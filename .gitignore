@@ -1,8 +1,14 @@
-# ignore maven build folder
+# ignore build and configuration files
 target/
-
-# ignore IntelliJ files
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.logs
+*.iml
 .idea/
+.eclipse
 
 # ignore macOS temporary files
 .DS_Store
