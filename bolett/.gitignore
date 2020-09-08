@@ -1,5 +1,5 @@
 # ignore maven build folder
-target/
+bolett/target/
 
 
 # ignore macOS temporary files
