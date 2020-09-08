@@ -1,0 +1,6 @@
+# ignore maven build folder
+target/
+
+
+# ignore macOS temporary files
+.DS_Store
