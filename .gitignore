@@ -1,6 +1,8 @@
 # ignore maven build folder
-bolett/target/
+target/
 
+# ignore IntelliJ files
+.idea/
 
 # ignore macOS temporary files
 .DS_Store
