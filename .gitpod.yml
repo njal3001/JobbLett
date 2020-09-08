@@ -1,0 +1,9 @@
+tasks:
+  - init: sdk use java 14.0.2.j9-adpt && mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=simpleexample/libs/fx-map-control-1.0.jar
+    command: cd bolett
+image:
+  file: .gitpod.Dockerfile
+
+ports:
+  # used by virtual desktop and vnc, supports JavaFX
+  - port: 6080
