@@ -14,7 +14,7 @@ public class GroupTest {
 	@BeforeAll
 	public void setUp() throws Exception {
 		testGroup = new Group("MoholtKollektivet");
-		testUser1 = new User("test1","passord123", "Ole", "Testmannsen");
+		testUser1 = new User("test1","Passord123", "Ole", "Testmannsen");
 		testGroup.addUser(testUser1);
 	}
 	
@@ -65,7 +65,7 @@ public class GroupTest {
 		}
 		
 		//Testing if the members are added to the group
-		User testUser2 = new User("test2", "passord2", "Kari", "Testermann");
+		User testUser2 = new User("test2", "Passord123", "Kari", "Testermann");
 		testGroup.addUser(testUser2);
 		assertTrue(testGroup.getGroupmembers().contains(testUser2));
 		assertTrue(testGroup.getGroupmembers().contains(testUser1));
