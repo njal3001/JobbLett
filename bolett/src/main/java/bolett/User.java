@@ -22,7 +22,7 @@ public class User{
     // Contains only letters
     // At least 2 characters
     public static boolean validName(String name){
-        String pattern = "[a-åA-Å]{2,}";
+        String pattern = "[a-zA-ZæøåÆØÅ]{2,}";
         return name.matches(pattern);
     }
 
@@ -41,7 +41,7 @@ public class User{
     // No whitespace
     // At least 8 characters
     public static boolean validPassword(String password){
-        String pattern = "(?=.*[0-9])(?=.*[a-å])(?=.*[A-Å])(?=\\S+$).{8,}";
+        String pattern = "^(?=.*[0-9])(?=.*[a-zæøå])(?=.*[A-ZÆØÅ])(?=\\S+$).{8,}$";
         return password.matches(pattern);
     }
 

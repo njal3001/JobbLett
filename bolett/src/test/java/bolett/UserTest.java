@@ -10,9 +10,9 @@ public class UserTest {
 
     @Test
     public void testValidUsername() {
-        assertTrue(User.validUsername("njal3001"));
+        assertTrue(User.validUsername("njåøl3001"));
         assertTrue(User.validUsername("N2"));
-        assertTrue(User.validUsername("N+-$3"));
+        assertTrue(User.validUsername("Æ+-$3"));
         assertFalse(User.validUsername("n 2"));
         assertFalse(User.validUsername(" n2"));
         assertFalse(User.validUsername("n"));
@@ -20,9 +20,10 @@ public class UserTest {
 
     @Test
     public void testValidName() {
-        assertFalse(User.validName("njal3001"));
         assertTrue(User.validName("Nils"));
         assertTrue(User.validName("nk"));
+        assertTrue(User.validName("Njåøæl"));
+        assertFalse(User.validName("njal3001"));
         assertFalse(User.validName(" nils"));
         assertFalse(User.validName("n"));
         assertFalse(User.validName("+-33"));
@@ -30,7 +31,7 @@ public class UserTest {
 
     @Test
     public void testValidPassword() {
-        assertTrue(User.validPassword("Nils1254"));
+        assertTrue(User.validPassword("NiæØls1254"));
         assertTrue(User.validPassword("Nk123456"));
         assertTrue(User.validPassword("Nils+-//1254"));
         assertFalse(User.validPassword("njal3001"));
@@ -83,7 +84,7 @@ public class UserTest {
         try{
             u1.setName("Kåre", "Heins");
             assertEquals(u1.getGivenName(), "Kåre");
-            assertEquals(u1.getFamilyName(), "Enge");
+            assertEquals(u1.getFamilyName(), "Heins");
         } catch(Exception e){
             fail("Exception should not be thrown for this input");
         }
@@ -93,7 +94,7 @@ public class UserTest {
         } catch(Exception e){
             assertTrue(e instanceof IllegalArgumentException);
             assertEquals(u1.getGivenName(), "Kåre");
-            assertEquals(u1.getFamilyName(), "Enge");
+            assertEquals(u1.getFamilyName(), "Heins");
         }
     }
 
