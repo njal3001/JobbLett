@@ -1,2 +1,3 @@
-bolett/App.class
-bolett/AppController.class
+bolett\AppController.class
+module-info.class
+bolett\App.class
