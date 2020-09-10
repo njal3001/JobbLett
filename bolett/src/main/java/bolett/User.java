@@ -21,27 +21,27 @@ public class User{
     // Name criteria:
     // Contains only letters
     // At least 2 characters
-    private static boolean validName(String name){
-        String pattern = "[a-åA-Å]{2,}";
+    public static boolean validName(String name){
+        String pattern = "[a-zA-ZæøåÆØÅ]{2,}";
         return name.matches(pattern);
     }
 
     // Username criteria:
     // No whitespace
     // At least 2 characters
-    private static boolean validUsername(String username){
+    public static boolean validUsername(String username){
         String pattern = "[^\\s]{2,}";
         return username.matches(pattern);
     }
 
     // Password criteria:
     // At least 1 digit
-    // At least 1 lower case digit
-    // At least 1 upper case digit
+    // At least 1 lower case letter
+    // At least 1 upper case letter
     // No whitespace
     // At least 8 characters
-    private static boolean validPassword(String password){
-        String pattern = "(?=.*[0-9])(?=.*[a-å])(?=.*[A-Å])(?=\\S+$).{8,}";
+    public static boolean validPassword(String password){
+        String pattern = "^(?=.*[0-9])(?=.*[a-zæøå])(?=.*[A-ZÆØÅ])(?=\\S+$).{8,}$";
         return password.matches(pattern);
     }
 
@@ -61,12 +61,24 @@ public class User{
             throw new IllegalArgumentException("Not a valid name");
     }
 
+    public String getUserName(){
+        return this.username;
+    }
+
+    public String getGivenName(){
+        return this.givenName;
+    }
+
+    public String getFamilyName(){
+        return this.familyName;
+    }
+
     public boolean matchesPassword(String password){
         return this.password.matches(password);
     }
     
     public String toString(){
-        return givenName + " " + familyName + "(@" + username + ")";
+        return givenName + " " + familyName + " (@" + username + ")";
     }
 
 }
