@@ -8,11 +8,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;;
 
 public class GroupTest {
-	Group testGroup;
-	User testUser1;
+	static Group testGroup= new Group("MoholtKollektivet");;
+	static User testUser1 = new User("test1","Passord123", "Ole", "Testmannsen");
 	
 	@BeforeAll
-	public void setUp() throws Exception {
+	public static void setUp(){
 		testGroup = new Group("MoholtKollektivet");
 		testUser1 = new User("test1","Passord123", "Ole", "Testmannsen");
 		testGroup.addUser(testUser1);
