@@ -22,13 +22,13 @@ public class Group {
 
     }
 
-    private void addUser(User user) {
+    public void addUser(User user){
         checkExistingUser(user);
         this.groupmembers.add(user);
     }
 
-    private void removeUser(User user) {
-        this.groupmembers.remove(user);
+    public void removeUser(User user){
+            this.groupmembers.remove(user);
     }
 
     private void checkExistingUser(User user) {
@@ -66,6 +66,10 @@ public class Group {
     public String getGroupname() {
         return this.groupname;
     }
+    
+    public Collection<User> getGroupmembers() {
+		return groupmembers;
+	}
 
     @Override
     public String toString() {
