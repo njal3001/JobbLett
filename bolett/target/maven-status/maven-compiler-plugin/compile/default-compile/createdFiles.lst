@@ -1,2 +1,4 @@
 bolett/App.class
 bolett/AppController.class
+bolett/User.class
+bolett/Group.class

@@ -3,7 +3,7 @@ package bolett;
 public class User{
 
     // username is final after being initalized
-    private final String username;
+    public final String username;
 
     // password and name can be changed after initalization
     private String password;

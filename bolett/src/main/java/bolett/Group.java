@@ -9,32 +9,32 @@ public class Group {
     private Collection<User> groupmembers = new ArrayList<User>();
     private static int groupdID = 1;
 
-    public Group (String groupname){
-      //  checkExistingGroupName(groupname);
+    public Group(String groupname) {
+        //  checkExistingGroupName(groupname);
         checkGroupName(groupname);
         this.groupname = groupname;
     }
 
-    public Group(String groupname, int groupID){
+    public Group(String groupname, int groupID) {
         //  checkExistingGroupName(groupname);
         this.groupname = groupname;
         setGroupID(groupID);
 
     }
 
-    private void addUser(User userp){
+    private void addUser(User user) {
         checkExistingUser(user);
         this.groupmembers.add(user);
     }
 
-    private void removeUser(User user){
-            this.groupmembers.remove(user);
+    private void removeUser(User user) {
+        this.groupmembers.remove(user);
     }
 
-    private void checkExistingUser(User user){
-         if(this.groupmembers.contains(user)){
-             throw new IllegalArgumentException("This user is already in the group");
-         }
+    private void checkExistingUser(User user) {
+        if (this.groupmembers.contains(user)) {
+            throw new IllegalArgumentException("This user is already in the group");
+        }
     }
 
     //Pretending that Collection<Group> groups = new ArrayList<Group>(); exists in main class
@@ -44,30 +44,34 @@ public class Group {
        }
    }*/
 
-   private void checkGroupName(String groupname){
-       if(groupname.length() <2){
-           throw new IllegalArgumentException("Grouname length must be atleast 2 lettars");
-       }
-   }
+    public void changeGroupName(String groupname) {
+        checkGroupName(groupname);
+        this.groupname = groupname;
+    }
 
-   private void setGroupID(int groupdID){
-       //Not yet implemented
-   }
+    private void checkGroupName(String groupname) {
+        if (groupname.length() < 2) {
+            throw new IllegalArgumentException("Grouname length must be atleast 2 lettars");
+        }
+    }
 
-    public int getGroupSize(){
+    private void setGroupID(int groupdID) {
+        //Not yet implemented
+    }
+
+    public int getGroupSize() {
         return this.groupmembers.size();
     }
 
-    public String getGroupname(){
+    public String getGroupname() {
         return this.groupname;
     }
 
     @Override
-    public String toString(){
-       return this.groupname;
+    public String toString() {
+        return this.groupname;
     }
 
-
-
-
 }
+
+
