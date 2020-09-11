@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="111.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home name" wrappingWidth="138.22900390625">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Text>
+      <Text layoutX="144.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Members:" />
+      <Text layoutX="60.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home ID:" />
+      <ListView layoutX="80.0" layoutY="168.0" prefHeight="200.0" prefWidth="200.0" />
+   </children>
+</Pane>
