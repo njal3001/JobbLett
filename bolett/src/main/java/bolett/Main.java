@@ -1,9 +1,6 @@
 package bolett;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -13,6 +10,7 @@ public class Main {
     public Main() {
 
     }
+
 
     public User getUser(String username) {
         return users.stream()
@@ -50,9 +48,29 @@ public class Main {
     }
 
     private void addUser(User... users) {
-        for (User user: users) {
-            this.users.add(user);
+        this.users.addAll(Arrays.asList(users));
+    }
+
+    private void generateGroupId(int groupdID) {
+        //Not yet implemented
+        int i = 1;
+        for (Group group: this.groups){
+            if(group.getGroupdID() != groupdID){
+
+            }
         }
+    }
+
+
+    public Group getGroup(int groupID){
+        return groups.stream()
+                .filter(group -> group.getGroupdID()==groupID)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public int getGroupAmount(){
+        return this.groups.size();
     }
 
     public static void main(String[] args) {

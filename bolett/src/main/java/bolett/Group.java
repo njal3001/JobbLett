@@ -7,7 +7,7 @@ public class Group {
 
     private String groupname;
     private Collection<User> groupmembers = new ArrayList<User>();
-    private static int groupdID = 1;
+    private int groupdID = 1;
 
     public Group(String groupname) {
         //  checkExistingGroupName(groupname);
@@ -18,7 +18,7 @@ public class Group {
     public Group(String groupname, int groupID) {
         //  checkExistingGroupName(groupname);
         this.groupname = groupname;
-        setGroupID(groupID);
+       // setGroupID(groupID);
 
     }
 
@@ -55,9 +55,13 @@ public class Group {
         }
     }
 
-    private void setGroupID(int groupdID) {
+/*    private void setGroupID(int groupdID) {
         //Not yet implemented
-    }
+        for (int i = 0; i< ; i++) {
+
+        }
+
+    }*/
 
     public int getGroupSize() {
         return this.groupmembers.size();
@@ -70,6 +74,10 @@ public class Group {
     public Collection<User> getGroupmembers() {
 		return groupmembers;
 	}
+
+    public int getGroupdID() {
+        return groupdID;
+    }
 
     @Override
     public String toString() {
