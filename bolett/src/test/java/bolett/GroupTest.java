@@ -8,13 +8,16 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;;
 
 public class GroupTest {
-	static Group testGroup= new Group("MoholtKollektivet");;
-	static User testUser1 = new User("test1","Passord123", "Ole", "Testmannsen");
+	static Main main;
+	static Group testGroup;
+	static User testUser1;
 	
 	@BeforeAll
 	public static void setUp(){
-		testGroup = new Group("MoholtKollektivet");
-		testUser1 = new User("test1","Passord123", "Ole", "Testmannsen");
+		main = new Main();
+		testGroup = main.newGroup("MoholtKollektivet");
+		main.newUser("test1","Passord123", "Ole", "Testmannsen");
+		testUser1 = main.getUser("test1");
 		testGroup.addUser(testUser1);
 	}
 	
@@ -22,7 +25,7 @@ public class GroupTest {
 	public void testGroupName() {
 		//Testing groupname with less than 2 letters
 		try {
-			Group shortNameGroup = new Group("q"); 
+			Group shortNameGroup = main.newGroup("q");
 			fail("Should not be able to create groups with names less than two letters!");
 		}
 		catch (IllegalArgumentException e) {
@@ -31,7 +34,7 @@ public class GroupTest {
 		
 		//Should be able to create a new group with an allready existing groupname
 		try {
-			Group group1 = new Group("MoholtKollektivet");
+			Group group1 = main.newGroup("MoholtKollektivet");
 			//Group group2 = new Group("Moholtkollektivet");
 		}
 		catch (IllegalArgumentException e) {

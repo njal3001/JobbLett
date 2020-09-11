@@ -1,11 +1,12 @@
 package bolett;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class Main {
-    private Collection<User> users = new ArrayList<User>();
-    private Collection<Group> groups = new ArrayList<Group>();
+    private static Collection<User> users = new ArrayList<User>();
+    private static Collection<Group> groups = new ArrayList<Group>();
 
     public Main() {
 
@@ -47,24 +48,41 @@ public class Main {
                 .collect(Collectors.toList());
     }
 
-    private void addUser(User... users) {
+    public Group newGroup(String groupName) {
+        Group group = new Group(groupName, generateGroupId());
+        addGroups(group);
+        return group;
+    }
+
+    public void newUser(String username, String password, String givenName, String familyName) {
+        addUser(new User(username,password,givenName,familyName));
+    }
+
+    // Used by JSON import
+    public void addGroups(Group... groups) {
+        this.groups.addAll(Arrays.asList(groups));
+    }
+
+    // Used by JSON import
+    public void addUser(User... users) {
         this.users.addAll(Arrays.asList(users));
     }
 
-    private void generateGroupId(int groupdID) {
-        //Not yet implemented
-        int i = 1;
-        for (Group group: this.groups){
-            if(group.getGroupdID() != groupdID){
-
-            }
+    public int generateGroupId() {
+        Collection<Integer> alreadyUsed = groups.stream()
+                .map(group -> group.getGroupID())
+                .collect(Collectors.toList());
+        int groupID = 0;
+        while ((groupID == 0) || (alreadyUsed.contains(groupID))) {
+            groupID = ThreadLocalRandom.current().nextInt(1000,10000);
         }
+        return groupID;
     }
 
 
     public Group getGroup(int groupID){
         return groups.stream()
-                .filter(group -> group.getGroupdID()==groupID)
+                .filter(group -> group.getGroupID()==groupID)
                 .findFirst()
                 .orElse(null);
     }
@@ -75,18 +93,17 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
+        Group gruppe7 = main.newGroup("Gruppe7");
 
-        User hary = new User("haryp", "bestepassord123", "Hary", "Pi");
-        User sanket = new User("sanketb", "bestepassord123", "Sanket", "Be");
-        User kavu = new User("kavus", "bestepassord123", "Lol", "Si");
-        User njaal = new User("lol", "bestepassord123", "Njaal", "Te");
+        main.newUser("haryp", "bestePassord123", "Hary", "Pi");
+        main.newUser("sanketb", "bestePassord123", "Sanket", "Be");
+        main.newUser("kavus", "bestePassord123", "Lol", "Si");
+        main.newUser("lol", "bestePassord123", "Njaal", "Te");
 
-        Group gruppe7 = new Group("gruppe7");
-        gruppe7.addUser(hary);
-        gruppe7.addUser(sanket);
-        gruppe7.addUser(kavu);
-        gruppe7.addUser(njaal);
-        main.addUser(hary, sanket, kavu, njaal);
+        gruppe7.addUser(main.getUser("haryp"));
+        gruppe7.addUser(main.getUser("sanketb"));
+        gruppe7.addUser(main.getUser("kavus"));
+        gruppe7.addUser(main.getUser("lol"));
         System.out.println(main.searchUsers("sanket"));
 
     }

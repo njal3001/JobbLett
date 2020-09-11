@@ -7,18 +7,11 @@ public class Group {
 
     private String groupname;
     private Collection<User> groupmembers = new ArrayList<User>();
-    private int groupdID = 1;
-
-    public Group(String groupname) {
-        //  checkExistingGroupName(groupname);
-        checkGroupName(groupname);
-        this.groupname = groupname;
-    }
+    private final int groupID;
 
     public Group(String groupname, int groupID) {
-        //  checkExistingGroupName(groupname);
-        this.groupname = groupname;
-       // setGroupID(groupID);
+        changeGroupName(groupname);
+        this.groupID = groupID;
 
     }
 
@@ -50,7 +43,7 @@ public class Group {
     }
 
     private void checkGroupName(String groupname) {
-        if (groupname.length() < 2) {
+        if (groupname.trim().length() < 2) {
             throw new IllegalArgumentException("Grouname length must be atleast 2 lettars");
         }
     }
@@ -75,8 +68,8 @@ public class Group {
 		return groupmembers;
 	}
 
-    public int getGroupdID() {
-        return groupdID;
+    public int getGroupID() {
+        return groupID;
     }
 
     @Override
