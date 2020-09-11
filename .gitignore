@@ -1,5 +1,5 @@
 # ignore build and configuration files
-target/
+bolett/target/
 target/
 *.class
 *.jar

@@ -77,7 +77,8 @@ public class User{
         return this.password.matches(password);
     }
     
-    public String toString(){
+    @Override
+	public String toString(){
         return givenName + " " + familyName + " (@" + username + ")";
     }
 
