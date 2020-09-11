@@ -48,10 +48,10 @@ public class Main {
                 .collect(Collectors.toList());
     }
 
-    public Group newGroup(String groupName) {
-        Group group = new Group(groupName, generateGroupId());
-        addGroups(group);
-        return group;
+    public int newGroup(String groupName) {
+        int groupId = generateGroupId();
+        addGroups(new Group(groupName, groupId));
+        return groupId;
     }
 
     public void newUser(String username, String password, String givenName, String familyName) {
@@ -93,7 +93,7 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
-        Group gruppe7 = main.newGroup("Gruppe7");
+        Group gruppe7 = main.getGroup(main.newGroup("Gruppe7"));
 
         main.newUser("haryp", "bestePassord123", "Hary", "Pi");
         main.newUser("sanketb", "bestePassord123", "Sanket", "Be");
