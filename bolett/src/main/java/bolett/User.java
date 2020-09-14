@@ -1,21 +1,35 @@
 package bolett;
 
-public class User{
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+public class User{
     // username is final after being initalized
-    public final String username;
+    private final String username;
 
     // password and name can be changed after initalization
     private String password;
     private String givenName;
     private String familyName;
 
-    public User(String username, String password, String givenName, String familyName){
-        if(!validUsername(username))
-            throw new IllegalArgumentException("Not a valid username");
-        this.username = username;
+    @JsonCreator
+    public User(
+            @JsonProperty("userName") String userName,
+            @JsonProperty("password") String password,
+            @JsonProperty("givenName") String givenName,
+            @JsonProperty("familyName") String familyName
+    ){
+        if(!validUsername(userName))
+            throw new IllegalArgumentException("Not a valid userName");
+        this.username = userName;
         setPassword(password);
         setName(givenName, familyName);
+    }
+
+    // Only for testing purpose. Should be removed or made private before finish.
+    public String getPassword() {
+        return password;
     }
 
     // Name criteria:
