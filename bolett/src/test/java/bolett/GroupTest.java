@@ -43,19 +43,27 @@ public class GroupTest {
 		}
 	}
 	
-	//The test below will be closed until this part is implemented in the main class
-	/*@Test
+	@Test
 	public void testGroupID() {
 		//testing if it's possible to create two groups with the same ID
 		try {
-			Group group1 = new Group("q", 123); 
-			Group group2 = new Group("q", 123);
+			Group group1 = new Group("gruppe1", 1234);
+			Group group2 = new Group("gruppe2", 3234);
+			main.addGroups(group1, group2);
+		}
+		catch (IllegalStateException e) {
+			//An error code should not be thrown
+			fail("Should be able to create two groups with unique ID!");		}
+		try {
+			Group group1 = new Group("gruppe1", 1234);
+			Group group2 = new Group("gruppe2", 1234);
+			main.addGroups(group1, group2);
 			fail("Should not be able to create two groups with the same ID!");
 		}
-		catch (IllegalArgumentException e) {
-			//An error code should be thrown 
+		catch (IllegalStateException e) {
+			//An error code should be thrown
 		}
-	}*/
+	}
 	
 	@Test
 	public void testAddUser() {

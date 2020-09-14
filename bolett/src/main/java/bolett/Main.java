@@ -60,6 +60,19 @@ public class Main {
 
     // Used by JSON import
     public void addGroups(Group... groups) {
+        // Checks if group with same ID already exist.
+        Collection<Integer> usedGroupIDs = this.groups.stream()
+                .map(group -> group.getGroupID())
+                .collect(Collectors.toList());
+        usedGroupIDs.addAll(
+                Arrays.stream(groups)
+                        .map(group -> group.getGroupID())
+                        .collect(Collectors.toList())
+        );
+        for (int groupID:usedGroupIDs) {
+            if (Collections.frequency(usedGroupIDs, groupID) > 1) throw new IllegalStateException("Group with same GroupID already exist.");
+        }
+
         this.groups.addAll(Arrays.asList(groups));
     }
 
@@ -68,6 +81,7 @@ public class Main {
         this.users.addAll(Arrays.asList(users));
     }
 
+    // Generates a unique groupID with 4 digits.
     public int generateGroupId() {
         Collection<Integer> alreadyUsed = groups.stream()
                 .map(group -> group.getGroupID())

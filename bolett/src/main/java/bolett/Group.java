@@ -10,6 +10,9 @@ public class Group {
     private final int groupID;
 
     public Group(String groupname, int groupID) {
+        // Checks if GroupIDs are 4 digit.
+        if ((groupID<1000)&&(groupID>=10000)) throw new IllegalArgumentException("GroupID should be 4 digit");
+
         changeGroupName(groupname);
         this.groupID = groupID;
 
