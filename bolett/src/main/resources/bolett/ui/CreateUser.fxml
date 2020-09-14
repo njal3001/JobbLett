@@ -22,7 +22,7 @@
       <TextField layoutX="146.0" layoutY="204.0" />
       <TextField layoutX="146.0" layoutY="259.0" />
       <TextField layoutX="146.0" layoutY="316.0" />
-      <Button layoutX="180.0" layoutY="368.0" mnemonicParsing="false" text="Create account">
+      <Button fx:id="createAccount2" layoutX="165.0" layoutY="368.0" mnemonicParsing="false" onAction="#CreateAccountToWelcome" text="Create account">
          <font>
             <Font name="Arial" size="13.0" />
          </font></Button>
