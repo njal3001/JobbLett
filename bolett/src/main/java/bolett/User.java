@@ -54,11 +54,15 @@ public class User{
 
     public void setName(String givenName, String familyName){
         if(validName(givenName) && validName(familyName)){
-            this.givenName = givenName;
-            this.familyName = familyName;
+            this.givenName =  formatName(givenName);
+            this.familyName = formatName(familyName);
         }
         else
             throw new IllegalArgumentException("Not a valid name");
+    }
+
+    private String formatName(String name){
+        return String.valueOf(name.charAt(0)).toUpperCase() + name.substring(1).toLowerCase();
     }
 
     public String getUserName(){
