@@ -1,18 +1,17 @@
 package bolett;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class Main {
-    private Collection<User> users = new ArrayList<User>();
-    private Collection<Group> groups = new ArrayList<Group>();
+    private static Collection<User> users = new ArrayList<User>();
+    private static Collection<Group> groups = new ArrayList<Group>();
 
     public Main() {
 
     }
+
 
     public User getUser(String username) {
         return users.stream()
@@ -49,26 +48,76 @@ public class Main {
                 .collect(Collectors.toList());
     }
 
-    private void addUser(User... users) {
-        for (User user: users) {
-            this.users.add(user);
+    public int newGroup(String groupName) {
+        int groupId = generateGroupId();
+        addGroups(new Group(groupName, groupId));
+        return groupId;
+    }
+
+    public void newUser(String username, String password, String givenName, String familyName) {
+        addUser(new User(username,password,givenName,familyName));
+    }
+
+    // Used by JSON import
+    public void addGroups(Group... groups) {
+        // Checks if group with same ID already exist.
+        Collection<Integer> usedGroupIDs = this.groups.stream()
+                .map(group -> group.getGroupID())
+                .collect(Collectors.toList());
+        usedGroupIDs.addAll(
+                Arrays.stream(groups)
+                        .map(group -> group.getGroupID())
+                        .collect(Collectors.toList())
+        );
+        for (int groupID:usedGroupIDs) {
+            if (Collections.frequency(usedGroupIDs, groupID) > 1) throw new IllegalStateException("Group with same GroupID already exist.");
         }
+
+        this.groups.addAll(Arrays.asList(groups));
+    }
+
+    // Used by JSON import
+    public void addUser(User... users) {
+        this.users.addAll(Arrays.asList(users));
+    }
+
+    // Generates a unique groupID with 4 digits.
+    public int generateGroupId() {
+        Collection<Integer> alreadyUsed = groups.stream()
+                .map(group -> group.getGroupID())
+                .collect(Collectors.toList());
+        int groupID = 0;
+        while ((groupID == 0) || (alreadyUsed.contains(groupID))) {
+            groupID = ThreadLocalRandom.current().nextInt(1000,10000);
+        }
+        return groupID;
+    }
+
+
+    public Group getGroup(int groupID){
+        return groups.stream()
+                .filter(group -> group.getGroupID()==groupID)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public int getGroupAmount(){
+        return this.groups.size();
     }
 
     public static void main(String[] args) {
         Main main = new Main();
+        Group gruppe7 = main.getGroup(main.newGroup("Gruppe7"));
 
-        User hary = new User("haryp", "bestepassord123", "Hary", "Pi");
-        User sanket = new User("sanketb", "bestepassord123", "Sanket", "Be");
-        User kavu = new User("kavus", "bestepassord123", "Lol", "Si");
-        User njaal = new User("lol", "bestepassord123", "Njaal", "Te");
+        main.newUser("haryp", "bestePassord123", "Hary", "Pi");
+        main.newUser("sanketb", "bestePassord123", "Sanket", "Be");
+        main.newUser("kavus", "bestePassord123", "Lol", "Si");
+        main.newUser("lol", "bestePassord123", "Njaal", "Te");
 
-        Group gruppe7 = new Group("gruppe7");
-        gruppe7.addUser(hary);
-        gruppe7.addUser(sanket);
-        gruppe7.addUser(kavu);
-        gruppe7.addUser(njaal);
-        main.addUser(hary, sanket, kavu, njaal);
+        gruppe7.addUser(main.getUser("haryp"));
+        gruppe7.addUser(main.getUser("sanketb"));
+        gruppe7.addUser(main.getUser("kavus"));
+        gruppe7.addUser(main.getUser("lol"));
         System.out.println(main.searchUsers("sanket"));
 
     }
