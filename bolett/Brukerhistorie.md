@@ -3,15 +3,17 @@ Her har vi alle brukerhistorier som danner utgangspunktet for hvordan vil skal u
 bilde av hva vi skal utvikle.
 
 **Opprette gruppe for kollektivet (us-1)**
-Som bruker av appen ønsker jeg å opprette en gruppe for kollektivet mitt.
+Som bruker av appen ønsker jeg å opprette en gruppe for kollektivet mitt slik at jeg og de andre medlemmene av kollektivet kan bruke appens funksjoner. 
 
-Brukeren har behov for kunne invitere de andre beboerne til gruppen. Det skal også være mulig for beboerne å sende
-forespørsel om å bli medlem av gruppen. Dette skal da bli godkjent av gruppeoppretteren.
+Brukeren har behov for å kunne identifisere de andre medlemmene av gruppen, slik at alle som bruker appen må opprette en bruker. Brukeren må også kunne 
+invitere de andre beboerne til gruppen. De andre medlemmene av kollektivet må da kunne bruke denne invitasjonen til å bli med i gruppen.
 
 **Viktig å kunne se**
-*  Når en oppretter gruppen: viktig se hvem som er lagt til i gruppen
+* Navnene til medlemmene i gruppen
+* Gruppens navn
 
 **Viktig å kunne gjøre**
-*  Viktig å kunne opprette bruker
-*  Søke opp de du skal invitere
-*  Skal være mulige å sende forespørsel om å bli med i en allerrede opprettet gruppe ved å søke dem opp
+*  Opprette bruker og logge inn på appen
+*  Opprette en gruppe 
+*  Invitere andre til gruppen
+*  Bruke en invitasjon til å bli med i en gruppe
