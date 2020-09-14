@@ -8,13 +8,16 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;;
 
 public class GroupTest {
-	static Group testGroup= new Group("MoholtKollektivet");;
-	static User testUser1 = new User("test1","Passord123", "Ole", "Testmannsen");
+	static Main main;
+	static Group testGroup;
+	static User testUser1;
 	
 	@BeforeAll
 	public static void setUp(){
-		testGroup = new Group("MoholtKollektivet");
-		testUser1 = new User("test1","Passord123", "Ole", "Testmannsen");
+		main = new Main();
+		testGroup = main.getGroup(main.newGroup("MoholtKollektivet"));
+		main.newUser("test1","Passord123", "Ole", "Testmannsen");
+		testUser1 = main.getUser("test1");
 		testGroup.addUser(testUser1);
 	}
 	
@@ -22,7 +25,7 @@ public class GroupTest {
 	public void testGroupName() {
 		//Testing groupname with less than 2 letters
 		try {
-			Group shortNameGroup = new Group("q"); 
+			Group shortNameGroup = main.getGroup(main.newGroup("q"));
 			fail("Should not be able to create groups with names less than two letters!");
 		}
 		catch (IllegalArgumentException e) {
@@ -31,7 +34,7 @@ public class GroupTest {
 		
 		//Should be able to create a new group with an allready existing groupname
 		try {
-			Group group1 = new Group("MoholtKollektivet");
+			Group group1 = main.getGroup(main.newGroup("MoholtKollektivet"));
 			//Group group2 = new Group("Moholtkollektivet");
 		}
 		catch (IllegalArgumentException e) {
@@ -40,19 +43,27 @@ public class GroupTest {
 		}
 	}
 	
-	//The test below will be closed until this part is implemented in the main class
-	/*@Test
+	@Test
 	public void testGroupID() {
 		//testing if it's possible to create two groups with the same ID
 		try {
-			Group group1 = new Group("q", 123); 
-			Group group2 = new Group("q", 123);
+			Group group1 = new Group("gruppe1", 1234);
+			Group group2 = new Group("gruppe2", 3234);
+			main.addGroups(group1, group2);
+		}
+		catch (IllegalStateException e) {
+			//An error code should not be thrown
+			fail("Should be able to create two groups with unique ID!");		}
+		try {
+			Group group1 = new Group("gruppe1", 1234);
+			Group group2 = new Group("gruppe2", 1234);
+			main.addGroups(group1, group2);
 			fail("Should not be able to create two groups with the same ID!");
 		}
-		catch (IllegalArgumentException e) {
-			//An error code should be thrown 
+		catch (IllegalStateException e) {
+			//An error code should be thrown
 		}
-	}*/
+	}
 	
 	@Test
 	public void testAddUser() {

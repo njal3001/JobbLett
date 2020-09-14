@@ -7,18 +7,14 @@ public class Group {
 
     private String groupname;
     private Collection<User> groupmembers = new ArrayList<User>();
-    private static int groupdID = 1;
-
-    public Group(String groupname) {
-        //  checkExistingGroupName(groupname);
-        checkGroupName(groupname);
-        this.groupname = groupname;
-    }
+    private final int groupID;
 
     public Group(String groupname, int groupID) {
-        //  checkExistingGroupName(groupname);
-        this.groupname = groupname;
-        setGroupID(groupID);
+        // Checks if GroupIDs are 4 digit.
+        if ((groupID<1000)&&(groupID>=10000)) throw new IllegalArgumentException("GroupID should be 4 digit");
+
+        changeGroupName(groupname);
+        this.groupID = groupID;
 
     }
 
@@ -50,14 +46,18 @@ public class Group {
     }
 
     private void checkGroupName(String groupname) {
-        if (groupname.length() < 2) {
+        if (groupname.trim().length() < 2) {
             throw new IllegalArgumentException("Grouname length must be atleast 2 lettars");
         }
     }
 
-    private void setGroupID(int groupdID) {
+/*    private void setGroupID(int groupdID) {
         //Not yet implemented
-    }
+        for (int i = 0; i< ; i++) {
+
+        }
+
+    }*/
 
     public int getGroupSize() {
         return this.groupmembers.size();
@@ -70,6 +70,10 @@ public class Group {
     public Collection<User> getGroupmembers() {
 		return groupmembers;
 	}
+
+    public int getGroupID() {
+        return groupID;
+    }
 
     @Override
     public String toString() {
