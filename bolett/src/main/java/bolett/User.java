@@ -1,14 +1,13 @@
 package bolett;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property = "userName")
 public class User{
-    // username is final after being initalized
-    private final String username;
+    // username is final after being initialized
+    private String userName;
 
-    // password and name can be changed after initalization
+    // password and name can be changed after initialization
     private String password;
     private String givenName;
     private String familyName;
@@ -20,9 +19,8 @@ public class User{
             @JsonProperty("givenName") String givenName,
             @JsonProperty("familyName") String familyName
     ){
-        if(!validUsername(userName))
-            throw new IllegalArgumentException("Not a valid userName");
-        this.username = userName;
+        if (userName != null) if(!validUsername(userName)) throw new IllegalArgumentException("Not a valid userName");
+        this.userName = userName;
         setPassword(password);
         setName(givenName, familyName);
     }
@@ -76,7 +74,7 @@ public class User{
     }
 
     public String getUserName(){
-        return this.username;
+        return this.userName;
     }
 
     public String getGivenName(){
@@ -93,7 +91,7 @@ public class User{
     
     @Override
 	public String toString(){
-        return givenName + " " + familyName + " (@" + username + ")";
+        return givenName + " " + familyName + " (@" + userName + ")"+" ["+password+"]";
     }
 
 }
