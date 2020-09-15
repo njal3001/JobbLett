@@ -1,8 +1,10 @@
-package bolett;
+/*
+package bolett.json;
 
 import java.io.File;
-import java.nio.file.Paths;
-import java.util.Map;
+
+import bolett.core.Group;
+import bolett.core.Main;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -42,3 +44,4 @@ public class JSONSerialize {
         exporter.exportJSON();
     }
 }
+*/

@@ -1,10 +1,9 @@
-package bolett;
+package bolett.json;
 
+import bolett.core.Main;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 

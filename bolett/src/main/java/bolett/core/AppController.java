@@ -1,4 +1,4 @@
-package bolett;
+package bolett.core;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

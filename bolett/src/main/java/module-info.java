@@ -4,7 +4,8 @@ module bolett {
 	requires javafx.controls;
     requires com.fasterxml.jackson.databind;
 
-    exports bolett;
+    exports bolett.core;
+	exports bolett.json;
 
 	opens bolett to javafx.fxml, com.fasterxml.jackson.databind;
 }
