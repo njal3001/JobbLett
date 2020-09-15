@@ -1,4 +1,4 @@
-package bolett;
+package bolett.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,9 +14,9 @@ import java.net.URL;
 import java.util.EventListener;
 import java.util.ResourceBundle;
 
-public class AppController {
+public abstract class AbstractController {
     
-
+/*
     @FXML
     Button createAccount;
 
@@ -24,14 +24,10 @@ public class AppController {
     Button createAccount2;
 
     @FXML
-    Button LogInn;
+    Button LogInn;*/
 
-    @FXML
-    void handleClickMeButtonAction() {
-        createAccount.setText("Thanks!");
-    }
 
-    private void changeScreen(String URLName, Button button) throws IOException {
+    public void changeScreen(String URLName, Button button) throws IOException {
         Stage stage = (Stage) button.getScene().getWindow();
         Parent root=FXMLLoader.load(getClass().getResource(URLName));
         Scene scene = new Scene(root);
@@ -39,7 +35,7 @@ public class AppController {
         stage.show();
     }
 
-    @FXML
+   /* @FXML
     public void LogInToCreatAccount() throws IOException {
         changeScreen("ui/CreateUser.fxml", createAccount);
     }
@@ -49,7 +45,7 @@ public class AppController {
         changeScreen("ui/Welcome.fxml", createAccount2);
     }
 
-
+*/
 
 
  /*  @FXML

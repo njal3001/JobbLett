@@ -1,4 +1,4 @@
-package bolett;
+package bolett.core;
 
 public class User{
 
