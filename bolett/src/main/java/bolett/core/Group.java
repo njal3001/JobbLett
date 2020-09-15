@@ -1,4 +1,4 @@
-package bolett;
+package bolett.core;
 
 import java.util.ArrayList;
 import java.util.Collection;
