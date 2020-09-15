@@ -1,78 +1,75 @@
 package bolett.core;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
-@JsonRootName(value = "Group")
-public class Group implements Iterable<User> {
+public class Group {
 
-    private String groupName;
-    private Collection<User> groupMembers = new ArrayList<>();
-    private final int groupID;
+    private String groupname;
+    private Collection<User> groupmembers = new ArrayList<User>();
+    private static int groupdID = 1;
 
-    @JsonCreator
-    public Group(@JsonProperty("groupName") String groupName, @JsonProperty("groupID") int groupID) {
-        setGroupName(groupName);
-        this.groupID = groupID;
+    public Group(String groupname) {
+        //  checkExistingGroupName(groupname);
+        checkGroupName(groupname);
+        this.groupname = groupname;
     }
 
-    public void addUser(User user) {
+    public Group(String groupname, int groupID) {
+        //  checkExistingGroupName(groupname);
+        this.groupname = groupname;
+        setGroupID(groupID);
+
+    }
+
+    private void addUser(User user) {
         checkExistingUser(user);
-        this.groupMembers.add(user);
+        this.groupmembers.add(user);
     }
 
-    public void removeUser(User user) {
-        this.groupMembers.remove(user);
+    private void removeUser(User user) {
+        this.groupmembers.remove(user);
     }
 
     private void checkExistingUser(User user) {
-        if (this.groupMembers.contains(user)) {
+        if (this.groupmembers.contains(user)) {
             throw new IllegalArgumentException("This user is already in the group");
         }
     }
 
-    public void setGroupName(String groupName) {
-        checkGroupName(groupName);
-        this.groupName = groupName;
+    //Pretending that Collection<Group> groups = new ArrayList<Group>(); exists in main class
+/*   private void checkExistingGroupName(String groupname){
+       if(gr.stream().anyMatch(gorup -> gorup.groupname.equals(groupname))){
+           throw new IllegalArgumentException("Groupname already exists");
+       }
+   }*/
+
+    public void changeGroupName(String groupname) {
+        checkGroupName(groupname);
+        this.groupname = groupname;
     }
 
-    private void checkGroupName(String groupName) {
-        if (groupName.trim().length() < 2) {
-            throw new IllegalArgumentException("Group name must have at least 2 characters");
+    private void checkGroupName(String groupname) {
+        if (groupname.length() < 2) {
+            throw new IllegalArgumentException("Grouname length must be atleast 2 lettars");
         }
     }
 
-    @JsonIgnore
+    private void setGroupID(int groupdID) {
+        //Not yet implemented
+    }
+
     public int getGroupSize() {
-        return this.groupMembers.size();
+        return this.groupmembers.size();
     }
 
-    public String getGroupName() {
-        return this.groupName;
-    }
-
-    public int getGroupID() {
-        return groupID;
+    public String getGroupname() {
+        return this.groupname;
     }
 
     @Override
     public String toString() {
-        StringBuilder members = new StringBuilder();
-        for (User user : this) {
-            members.append(user.getGivenName()).append(" ").append(user.getFamilyName()).append(", ");
-        }
-        return this.groupName + ": " + members;
-    }
-
-    @Override
-    public Iterator<User> iterator() {
-        return groupMembers.iterator();
+        return this.groupname;
     }
 
 }
