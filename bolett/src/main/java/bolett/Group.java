@@ -1,17 +1,28 @@
 package bolett;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
+@JsonRootName(value = "Group")
 public class Group {
 
     private String groupname;
-    private Collection<User> groupmembers = new ArrayList<User>();
+    private Collection<User> groupmembers = new ArrayList<>();
     private final int groupID;
 
-    public Group(String groupname, int groupID) {
+    @JsonCreator
+    public Group(
+            @JsonProperty("groupname") String groupname,
+            @JsonProperty("groupID") int groupID
+    ) {
         // Checks if GroupIDs are 4 digit.
-        if ((groupID<1000)&&(groupID>=10000)) throw new IllegalArgumentException("GroupID should be 4 digit");
+        if ((groupID<1000)||(groupID>=10000)) throw new IllegalArgumentException("GroupID should be 4 digit");
 
         changeGroupName(groupname);
         this.groupID = groupID;
@@ -59,6 +70,7 @@ public class Group {
 
     }*/
 
+    @JsonIgnore
     public int getGroupSize() {
         return this.groupmembers.size();
     }
@@ -66,10 +78,11 @@ public class Group {
     public String getGroupname() {
         return this.groupname;
     }
-    
+
     public Collection<User> getGroupmembers() {
-		return groupmembers;
+		return new ArrayList<>(groupmembers);
 	}
+
 
     public int getGroupID() {
         return groupID;
@@ -77,7 +90,11 @@ public class Group {
 
     @Override
     public String toString() {
-        return this.groupname;
+        StringBuilder members = new StringBuilder();
+        for (User user:groupmembers) {
+            members.append(user.getGivenName()).append(" ").append(user.getFamilyName()).append(", ");
+        }
+        return this.groupname+": "+members;
     }
 
 }

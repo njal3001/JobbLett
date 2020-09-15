@@ -2,8 +2,9 @@ module bolett {
 	requires javafx.fxml;
 	requires transitive javafx.graphics;
 	requires javafx.controls;
-	
-	exports bolett;
+    requires com.fasterxml.jackson.databind;
 
-	opens bolett to javafx.fxml;
+    exports bolett;
+
+	opens bolett to javafx.fxml, com.fasterxml.jackson.databind;
 }

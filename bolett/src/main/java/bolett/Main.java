@@ -1,17 +1,36 @@
 package bolett;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class Main {
-    private static Collection<User> users = new ArrayList<User>();
-    private static Collection<Group> groups = new ArrayList<Group>();
+    private Collection<User> users = new ArrayList<User>();
+    private Collection<Group> groups = new ArrayList<Group>();
 
-    public Main() {
-
+    // Used by JSON export
+    public void setUsers(Collection<User> users) {
+        this.users = users;
     }
 
+    // Used by JSON export
+    public void setGroups(Collection<Group> groups) {
+        this.groups = groups;
+    }
+
+    // Used by JSON export
+    public Collection<Group> getGroups() {
+        return groups.stream().collect(Collectors.toList());
+    }
+
+    // Used by JSON export
+    public Collection<User> getUsers() {
+        return users.stream().collect(Collectors.toList());
+    }
 
     public User getUser(String username) {
         return users.stream()
@@ -101,6 +120,7 @@ public class Main {
                 .orElse(null);
     }
 
+    @JsonIgnore
     public int getGroupAmount(){
         return this.groups.size();
     }
@@ -122,5 +142,18 @@ public class Main {
 
     }
 
-
+    @Override
+    public String toString() {
+        String rtn = "Main{" +
+                "users=";
+        for (User user:users) {
+            rtn += user.toString()+", ";
+        }
+        rtn += "groups=";
+        for (Group group: groups) {
+            rtn += group.toString()+", ";
+        }
+        rtn += '}';
+        return rtn;
+    }
 }
