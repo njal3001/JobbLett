@@ -7,10 +7,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;;
 
-public class GroupTest {
-	static Main main;
-	static Group testGroup;
-	static User testUser1;
+public class GroupListTest {
+	private Main main;
+	private Group testGroup;
+	private User testUser1;
 	
 	@BeforeAll
 	public static void setUp(){
@@ -43,7 +43,28 @@ public class GroupTest {
 		}
 	}
 	
-
+	@Test
+	public void testGroupID() {
+		//testing if it's possible to create two groups with the same ID
+		try {
+			Group group1 = new Group("gruppe1", 1234);
+			Group group2 = new Group("gruppe2", 3234);
+			main.addGroups(group1, group2);
+		}
+		catch (IllegalStateException e) {
+			//An error code should not be thrown
+			fail("Should be able to create two groups with unique ID!");		}
+		try {
+			Group group1 = new Group("gruppe1", 1234);
+			Group group2 = new Group("gruppe2", 1234);
+			main.addGroups(group1, group2);
+			fail("Should not be able to create two groups with the same ID!");
+		}
+		catch (IllegalStateException e) {
+			//An error code should be thrown
+		}
+	}
+	
 	@Test
 	public void testAddUser() {
 		//Testing if it's possible to add an user twice to the same group
