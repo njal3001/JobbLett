@@ -1,34 +1,34 @@
 package bolett.core;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
-@JsonRootName(value = "Group")
-public class Group implements Iterable<User> {
+public class Group {
 
-    private String groupName;
-    private Collection<User> groupMembers = new ArrayList<>();
-    private final int groupID;
+    private String groupname;
+    private Collection<User> groupmembers = new ArrayList<User>();
+    private static int groupdID = 1;
 
-    @JsonCreator
-    public Group(@JsonProperty("groupName") String groupName, @JsonProperty("groupID") int groupID) {
-        setGroupName(groupName);
-        this.groupID = groupID;
+    public Group(String groupname) {
+        //  checkExistingGroupName(groupname);
+        checkGroupName(groupname);
+        this.groupname = groupname;
     }
 
-    public void addUser(User user) {
+    public Group(String groupname, int groupID) {
+        //  checkExistingGroupName(groupname);
+        this.groupname = groupname;
+        setGroupID(groupID);
+
+    }
+
+    private void addUser(User user) {
         checkExistingUser(user);
-        this.groupMembers.add(user);
+        this.groupmembers.add(user);
     }
 
-    public void removeUser(User user) {
-        this.groupMembers.remove(user);
+    private void removeUser(User user) {
+        this.groupmembers.remove(user);
     }
 
     public void setGroupName(String groupName) {
@@ -36,9 +36,9 @@ public class Group implements Iterable<User> {
         this.groupName = groupName;
     }
 
-    private void checkGroupName(String groupName) {
-        if (groupName.trim().length() < 2) {
-            throw new IllegalArgumentException("Group name must have at least 2 characters");
+    private void checkGroupName(String groupname) {
+        if (groupname.length() < 2) {
+            throw new IllegalArgumentException("Grouname length must be atleast 2 lettars");
         }
     }
 
@@ -52,12 +52,12 @@ public class Group implements Iterable<User> {
         return this.groupMembers.size();
     }
 
-    public String getGroupName() {
-        return this.groupName;
+    public int getGroupSize() {
+        return this.groupmembers.size();
     }
 
-    public int getGroupID() {
-        return groupID;
+    public String getGroupname() {
+        return this.groupname;
     }
 
     public User getUser(String username) {
