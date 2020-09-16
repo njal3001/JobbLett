@@ -1,22 +1,42 @@
 package bolett.core;
 
+import bolett.json.JSONDeserialize;
+import bolett.json.JSONSerialize;
+
 public class Main {
     private UserList userList = new UserList();
+    private GroupList groupList = new GroupList();
 
-    /*public static void main(String[] args) {
+
+    public Main() {
+        JSONDeserialize importer = new JSONDeserialize();
+        importer.updateMain(this);
+    }
+
+    public void closeMain() {
+        JSONSerialize serializer = new JSONSerialize(this, "src/main/resources/bolett/json/main.json");
+
+    }
+
+    public GroupList getGroupList() {
+        return groupList;
+    }
+
+    public UserList getUserList() {
+        return userList;
+    }
+
+    @Override
+    public String toString() {
+        return "Main{" +
+                "userList=" + userList +
+                ", groupList=" + groupList +
+                '}';
+    }
+
+    public static void main(String[] args) {
         Main main = new Main();
-        Group gruppe7 = main.getGroup(main.newGroup("Gruppe7"));
+        System.out.println(main);
 
-        main.newUser("haryp", "bestePassord123", "Hary", "Pi");
-        main.newUser("sanketb", "bestePassord123", "Sanket", "Be");
-        main.newUser("kavus", "bestePassord123", "Lol", "Si");
-        main.newUser("lol", "bestePassord123", "Njaal", "Te");
-
-        gruppe7.addUser(main.getUser("haryp"));
-        gruppe7.addUser(main.getUser("sanketb"));
-        gruppe7.addUser(main.getUser("kavus"));
-        gruppe7.addUser(main.getUser("lol"));
-        System.out.println(main.searchUsers("sanket"));
-
-    }*/
+    }
 }

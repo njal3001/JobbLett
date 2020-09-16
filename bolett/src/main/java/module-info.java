@@ -9,4 +9,5 @@ module bolett {
 
 	opens bolett.ui to javafx.fxml;
 	opens bolett.json to com.fasterxml.jackson.databind;
+	opens bolett.core to com.fasterxml.jackson.databind;
 }

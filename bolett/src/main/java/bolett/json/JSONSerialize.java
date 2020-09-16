@@ -6,6 +6,7 @@ import bolett.core.Group;
 import bolett.core.GroupList;
 import bolett.core.Main;
 import bolett.core.UserList;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -22,6 +23,11 @@ public class JSONSerialize {
         try {
             // create object mapper instance
             ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.setVisibility(objectMapper.getSerializationConfig().getDefaultVisibilityChecker()
+                    .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+                    .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                    .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+                    .withCreatorVisibility(JsonAutoDetect.Visibility.ANY));
             // convert map file to JSON
             objectMapper.writeValue(new File(fileLocation), object);
         } catch (Exception ex) {
@@ -29,22 +35,20 @@ public class JSONSerialize {
         }
     }
 
-    public static void main(String[] args) {
-        UserList userList = new UserList();
-        GroupList groupList = new GroupList();
-        Group gruppe7 = groupList.newGroup("Gruppe7");
+/*    public static void main(String[] args) {
+        Main main = new Main();
+        Group gruppe7 = main.getGroupList().newGroup("Gruppe7");
 
-        userList.newUser("haryp", "bestePassord123", "Hary", "Pi");
-        userList.newUser("sanketb", "bestePassord123", "Sanket", "Be");
-        userList.newUser("kavus", "bestePassord123", "Lol", "Si");
-        userList.newUser("lol", "bestePassord123", "Njaal", "Te");
+        main.getUserList().newUser("haryp", "bestePassord123", "Hary", "Pi");
+        main.getUserList().newUser("sanketb", "bestePassord123", "Sanket", "Be");
+        main.getUserList().newUser("kavus", "bestePassord123", "Lol", "Si");
+        main.getUserList().newUser("lol", "bestePassord123", "Njaal", "Te");
 
-        gruppe7.addUser(userList.getUser("haryp"));
-        gruppe7.addUser(userList.getUser("sanketb"));
-        gruppe7.addUser(userList.getUser("kavus"));
-        gruppe7.addUser(userList.getUser("lol"));
+        gruppe7.addUser(main.getUserList().getUser("haryp"));
+        gruppe7.addUser(main.getUserList().getUser("sanketb"));
+        gruppe7.addUser(main.getUserList().getUser("kavus"));
+        gruppe7.addUser(main.getUserList().getUser("lol"));
 
-        new JSONSerialize(userList,"src/main/resources/bolett/json/userList.json").exportJSON();
-        new JSONSerialize(groupList,"src/main/resources/bolett/json/groupList.json").exportJSON();
-    }
+        new JSONSerialize(main,"src/main/resources/bolett/json/main.json").exportJSON();
+    }*/
 }
