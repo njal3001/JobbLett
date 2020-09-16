@@ -2,19 +2,19 @@
 Her har vi alle brukerhistorier som danner utgangspunktet for hvordan vil skal utvikle appen. Det gir oss et konkret
 bilde av hva vi skal utvikle.
 
-<h3>Opprette gruppe for kollektivet (us-1)<h3>
+<h3>Opprette gruppe for teamet mitt (us-1)<h3>
 
-Som bruker av appen ønsker jeg å opprette en gruppe for kollektivet mitt slik at jeg og de andre medlemmene av kollektivet kan bruke appens funksjoner. 
+Som arbeidsgiver ønsker jeg å opprette en gruppe for mitt team slik at jeg får oversikt over mine arbeidstakere.
 
-Man må opprette en bruker for å kunne bruke appen. Brukeren må kunne 
-invitere de andre beboerne til gruppen. De andre medlemmene av kollektivet må da kunne bruke denne invitasjonen til å bli med i gruppen.
+Arbeidsgiver og arbeidstaker må kunne opprette en bruker. Arbeidgiver må også kunne opprette en gruppe for teamet sitt. Arbeidstaker blir med i gruppen ved å
+bruke en gruppekode som de får fra arbeidsgiveren.
 
 **Viktig å kunne se**
-* Navnene til medlemmene i gruppen
-* Gruppens navn
+* Navnene til medlemmene i teamet
+* Navnet på teamet
+* Gruppekoden
 
 **Viktig å kunne gjøre**
 *  Opprette bruker og logge inn på appen
 *  Opprette en gruppe 
-*  Invitere andre til gruppen
-*  Bruke en invitasjon til å bli med i en gruppe
+*  Bli med i en gruppe
