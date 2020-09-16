@@ -7,5 +7,6 @@ module bolett {
     exports bolett.core;
 	exports bolett.json;
 
-	opens bolett to javafx.fxml, com.fasterxml.jackson.databind;
+	opens bolett.ui to javafx.fxml;
+	opens bolett.json to com.fasterxml.jackson.databind;
 }

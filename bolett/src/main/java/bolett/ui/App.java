@@ -1,4 +1,4 @@
-package bolett.core;
+package bolett.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
