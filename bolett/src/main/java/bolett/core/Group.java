@@ -31,6 +31,13 @@ public class Group implements Iterable<User> {
         this.groupMembers.remove(user);
     }
 
+    public User getUser(String username) {
+        return groupMembers.stream()
+                .filter(group -> group.getUserName().equals(username))
+                .findFirst()
+                .orElse(null);
+    }
+
     private void checkExistingUser(User user) {
         if (this.groupMembers.contains(user)) {
             throw new IllegalArgumentException("This user is already in the group");
@@ -65,8 +72,9 @@ public class Group implements Iterable<User> {
     public String toString() {
         StringBuilder members = new StringBuilder();
         for (User user : this) {
-            members.append(user.getGivenName()).append(" ").append(user.getFamilyName()).append(", ");
+            members.append(user.toString()).append(", ");
         }
+        members.setLength(members.length() - 2);
         return this.groupName + ": " + members;
     }
 

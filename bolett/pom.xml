@@ -98,7 +98,7 @@
 			<artifactId>javafx-maven-plugin</artifactId>
 			<version>0.0.4</version>
 			<configuration>
-				<mainClass>simpleex.ui.FxApp</mainClass>
+				<mainClass>bolett.ui.App</mainClass>
 			</configuration>
 
 		</plugin>
