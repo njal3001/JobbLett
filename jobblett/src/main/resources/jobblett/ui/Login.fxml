@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.LogInnController">
+   <children>
+      <Text layoutX="71.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" />
+      <Text layoutX="71.0" layoutY="299.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" wrappingWidth="65.8369140625" />
+      <TextField fx:id="userName" layoutX="151.0" layoutY="240.0" onAction="#logInToUserHome" text="haryp" />
+      <TextField fx:id="password" layoutX="151.0" layoutY="281.0" onAction="#logInToUserHome" text="bestePassord123" />
+      <Button fx:id="login" layoutX="151.0" layoutY="326.0" mnemonicParsing="false" onAction="#logInToUserHome" prefHeight="27.0" prefWidth="60.0" text="Login">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font></Button>
+      <Button fx:id="createAccount" layoutX="126.0" layoutY="373.0" mnemonicParsing="false" onAction="#goToCreateUser" prefHeight="27.0" prefWidth="110.0" text="Create account">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font></Button>
+      <Text fx:id="infoArea" layoutX="61.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" " textAlignment="CENTER" wrappingWidth="240.541015625" />
+   </children>
+</Pane>

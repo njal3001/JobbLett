@@ -4,11 +4,11 @@ module bolett {
 	requires javafx.controls;
     requires com.fasterxml.jackson.databind;
 
-    exports bolett.core;
-	exports bolett.json;
-	exports bolett.ui;
+    exports jobblett.core;
+	exports jobblett.json;
+	exports jobblett.ui;
 
-	opens bolett.ui to javafx.fxml;
-	opens bolett.json to com.fasterxml.jackson.databind;
-	opens bolett.core to com.fasterxml.jackson.databind;
+	opens jobblett.ui to javafx.fxml;
+	opens jobblett.json to com.fasterxml.jackson.databind;
+	opens jobblett.core to com.fasterxml.jackson.databind;
 }
