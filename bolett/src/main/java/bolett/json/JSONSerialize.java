@@ -1,47 +1,54 @@
-/*
 package bolett.json;
 
 import java.io.File;
 
 import bolett.core.Group;
+import bolett.core.GroupList;
 import bolett.core.Main;
+import bolett.core.UserList;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class JSONSerialize {
-    Main main;
+    Object object;
+    String fileLocation;
 
-    public JSONSerialize(Main main) {
-        this.main = main;
+    public JSONSerialize(Object object, String fileLocation) {
+        this.object = object;
+        this.fileLocation = fileLocation;
     }
 
     public void exportJSON() {
         try {
             // create object mapper instance
             ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.setVisibility(objectMapper.getSerializationConfig().getDefaultVisibilityChecker()
+                    .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+                    .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                    .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+                    .withCreatorVisibility(JsonAutoDetect.Visibility.ANY));
             // convert map file to JSON
-            objectMapper.writeValue(new File("src/main/java/bolett/main.json"), main);
+            objectMapper.writeValue(new File(fileLocation), object);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         Main main = new Main();
-        Group gruppe7 = main.getGroup(main.newGroup("Gruppe7"));
+        Group gruppe7 = main.getGroupList().newGroup("Gruppe7");
 
-        main.newUser("haryp", "bestePassord123", "Hary", "Pi");
-        main.newUser("sanketb", "bestePassord123", "Sanket", "Be");
-        main.newUser("kavus", "bestePassord123", "Lol", "Si");
-        main.newUser("lol", "bestePassord123", "Njaal", "Te");
+        main.getUserList().newUser("haryp", "bestePassord123", "Hary", "Pi");
+        main.getUserList().newUser("sanketb", "bestePassord123", "Sanket", "Be");
+        main.getUserList().newUser("kavus", "bestePassord123", "Lol", "Si");
+        main.getUserList().newUser("lol", "bestePassord123", "Njaal", "Te");
 
-        gruppe7.addUser(main.getUser("haryp"));
-        gruppe7.addUser(main.getUser("sanketb"));
-        gruppe7.addUser(main.getUser("kavus"));
-        gruppe7.addUser(main.getUser("lol"));
+        gruppe7.addUser(main.getUserList().getUser("haryp"));
+        gruppe7.addUser(main.getUserList().getUser("sanketb"));
+        gruppe7.addUser(main.getUserList().getUser("kavus"));
+        gruppe7.addUser(main.getUserList().getUser("lol"));
 
-        JSONSerialize exporter = new JSONSerialize(main);
-        exporter.exportJSON();
-    }
+        new JSONSerialize(main,"src/main/resources/bolett/json/main.json").exportJSON();
+    }*/
 }
-*/

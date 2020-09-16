@@ -1,24 +1,46 @@
 package bolett.json;
 
 import bolett.core.Main;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 
 
 public class JSONDeserialize {
     Main main;
+    BufferedReader reader;
+    ObjectMapper objectMapper;
+    String json;
+
+    public JSONDeserialize() {
+
+        {
+            try {
+                reader = new BufferedReader(new FileReader("src/main/resources/bolett/json/main.json"));
+                json = reader.readLine();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        // create object mapper instance
+        objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(objectMapper.getSerializationConfig().getDefaultVisibilityChecker()
+                .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+                .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withCreatorVisibility(JsonAutoDetect.Visibility.ANY));
+    }
 
     public Main importJSON() {
         Main main = null;
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("src/main/java/bolett/main.json"));
-            String json = reader.readLine();
-
-            // create object mapper instance
-            ObjectMapper objectMapper = new ObjectMapper();
-
             // deserialize json string
             main = objectMapper.readValue(json,Main.class);
 
@@ -30,10 +52,12 @@ public class JSONDeserialize {
         return main;
     }
 
-    public static void main(String[] args) {
-        JSONDeserialize importer = new JSONDeserialize();
-        Main main = importer.importJSON();
-        System.out.println(main);
-
+    public void updateMain(Main main) {
+        try {
+            objectMapper.readerForUpdating(main).readValue(json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
+
 }
