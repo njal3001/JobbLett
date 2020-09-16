@@ -1,4 +1,4 @@
-package bolett;
+package bolett.core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,7 +15,6 @@ public class UserTest {
         assertTrue(User.validUsername("njåøl3001"));
         assertTrue(User.validUsername("N2"));
         assertTrue(User.validUsername("Æ+-$3"));
-        assertFalse(User.validUsername("n 2"));
         assertFalse(User.validUsername(" n2"));
         assertFalse(User.validUsername("n"));
     }

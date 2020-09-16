@@ -31,22 +31,9 @@ public class Group {
         this.groupmembers.remove(user);
     }
 
-    private void checkExistingUser(User user) {
-        if (this.groupmembers.contains(user)) {
-            throw new IllegalArgumentException("This user is already in the group");
-        }
-    }
-
-    //Pretending that Collection<Group> groups = new ArrayList<Group>(); exists in main class
-/*   private void checkExistingGroupName(String groupname){
-       if(gr.stream().anyMatch(gorup -> gorup.groupname.equals(groupname))){
-           throw new IllegalArgumentException("Groupname already exists");
-       }
-   }*/
-
-    public void changeGroupName(String groupname) {
-        checkGroupName(groupname);
-        this.groupname = groupname;
+    public void setGroupName(String groupName) {
+        checkGroupName(groupName);
+        this.groupName = groupName;
     }
 
     private void checkGroupName(String groupname) {
@@ -55,8 +42,14 @@ public class Group {
         }
     }
 
-    private void setGroupID(int groupdID) {
-        //Not yet implemented
+    private void checkExistingUser(User user) {
+        if (this.groupMembers.contains(user))
+            throw new IllegalArgumentException("This user is already in the group");
+    }
+
+    @JsonIgnore
+    public int getGroupSize() {
+        return this.groupMembers.size();
     }
 
     public int getGroupSize() {
@@ -67,11 +60,23 @@ public class Group {
         return this.groupname;
     }
 
+    public User getUser(String username) {
+        return groupMembers.stream().filter(user -> user.getUserName().equals(username)).findFirst().orElse(null);
+    }
+
     @Override
     public String toString() {
-        return this.groupname;
+        StringBuilder members = new StringBuilder();
+        for (User user : this) {
+            members.append(user.toString()).append(", ");
+        }
+        members.setLength(members.length() - 2);
+        return this.groupName + ": " + members;
+    }
+
+    @Override
+    public Iterator<User> iterator() {
+        return groupMembers.iterator();
     }
 
 }
-
-
