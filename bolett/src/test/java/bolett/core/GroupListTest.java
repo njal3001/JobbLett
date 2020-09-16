@@ -9,16 +9,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;;
 
 public class GroupListTest {
+    
     private GroupList groupList;
     private Group testGroup;
-    private User testUser1;
 
     @BeforeEach
     public void setUp() {
         groupList = new GroupList();
         testGroup = new Group("test1", 1);
-        testUser1 = new User("test1", "Passord123", "Ole", "Testmannsen");
-        testGroup.addUser(testUser1);
     }
 
     /*
@@ -48,8 +46,8 @@ public class GroupListTest {
         assertEquals(testGroup, groupList.getGroup(testGroup.getGroupID()));
 
 		try {
-			Group group1 = new Group("gruppe1", 1234);
-			Group group2 = new Group("gruppe2", 1234);
+			Group group1 = new Group("g1", 1234);
+			Group group2 = new Group("g2", 1234);
 			groupList.addGroup(group1);
 			groupList.addGroup(group2);
 			fail("Should not be able to create two groups with the same ID!");
