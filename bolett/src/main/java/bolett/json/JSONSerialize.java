@@ -35,8 +35,8 @@ public class JSONSerialize {
         }
     }
 
-/*    public static void main(String[] args) {
-        Main main = new Main();
+    public static void main(String[] args) {
+        Main main = new Main(true);
         Group gruppe7 = main.getGroupList().newGroup("Gruppe7");
 
         main.getUserList().newUser("haryp", "bestePassord123", "Hary", "Pi");
@@ -50,5 +50,5 @@ public class JSONSerialize {
         gruppe7.addUser(main.getUserList().getUser("lol"));
 
         new JSONSerialize(main,"src/main/resources/bolett/json/main.json").exportJSON();
-    }*/
+    }
 }

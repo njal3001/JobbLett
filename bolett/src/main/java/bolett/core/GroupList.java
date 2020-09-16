@@ -44,6 +44,13 @@ public class GroupList implements Iterable<Group> {
         return groups.stream().filter(group -> group.getGroupID() == groupID).findFirst().orElse(null);
     }
 
+    //LagTest
+    public Collection<Group> getGroups(User user){
+        return groups.stream()
+                .filter(group -> group.getUser(user.getUserName())==user)
+                .collect(Collectors.toList());
+    }
+
     public int getGroupSize() {
         return groups.size();
     }

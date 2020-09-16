@@ -6,16 +6,24 @@ import bolett.json.JSONSerialize;
 public class Main {
     private UserList userList = new UserList();
     private GroupList groupList = new GroupList();
-
+    private User loggedIn = null;
+    private Group activeGroup = null;
 
     public Main() {
-        JSONDeserialize importer = new JSONDeserialize();
-        importer.updateMain(this);
+        this(false);
     }
 
-    public void closeMain() {
-        JSONSerialize serializer = new JSONSerialize(this, "src/main/resources/bolett/json/main.json");
 
+    public Main(boolean skipImport) {
+       if (!skipImport) {
+           JSONDeserialize importer = new JSONDeserialize();
+           importer.updateMain(this);
+       }
+    }
+
+    public void serializeMain() {
+        JSONSerialize serializer = new JSONSerialize(this, "src/main/resources/bolett/json/main.json");
+        serializer.exportJSON();
     }
 
     public GroupList getGroupList() {
@@ -38,5 +46,27 @@ public class Main {
         Main main = new Main();
         System.out.println(main);
 
+    }
+
+    public void logIn(User loggedIn) {
+        this.loggedIn = loggedIn;
+        serializeMain();
+    }
+
+    public void logOut() {
+        logIn(null);
+    }
+
+    public User getLoggedIn() {
+        return loggedIn;
+    }
+
+    public Group getActiveGroup() {
+        return activeGroup;
+    }
+
+    public void setActiveGroup(Group activeGroup) {
+        this.activeGroup = activeGroup;
+        serializeMain();
     }
 }

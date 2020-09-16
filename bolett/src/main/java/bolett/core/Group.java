@@ -1,15 +1,13 @@
 package bolett.core;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.*;
 
+import java.io.PushbackReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-@JsonRootName(value = "Group")
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property = "groupID")
 public class Group implements Iterable<User> {
 
     private String groupName;
@@ -82,5 +80,4 @@ public class Group implements Iterable<User> {
     public Iterator<User> iterator() {
         return groupMembers.iterator();
     }
-
 }

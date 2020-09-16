@@ -48,8 +48,10 @@ public class UserList implements Iterable<User> {
                 .collect(Collectors.toList());
     }
 
-    public void newUser(String username, String password, String givenName, String familyName) {
-        addUser(new User(username,password,givenName,familyName));
+    public User newUser(String username, String password, String givenName, String familyName) {
+        User user = new User(username,password,givenName,familyName);
+        addUser(user);
+        return user;
     }
 
     public void addUser(User... users) {
@@ -58,6 +60,13 @@ public class UserList implements Iterable<User> {
         }
 
         this.users.addAll(Arrays.asList(users));
+    }
+
+    public User login(String username, String password) {
+        User user = getUser(username);
+        if (user == null) return null;
+        if (! user.getPassword().equals(password)) return null;
+        else return user;
     }
 
     @Override

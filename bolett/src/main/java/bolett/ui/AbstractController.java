@@ -1,5 +1,8 @@
 package bolett.ui;
 
+import bolett.core.Group;
+import bolett.core.Main;
+import bolett.core.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,48 +18,16 @@ import java.util.EventListener;
 import java.util.ResourceBundle;
 
 public abstract class AbstractController {
-    
-/*
-    @FXML
-    Button createAccount;
+    protected Main main = new Main();
+    protected User activeUser = main.getLoggedIn();
+    protected Group activeGroup = main.getActiveGroup();
 
-    @FXML
-    Button createAccount2;
-
-    @FXML
-    Button LogInn;*/
-
-
-    public void changeScreen(String URLName, Button button) throws IOException {
+    protected void changeScreen(String URLName, Node button) throws IOException {
         Stage stage = (Stage) button.getScene().getWindow();
         Parent root=FXMLLoader.load(getClass().getResource(URLName));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
-
-   /* @FXML
-    public void LogInToCreatAccount() throws IOException {
-        changeScreen("ui/CreateUser.fxml", createAccount);
-    }
-
-    @FXML
-    public void CreateAccountToWelcome() throws IOException {
-        changeScreen("ui/Welcome.fxml", createAccount2);
-    }
-
-*/
-
-
- /*  @FXML
-    public void changeScreenButtonPushed(ActionEvent event) throws IOException {
-       Stage stage = (Stage) createAccount.getScene().getWindow();
-       Parent root=FXMLLoader.load(getClass().getResource("ui/CreateUser.fxml"));
-       Scene scene = new Scene(root);
-       stage.setScene(scene);
-       stage.show();
-    }*/
-
-
 
 }
