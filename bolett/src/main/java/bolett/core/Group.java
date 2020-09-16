@@ -1,34 +1,40 @@
 package bolett.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
-public class Group {
+@JsonRootName(value = "Group")
+public class Group implements Iterable<User> {
 
-    private String groupname;
-    private Collection<User> groupmembers = new ArrayList<User>();
-    private static int groupdID = 1;
+    private String groupName;
+    private Collection<User> groupMembers = new ArrayList<>();
+    private final int groupID;
 
-    public Group(String groupname) {
-        //  checkExistingGroupName(groupname);
-        checkGroupName(groupname);
-        this.groupname = groupname;
+    @JsonCreator
+    public Group(@JsonProperty("groupName") String groupName, @JsonProperty("groupID") int groupID) {
+        setGroupName(groupName);
+        this.groupID = groupID;
     }
 
-    public Group(String groupname, int groupID) {
-        //  checkExistingGroupName(groupname);
-        this.groupname = groupname;
-        setGroupID(groupID);
-
-    }
-
-    private void addUser(User user) {
+    public void addUser(User user) {
         checkExistingUser(user);
-        this.groupmembers.add(user);
+        this.groupMembers.add(user);
     }
 
-    private void removeUser(User user) {
-        this.groupmembers.remove(user);
+    public void removeUser(User user) {
+        this.groupMembers.remove(user);
+    }
+
+    private void checkExistingUser(User user) {
+        if (this.groupMembers.contains(user)) {
+            throw new IllegalArgumentException("This user is already in the group");
+        }
     }
 
     public void setGroupName(String groupName) {
@@ -36,15 +42,10 @@ public class Group {
         this.groupName = groupName;
     }
 
-    private void checkGroupName(String groupname) {
-        if (groupname.length() < 2) {
-            throw new IllegalArgumentException("Grouname length must be atleast 2 lettars");
+    private void checkGroupName(String groupName) {
+        if (groupName.trim().length() < 2) {
+            throw new IllegalArgumentException("Group name must have at least 2 characters");
         }
-    }
-
-    private void checkExistingUser(User user) {
-        if (this.groupMembers.contains(user))
-            throw new IllegalArgumentException("This user is already in the group");
     }
 
     @JsonIgnore
@@ -52,25 +53,20 @@ public class Group {
         return this.groupMembers.size();
     }
 
-    public int getGroupSize() {
-        return this.groupmembers.size();
+    public String getGroupName() {
+        return this.groupName;
     }
 
-    public String getGroupname() {
-        return this.groupname;
-    }
-
-    public User getUser(String username) {
-        return groupMembers.stream().filter(user -> user.getUserName().equals(username)).findFirst().orElse(null);
+    public int getGroupID() {
+        return groupID;
     }
 
     @Override
     public String toString() {
         StringBuilder members = new StringBuilder();
         for (User user : this) {
-            members.append(user.toString()).append(", ");
+            members.append(user.getGivenName()).append(" ").append(user.getFamilyName()).append(", ");
         }
-        members.setLength(members.length() - 2);
         return this.groupName + ": " + members;
     }
 
