@@ -11,7 +11,7 @@ public class GroupList implements Iterable<Group> {
     private Collection<Group> groups = new ArrayList<Group>();
 
     // Generates a unique groupID with 4 digits.
-    public int generateGroupId() {
+    private int generateGroupId() {
         Collection<Integer> alreadyUsed = getGroupIds();
         if (alreadyUsed.size() >= 9000)
             throw new IllegalStateException("All Ids are taken");
@@ -34,6 +34,10 @@ public class GroupList implements Iterable<Group> {
         if(getGroupIds().contains(group.getGroupID()))
             throw new IllegalArgumentException("Group ID is already taken");
         groups.add(group);
+    }
+
+    public void removeGroup(Group group) {
+        groups.remove(group);
     }
 
     public Group getGroup(int groupID) {

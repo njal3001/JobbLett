@@ -95,7 +95,7 @@ public class User{
     
     @Override
 	public String toString(){
-        return givenName + " " + familyName + " (@" + userName + ")"+" ["+password+"]";
+        return givenName + " " + familyName + " (@" + userName + ")";
     }
 
 }

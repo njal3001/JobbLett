@@ -31,12 +31,6 @@ public class Group implements Iterable<User> {
         this.groupMembers.remove(user);
     }
 
-    private void checkExistingUser(User user) {
-        if (this.groupMembers.contains(user)) {
-            throw new IllegalArgumentException("This user is already in the group");
-        }
-    }
-
     public void setGroupName(String groupName) {
         checkGroupName(groupName);
         this.groupName = groupName;
@@ -46,6 +40,11 @@ public class Group implements Iterable<User> {
         if (groupName.trim().length() < 2) {
             throw new IllegalArgumentException("Group name must have at least 2 characters");
         }
+    }
+
+    private void checkExistingUser(User user) {
+        if (this.groupMembers.contains(user))
+            throw new IllegalArgumentException("This user is already in the group");
     }
 
     @JsonIgnore
@@ -61,12 +60,17 @@ public class Group implements Iterable<User> {
         return groupID;
     }
 
+    public User getUser(String username) {
+        return groupMembers.stream().filter(user -> user.getUserName().equals(username)).findFirst().orElse(null);
+    }
+
     @Override
     public String toString() {
         StringBuilder members = new StringBuilder();
         for (User user : this) {
-            members.append(user.getGivenName()).append(" ").append(user.getFamilyName()).append(", ");
+            members.append(user.toString()).append(", ");
         }
+        members.setLength(members.length() - 2);
         return this.groupName + ": " + members;
     }
 
@@ -76,5 +80,3 @@ public class Group implements Iterable<User> {
     }
 
 }
-
-
