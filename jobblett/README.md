@@ -13,7 +13,8 @@ Deretter tildeler arbeidsgiveren skift til arbeidstakerne og hele gruppen får e
 Under vises et bilde av appens hovedside. Her ser man navnet på teamet og en oversikt over alle medlemmene i teamet. 
 Her er det planlagt at man vil få en oversikt over teamets jobbskift når appen er ferdig utviklet. 
 
-![](/pictures/prosjekt_skjermbilde.png)
+![](jobblett/pictures/prosjekt_skjermbilde.png)
+
 
 
 
