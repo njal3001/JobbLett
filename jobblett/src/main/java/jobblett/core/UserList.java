@@ -9,23 +9,25 @@ import java.util.stream.Collectors;
 public class UserList implements Iterable<User> {
     private Collection<User> users = new ArrayList<User>();
 
-    // Used by JSON Deserialization
-    public void setUsers(Collection<User> users) {
-        this.users = users;
-    }
 
-    // Used by JSON Serialization
-    public Collection<User> getUsers() {
-        return users.stream().collect(Collectors.toList());
-    }
-
+    /**
+     * Checks whether if it exist a user with the given username.
+     * @param username
+     * @return the user if it exist, else null
+     */
     public User getUser(String username) {
         return users.stream()
                 .filter(a -> a.getUserName().equals(username))
                 .findAny()
                 .orElse(null);
     }
-
+    
+    /**
+     * Searches for other users.
+     * Searches in all users' username, givenname and familyname.
+     * @param searchQuery
+     * @return A collections with all the matching users.
+     */
     public Collection<User> searchUsers(String searchQuery) {
         Collection<User> matchedUsernames = users.stream()
                 .filter(a -> a.getUserName().toLowerCase().contains(searchQuery.toLowerCase()))
@@ -47,13 +49,27 @@ public class UserList implements Iterable<User> {
                 .distinct()
                 .collect(Collectors.toList());
     }
-
+    
+    /**
+     * Creates a new user.
+     * Adds the user to the collections of all the Users
+     * @param username
+     * @param password
+     * @param givenName
+     * @param familyName
+     * @return the created user
+     */
     public User newUser(String username, String password, String givenName, String familyName) {
         User user = new User(username,password,givenName,familyName);
         addUser(user);
         return user;
     }
-
+    
+    /**
+     * Optional method for adding several users into the collection of all users at once.
+     * This method has not been used yet, but can be useful in the future.
+     * @param users
+     */
     public void addUser(User... users) {
         for (User user : users) {
             if (getUser(user.getUserName())!=null) throw new IllegalArgumentException("User with the same username already exist.");
@@ -62,6 +78,13 @@ public class UserList implements Iterable<User> {
         this.users.addAll(Arrays.asList(users));
     }
 
+    /**
+     * Lets the user log into their account
+     * Checks whether the username and password matches an existing user, before logging in
+     * @param username
+     * @param password
+     * @return the user if logged in, else null
+     */
     public User login(String username, String password) {
         User user = getUser(username);
         if (user == null) return null;
