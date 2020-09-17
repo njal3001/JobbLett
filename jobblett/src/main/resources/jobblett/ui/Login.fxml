@@ -20,12 +20,11 @@
          <font>
             <Font name="Arial" size="13.0" />
          </font></Button>
-      <Text fx:id="infoArea" layoutX="61.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" " textAlignment="CENTER" wrappingWidth="240.541015625" />
       <PasswordField fx:id="passwordField" layoutX="151.0" layoutY="281.0" onAction="#logInToUserHome" prefHeight="27.0" prefWidth="160.0" text="bestePassord123">
          <font>
             <Font size="9.0" />
          </font>
       </PasswordField>
-      <Text fx:id="errorMessage" layoutX="151.0" layoutY="481.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="errorMessage" layoutX="91.0" layoutY="497.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="160.0" />
    </children>
 </Pane>
