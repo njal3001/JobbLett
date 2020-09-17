@@ -5,29 +5,29 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 public class JSONDeserialize {
     Main main;
-    BufferedReader reader;
     ObjectMapper objectMapper;
     String json;
+    Reader reader;
 
     public JSONDeserialize() {
-
-        {
-            try {
-                reader = new BufferedReader(new FileReader("jobblett/src/main/resources/jobblett/json/main.json"));
-                json = reader.readLine();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        File f = new File(System.getProperty("user.home")+"/.jobblett");
+        //noinspection ResultOfMethodCallIgnored
+        f.mkdir();
+        try {
+            Path path = Paths.get(System.getProperty("user.home")+"/.jobblett","main.json");
+            reader = new FileReader(path.toFile());
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            useDefaultValues();
         }
         // create object mapper instance
         objectMapper = new ObjectMapper();
@@ -38,15 +38,23 @@ public class JSONDeserialize {
                 .withCreatorVisibility(JsonAutoDetect.Visibility.ANY));
     }
 
+    private void useDefaultValues() {
+        URL url = getClass().getResource("defaultMain.json");
+        try {
+            this.reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Main importJSON() {
         Main main = null;
         try {
             // deserialize json string
-            main = objectMapper.readValue(json,Main.class);
+            main = objectMapper.readValue(reader,Main.class);
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            System.out.println(ex);
         }
 
         return main;
@@ -54,10 +62,14 @@ public class JSONDeserialize {
 
     public void updateMain(Main main) {
         try {
-            objectMapper.readerForUpdating(main).readValue(json);
-        } catch (JsonProcessingException e) {
+            objectMapper.readerForUpdating(main).readValue(reader,Main.class);
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        new JSONDeserialize();
     }
 
 }

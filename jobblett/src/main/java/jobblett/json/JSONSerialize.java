@@ -1,6 +1,7 @@
 package jobblett.json;
 
 import java.io.File;
+import java.net.URL;
 
 import jobblett.core.Group;
 import jobblett.core.Main;
@@ -12,9 +13,9 @@ public class JSONSerialize {
     Object object;
     String fileLocation;
 
-    public JSONSerialize(Object object, String fileLocation) {
+    public JSONSerialize(Object object, String file) {
         this.object = object;
-        this.fileLocation = fileLocation;
+        this.fileLocation = System.getProperty("user.home")+"/.jobblett/"+file;
     }
 
     public void exportJSON() {
@@ -33,20 +34,20 @@ public class JSONSerialize {
         }
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Main main = new Main(true);
         Group gruppe7 = main.getGroupList().newGroup("Gruppe7");
 
-        main.getUserList().newUser("haryp", "bestePassord123", "Hary", "Pi");
-        main.getUserList().newUser("sanketb", "bestePassord123", "Sanket", "Be");
-        main.getUserList().newUser("kavus", "bestePassord123", "Lol", "Si");
-        main.getUserList().newUser("lol", "bestePassord123", "Njaal", "Te");
+        main.getUserList().newUser("olav", "bestePassord123", "Olav", "Nordmann");
+        main.getUserList().newUser("nora", "bestePassord123", "Nora", "Bekkestad");
+        main.getUserList().newUser("petter", "bestePassord123", "Petter", "Petterson");
+        main.getUserList().newUser("david", "bestePassord123", "David", "Berg");
 
-        gruppe7.addUser(main.getUserList().getUser("haryp"));
-        gruppe7.addUser(main.getUserList().getUser("sanketb"));
-        gruppe7.addUser(main.getUserList().getUser("kavus"));
-        gruppe7.addUser(main.getUserList().getUser("lol"));
+        gruppe7.addUser(main.getUserList().getUser("olav"));
+        gruppe7.addUser(main.getUserList().getUser("nora"));
+        gruppe7.addUser(main.getUserList().getUser("petter"));
+        gruppe7.addUser(main.getUserList().getUser("david"));
 
-        new JSONSerialize(main,"jobblett/src/main/resources/jobblett/json/main.json").exportJSON();
-    }
+        new JSONSerialize(main,"main.json").exportJSON();
+    }*/
 }
