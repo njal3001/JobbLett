@@ -22,7 +22,7 @@ public class Main {
     }
 
     public void serializeMain() {
-        JSONSerialize serializer = new JSONSerialize(this, "src/main/resources/jobblett/json/main.json");
+        JSONSerialize serializer = new JSONSerialize(this, "jobblett/src/main/resources/jobblett/json/main.json");
         serializer.exportJSON();
     }
 

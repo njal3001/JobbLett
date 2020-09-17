@@ -47,6 +47,6 @@ public class JSONSerialize {
         gruppe7.addUser(main.getUserList().getUser("kavus"));
         gruppe7.addUser(main.getUserList().getUser("lol"));
 
-        new JSONSerialize(main,"src/main/resources/jobblett/json/main.json").exportJSON();
+        new JSONSerialize(main,"jobblett/src/main/resources/jobblett/json/main.json").exportJSON();
     }
 }

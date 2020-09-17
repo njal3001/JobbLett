@@ -21,7 +21,7 @@ public class JSONDeserialize {
 
         {
             try {
-                reader = new BufferedReader(new FileReader("src/main/resources/jobblett/json/main.json"));
+                reader = new BufferedReader(new FileReader("jobblett/src/main/resources/jobblett/json/main.json"));
                 json = reader.readLine();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
