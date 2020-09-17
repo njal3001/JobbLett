@@ -11,13 +11,19 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
+/**
+ * Used to deserialize main.json to Main.class from the systems user-folder.
+ * Imports the data-file from $USER_HOME/.jobblett/main.json
+ */
 public class JSONDeserialize {
     Main main;
     ObjectMapper objectMapper;
     String json;
     Reader reader;
 
+    /**
+     * Initializes a JSONDeserialize-instance and reads main.json.
+     */
     public JSONDeserialize() {
         File f = new File(System.getProperty("user.home")+"/.jobblett");
         //noinspection ResultOfMethodCallIgnored
@@ -47,6 +53,11 @@ public class JSONDeserialize {
         }
     }
 
+    /**
+     * Imports main.json and returns a new Main.class instance with tha data.
+     *
+     * @return Main.class object
+     */
     public Main importJSON() {
         Main main = null;
         try {
@@ -60,6 +71,11 @@ public class JSONDeserialize {
         return main;
     }
 
+    /**
+     * Updates an existing Main.class instance with data from main.json
+     *
+     * @param main the existing Main.class instance
+     */
     public void updateMain(Main main) {
         try {
             objectMapper.readerForUpdating(main).readValue(reader,Main.class);
