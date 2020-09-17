@@ -7,16 +7,28 @@ import jobblett.core.Main;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
+/**
+ * Used to serialize Main.class to main.json in the systems user-folder.
+ * Saves the data-file in $USER_HOME/.jobblett/main.json
+ */
 public class JSONSerialize {
     Object object;
     String fileLocation;
 
+    /**
+     * Initializes a new instance of JSONSerialize and locates the file to serialize to.
+     *
+     * @param object the object that should be serialized
+     * @param fileLocation the location of the file to write to (relative to jobblett's appdata-folder)
+     */
     public JSONSerialize(Object object, String fileLocation) {
         this.object = object;
         this.fileLocation = fileLocation;
     }
 
+    /**
+     * Serializes the object.
+     */
     public void exportJSON() {
         try {
             // create object mapper instance
