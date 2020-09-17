@@ -1,13 +1,13 @@
 package jobblett.ui;
 
-import javafx.scene.control.PasswordField;
-import jobblett.core.User;
+import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-
-import java.io.IOException;
+import jobblett.core.User;
 
 public class LogInnController extends AbstractController {
 
@@ -21,9 +21,6 @@ public class LogInnController extends AbstractController {
     TextField userName;
 
     @FXML
-    Text infoArea;
-
-    @FXML
     Text errorMessage;
 
     @FXML
@@ -31,32 +28,24 @@ public class LogInnController extends AbstractController {
 
     @FXML
     public void initialize(){
-        errorMessage.setVisible(false);
+        //errorMessage.setVisible(false);
     }
     @FXML
     public void goToCreateUser() throws IOException {
         changeScreen("CreateUser.fxml", createAccount);
     }
 
-    @FXML
-    public void logInToUserHome(){
+   @FXML
+    public void logInToUserHome() throws IOException{
         String userName = this.userName.getText();
         String password = this.passwordField.getText();
         User user = main.getUserList().login(userName, password);
-        if (user == null) infoArea.setText("Wrong username or password");
+        if (user == null) errorMessage.setText("Wrong username or password");
         else {
-
-            try {
-                main.logIn(user);
-                errorMessage.setVisible(false);
-                changeScreen("UserHome.fxml", login);
-            } catch (IOException e) {
-                e.printStackTrace();
-                errorMessage.setVisible(true);
-                errorMessage.setText("Wrong username or password");
-            }
+        	main.logIn(user);
+            changeScreen("UserHome.fxml", login);
+        	}
         }
-    }
 
 
 }
