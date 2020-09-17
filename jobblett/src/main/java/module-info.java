@@ -1,4 +1,4 @@
-module bolett {
+module jobblett {
 	requires javafx.fxml;
 	requires transitive javafx.graphics;
 	requires javafx.controls;
