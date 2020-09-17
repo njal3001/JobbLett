@@ -32,7 +32,7 @@ public class Main {
      * Saves data to main.json
      */
     public void serializeMain() {
-        JSONSerialize serializer = new JSONSerialize(this, "src/main/resources/jobblett/json/main.json");
+        JSONSerialize serializer = new JSONSerialize(this, "main.json");
         serializer.exportJSON();
     }
     
