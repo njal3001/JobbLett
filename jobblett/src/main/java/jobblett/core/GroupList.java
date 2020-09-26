@@ -51,10 +51,10 @@ public class GroupList implements Iterable<Group> {
      * @param group the group to be added
      * @throws IllegalArgumentException if groupID is already taken
      */
-    public void addGroup(Group group) throws IllegalArgumentException{
+    public boolean addGroup(Group group) throws IllegalArgumentException{
         if(getGroupIds().contains(group.getGroupID()))
             throw new IllegalArgumentException("Group ID is already taken");
-        groups.add(group);
+        return groups.add(group);
     }
 
     /**
