@@ -33,5 +33,13 @@ public class JobShift {
         return info;
     }
 
-
+    @Override
+    public String toString() {
+        return "JobShift{" +
+                "user=" + user +
+                ", startingTime=" + startingTime +
+                ", duration=" + duration +
+                ", info='" + info + '\'' +
+                '}';
+    }
 }
