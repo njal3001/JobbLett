@@ -1,8 +1,10 @@
 package jobblett.core;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jobblett.json.JSONDeserialize;
 import jobblett.json.JSONSerialize;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Main {
     private UserList userList = new UserList();
     private GroupList groupList = new GroupList();

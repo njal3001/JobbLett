@@ -1,5 +1,7 @@
 package jobblett.core;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.stream.Collectors;
 /**
  * Handles all of the JobShifts created.
  */
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class JobShiftList implements Iterable<JobShift> {
     Collection<JobShift> jobShifts = new ArrayList<>();
 

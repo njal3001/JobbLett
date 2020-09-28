@@ -10,6 +10,7 @@ import java.util.Iterator;
  * Represents a group in jobblett.
  */
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property = "groupID")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Group implements Iterable<User> {
 
     private String groupName;
