@@ -40,6 +40,7 @@ public class User{
     /**
      * Only for testing purpose.
      * Should be removed or made private before finish.
+     * Use matchesPassword(String password) instead.
      *  
      * @return
      * @deprecated Prevent using this method 

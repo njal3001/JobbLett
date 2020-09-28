@@ -88,7 +88,7 @@ public class UserList implements Iterable<User> {
     public User login(String username, String password) {
         User user = getUser(username);
         if (user == null) return null;
-        if (! user.getPassword().equals(password)) return null;
+        if (! user.matchesPassword(password)) return null;
         else return user;
     }
 
