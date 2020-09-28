@@ -1,15 +1,18 @@
 package jobblett.core;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jobblett.json.JSONDeserialize;
 import jobblett.json.JSONSerialize;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Main {
     private UserList userList = new UserList();
     private GroupList groupList = new GroupList();
+    private JobShiftList jobShiftList = new JobShiftList();
     private User loggedIn = null;
     private Group activeGroup = null;
 
-    
+
     /**
      * Initializes a new instance of Main
      * @param skipImport is used to easily create and update defaultMain.json (Only used by developers!)
@@ -45,6 +48,10 @@ public class Main {
         return userList;
     }
 
+    public JobShiftList getJobShiftList() {
+        return jobShiftList;
+    }
+
     @Override
     public String toString() {
         return "Main{" +
@@ -57,9 +64,9 @@ public class Main {
     /**
      * Changes the instance to logged in.
      * Saves it to main.json that the user is logged in.
-     * Is used by app controllers
+     * Is used by app controllers.
      * 
-     * @param loggedIn
+     * @param loggedIn the User that should be logged in
      */
     public void logIn(User loggedIn) {
         this.loggedIn = loggedIn;
@@ -77,7 +84,7 @@ public class Main {
      * Gets the user which is currently logged in.
      * Is used by app controllers.
      * 
-     * @return
+     * @return the logged in User
      */
     public User getLoggedIn() {
         return loggedIn;
@@ -87,7 +94,7 @@ public class Main {
      * Gets the group which is currently opened in the app.
      * Is used by app controllers.
      * 
-     * @return
+     * @return the active Group
      */
     public Group getActiveGroup() {
         return activeGroup;
@@ -98,7 +105,7 @@ public class Main {
      * Used by app controllers.
      * Saves which group is open to main.json.
      * 
-     * @param activeGroup
+     * @param activeGroup the Group that should be set as active
      */
     public void setActiveGroup(Group activeGroup) {
         this.activeGroup = activeGroup;

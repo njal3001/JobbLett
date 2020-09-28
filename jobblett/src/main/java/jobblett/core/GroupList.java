@@ -1,5 +1,7 @@
 package jobblett.core;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -9,6 +11,7 @@ import java.util.stream.Collectors;
 /**
  * Handles all of the groups in the "database".
  */
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class GroupList implements Iterable<Group> {
 
     private Collection<Group> groups = new ArrayList<>();
@@ -51,10 +54,10 @@ public class GroupList implements Iterable<Group> {
      * @param group the group to be added
      * @throws IllegalArgumentException if groupID is already taken
      */
-    public void addGroup(Group group) throws IllegalArgumentException{
+    public boolean addGroup(Group group) throws IllegalArgumentException{
         if(getGroupIds().contains(group.getGroupID()))
             throw new IllegalArgumentException("Group ID is already taken");
-        groups.add(group);
+        return groups.add(group);
     }
 
     /**

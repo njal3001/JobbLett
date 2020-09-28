@@ -1,8 +1,14 @@
 package jobblett.core;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.ANY, setterVisibility = JsonAutoDetect.Visibility.ANY)
 public class JobShift implements Comparable<JobShift>{
 
     private User user;
@@ -10,21 +16,25 @@ public class JobShift implements Comparable<JobShift>{
     private Duration duration;
     private String info;
 
-    public JobShift(User user, LocalDateTime startingTime, Duration duration, String info){
+    @JsonCreator
+    public JobShift(@JsonProperty("user") User user, @JsonProperty("startingTime") LocalDateTime startingTime, @JsonProperty("duration") Duration duration, @JsonProperty("info") String info){
         setUser(user);
         setStartingTime(startingTime);
         setDuration(duration);
         setInfo(info);
     }
-
+    
+    @JsonGetter
     public User getUser(){
         return user;
     }
 
+    @JsonGetter
     public LocalDateTime getStartingTime(){
         return startingTime;
     }
 
+    @JsonGetter
     public Duration getDuration(){
         return duration;
     }
@@ -33,6 +43,7 @@ public class JobShift implements Comparable<JobShift>{
         return startingTime.plus(duration);
     }
 
+    @JsonGetter
     public String getInfo(){
         return info;
     }
@@ -66,5 +77,15 @@ public class JobShift implements Comparable<JobShift>{
             return -1;
         else
             return 0;
+    }
+    
+    @Override
+    public String toString() {
+        return "JobShift{" +
+                "user=" + user +
+                ", startingTime=" + startingTime +
+                ", duration=" + duration +
+                ", info='" + info + '\'' +
+                '}';
     }
 }

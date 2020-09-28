@@ -5,8 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+/**
+ * Data object representing a User in real life.
+ */
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property = "userName")
-public class User{
+public class User {
     // username is final after being initialized
     private final String userName;
 
@@ -69,7 +72,6 @@ public class User{
      * Username criteria:
      * 	- No whitespace
      *  - At least 2 characters
-     * @param username
      * @return true if the criteria are fulfilled, else false
      */
     public static boolean validUsername(String userName){
