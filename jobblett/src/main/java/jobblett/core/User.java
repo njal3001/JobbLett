@@ -1,10 +1,11 @@
 package jobblett.core;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
+import com.google.common.hash.Hashing;
 
+import java.nio.charset.StandardCharsets;
+
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property = "userName")
 public class User{
     // username is final after being initialized
@@ -14,7 +15,14 @@ public class User{
     private String password;
     private String givenName;
     private String familyName;
-    
+
+    @JsonCreator
+    public User(
+            @JsonProperty("userName") String userName
+    ){
+        this.userName = userName;
+    }
+
     /**
      * Checks if the parameters are valid before creating instance a User.
      * Allows JSON to create empty Users.
@@ -24,18 +32,18 @@ public class User{
      * @param givenName
      * @param familyName
      */
-    @JsonCreator
     public User(
-            @JsonProperty("userName") String userName,
-            @JsonProperty("password") String password,
-            @JsonProperty("givenName") String givenName,
-            @JsonProperty("familyName") String familyName
+            String userName,
+            String password,
+            String givenName,
+            String familyName
     ){
         if (userName != null) if(!validUsername(userName)) throw new IllegalArgumentException("Not a valid userName");
         this.userName = userName;
         setPassword(password);
         setName(givenName, familyName);
     }
+
 
     /**
      * Only for testing purpose.
@@ -101,8 +109,12 @@ public class User{
      * @throws IllegalArgumentException
      */
     public void setPassword(String password) throws IllegalArgumentException{
-        if(validPassword(password))
-            this.password = password;
+        if(validPassword(password)){
+            String hashedPassword = Hashing.sha256()
+                    .hashString(password, StandardCharsets.UTF_8)
+                    .toString();
+            this.password = hashedPassword;
+        }
         else
             throw new IllegalArgumentException("Not a valid password"); 
     }
@@ -165,7 +177,10 @@ public class User{
      * @return true if the password matches, else false
      */
     public boolean matchesPassword(String password){
-        return this.password.matches(password);
+        String hashedPassword = Hashing.sha256()
+                .hashString(password, StandardCharsets.UTF_8)
+                .toString();
+        return this.password.matches(hashedPassword);
     }
     
     @Override
