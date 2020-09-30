@@ -1,64 +1,48 @@
 {
-  "userList": {
-    "users": [
-      {
-        "userName": "olav",
-        "password": "bestePassord123",
-        "givenName": "Olav",
-        "familyName": "Nordmann"
-      },
-      {
-        "userName": "nora",
-        "password": "bestePassord123",
-        "givenName": "Nora",
-        "familyName": "Bekkestad"
-      },
-      {
-        "userName": "petter",
-        "password": "bestePassord123",
-        "givenName": "Petter",
-        "familyName": "Petterson"
-      },
-      {
-        "userName": "david",
-        "password": "bestePassord123",
-        "givenName": "David",
-        "familyName": "Berg"
-      }
-    ]
+  "userList" : {
+    "users" : [ {
+      "type" : "jobblett.core.Employee",
+      "userName" : "olav",
+      "password" : "bestePassord123",
+      "givenName" : "Olav",
+      "familyName" : "Nordmann"
+    }, {
+      "type" : "jobblett.core.Employee",
+      "userName" : "nora",
+      "password" : "bestePassord123",
+      "givenName" : "Nora",
+      "familyName" : "Bekkestad"
+    }, {
+      "type" : "jobblett.core.Employee",
+      "userName" : "petter",
+      "password" : "bestePassord123",
+      "givenName" : "Petter",
+      "familyName" : "Petterson"
+    }, {
+      "type" : "jobblett.core.Employee",
+      "userName" : "david",
+      "password" : "bestePassord123",
+      "givenName" : "David",
+      "familyName" : "Berg"
+    } ]
   },
-  "groupList": {
-    "groups": [
-      {
-        "groupID": 1539,
-        "groupName": "Gruppe7",
-        "groupMembers": [
-          "olav",
-          "nora",
-          "petter",
-          "david"
-        ]
+  "groupList" : {
+    "groups" : [ {
+      "groupID" : 3899,
+      "groupName" : "Gruppe7",
+      "groupMembers" : [ "olav", "nora", "petter", "david" ],
+      "employees" : [ ],
+      "administrators" : [ ],
+      "jobShifts" : {
+        "jobShifts" : [ {
+          "user" : "nora",
+          "startingTime" : [ 2020, 9, 30, 14, 33, 6, 527002000 ],
+          "duration" : 7200.000000000,
+          "info" : "Dette er Olav sin skift."
+        } ]
       }
-    ]
+    } ]
   },
-  "jobShiftList": {
-    "jobShifts": [
-      {
-        "user": "nora",
-        "startingTime": [
-          2020,
-          9,
-          28,
-          15,
-          9,
-          50,
-          733766200
-        ],
-        "duration": 7200.000000000,
-        "info": "Dette er Olav sin skift."
-      }
-    ]
-  },
-  "loggedIn": null,
-  "activeGroup": null
+  "loggedIn" : null,
+  "activeGroup" : null
 }

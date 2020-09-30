@@ -1,17 +1,17 @@
 package jobblett.json;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import jobblett.core.Employee;
+import jobblett.core.Group;
+import jobblett.core.JobShift;
+import jobblett.core.Main;
+
 import java.io.File;
-import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import jobblett.core.Group;
-import jobblett.core.Main;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jobblett.core.User;
 
 /**
  * Used to serialize Main.class to main.json in the systems user-folder.
@@ -40,7 +40,7 @@ public class JSONSerialize {
             // create object mapper instance
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.registerModule(new JavaTimeModule());
-
+            objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
             // convert map file to JSON
             objectMapper.writeValue(new File(fileLocation), object);
         } catch (Exception ex) {
@@ -52,17 +52,17 @@ public class JSONSerialize {
         Main main = new Main(true);
         Group gruppe7 = main.getGroupList().newGroup("Gruppe7");
 
-        User olav = main.getUserList().newUser("olav", "bestePassord123", "Olav", "Nordmann");
-        User nora = main.getUserList().newUser("nora", "bestePassord123", "Nora", "Bekkestad");
-        User petter = main.getUserList().newUser("petter", "bestePassord123", "Petter", "Petterson");
-        User david = main.getUserList().newUser("david", "bestePassord123", "David", "Berg");
+        main.getUserList().addUser(new Employee("olav", "bestePassord123", "Olav", "Nordmann"));
+        main.getUserList().addUser(new Employee("nora", "bestePassord123", "Nora", "Bekkestad"));
+        main.getUserList().addUser(new Employee("petter", "bestePassord123", "Petter", "Petterson"));
+        main.getUserList().addUser(new Employee("david", "bestePassord123", "David", "Berg"));
 
-        gruppe7.addUser(olav);
-        gruppe7.addUser(nora);
-        gruppe7.addUser(petter);
-        gruppe7.addUser(david);
+        gruppe7.addUser(main.getUserList().getUser("olav"));
+        gruppe7.addUser(main.getUserList().getUser("nora"));
+        gruppe7.addUser(main.getUserList().getUser("petter"));
+        gruppe7.addUser(main.getUserList().getUser("david"));
 
-        main.getJobShiftList().newJobShift(nora, LocalDateTime.now(), Duration.ofHours(2),"Dette er Olav sin skift.");
+        gruppe7.getJobShifts().addJobShift(new JobShift(main.getUserList().getUser("nora"), LocalDateTime.now(), Duration.ofHours(2),"Dette er Olav sin skift."));
 
         new JSONSerialize(main,"defaultMain.json").exportJSON();
     }

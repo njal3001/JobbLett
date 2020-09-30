@@ -1,14 +1,17 @@
 package jobblett.core;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 
 /**
  * Data object representing a User in real life.
  */
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property = "userName")
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Employee.class),
+        @JsonSubTypes.Type(value = Administrator.class),
+})
 public abstract class AbstractUser {
     // username is final after being initialized
     private final String userName;
@@ -28,12 +31,7 @@ public abstract class AbstractUser {
      * @param familyName
      */
     @JsonCreator
-    public AbstractUser(
-            @JsonProperty("userName") String userName,
-            @JsonProperty("password") String password,
-            @JsonProperty("givenName") String givenName,
-            @JsonProperty("familyName") String familyName
-    ){
+    public AbstractUser(String userName, String password, String givenName, String familyName){
         if (userName != null) if(!validUsername(userName)) throw new IllegalArgumentException("Not a valid userName");
         this.userName = userName;
         setPassword(password);

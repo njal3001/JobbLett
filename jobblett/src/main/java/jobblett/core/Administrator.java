@@ -1,10 +1,20 @@
 package jobblett.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Administrator extends AbstractUser{
 
     private GroupList groupList;
     private Employee employee;
-    public Administrator(String userName, String password, String givenName, String familyName){
+
+    @JsonCreator
+    public Administrator(
+            @JsonProperty("userName") String userName,
+            @JsonProperty("password") String password,
+            @JsonProperty("givenName") String givenName,
+            @JsonProperty("familyName") String familyName
+    ){
         super(userName, password, givenName, familyName);
         groupList = new GroupList();
     }

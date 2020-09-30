@@ -7,42 +7,42 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
-public class UserTest {
+public class AdministratorTest {
 
     @Test
     public void testValidUsername() {
-        assertTrue(AbstractUser.validUsername("njåøl3001"));
-        assertTrue(AbstractUser.validUsername("N2"));
-        assertTrue(AbstractUser.validUsername("Æ+-$3"));
-        assertFalse(AbstractUser.validUsername(" n2"));
-        assertFalse(AbstractUser.validUsername("n"));
+        assertTrue(Administrator.validUsername("njåøl3001"));
+        assertTrue(Administrator.validUsername("N2"));
+        assertTrue(Administrator.validUsername("Æ+-$3"));
+        assertFalse(Administrator.validUsername(" n2"));
+        assertFalse(Administrator.validUsername("n"));
     }
 
     @Test
     public void testValidName() {
-        assertTrue(AbstractUser.validName("Nils"));
-        assertTrue(AbstractUser.validName("nk"));
-        assertTrue(AbstractUser.validName("Njåøæl"));
-        assertFalse(AbstractUser.validName("njal3001"));
-        assertFalse(AbstractUser.validName(" nils"));
-        assertFalse(AbstractUser.validName("n"));
-        assertFalse(AbstractUser.validName("+-33"));
+        assertTrue(Administrator.validName("Nils"));
+        assertTrue(Administrator.validName("nk"));
+        assertTrue(Administrator.validName("Njåøæl"));
+        assertFalse(Administrator.validName("njal3001"));
+        assertFalse(Administrator.validName(" nils"));
+        assertFalse(Administrator.validName("n"));
+        assertFalse(Administrator.validName("+-33"));
     }
 
     @Test
     public void testValidPassword() {
-        assertTrue(AbstractUser.validPassword("NiæØls1254"));
-        assertTrue(AbstractUser.validPassword("Nk123456"));
-        assertTrue(AbstractUser.validPassword("Nils+-//1254"));
-        assertFalse(AbstractUser.validPassword("njal3001"));
-        assertFalse(AbstractUser.validPassword("nkdkdD22d k"));
-        assertFalse(AbstractUser.validPassword("nkdkdD2"));
+        assertTrue(Administrator.validPassword("NiæØls1254"));
+        assertTrue(Administrator.validPassword("Nk123456"));
+        assertTrue(Administrator.validPassword("Nils+-//1254"));
+        assertFalse(Administrator.validPassword("njal3001"));
+        assertFalse(Administrator.validPassword("nkdkdD22d k"));
+        assertFalse(Administrator.validPassword("nkdkdD2"));
     }
 
     @Test
     public void testConstructor() {
         try {
-            AbstractUser u1 = new AbstractUser("njal3001", "Nils1254", "Nils", "Enge");
+            Administrator u1 = new Administrator("njal3001", "Nils1254", "Nils", "Enge");
             assertEquals(u1.getUserName(), "njal3001");         
             assertEquals(u1.getGivenName(), "Nils");
             assertEquals(u1.getFamilyName(), "Enge");    
@@ -50,28 +50,28 @@ public class UserTest {
             fail("Exception should not be thrown for this input");
         }
         try {
-            AbstractUser u2 = new AbstractUser("", "Nils1254", "Nils", "Enge");
+            Administrator u2 = new Administrator("", "Nils1254", "Nils", "Enge");
             fail("Exception should be thrown because of invalid username");
         } catch (Exception e) {
             assertTrue(e instanceof IllegalArgumentException);
         }
 
         try {
-            AbstractUser u2 = new AbstractUser("njal3001", "", "Nils", "Enge");
+            Administrator u2 = new Administrator("njal3001", "", "Nils", "Enge");
             fail("Exception should be thrown because of invalid password");
         } catch (Exception e) {
             assertTrue(e instanceof IllegalArgumentException);
         }
 
         try {
-            AbstractUser u2 = new AbstractUser("njal3001", "Nils1254", "", "Enge");
+            Administrator u2 = new Administrator("njal3001", "Nils1254", "", "Enge");
             fail("Exception should be thrown because of invalid given name");
         } catch (Exception e) {
             assertTrue(e instanceof IllegalArgumentException);
         }
 
         try {
-            AbstractUser u2 = new AbstractUser("njal3001", "Nils1254", "Nils", "");
+            Administrator u2 = new Administrator("njal3001", "Nils1254", "Nils", "");
             fail("Exception should be thrown because of invalid family name");
         } catch (Exception e) {
             assertTrue(e instanceof IllegalArgumentException);
@@ -80,7 +80,7 @@ public class UserTest {
 
     @Test
     public void testSetName() {
-        AbstractUser u1 = new AbstractUser("njal3001", "Nils1254", "Nils", "Enge");
+        Administrator u1 = new Administrator("njal3001", "Nils1254", "Nils", "Enge");
         try{
             u1.setName("Kåre", "Heins");
             assertEquals(u1.getGivenName(), "Kåre");
@@ -100,7 +100,7 @@ public class UserTest {
 
     @Test
     public void testSetPassword() {
-        AbstractUser u1 = new AbstractUser("njal3001", "Nils1254", "Nils", "Enge");
+        Administrator u1 = new Administrator("njal3001", "Nils1254", "Nils", "Enge");
         try{
             u1.setPassword("Nils1254");
         } catch(Exception e){
@@ -116,14 +116,14 @@ public class UserTest {
 
     @Test
     public void testMatchesPassword() {
-        AbstractUser u1 = new AbstractUser("njal3001", "Nils1254", "Nils", "Enge");
+        Administrator u1 = new Administrator("njal3001", "Nils1254", "Nils", "Enge");
         assertTrue(u1.matchesPassword("Nils1254"));
         assertFalse(u1.matchesPassword("nils1254"));
     }
 
     @Test
     public void testToString() {
-        AbstractUser u1 = new AbstractUser("njal3001", "Nils1254", "Nils", "Enge");
+        Administrator u1 = new Administrator("njal3001", "Nils1254", "Nils", "Enge");
         assertEquals("Nils Enge (@njal3001)", u1.toString());
     }
 

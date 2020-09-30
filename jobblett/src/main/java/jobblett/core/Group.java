@@ -18,8 +18,8 @@ public class Group implements Iterable<AbstractUser> {
     private String groupName;
     private Collection<AbstractUser> groupMembers = new ArrayList<>();
     private final int groupID;
-    private Collection<Employee> employees = new ArrayList<Employee>();
-    private Collection<Administrator> administrators = new ArrayList<Administrator>();
+    private Collection<Employee> employees = new ArrayList<>();
+    private Collection<Administrator> administrators = new ArrayList<>();
     private JobShiftList jobShifts = new JobShiftList();
 
     public void addJobShift(JobShift jobShift) {
@@ -155,6 +155,9 @@ public class Group implements Iterable<AbstractUser> {
                 .collect(Collectors.toList());
     }
 
+    public JobShiftList getJobShifts() {
+        return jobShifts;
+    }
 
     @Override
     public String toString() {

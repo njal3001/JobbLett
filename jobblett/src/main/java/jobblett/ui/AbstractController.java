@@ -15,8 +15,7 @@ public abstract class AbstractController {
     protected Main main = new Main();
     protected AbstractUser activeUser = main.getLoggedIn();
     protected Group activeGroup = main.getActiveGroup();
-    protected JobShiftList activeShiftList=main.getJobShiftList();
-    
+
 
     protected void changeScreen(String URLName, Node button) throws IOException {
         Stage stage = (Stage) button.getScene().getWindow();

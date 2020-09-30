@@ -1,7 +1,12 @@
 package jobblett.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Employee extends AbstractUser{
 
+    private GroupList groupList;
+    private Employee employee;
 
     /**
      * Checks if the parameters are valid before creating instance a User.
@@ -12,10 +17,13 @@ public class Employee extends AbstractUser{
      * @param givenName
      * @param familyName
      */
-
-    private GroupList groupList;
-    private Employee employee;
-    public Employee(String userName, String password, String givenName, String familyName) {
+    @JsonCreator
+    public Employee(
+                    @JsonProperty("userName") String userName,
+                    @JsonProperty("password") String password,
+                    @JsonProperty("givenName") String givenName,
+                    @JsonProperty("familyName") String familyName
+    ){
         super(userName, password, givenName, familyName);
         this.groupList = new GroupList();
     }

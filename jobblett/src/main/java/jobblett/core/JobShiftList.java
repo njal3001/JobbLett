@@ -23,7 +23,7 @@ public class JobShiftList implements Iterable<JobShift> {
      * @param userFilter user used to filter jobShifts
      * @return Collection of JobShift
      */
-    public Collection<JobShift> getJobShiftsSortedAfterStartTime(User userFilter) {
+    public Collection<JobShift> getJobShiftsSortedAfterStartTime(AbstractUser userFilter) {
         Collection<JobShift> jobShifts = getJobShiftsFilteredByUser(userFilter);
         return jobShifts.stream()
                 .sorted(Comparator.comparing(JobShift::getStartingTime))
@@ -45,7 +45,7 @@ public class JobShiftList implements Iterable<JobShift> {
      * @param userFilter userFilter user used to filter jobShifts
      * @return Collection of JobShift
      */
-    public Collection<JobShift> getJobShiftsSortedAfterUserName(User userFilter) {
+    public Collection<JobShift> getJobShiftsSortedAfterUserName(AbstractUser userFilter) {
         Collection<JobShift> jobShifts = getJobShiftsFilteredByUser(userFilter);
         return jobShifts.stream()
                 .sorted(Comparator.comparing(a -> a.getUser().getUserName()))
@@ -67,7 +67,7 @@ public class JobShiftList implements Iterable<JobShift> {
      * @param userFilter user used to filter jobShifts
      * @return Collection<JobShift>
      */
-    public Collection<JobShift> getJobShiftsFilteredByUser(User userFilter) {
+    public Collection<JobShift> getJobShiftsFilteredByUser(AbstractUser userFilter) {
         Collection<JobShift> jobShifts;
         if (userFilter != null) jobShifts = this.jobShifts.stream()
                 .filter(jobShift -> jobShift.getUser() == userFilter)
@@ -88,7 +88,7 @@ public class JobShiftList implements Iterable<JobShift> {
      * @return JobShift
      * @deprecated Use addJobShift instead
      */
-    public JobShift newJobShift(User user, LocalDateTime startingTime, Duration duration, String info) {
+    public JobShift newJobShift(AbstractUser user, LocalDateTime startingTime, Duration duration, String info) {
         JobShift jobShift = new JobShift(user, startingTime, duration, info);
         jobShifts.add(jobShift);
         return jobShift;

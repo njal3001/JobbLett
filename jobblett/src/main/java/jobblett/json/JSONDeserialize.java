@@ -1,5 +1,6 @@
 package jobblett.json;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jobblett.core.Main;
@@ -41,6 +42,7 @@ public class JSONDeserialize {
         // create object mapper instance
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
     }
 
     private void useDefaultValues() {

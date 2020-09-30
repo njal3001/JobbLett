@@ -35,7 +35,7 @@ public class ShiftViewController extends AbstractController{
         groupID.setText("GroupID: "+activeGroup.getGroupID());
 
        // Lists all members
-        for (JobShift shift : activeShiftList) {
+        for (JobShift shift : activeGroup.getJobShifts()) {
             Text text = new Text(shift.toString());
             shifts.getItems().add(text);
         }
