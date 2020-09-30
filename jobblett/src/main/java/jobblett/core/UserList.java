@@ -7,10 +7,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
-public class UserList implements Iterable<User> {
-    private Collection<User> users = new ArrayList<>();
+public class UserList implements Iterable<AbstractUser> {
+    private Collection<AbstractUser> users = new ArrayList<>();
 
 
     /**
@@ -18,12 +19,13 @@ public class UserList implements Iterable<User> {
      * @param username the username to be checked
      * @return the user if it exist, else null
      */
-    public User getUser(String username) {
+    public AbstractUser getUser(String username) {
         return users.stream()
                 .filter(a -> a.getUserName().equals(username))
                 .findAny()
                 .orElse(null);
     }
+
     
     /**
      * Searches for other users.
@@ -31,20 +33,20 @@ public class UserList implements Iterable<User> {
      * @param searchQuery the searchQuery for searching
      * @return A collections with all the matching users.
      */
-    public Collection<User> searchUsers(String searchQuery) {
-        Collection<User> matchedUsernames = users.stream()
+    public Collection<AbstractUser> searchUsers(String searchQuery) {
+        Collection<AbstractUser> matchedUsernames = users.stream()
                 .filter(a -> a.getUserName().toLowerCase().contains(searchQuery.toLowerCase()))
                 .collect(Collectors.toList());
 
-        Collection<User> matchedGivenNames = users.stream()
+        Collection<AbstractUser> matchedGivenNames = users.stream()
                 .filter(a -> a.getGivenName().toLowerCase().contains(searchQuery.toLowerCase()))
                 .collect(Collectors.toList());
 
-        Collection<User> matchedFamilyNames = users.stream()
+        Collection<AbstractUser> matchedFamilyNames = users.stream()
                 .filter(a -> a.getFamilyName().toLowerCase().contains(searchQuery.toLowerCase()))
                 .collect(Collectors.toList());
 
-        Collection<User> matchedUsers = new ArrayList<>();
+        Collection<AbstractUser> matchedUsers = new ArrayList<>();
         matchedUsers.addAll(matchedFamilyNames);
         matchedUsers.addAll(matchedGivenNames);
         matchedUsers.addAll(matchedUsernames);
@@ -64,10 +66,13 @@ public class UserList implements Iterable<User> {
      *
      * @deprecated Use addUser(new User(...)) instead.
      */
-    public User newUser(String username, String password, String givenName, String familyName) {
-        User user = new User(username,password,givenName,familyName);
-        addUser(user);
-        return user;
+    public AbstractUser newUser(String username, String password, String givenName, String familyName, boolean admin) {
+        if(admin) {AbstractUser adminuser = new Administrator(username,password,givenName,familyName);
+            addUser(adminuser);
+            return  adminuser;}
+        else {AbstractUser employeeuser = new Employee(username,password,givenName,familyName);
+            addUser(employeeuser);
+            return employeeuser;}
     }
     
     /**
@@ -75,8 +80,8 @@ public class UserList implements Iterable<User> {
      * This method has not been used yet, but can be useful in the future.
      * @param users list of users to be added
      */
-    public void addUser(User... users) {
-        for (User user : users) {
+    public void addUser(AbstractUser... users) {
+        for (AbstractUser user : users) {
             if (getUser(user.getUserName())!=null) throw new IllegalArgumentException("User with the same username already exist.");
         }
 
@@ -90,15 +95,15 @@ public class UserList implements Iterable<User> {
      * @param password password used to check
      * @return the user if logged in, else null
      */
-    public User login(String username, String password) {
-        User user = getUser(username);
+    public AbstractUser login(String username, String password) {
+        AbstractUser user = getUser(username);
         if (user == null) return null;
         if (! user.matchesPassword(password)) return null;
         else return user;
     }
 
     @Override
-    public Iterator<User> iterator() {
+    public Iterator<AbstractUser> iterator() {
         return users.iterator();
     }
 

@@ -11,12 +11,12 @@ import org.junit.jupiter.api.Test;
 public class GroupTest {
     
     private Group group;
-    User user1;
+    AbstractUser user1;
 
     @BeforeEach
     public void setUp(){
         group = new Group("test", 1);
-        user1 = new User("test1", "Passord123", "Kari", "Testermann");
+        user1 = new AbstractUser("test1", "Passord123", "Kari", "Testermann");
     }
 	
 	@Test
@@ -59,7 +59,7 @@ public class GroupTest {
 
     @Test
     public void testToString() {
-        User user2 = new User("test2", "Passord123", "Kari", "Testermann");
+        AbstractUser user2 = new AbstractUser("test2", "Passord123", "Kari", "Testermann");
         group.addUser(user1);
         group.addUser(user2);
         assertEquals("test: Kari Testermann (@test1), Kari Testermann (@test2)", group.toString());

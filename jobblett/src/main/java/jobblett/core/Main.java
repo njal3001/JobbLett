@@ -8,7 +8,7 @@ import jobblett.json.JSONSerialize;
 public class Main {
     private UserList userList = new UserList();
     private GroupList groupList = new GroupList();
-    private User loggedIn = null;
+    private AbstractUser loggedIn = null;
     private Group activeGroup = null;
 
 
@@ -63,7 +63,7 @@ public class Main {
      * 
      * @param loggedIn the User that should be logged in
      */
-    public void logIn(User loggedIn) {
+    public void logIn(AbstractUser loggedIn) {
         this.loggedIn = loggedIn;
         serializeMain();
     }
@@ -81,7 +81,7 @@ public class Main {
      * 
      * @return the logged in User
      */
-    public User getLoggedIn() {
+    public AbstractUser getLoggedIn() {
         return loggedIn;
     }
     

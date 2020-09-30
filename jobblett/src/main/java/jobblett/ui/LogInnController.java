@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import jobblett.core.User;
+import jobblett.core.AbstractUser;
 
 public class LogInnController extends AbstractController {
 
@@ -39,7 +39,7 @@ public class LogInnController extends AbstractController {
     public void logInToUserHome() throws IOException{
         String userName = this.userName.getText();
         String password = this.passwordField.getText();
-        User user = main.getUserList().login(userName, password);
+        AbstractUser user = main.getUserList().login(userName, password);
         if (user == null) errorMessage.setText("Wrong username or password");
         else {
         	main.logIn(user);

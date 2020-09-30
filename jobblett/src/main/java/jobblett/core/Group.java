@@ -5,17 +5,21 @@ import com.fasterxml.jackson.annotation.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Represents a group in jobblett.
  */
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property = "groupID")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
-public class Group implements Iterable<User> {
+public class Group implements Iterable<AbstractUser> {
 
     private String groupName;
-    private Collection<User> groupMembers = new ArrayList<>();
+    private Collection<AbstractUser> groupMembers = new ArrayList<>();
     private final int groupID;
+    private Collection<Employee> employees = new ArrayList<Employee>();
+    private Collection<Administrator> administrators = new ArrayList<Administrator>();
     private JobShiftList jobShifts = new JobShiftList();
 
     public void addJobShift(JobShift jobShift) {
@@ -41,7 +45,7 @@ public class Group implements Iterable<User> {
      * @param user the user to be added
      * @throws IllegalArgumentException if the user is already a groupMember
      */
-    public void addUser(User user) throws IllegalArgumentException {
+    public void addUser(AbstractUser user) throws IllegalArgumentException {
         checkExistingUser(user);
         this.groupMembers.add(user);
     }
@@ -52,7 +56,7 @@ public class Group implements Iterable<User> {
      * @param user the user that should be removed
      * @return returns true if the user was contained and removed, else false
      */
-    public boolean removeUser(User user) {
+    public boolean removeUser(AbstractUser user) {
         return this.groupMembers.remove(user);
     }
 
@@ -62,7 +66,7 @@ public class Group implements Iterable<User> {
      * @param username the username used to search
      * @return  returns the user if found, else null.
      */
-    public User getUser(String username) {
+    public AbstractUser getUser(String username) {
         return groupMembers.stream()
                 .filter(group -> group.getUserName().equals(username))
                 .findFirst()
@@ -75,7 +79,7 @@ public class Group implements Iterable<User> {
      * @param user the user that should be checked
      * @throws IllegalArgumentException throws exception if the user already exist.
      */
-    private void checkExistingUser(User user) throws IllegalArgumentException {
+    private void checkExistingUser(AbstractUser user) throws IllegalArgumentException {
         if (this.groupMembers.contains(user)) {
             throw new IllegalArgumentException("This user is already in the group");
         }
@@ -136,10 +140,26 @@ public class Group implements Iterable<User> {
     }
 
 
+
+    public Collection<Administrator> getAdmins(){
+        return StreamSupport.stream(spliterator(),false)
+                .filter(a -> a instanceof Administrator)
+                .map(a -> (Administrator)a)
+                .collect(Collectors.toList());
+    }
+
+    public Collection<Employee> getEmployees(){
+        return StreamSupport.stream(spliterator(),false)
+                .filter(e -> e instanceof Employee)
+                .map(e -> (Employee)e)
+                .collect(Collectors.toList());
+    }
+
+
     @Override
     public String toString() {
         StringBuilder members = new StringBuilder();
-        for (User user : this) {
+        for (AbstractUser user : this) {
             members.append(user.toString()).append(", ");
         }
         members.setLength(members.length() - 2);
@@ -147,7 +167,7 @@ public class Group implements Iterable<User> {
     }
 
     @Override
-    public Iterator<User> iterator() {
+    public Iterator<AbstractUser> iterator() {
         return groupMembers.iterator();
     }
 }

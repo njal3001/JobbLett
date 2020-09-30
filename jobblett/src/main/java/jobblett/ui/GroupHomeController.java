@@ -1,12 +1,12 @@
 package jobblett.ui;
 
-import java.io.IOException;
-
+import javafx.scene.control.Button;
+import jobblett.core.AbstractUser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
-import jobblett.core.User;
+import java.io.IOException;
 
 public class GroupHomeController extends AbstractController{
 
@@ -36,7 +36,7 @@ public class GroupHomeController extends AbstractController{
         groupID.setText("GroupID: "+activeGroup.getGroupID());
 
         // Lists all members
-        for (User user : activeGroup) {
+        for (AbstractUser user : activeGroup) {
             Text text = new Text(user.toString());
             members.getItems().add(text);
         }
