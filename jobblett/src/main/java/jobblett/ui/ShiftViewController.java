@@ -6,24 +6,23 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
-import jobblett.core.User;
+import jobblett.core.JobShift;
 
-public class GroupHomeController extends AbstractController{
-
+public class ShiftViewController extends AbstractController{
     @FXML
     Text groupName;
 
     @FXML
-    ListView<Text> members;
+    ListView<Text> shifts;
 
     @FXML
     Text groupID;
 
-    @FXML
+    /*@FXML
     Button backToHome;
-    
+    */
     @FXML
-    Button goToShifts;
+    Button backToGroup;
 
 
 
@@ -35,22 +34,22 @@ public class GroupHomeController extends AbstractController{
         // Shows GroupID
         groupID.setText("GroupID: "+activeGroup.getGroupID());
 
-        // Lists all members
-        for (User user : activeGroup) {
-            Text text = new Text(user.toString());
-            members.getItems().add(text);
+       // Lists all members
+        for (JobShift shift : activeShiftList) {
+            Text text = new Text(shift.toString());
+            shifts.getItems().add(text);
         }
     }
 
     @FXML
     public void backButton() throws IOException {
-        changeScreen("UserHome.fxml", backToHome);
+        changeScreen("GroupHome.fxml", backToGroup);
     }
-    
+/*    
     @FXML
     public void viewShifts() throws IOException {
         changeScreen("ShiftView.fxml", goToShifts);
-    }
+    }*/
 
 
 }
