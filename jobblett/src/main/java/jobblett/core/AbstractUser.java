@@ -1,10 +1,15 @@
 package jobblett.core;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.*;
+import com.google.common.hash.Hashing;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * Data object representing a User in real life.
  */
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property = "userName")
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS,
         property = "type")
@@ -20,7 +25,6 @@ public abstract class AbstractUser {
     private String password;
     private String givenName;
     private String familyName;
-    
     /**
      * Checks if the parameters are valid before creating instance a User.
      * Allows JSON to create empty Users.
@@ -30,25 +34,11 @@ public abstract class AbstractUser {
      * @param givenName
      * @param familyName
      */
-    @JsonCreator
     public AbstractUser(String userName, String password, String givenName, String familyName){
         if (userName != null) if(!validUsername(userName)) throw new IllegalArgumentException("Not a valid userName");
         this.userName = userName;
         setPassword(password);
         setName(givenName, familyName);
-    }
-
-    /**
-     * Only for testing purpose.
-     * Should be removed or made private before finish.
-     * Use matchesPassword(String password) instead.
-     *  
-     * @return
-     * @deprecated Prevent using this method 
-     */
-    @Deprecated
-    public String getPassword() {
-        return password;
     }
 
    /**
@@ -71,6 +61,7 @@ public abstract class AbstractUser {
      * Username criteria:
      * 	- No whitespace
      *  - At least 2 characters
+     * @param userName
      * @return true if the criteria are fulfilled, else false
      */
     public static boolean validUsername(String userName){
@@ -101,8 +92,12 @@ public abstract class AbstractUser {
      * @throws IllegalArgumentException
      */
     public void setPassword(String password) throws IllegalArgumentException{
-        if(validPassword(password))
-            this.password = password;
+        if(validPassword(password)){
+            String hashedPassword = Hashing.sha256()
+                    .hashString(password, StandardCharsets.UTF_8)
+                    .toString();
+            this.password = hashedPassword;
+        }
         else
             throw new IllegalArgumentException("Not a valid password"); 
     }
@@ -165,7 +160,10 @@ public abstract class AbstractUser {
      * @return true if the password matches, else false
      */
     public boolean matchesPassword(String password){
-        return this.password.matches(password);
+        String hashedPassword = Hashing.sha256()
+                .hashString(password, StandardCharsets.UTF_8)
+                .toString();
+        return this.password.matches(hashedPassword);
     }
     
     @Override

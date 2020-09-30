@@ -5,8 +5,9 @@ module jobblett {
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jdk8;
     requires com.fasterxml.jackson.datatype.jsr310;
+	requires guava;
 
-    exports jobblett.core;
+	exports jobblett.core;
 	exports jobblett.json;
 	exports jobblett.ui;
 

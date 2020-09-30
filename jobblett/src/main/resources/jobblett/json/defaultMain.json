@@ -3,32 +3,48 @@
     "users" : [ {
       "type" : "jobblett.core.Employee",
       "userName" : "olav",
-      "password" : "bestePassord123",
+      "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
       "givenName" : "Olav",
-      "familyName" : "Nordmann"
+      "familyName" : "Nordmann",
+      "groupList" : {
+        "groups" : [ ]
+      },
+      "employee" : null
     }, {
       "type" : "jobblett.core.Employee",
       "userName" : "nora",
-      "password" : "bestePassord123",
+      "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
       "givenName" : "Nora",
-      "familyName" : "Bekkestad"
+      "familyName" : "Bekkestad",
+      "groupList" : {
+        "groups" : [ ]
+      },
+      "employee" : null
     }, {
       "type" : "jobblett.core.Employee",
       "userName" : "petter",
-      "password" : "bestePassord123",
+      "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
       "givenName" : "Petter",
-      "familyName" : "Petterson"
+      "familyName" : "Petterson",
+      "groupList" : {
+        "groups" : [ ]
+      },
+      "employee" : null
     }, {
       "type" : "jobblett.core.Employee",
       "userName" : "david",
-      "password" : "bestePassord123",
+      "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
       "givenName" : "David",
-      "familyName" : "Berg"
+      "familyName" : "Berg",
+      "groupList" : {
+        "groups" : [ ]
+      },
+      "employee" : null
     } ]
   },
   "groupList" : {
     "groups" : [ {
-      "groupID" : 3899,
+      "groupID" : 7709,
       "groupName" : "Gruppe7",
       "groupMembers" : [ "olav", "nora", "petter", "david" ],
       "employees" : [ ],
@@ -36,7 +52,7 @@
       "jobShifts" : {
         "jobShifts" : [ {
           "user" : "nora",
-          "startingTime" : [ 2020, 9, 30, 14, 33, 6, 527002000 ],
+          "startingTime" : [ 2020, 9, 30, 14, 52, 2, 252904000 ],
           "duration" : 7200.000000000,
           "info" : "Dette er Olav sin skift."
         } ]

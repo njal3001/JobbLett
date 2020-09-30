@@ -8,6 +8,11 @@ public class Employee extends AbstractUser{
     private GroupList groupList;
     private Employee employee;
 
+    @JsonCreator
+    public Employee(@JsonProperty("userName") String userName){
+        super(userName, "DefaultPassword123", "DefaultGivenName", "DefaultFamilyName");
+    }
+
     /**
      * Checks if the parameters are valid before creating instance a User.
      * Allows JSON to create empty Users.
@@ -17,13 +22,7 @@ public class Employee extends AbstractUser{
      * @param givenName
      * @param familyName
      */
-    @JsonCreator
-    public Employee(
-                    @JsonProperty("userName") String userName,
-                    @JsonProperty("password") String password,
-                    @JsonProperty("givenName") String givenName,
-                    @JsonProperty("familyName") String familyName
-    ){
+    public Employee(String userName, String password, String givenName, String familyName){
         super(userName, password, givenName, familyName);
         this.groupList = new GroupList();
     }

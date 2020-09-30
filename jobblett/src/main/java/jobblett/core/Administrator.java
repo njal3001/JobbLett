@@ -9,12 +9,11 @@ public class Administrator extends AbstractUser{
     private Employee employee;
 
     @JsonCreator
-    public Administrator(
-            @JsonProperty("userName") String userName,
-            @JsonProperty("password") String password,
-            @JsonProperty("givenName") String givenName,
-            @JsonProperty("familyName") String familyName
-    ){
+    public Administrator(@JsonProperty("userName") String userName){
+        super(userName, "DefaultPassword123", "DefaultGivenName", "DefaultFamilyName");
+    }
+
+    public Administrator(String userName, String password, String givenName, String familyName){
         super(userName, password, givenName, familyName);
         groupList = new GroupList();
     }
