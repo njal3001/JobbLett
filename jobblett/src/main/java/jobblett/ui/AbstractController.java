@@ -2,7 +2,7 @@ package jobblett.ui;
 
 import jobblett.core.Group;
 import jobblett.core.Main;
-import jobblett.core.User;
+import jobblett.core.AbstractUser;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public abstract class AbstractController {
     protected Main main = new Main();
-    protected User activeUser = main.getLoggedIn();
+    protected AbstractUser activeUser = main.getLoggedIn();
     protected Group activeGroup = main.getActiveGroup();
 
     protected void changeScreen(String URLName, Node button) throws IOException {

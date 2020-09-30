@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import jobblett.core.User;
+import jobblett.core.AbstractUser;
 
 
 
@@ -30,6 +30,8 @@ public class CreateUserController extends AbstractController {
     
     @FXML
     Text errorMessage;
+
+    boolean admin;
     
     @FXML
     Button goBack;
@@ -42,7 +44,7 @@ public class CreateUserController extends AbstractController {
         String givenName = this.givenName.getText();
         String familyName = this.familyName.getText();
         try {
-        	User newUser= main.getUserList().newUser(username,password,givenName,familyName);
+        	AbstractUser newUser= main.getUserList().newUser(username,password,givenName,familyName, admin);
         	main.logIn(newUser);
         	changeScreen("UserHome.fxml", createAccount);
         } catch(Exception e) {

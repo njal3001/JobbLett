@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property = "userName")
-public class User{
+public abstract class AbstractUser {
     // username is final after being initialized
     private final String userName;
 
@@ -25,7 +25,7 @@ public class User{
      * @param familyName
      */
     @JsonCreator
-    public User(
+    public AbstractUser(
             @JsonProperty("userName") String userName,
             @JsonProperty("password") String password,
             @JsonProperty("givenName") String givenName,

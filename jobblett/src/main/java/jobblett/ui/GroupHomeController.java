@@ -1,7 +1,7 @@
 package jobblett.ui;
 
 import javafx.scene.control.Button;
-import jobblett.core.User;
+import jobblett.core.AbstractUser;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
@@ -33,7 +33,7 @@ public class GroupHomeController extends AbstractController{
         groupID.setText("GroupID: "+activeGroup.getGroupID());
 
         // Lists all members
-        for (User user : activeGroup) {
+        for (AbstractUser user : activeGroup) {
             Text text = new Text(user.toString());
             members.getItems().add(text);
         }
