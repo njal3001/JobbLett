@@ -8,7 +8,6 @@ import jobblett.json.JSONSerialize;
 public class Main {
     private UserList userList = new UserList();
     private GroupList groupList = new GroupList();
-    private JobShiftList jobShiftList = new JobShiftList();
     private User loggedIn = null;
     private Group activeGroup = null;
 
@@ -46,10 +45,6 @@ public class Main {
 
     public UserList getUserList() {
         return userList;
-    }
-
-    public JobShiftList getJobShiftList() {
-        return jobShiftList;
     }
 
     @Override

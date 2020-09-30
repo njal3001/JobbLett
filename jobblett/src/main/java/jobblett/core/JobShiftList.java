@@ -86,11 +86,16 @@ public class JobShiftList implements Iterable<JobShift> {
      * @param duration duration of the jobShift
      * @param info info about the jobShift
      * @return JobShift
+     * @deprecated Use addJobShift instead
      */
     public JobShift newJobShift(User user, LocalDateTime startingTime, Duration duration, String info) {
         JobShift jobShift = new JobShift(user, startingTime, duration, info);
         jobShifts.add(jobShift);
         return jobShift;
+    }
+
+    public void addJobShift(JobShift jobShift) {
+        jobShifts.add(jobShift);
     }
 
     /**

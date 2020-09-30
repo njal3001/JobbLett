@@ -16,6 +16,11 @@ public class Group implements Iterable<User> {
     private String groupName;
     private Collection<User> groupMembers = new ArrayList<>();
     private final int groupID;
+    private JobShiftList jobShifts = new JobShiftList();
+
+    public void addJobShift(JobShift jobShift) {
+        jobShifts.addJobShift(jobShift);
+    }
 
     /**
      * Initialize a instance of Group with a groupName and groupID.

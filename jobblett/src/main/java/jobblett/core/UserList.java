@@ -61,6 +61,8 @@ public class UserList implements Iterable<User> {
      * @param givenName given name of the new User
      * @param familyName family name of the new User
      * @return the created user
+     *
+     * @deprecated Use addUser(new User(...)) instead.
      */
     public User newUser(String username, String password, String givenName, String familyName) {
         User user = new User(username,password,givenName,familyName);
