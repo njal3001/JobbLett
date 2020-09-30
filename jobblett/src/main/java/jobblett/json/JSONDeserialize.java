@@ -1,5 +1,7 @@
 package jobblett.json;
 
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jobblett.core.Main;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,6 +12,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 
 /**
  * Used to deserialize main.json to Main.class from the systems user-folder.
@@ -37,11 +40,7 @@ public class JSONDeserialize {
         }
         // create object mapper instance
         objectMapper = new ObjectMapper();
-        objectMapper.setVisibility(objectMapper.getSerializationConfig().getDefaultVisibilityChecker()
-                .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
-                .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
-                .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
-                .withCreatorVisibility(JsonAutoDetect.Visibility.ANY));
+        objectMapper.registerModule(new JavaTimeModule());
     }
 
     private void useDefaultValues() {
@@ -79,13 +78,16 @@ public class JSONDeserialize {
     public void updateMain(Main main) {
         try {
             objectMapper.readerForUpdating(main).readValue(reader,Main.class);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Existing data is not found or corrupted. Using default data.");
+            useDefaultValues();
+            try {
+                objectMapper.readerForUpdating(main).readValue(reader,Main.class);
+            } catch (IOException er) {
+                e.printStackTrace();
+                er.printStackTrace();
+            }
         }
-    }
-
-    public static void main(String[] args) {
-        new JSONDeserialize();
     }
 
 }

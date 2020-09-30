@@ -3,6 +3,8 @@ module jobblett {
 	requires transitive javafx.graphics;
 	requires javafx.controls;
     requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.datatype.jdk8;
+    requires com.fasterxml.jackson.datatype.jsr310;
 
     exports jobblett.core;
 	exports jobblett.json;

@@ -10,11 +10,17 @@ import java.util.Iterator;
  * Represents a group in jobblett.
  */
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property = "groupID")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Group implements Iterable<User> {
 
     private String groupName;
     private Collection<User> groupMembers = new ArrayList<>();
     private final int groupID;
+    private JobShiftList jobShifts = new JobShiftList();
+
+    public void addJobShift(JobShift jobShift) {
+        jobShifts.addJobShift(jobShift);
+    }
 
     /**
      * Initialize a instance of Group with a groupName and groupID.

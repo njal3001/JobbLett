@@ -1,18 +1,21 @@
 package jobblett.core;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class UserList implements Iterable<User> {
-    private Collection<User> users = new ArrayList<User>();
+    private Collection<User> users = new ArrayList<>();
 
 
     /**
      * Checks whether if it exist a user with the given username.
-     * @param username
+     * @param username the username to be checked
      * @return the user if it exist, else null
      */
     public User getUser(String username) {
@@ -25,7 +28,7 @@ public class UserList implements Iterable<User> {
     /**
      * Searches for other users.
      * Searches in all users' username, givenname and familyname.
-     * @param searchQuery
+     * @param searchQuery the searchQuery for searching
      * @return A collections with all the matching users.
      */
     public Collection<User> searchUsers(String searchQuery) {
@@ -41,7 +44,7 @@ public class UserList implements Iterable<User> {
                 .filter(a -> a.getFamilyName().toLowerCase().contains(searchQuery.toLowerCase()))
                 .collect(Collectors.toList());
 
-        Collection<User> matchedUsers = new ArrayList<User>();
+        Collection<User> matchedUsers = new ArrayList<>();
         matchedUsers.addAll(matchedFamilyNames);
         matchedUsers.addAll(matchedGivenNames);
         matchedUsers.addAll(matchedUsernames);
@@ -53,11 +56,13 @@ public class UserList implements Iterable<User> {
     /**
      * Creates a new user.
      * Adds the user to the collections of all the Users
-     * @param username
-     * @param password
-     * @param givenName
-     * @param familyName
+     * @param username username
+     * @param password password of the new User
+     * @param givenName given name of the new User
+     * @param familyName family name of the new User
      * @return the created user
+     *
+     * @deprecated Use addUser(new User(...)) instead.
      */
     public User newUser(String username, String password, String givenName, String familyName) {
         User user = new User(username,password,givenName,familyName);
@@ -68,7 +73,7 @@ public class UserList implements Iterable<User> {
     /**
      * Optional method for adding several users into the collection of all users at once.
      * This method has not been used yet, but can be useful in the future.
-     * @param users
+     * @param users list of users to be added
      */
     public void addUser(User... users) {
         for (User user : users) {
@@ -81,8 +86,8 @@ public class UserList implements Iterable<User> {
     /**
      * Lets the user log into their account
      * Checks whether the username and password matches an existing user, before logging in
-     * @param username
-     * @param password
+     * @param username username used to check
+     * @param password password used to check
      * @return the user if logged in, else null
      */
     public User login(String username, String password) {

@@ -1,6 +1,7 @@
 package jobblett.ui;
 
-import jobblett.core.Group;
+import java.io.IOException;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -11,13 +12,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-
-import java.io.IOException;
+import jobblett.core.Group;
 
 public class UserHomeController extends AbstractController{
 
     @FXML
-    ListView groups;
+    ListView<Text> groups;
 
     @FXML
     Text userFullName;
