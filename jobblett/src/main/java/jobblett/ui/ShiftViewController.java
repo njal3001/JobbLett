@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
-import jobblett.core.Group;
 import jobblett.core.JobShift;
 
 public class ShiftViewController extends AbstractController{

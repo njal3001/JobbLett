@@ -1,7 +1,6 @@
 package jobblett.ui;
 
 import javafx.scene.control.Button;
-import jobblett.core.Group;
 import jobblett.core.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -26,8 +25,8 @@ public class GroupHomeController extends AbstractController{
     Button goToShifts;
 
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void update() {
         // Sets GroupName on top of the screen
         groupName.setText(activeGroup.getGroupName());
 

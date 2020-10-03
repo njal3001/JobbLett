@@ -12,7 +12,7 @@ import jobblett.core.User;
 public class CreateUserController extends AbstractController {
 
     @FXML
-    Button createAccount;
+    Button createAccountButton;
 
     @FXML
     TextField username;
@@ -30,11 +30,11 @@ public class CreateUserController extends AbstractController {
     Text errorMessage;
     
     @FXML
-    Button goBack;
+    Button goBackButton;
 
 
     @FXML
-    public void CreateAccount() throws IOException {
+    public void createAccount() throws IOException {
         String username = this.username.getText();
         String password = this.password.getText();
         String givenName = this.givenName.getText();
@@ -43,16 +43,15 @@ public class CreateUserController extends AbstractController {
             User newUser = new User(username, password, givenName, familyName);
             main.getUserList().addUser(newUser);
         	main.logIn(newUser);
-        	changeScreen("UserHome.fxml", createAccount, main);
+        	changeScreen("UserHome.fxml", createAccountButton, main);
         } catch(Exception e) {
             errorMessage.setText(e.getMessage());
-            e.printStackTrace();
         }
     }
     
     @FXML
     public void goToLogIn() throws IOException {
-    	changeScreen("Login.fxml", goBack, main);
+    	changeScreen("Login.fxml", goBackButton, main);
     }
         
 }

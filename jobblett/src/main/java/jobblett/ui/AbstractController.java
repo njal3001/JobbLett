@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public abstract class AbstractController {
+    
     protected Main main;
     protected User activeUser;
     protected Group activeGroup;
@@ -27,6 +28,7 @@ public abstract class AbstractController {
         update();
     }
 
+    // Burde finnes en bedre måte enn å bruke node hver gang for å finne stage
     protected void changeScreen(String URLName, Node button, Main main) throws IOException {
         Stage stage = (Stage) button.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource(URLName));
@@ -38,6 +40,7 @@ public abstract class AbstractController {
         stage.show();
     }
 
+    // Used by subclasses that need to update the UI when the scene changes
     protected void update(){
 
     }
