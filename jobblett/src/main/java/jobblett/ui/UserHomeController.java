@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import jobblett.core.Group;
+import jobblett.core.User;
 
 public class UserHomeController extends AbstractController{
 
@@ -37,21 +38,21 @@ public class UserHomeController extends AbstractController{
     @FXML
     Button link;
 
-    @FXML
-    public void initialize() {
+    public void update() {
         // Sets full name on top of the screen
         String givenName = activeUser.getGivenName();
         String familyName = activeUser.getFamilyName();
-        System.out.println(givenName+" "+familyName);
-        userFullName.setText(givenName+" "+familyName);
+        userFullName.setText(givenName + " " + familyName);
 
         // Switches to right state
-        if (main.getGroupList().getGroups(activeUser).isEmpty()) switchToNoExistingGroups();
-        else switchToHasExistingGroups();
+        if (main.getGroupList().getGroups(activeUser).isEmpty()) 
+            switchToNoExistingGroups();
+        else 
+            switchToHasExistingGroups();
 
         // Lists all groups
         for (Group group : main.getGroupList().getGroups(activeUser)) {
-            String groupName = group.getGroupName();
+         //   String groupName = group.getGroupName();
             Text text = new Text(group.getGroupName());
             groups.getItems().add(text);
             text.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -59,7 +60,7 @@ public class UserHomeController extends AbstractController{
                 public void handle(MouseEvent event) {
                     main.setActiveGroup(group);
                     try {
-                        changeScreen("GroupHome.fxml",text);
+                        changeScreen("GroupHome.fxml",text, main);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -87,7 +88,7 @@ public class UserHomeController extends AbstractController{
     public void logOut() {
         main.logOut();
         try {
-            changeScreen("Login.fxml",logOut);
+            changeScreen("Login.fxml",logOut, main);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -100,7 +101,7 @@ public class UserHomeController extends AbstractController{
         group.addUser(activeUser);
         main.setActiveGroup(group);
         try {
-            changeScreen("GroupHome.fxml", link);
+            changeScreen("GroupHome.fxml", link, main);
         } catch (IOException e) {
             e.printStackTrace();
         }

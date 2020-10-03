@@ -7,9 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import jobblett.core.AbstractUser;
-
-
+import jobblett.core.User;
 
 public class CreateUserController extends AbstractController {
 
@@ -30,8 +28,6 @@ public class CreateUserController extends AbstractController {
     
     @FXML
     Text errorMessage;
-
-    boolean admin;
     
     @FXML
     Button goBack;
@@ -44,17 +40,19 @@ public class CreateUserController extends AbstractController {
         String givenName = this.givenName.getText();
         String familyName = this.familyName.getText();
         try {
-        	AbstractUser newUser= main.getUserList().newUser(username,password,givenName,familyName, admin);
+            User newUser = new User(username, password, givenName, familyName);
+            main.getUserList().addUser(newUser);
         	main.logIn(newUser);
-        	changeScreen("UserHome.fxml", createAccount);
+        	changeScreen("UserHome.fxml", createAccount, main);
         } catch(Exception e) {
-        	errorMessage.setText(e.getMessage());
+            errorMessage.setText(e.getMessage());
+            e.printStackTrace();
         }
     }
     
     @FXML
     public void goToLogIn() throws IOException {
-    	changeScreen("Login.fxml", goBack);
+    	changeScreen("Login.fxml", goBack, main);
     }
         
 }

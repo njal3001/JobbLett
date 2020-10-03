@@ -2,27 +2,43 @@ package jobblett.ui;
 
 import jobblett.core.Group;
 import jobblett.core.Main;
-import jobblett.core.AbstractUser;
+import jobblett.core.User;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import jobblett.core.JobShiftList;
 import java.io.IOException;
 
 public abstract class AbstractController {
-    protected Main main = new Main();
-    protected AbstractUser activeUser = main.getLoggedIn();
-    protected Group activeGroup = main.getActiveGroup();
+    protected Main main;
+    protected User activeUser;
+    protected Group activeGroup;
 
+    protected AbstractController(){
+        main = new Main();
+    }
 
-    protected void changeScreen(String URLName, Node button) throws IOException {
+    protected void setMain(Main main){
+        this.main = main;
+        this.activeUser = main.getLoggedIn();
+        this.activeGroup = main.getActiveGroup();
+        update();
+    }
+
+    protected void changeScreen(String URLName, Node button, Main main) throws IOException {
         Stage stage = (Stage) button.getScene().getWindow();
-        Parent root=FXMLLoader.load(getClass().getResource(URLName));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(URLName));
+        Parent root = loader.load();
+        AbstractController controller = (AbstractController) loader.getController();
+        controller.setMain(main);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
+    protected void update(){
+
+    }
 }

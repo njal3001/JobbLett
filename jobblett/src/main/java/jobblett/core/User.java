@@ -10,16 +10,13 @@ import java.nio.charset.StandardCharsets;
  * Data object representing a User in real life.
  */
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property = "userName")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property = "username")
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS,
         property = "type")
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = Employee.class),
-        @JsonSubTypes.Type(value = Administrator.class),
-})
-public abstract class AbstractUser {
+        
+public class User {
     // username is final after being initialized
-    private final String userName;
+    private final String username;
 
     // password and name can be changed after initialization
     private String password;
@@ -34,9 +31,9 @@ public abstract class AbstractUser {
      * @param givenName
      * @param familyName
      */
-    public AbstractUser(String userName, String password, String givenName, String familyName){
-        if (userName != null) if(!validUsername(userName)) throw new IllegalArgumentException("Not a valid userName");
-        this.userName = userName;
+    public User(String username, String password, String givenName, String familyName){
+        if (username != null) if(!validUsername(username)) throw new IllegalArgumentException("Not a valid userName");
+        this.username = username;
         setPassword(password);
         setName(givenName, familyName);
     }
@@ -61,12 +58,12 @@ public abstract class AbstractUser {
      * Username criteria:
      * 	- No whitespace
      *  - At least 2 characters
-     * @param userName
+     * @param username
      * @return true if the criteria are fulfilled, else false
      */
-    public static boolean validUsername(String userName){
+    public static boolean validUsername(String username){
         String pattern = "[^\\s]{2,}";
-        return userName.matches(pattern);
+        return username.matches(pattern);
     }
 
 
@@ -132,7 +129,7 @@ public abstract class AbstractUser {
      * @return
      */
     public String getUserName(){
-        return this.userName;
+        return this.username;
     }
     
     /**
@@ -168,7 +165,7 @@ public abstract class AbstractUser {
     
     @Override
 	public String toString(){
-        return givenName + " " + familyName + " (@" + userName + ")";
+        return givenName + " " + familyName + " (@" + username + ")";
     }
 
 }

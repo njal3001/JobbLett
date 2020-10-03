@@ -6,9 +6,10 @@ import jobblett.json.JSONSerialize;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Main {
+
     private UserList userList = new UserList();
     private GroupList groupList = new GroupList();
-    private AbstractUser loggedIn = null;
+    private User loggedIn = null;
     private Group activeGroup = null;
 
 
@@ -16,27 +17,36 @@ public class Main {
      * Initializes a new instance of Main
      * @param skipImport is used to easily create and update defaultMain.json (Only used by developers!)
      */
+    /*
     public Main(boolean skipImport) {
        if (!skipImport) {
            JSONDeserialize importer = new JSONDeserialize();
            importer.updateMain(this);
        }
     }
+    */
     
     /**
      * Initializes a new instance of Main with import
      */
+    /*
     public Main() {
         this(false);
     }
-    
+    */
+
+
     /**
      * Saves data to main.json
      */
+        /*
     public void serializeMain() {
         JSONSerialize serializer = new JSONSerialize(this, "main.json");
         serializer.exportJSON();
-    }
+    } 
+    */
+
+    
     
  
     public GroupList getGroupList() {
@@ -63,9 +73,9 @@ public class Main {
      * 
      * @param loggedIn the User that should be logged in
      */
-    public void logIn(AbstractUser loggedIn) {
+    public void logIn(User loggedIn) {
         this.loggedIn = loggedIn;
-        serializeMain();
+        //serializeMain();
     }
     
     /**
@@ -81,7 +91,7 @@ public class Main {
      * 
      * @return the logged in User
      */
-    public AbstractUser getLoggedIn() {
+    public User getLoggedIn() {
         return loggedIn;
     }
     
@@ -104,6 +114,6 @@ public class Main {
      */
     public void setActiveGroup(Group activeGroup) {
         this.activeGroup = activeGroup;
-        serializeMain();
+        //serializeMain();
     }
 }

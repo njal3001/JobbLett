@@ -9,12 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GroupTest {
     
     private Group group;
-    AbstractUser user1;
+    User user1;
 
     @BeforeEach
     public void setUp(){
         group = new Group("test", 1);
-        user1 = new Employee("test1", "Passord123", "Kari", "Testermann");
+        user1 = new User("test1", "Passord123", "Kari", "Testermann");
     }
 	
 	@Test
@@ -57,14 +57,12 @@ public class GroupTest {
 
     @Test
     public void testToString() {
-        Employee user2 = new Employee("test2", "Passord123", "Kari", "Testermann");
+        User user2 = new User("test2", "Passord123", "Kari", "Testermann");
         group.addUser(user1);
         group.addUser(user2);
         assertEquals("test: Kari Testermann (@test1), Kari Testermann (@test2)", group.toString());
     }
     
     //Burde kanskje ha test for iterable også
-	
-	
 }
 

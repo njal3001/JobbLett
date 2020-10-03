@@ -8,13 +8,13 @@ import java.time.LocalDateTime;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.ANY, setterVisibility = JsonAutoDetect.Visibility.ANY)
 public class JobShift implements Comparable<JobShift>{
 
-    private AbstractUser user;
+    private User user;
     private LocalDateTime startingTime;
     private Duration duration;
     private String info;
 
     @JsonCreator
-    public JobShift(@JsonProperty("user") AbstractUser user, @JsonProperty("startingTime") LocalDateTime startingTime, @JsonProperty("duration") Duration duration, @JsonProperty("info") String info){
+    public JobShift(@JsonProperty("user") User user, @JsonProperty("startingTime") LocalDateTime startingTime, @JsonProperty("duration") Duration duration, @JsonProperty("info") String info){
         setUser(user);
         setStartingTime(startingTime);
         setDuration(duration);
@@ -22,7 +22,7 @@ public class JobShift implements Comparable<JobShift>{
     }
     
     @JsonGetter
-    public AbstractUser getUser(){
+    public User getUser(){
         return user;
     }
 
@@ -46,7 +46,7 @@ public class JobShift implements Comparable<JobShift>{
         return info;
     }
 
-    public void setUser(AbstractUser user){
+    public void setUser(User user){
         this.user = user;
     }
 

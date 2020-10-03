@@ -6,8 +6,10 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -15,100 +17,42 @@ import java.util.stream.Collectors;
  */
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class JobShiftList implements Iterable<JobShift> {
-    Collection<JobShift> jobShifts = new ArrayList<>();
+
+    List<JobShift> jobShifts = new ArrayList<>();
 
     /**
-     * Returns JobShifts sorted after startTime.
-     *
-     * @param userFilter user used to filter jobShifts
-     * @return Collection of JobShift
+     * @return List of JobShift
      */
-    public Collection<JobShift> getJobShiftsSortedAfterStartTime(AbstractUser userFilter) {
-        Collection<JobShift> jobShifts = getJobShiftsFilteredByUser(userFilter);
-        return jobShifts.stream()
-                .sorted(Comparator.comparing(JobShift::getStartingTime))
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Returns JobShifts sorted after startTime.
-     *
-     * @return Collection of JobShift
-     */
-    public Collection<JobShift> getJobShiftsSortedAfterStartTime() {
-        return getJobShiftsSortedAfterStartTime(null);
-    }
-
-    /**
-     * Returns JobShifts sorted after userName.
-     *
-     * @param userFilter userFilter user used to filter jobShifts
-     * @return Collection of JobShift
-     */
-    public Collection<JobShift> getJobShiftsSortedAfterUserName(AbstractUser userFilter) {
-        Collection<JobShift> jobShifts = getJobShiftsFilteredByUser(userFilter);
-        return jobShifts.stream()
-                .sorted(Comparator.comparing(a -> a.getUser().getUserName()))
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Returns JobShifts sorted after userName.
-     *
-     * @return Collection of JobShift
-     */
-    public Collection<JobShift> getJobShiftsSortedAfterUserName() {
-        return getJobShiftsSortedAfterUserName(null);
+    public List<JobShift> getJobShifts() {
+        return new ArrayList<>(jobShifts); // Vet ikke om dette er den beste måten å gjøre dette
     }
 
     /**
      * Returns jobShiftsList filtered by a User.
      *
      * @param userFilter user used to filter jobShifts
-     * @return Collection<JobShift>
+     * @return List<JobShift>
      */
-    public Collection<JobShift> getJobShiftsFilteredByUser(AbstractUser userFilter) {
-        Collection<JobShift> jobShifts;
-        if (userFilter != null) jobShifts = this.jobShifts.stream()
+    public List<JobShift> getJobShifts(User userFilter) {
+        return this.jobShifts.stream()
                 .filter(jobShift -> jobShift.getUser() == userFilter)
                 .collect(Collectors.toList());
-        else jobShifts = new ArrayList<>(this.jobShifts);
-        return jobShifts;
     }
 
-    /**
-     * Creates a new jobShift with the given parameters.
-     * The jobShift is automatically added to jobShiftList.
-     * The created jobShift is returned.
-     *
-     * @param user the user the jobShift is assigned to
-     * @param startingTime startTime of the jobShift
-     * @param duration duration of the jobShift
-     * @param info info about the jobShift
-     * @return JobShift
-     * @deprecated Use addJobShift instead
-     */
-    public JobShift newJobShift(AbstractUser user, LocalDateTime startingTime, Duration duration, String info) {
-        JobShift jobShift = new JobShift(user, startingTime, duration, info);
-        jobShifts.add(jobShift);
-        return jobShift;
-    }
-
+    // Jobshift is always sorted by starting time 
     public void addJobShift(JobShift jobShift) {
         jobShifts.add(jobShift);
+        Collections.sort(jobShifts);
     }
 
     /**
-     * Removes the jobShift from the list and deletes it from memory.
-     * WARNING: the jobShift cannot be recovered.
+     * Removes the jobShift from the list.
      *
      * @param jobShift the jobShift to be deleted
      * @return true if deleted, else false
      */
-    public boolean deleteJobShift(JobShift jobShift) {
-        boolean rtn = jobShifts.remove(jobShift);
-        System.gc();
-        return rtn;
+    public boolean removeJobShift(JobShift jobShift) {
+        return jobShifts.remove(jobShift);
     }
 
     @Override
