@@ -36,7 +36,6 @@ public class UserHomeController extends AbstractController {
 
         // Lists all groups
         for (Group group : main.getGroupList().getGroups(activeUser)) {
-            // String groupName = group.getGroupName();
             Text text = new Text(group.getGroupName());
             groups.getItems().add(text);
             text.setOnMouseClicked(new EventHandler<MouseEvent>() {

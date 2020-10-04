@@ -21,7 +21,7 @@ public class JoinGroupController extends AbstractController {
     @FXML
     Button goBackButton;
 
-    // Fungerer ikke, vet ikke hvorfor
+    // Fungerer ikke, vet ikke hvorfor, heller ingen melding hvis man skriver inn feil kode
     @FXML
     public void initalize(){
         // Sets a listener to prevent non-integers on groupID

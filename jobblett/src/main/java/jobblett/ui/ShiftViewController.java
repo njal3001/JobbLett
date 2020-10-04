@@ -19,16 +19,18 @@ public class ShiftViewController extends AbstractController{
     @FXML
     Text groupID;
 
-    /*@FXML
-    Button backToHome;
-    */
-
     @FXML
     Button backToGroup;
 
-
     @FXML
-    public void initialize() {
+    Text shiftsText;
+
+    @FXML 
+    Button newShiftButton;
+
+
+    @Override
+    public void update() {
         // Sets GroupName on top of the screen
         groupName.setText(activeGroup.getGroupName());
 
@@ -46,11 +48,11 @@ public class ShiftViewController extends AbstractController{
     public void backButton() throws IOException {
         changeScreen("GroupHome.fxml", backToGroup, main);
     }
-/*    
+
     @FXML
-    public void viewShifts() throws IOException {
-        changeScreen("ShiftView.fxml", goToShifts);
-    }*/
-
-
+    public void goToCreateShift() throws IOException {
+        changeScreen("CreateShift.fxml", newShiftButton, main);
+    }
+    
+    
 }

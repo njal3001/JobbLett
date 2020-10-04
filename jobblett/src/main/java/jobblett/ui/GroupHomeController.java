@@ -24,6 +24,8 @@ public class GroupHomeController extends AbstractController{
     @FXML
     Button goToShifts;
 
+    //Må fikse teksten på FXML
+    // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme kode hver gang vi skal vise noe med listView
 
     @Override
     public void update() {

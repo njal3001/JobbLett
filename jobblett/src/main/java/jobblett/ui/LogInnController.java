@@ -26,9 +26,11 @@ public class LogInnController extends AbstractController {
     @FXML
     PasswordField passwordField;
 
-    @FXML
-    public void initialize(){
-        //errorMessage.setVisible(false);
+    // Må fikse teksten på FXML
+
+    @Override
+    public void update(){
+        errorMessage.setText("");
     }
     @FXML
     public void goToCreateUser() throws IOException {
