@@ -42,6 +42,7 @@ public class ShiftViewController extends AbstractController{
             Text text = new Text(shift.toString());
             shifts.getItems().add(text);
         }
+        newShiftButton.setVisible(activeGroup.isAdmin(activeUser));
     }
 
     @FXML

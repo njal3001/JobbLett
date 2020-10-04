@@ -27,7 +27,7 @@
             <Font name="Arial" size="13.0" />
         </font>
     </Button>
-    <TextArea fx:id="infoText" layoutX="66.0" layoutY="379.0" prefHeight="133.0" prefWidth="200.0" />
+    <TextArea fx:id="infoArea" layoutX="66.0" layoutY="379.0" prefHeight="133.0" prefWidth="200.0" />
     <DatePicker fx:id="date" layoutX="72.0" layoutY="262.0" prefHeight="27.0" prefWidth="200.0" />
     <TextField fx:id="fromField" layoutX="70.0" layoutY="307.0" prefHeight="27.0" prefWidth="56.0" />
     <ListView fx:id="members" layoutX="66.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0" />

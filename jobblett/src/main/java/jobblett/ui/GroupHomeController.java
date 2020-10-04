@@ -26,6 +26,7 @@ public class GroupHomeController extends AbstractController{
 
     //Må fikse teksten på FXML
     // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme kode hver gang vi skal vise noe med listView
+    // Må legge til en måte at man kan se hvem som er admin
 
     @Override
     public void update() {

@@ -19,7 +19,13 @@ public class Group implements Iterable<User> {
     private JobShiftList jobShifts = new JobShiftList();
     private User admin;
 
-    public void addJobShift(JobShift jobShift) {
+
+    // Føles ikke riktig å gjøre det slik, men tenker at vi må ha noe logikk som gjør at en vanlig user ikke kan lage job shift. 
+    //Men dette vil ikke bli brukt i kontrolleren siden der fjerner vi bare knappen for å lage job shift hvis man ikke er admin
+    //Burde finne en annen måte å gjøre det på kanskje
+    public void addJobShift(JobShift jobShift, User user) {
+        if(!isAdmin(user))
+            throw new IllegalArgumentException("It's only admin that can add new job shift");
         jobShifts.addJobShift(jobShift);
     }
 
