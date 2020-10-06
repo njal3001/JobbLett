@@ -1,9 +1,8 @@
 package jobblett.ui;
 
 import javafx.scene.control.Button;
-import jobblett.core.AbstractUser;
+import jobblett.core.User;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import java.io.IOException;
@@ -25,18 +24,20 @@ public class GroupHomeController extends AbstractController{
     @FXML
     Button goToShifts;
 
+    //Må fikse teksten på FXML
+    // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme kode hver gang vi skal vise noe med listView
+    // Må legge til en måte at man kan se hvem som er admin
 
-
-    @FXML
-    public void initialize() {
+    @Override
+    public void update() {
         // Sets GroupName on top of the screen
         groupName.setText(activeGroup.getGroupName());
 
         // Shows GroupID
-        groupID.setText("GroupID: "+activeGroup.getGroupID());
+        groupID.setText("GroupID: " + activeGroup.getGroupID());
 
         // Lists all members
-        for (AbstractUser user : activeGroup) {
+        for (User user : activeGroup) {
             Text text = new Text(user.toString());
             members.getItems().add(text);
         }
@@ -44,13 +45,11 @@ public class GroupHomeController extends AbstractController{
 
     @FXML
     public void backButton() throws IOException {
-        changeScreen("UserHome.fxml", backToHome);
+        changeScreen("UserHome.fxml", backToHome, main);
     }
     
     @FXML
     public void viewShifts() throws IOException {
-        changeScreen("ShiftView.fxml", goToShifts);
+        changeScreen("ShiftView.fxml", goToShifts, main);
     }
-
-
 }

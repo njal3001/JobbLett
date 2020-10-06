@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import jobblett.core.AbstractUser;
+import jobblett.core.User;
 
 public class LogInnController extends AbstractController {
 
@@ -26,24 +26,27 @@ public class LogInnController extends AbstractController {
     @FXML
     PasswordField passwordField;
 
-    @FXML
-    public void initialize(){
-        //errorMessage.setVisible(false);
+    // Må fikse teksten på FXML
+
+    @Override
+    public void update(){
+        errorMessage.setText("");
     }
     @FXML
     public void goToCreateUser() throws IOException {
-        changeScreen("CreateUser.fxml", createAccount);
+        changeScreen("CreateUser.fxml", createAccount, main);
     }
 
    @FXML
     public void logInToUserHome() throws IOException{
         String userName = this.userName.getText();
         String password = this.passwordField.getText();
-        AbstractUser user = main.getUserList().login(userName, password);
-        if (user == null) errorMessage.setText("Wrong username or password");
+        User user = main.getUserList().login(userName, password);
+        if (user == null) 
+            errorMessage.setText("Wrong username or password");
         else {
         	main.logIn(user);
-            changeScreen("UserHome.fxml", login);
+            changeScreen("UserHome.fxml", login, main);
         	}
         }
 

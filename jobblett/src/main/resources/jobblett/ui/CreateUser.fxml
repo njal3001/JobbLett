@@ -24,13 +24,13 @@
    <PasswordField fx:id="password" layoutX="146.0" layoutY="204.0" />
    <TextField fx:id="givenName" layoutX="146.0" layoutY="259.0" />
    <TextField fx:id="familyName" layoutX="146.0" layoutY="316.0" />
-   <Button fx:id="createAccount" layoutX="226.0" layoutY="371.0" mnemonicParsing="false" onAction="#CreateAccount" text="Create account">
+   <Button fx:id="createAccountButton" layoutX="226.0" layoutY="371.0" mnemonicParsing="false" onAction="#createAccount" text="Create account">
       <font>
          <Font name="Arial" size="13.0" />
       </font>
    </Button>
    <Text fx:id="errorMessage" layoutX="93.0" layoutY="517.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="106.16259765625" />
-   <Button fx:id="goBack" layoutX="40.0" layoutY="371.0" mnemonicParsing="false" onAction="#goToLogIn" text="Tilbake">
+   <Button fx:id="goBackButton" layoutX="40.0" layoutY="371.0" mnemonicParsing="false" onAction="#goToLogIn" text="Back">
       <font>
          <Font name="Arial" size="13.0" />
       </font>

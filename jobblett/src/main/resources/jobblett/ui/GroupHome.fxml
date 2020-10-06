@@ -16,7 +16,7 @@
       <Text layoutX="144.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Members:" />
       <Text fx:id="groupID" layoutX="80.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GroupID: " wrappingWidth="96.79052734375" />
       <ListView fx:id="members" layoutX="80.0" layoutY="168.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button fx:id="backToHome" layoutX="253.0" layoutY="576.0" mnemonicParsing="false" onAction="#backButton" text="Tilbake" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
+      <Button fx:id="backToHome" layoutX="253.0" layoutY="576.0" mnemonicParsing="false" onAction="#backButton" text="Back" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
       <Button fx:id="goToShifts" layoutX="118.0" layoutY="377.0" mnemonicParsing="false" onAction="#viewShifts" prefHeight="27.0" prefWidth="125.0" style="-fx-background-color: #21b1ff;" text="View shifts" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
    </children>
 </Pane>

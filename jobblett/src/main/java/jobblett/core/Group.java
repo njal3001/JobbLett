@@ -5,24 +5,27 @@ import com.fasterxml.jackson.annotation.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Represents a group in jobblett.
  */
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property = "groupID")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
-public class Group implements Iterable<AbstractUser> {
+public class Group implements Iterable<User> {
 
     private String groupName;
-    private Collection<AbstractUser> groupMembers = new ArrayList<>();
+    private Collection<User> groupMembers = new ArrayList<>();
     private final int groupID;
-    private Collection<Employee> employees = new ArrayList<>();
-    private Collection<Administrator> administrators = new ArrayList<>();
     private JobShiftList jobShifts = new JobShiftList();
+    private User admin;
 
-    public void addJobShift(JobShift jobShift) {
+
+    // Føles ikke riktig å gjøre det slik, men tenker at vi må ha noe logikk som gjør at en vanlig user ikke kan lage job shift. 
+    //Men dette vil ikke bli brukt i kontrolleren siden der fjerner vi bare knappen for å lage job shift hvis man ikke er admin
+    //Burde finne en annen måte å gjøre det på kanskje
+    public void addJobShift(JobShift jobShift, User user) {
+        if(!isAdmin(user))
+            throw new IllegalArgumentException("It's only admin that can add new job shift");
         jobShifts.addJobShift(jobShift);
     }
 
@@ -45,9 +48,20 @@ public class Group implements Iterable<AbstractUser> {
      * @param user the user to be added
      * @throws IllegalArgumentException if the user is already a groupMember
      */
-    public void addUser(AbstractUser user) throws IllegalArgumentException {
+    public void addUser(User user) throws IllegalArgumentException {
         checkExistingUser(user);
+        // The first member to join the group becomes admin
+        if(groupMembers.size() == 0 && admin == null)
+            admin = user;
         this.groupMembers.add(user);
+    }
+
+    public boolean isAdmin(User user){
+        return user == admin;
+    }
+
+    public User getAdmin(){
+        return admin;
     }
 
     /**
@@ -56,7 +70,7 @@ public class Group implements Iterable<AbstractUser> {
      * @param user the user that should be removed
      * @return returns true if the user was contained and removed, else false
      */
-    public boolean removeUser(AbstractUser user) {
+    public boolean removeUser(User user) {
         return this.groupMembers.remove(user);
     }
 
@@ -66,7 +80,7 @@ public class Group implements Iterable<AbstractUser> {
      * @param username the username used to search
      * @return  returns the user if found, else null.
      */
-    public AbstractUser getUser(String username) {
+    public User getUser(String username) {
         return groupMembers.stream()
                 .filter(group -> group.getUserName().equals(username))
                 .findFirst()
@@ -74,33 +88,32 @@ public class Group implements Iterable<AbstractUser> {
     }
 
     /**
-     * Checks if a user with the same username already exist.
+     * Checks if user is already a member of the group.
      *
      * @param user the user that should be checked
      * @throws IllegalArgumentException throws exception if the user already exist.
      */
-    private void checkExistingUser(AbstractUser user) throws IllegalArgumentException {
+    private void checkExistingUser(User user) throws IllegalArgumentException {
         if (this.groupMembers.contains(user)) {
             throw new IllegalArgumentException("This user is already in the group");
         }
     }
 
     /**
-     * Checks if the new groupName is valid and changes the groupName.
+     * Checks if the new group name is valid and changes the groupName.
      *
-     * @param groupName the new groupName
-     * @throws IllegalArgumentException invalid groupName throws exception
+     * @param groupName the new group name
+     * @throws IllegalArgumentException invalid group name throws exception
      */
     public void setGroupName(String groupName) throws IllegalArgumentException {
         checkGroupName(groupName);
         this.groupName = groupName;
     }
 
-
     /**
-     * Checks if the groupName is more than 2 characters.
+     * Checks if the group name is more than 1 character.
      *
-     * @param groupName the groupName
+     * @param groupName the group name
      * @throws IllegalArgumentException throws exception if criteria is not fulfilled
      */
     private void checkGroupName(String groupName) throws IllegalArgumentException {
@@ -110,7 +123,7 @@ public class Group implements Iterable<AbstractUser> {
     }
 
     /**
-     * Gets the amount of members in a group.
+     * Gets the number of members in a group.
      *
      * @return amount of members
      */
@@ -139,22 +152,6 @@ public class Group implements Iterable<AbstractUser> {
         return groupID;
     }
 
-
-
-    public Collection<Administrator> getAdmins(){
-        return StreamSupport.stream(spliterator(),false)
-                .filter(a -> a instanceof Administrator)
-                .map(a -> (Administrator)a)
-                .collect(Collectors.toList());
-    }
-
-    public Collection<Employee> getEmployees(){
-        return StreamSupport.stream(spliterator(),false)
-                .filter(e -> e instanceof Employee)
-                .map(e -> (Employee)e)
-                .collect(Collectors.toList());
-    }
-
     public JobShiftList getJobShifts() {
         return jobShifts;
     }
@@ -162,7 +159,7 @@ public class Group implements Iterable<AbstractUser> {
     @Override
     public String toString() {
         StringBuilder members = new StringBuilder();
-        for (AbstractUser user : this) {
+        for (User user : this) {
             members.append(user.toString()).append(", ");
         }
         members.setLength(members.length() - 2);
@@ -170,7 +167,7 @@ public class Group implements Iterable<AbstractUser> {
     }
 
     @Override
-    public Iterator<AbstractUser> iterator() {
+    public Iterator<User> iterator() {
         return groupMembers.iterator();
     }
 }

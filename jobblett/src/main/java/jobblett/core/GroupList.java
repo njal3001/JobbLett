@@ -91,7 +91,7 @@ public class GroupList implements Iterable<Group> {
      * @return a collection with groups
      */
     //LagTest
-    public Collection<Group> getGroups(AbstractUser user){
+    public Collection<Group> getGroups(User user){
         return groups.stream()
                 .filter(group -> group.getUser(user.getUserName())==user)
                 .collect(Collectors.toList());

@@ -1,13 +1,12 @@
 package jobblett.json;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import jobblett.core.Employee;
 import jobblett.core.Group;
 import jobblett.core.JobShift;
 import jobblett.core.Main;
+import jobblett.core.User;
 
 import java.io.File;
 import java.time.Duration;
@@ -48,14 +47,15 @@ public class JSONSerialize {
         }
     }
 
+    /*
     public static void main(String[] args) {
         Main main = new Main(true);
         Group gruppe7 = main.getGroupList().newGroup("Gruppe7");
 
-        main.getUserList().addUser(new Employee("olav", "bestePassord123", "Olav", "Nordmann"));
-        main.getUserList().addUser(new Employee("nora", "bestePassord123", "Nora", "Bekkestad"));
-        main.getUserList().addUser(new Employee("petter", "bestePassord123", "Petter", "Petterson"));
-        main.getUserList().addUser(new Employee("david", "bestePassord123", "David", "Berg"));
+        main.getUserList().addUser(new User("olav", "bestePassord123", "Olav", "Nordmann"));
+        main.getUserList().addUser(new User("nora", "bestePassord123", "Nora", "Bekkestad"));
+        main.getUserList().addUser(new User("petter", "bestePassord123", "Petter", "Petterson"));
+        main.getUserList().addUser(new User("david", "bestePassord123", "David", "Berg"));
 
         gruppe7.addUser(main.getUserList().getUser("olav"));
         gruppe7.addUser(main.getUserList().getUser("nora"));
@@ -66,4 +66,5 @@ public class JSONSerialize {
 
         new JSONSerialize(main,"defaultMain.json").exportJSON();
     }
+    */
 }
