@@ -8,6 +8,7 @@ target/
 *.logs
 *.iml
 .idea/
+.settings/
 .eclipse
 .classpath
 .project
