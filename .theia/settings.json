@@ -5,5 +5,10 @@
         "**/.project": true,
         "**/.settings": true,
         "**/.factorypath": true
+    },
+    "java.format.settings.url": "jobblett/config/checkstyle/eclipse-java-google-style.xml",
+    "[java]": {
+      "editor.tabSize": 2
     }
+
 }

@@ -3,6 +3,7 @@ package jobblett.ui;
 import javafx.scene.control.Button;
 import jobblett.core.User;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import java.io.IOException;
@@ -45,11 +46,11 @@ public class GroupHomeController extends AbstractController{
 
     @FXML
     public void backButton() throws IOException {
-        changeScreen("UserHome.fxml", backToHome, main);
+        changeScreen(new FXMLLoader(getClass().getResource("UserHome.fxml")), backToHome, main);
     }
     
     @FXML
     public void viewShifts() throws IOException {
-        changeScreen("ShiftView.fxml", goToShifts, main);
+        changeScreen(new FXMLLoader(getClass().getResource("ShiftView.fxml")), goToShifts, main);
     }
 }

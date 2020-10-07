@@ -3,6 +3,7 @@ package jobblett.ui;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
@@ -47,12 +48,12 @@ public class ShiftViewController extends AbstractController{
 
     @FXML
     public void backButton() throws IOException {
-        changeScreen("GroupHome.fxml", backToGroup, main);
+        changeScreen(new FXMLLoader(getClass().getResource("GroupHome.fxml")), backToGroup, main);
     }
 
     @FXML
     public void goToCreateShift() throws IOException {
-        changeScreen("CreateShift.fxml", newShiftButton, main);
+        changeScreen(new FXMLLoader(getClass().getResource("CreateShift.fxml")), newShiftButton, main);
     }
     
     

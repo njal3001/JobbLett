@@ -12,80 +12,82 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * Used to deserialize main.json to Main.class from the systems user-folder.
- * Imports the data-file from $USER_HOME/.jobblett/main.json
+ * Used to deserialize main.json to Main.class from the systems user-folder. Imports the data-file
+ * from $USER_HOME/.jobblett/main.json
  */
 public class JSONDeserialize {
-    Main main;
-    ObjectMapper objectMapper;
-    String json;
-    Reader reader;
+  ObjectMapper objectMapper;
+  Reader reader;
 
-    /**
-     * Initializes a JSONDeserialize-instance and reads main.json.
-     */
-    public JSONDeserialize() {
-        File f = new File(System.getProperty("user.home")+"/.jobblett");
-        //noinspection ResultOfMethodCallIgnored
-        f.mkdir();
-        try {
-            Path path = Paths.get(System.getProperty("user.home")+"/.jobblett","main.json");
-            reader = new FileReader(path.toFile());
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-            useDefaultValues();
-        }
-        // create object mapper instance
-        objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+  /**
+   * Initializes a JSONDeserialize-instance and reads main.json.
+   */
+  public JSONDeserialize() {
+    File f = new File(System.getProperty("user.home") + "/.jobblett");
+    // noinspection ResultOfMethodCallIgnored
+    boolean mkdir = f.mkdir();
+    if (mkdir)
+      useDefaultValues();
+    else {
+      try {
+        Path path = Paths.get(System.getProperty("user.home") + "/.jobblett", "main.json");
+        reader = new FileReader(path.toFile(), StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        System.out.println(e.getMessage());
+        useDefaultValues();
+      }
+    }
+    // create object mapper instance
+    objectMapper = new ObjectMapper();
+    objectMapper.registerModule(new JavaTimeModule());
+    objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+  }
+
+  private void useDefaultValues() {
+    URL url = getClass().getResource("defaultMain.json");
+    try {
+      this.reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Imports main.json and returns a new Main.class instance with tha data.
+   *
+   * @return Main.class object
+   */
+  public Main importJSON() {
+    Main main = null;
+    try {
+      // deserialize json string
+      main = objectMapper.readValue(reader, Main.class);
+
+    } catch (Exception ex) {
+      ex.printStackTrace();
     }
 
-    private void useDefaultValues() {
-        URL url = getClass().getResource("defaultMain.json");
-        try {
-            this.reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    return main;
+  }
+
+  /**
+   * Updates an existing Main.class instance with data from main.json
+   *
+   * @param main the existing Main.class instance
+   */
+  public void updateMain(Main main) {
+    try {
+      objectMapper.readerForUpdating(main).readValue(reader, Main.class);
+    } catch (Exception e) {
+      System.out.println("Existing data is not found or corrupted. Using default data.");
+      useDefaultValues();
+      try {
+        objectMapper.readerForUpdating(main).readValue(reader, Main.class);
+      } catch (IOException er) {
+        e.printStackTrace();
+        er.printStackTrace();
+      }
     }
-
-    /**
-     * Imports main.json and returns a new Main.class instance with tha data.
-     *
-     * @return Main.class object
-     */
-    public Main importJSON() {
-        Main main = null;
-        try {
-            // deserialize json string
-            main = objectMapper.readValue(reader,Main.class);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return main;
-    }
-
-    /**
-     * Updates an existing Main.class instance with data from main.json
-     *
-     * @param main the existing Main.class instance
-     */
-    public void updateMain(Main main) {
-        try {
-            objectMapper.readerForUpdating(main).readValue(reader,Main.class);
-        } catch (Exception e) {
-            System.out.println("Existing data is not found or corrupted. Using default data.");
-            useDefaultValues();
-            try {
-                objectMapper.readerForUpdating(main).readValue(reader,Main.class);
-            } catch (IOException er) {
-                e.printStackTrace();
-                er.printStackTrace();
-            }
-        }
-    }
+  }
 
 }

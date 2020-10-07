@@ -4,13 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jobblett.core.Group;
-import jobblett.core.JobShift;
 import jobblett.core.Main;
 import jobblett.core.User;
 
 import java.io.File;
 import java.time.Duration;
-import java.time.LocalDateTime;
 
 /**
  * Used to serialize Main.class to main.json in the systems user-folder.

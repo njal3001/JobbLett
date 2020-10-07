@@ -5,10 +5,10 @@ import javafx.scene.control.DatePicker;
 import jobblett.core.JobShift;
 import jobblett.core.User;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -52,7 +52,7 @@ public class CreateShiftController extends AbstractController {
 
     @FXML
     public void goBack() throws IOException {
-        changeScreen("ShiftView.fxml", goBackButton, main);
+        changeScreen(new FXMLLoader(getClass().getResource("ShiftView.fxml")), goBackButton, main);
     }
 
     @FXML

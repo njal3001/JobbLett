@@ -3,7 +3,6 @@ package jobblett.ui;
 import jobblett.core.Group;
 import jobblett.core.Main;
 import jobblett.core.User;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -29,9 +28,8 @@ public abstract class AbstractController {
     }
 
     // Burde finnes en bedre måte enn å bruke node hver gang for å finne stage
-    protected void changeScreen(String URLName, Node button, Main main) throws IOException {
+    protected void changeScreen(FXMLLoader loader, Node button, Main main) throws IOException {
         Stage stage = (Stage) button.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(URLName));
         Parent root = loader.load();
         AbstractController controller = (AbstractController) loader.getController();
         controller.setMain(main);

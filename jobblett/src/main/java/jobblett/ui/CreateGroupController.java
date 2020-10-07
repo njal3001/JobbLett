@@ -3,6 +3,7 @@ package jobblett.ui;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -21,7 +22,7 @@ public class CreateGroupController extends AbstractController {
 
     @FXML
     public void goToUserHome() throws IOException {
-        changeScreen("UserHome.fxml", goBackButton, main);
+        changeScreen(new FXMLLoader(getClass().getResource("UserHome.fxml")), goBackButton, main);
     }
 
    @FXML
@@ -31,7 +32,7 @@ public class CreateGroupController extends AbstractController {
             Group newGroup = main.getGroupList().newGroup(groupName);
             newGroup.addUser(activeUser);
             main.setActiveGroup(newGroup);
-            changeScreen("GroupHome.fxml", createGroupButton, main);
+            changeScreen(new FXMLLoader(getClass().getResource("GroupHome.fxml")), createGroupButton, main);
         } catch(Exception e){
             errorMessage.setText(e.getMessage());
         }

@@ -38,7 +38,7 @@ public class JobShiftList implements Iterable<JobShift> {
     // Jobshift is always sorted by starting time 
     public void addJobShift(JobShift jobShift) {
         jobShifts.add(jobShift);
-        Collections.sort(jobShifts);
+        Collections.sort(jobShifts, new JobShiftStartTimeComparator());
     }
 
     /**
