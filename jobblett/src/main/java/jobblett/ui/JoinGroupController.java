@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -42,7 +43,7 @@ public class JoinGroupController extends AbstractController {
 
     @FXML
     public void goToUserHome() throws IOException {
-        changeScreen("UserHome.fxml", goBackButton, main);
+        changeScreen(new FXMLLoader(getClass().getResource("UserHome.fxml")), goBackButton, main);
     }
 
    @FXML
@@ -51,7 +52,7 @@ public class JoinGroupController extends AbstractController {
         try{
             Group group = main.getGroupList().getGroup(groupID);
             group.addUser(main.getLoggedIn());
-            changeScreen("GroupHome.fxml", joinGroupButton, main);
+            changeScreen(new FXMLLoader(getClass().getResource("GroupHome.fxml")), joinGroupButton, main);
         } catch(Exception e){
             errorMessage.setText(e.getMessage());
         }

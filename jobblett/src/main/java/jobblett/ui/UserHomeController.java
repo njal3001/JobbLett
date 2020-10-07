@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
@@ -43,7 +44,7 @@ public class UserHomeController extends AbstractController {
                 public void handle(MouseEvent event) {
                     main.setActiveGroup(group);
                     try {
-                        changeScreen("GroupHome.fxml", text, main);
+                        changeScreen(new FXMLLoader(getClass().getResource("GroupHome.fxml")), text, main);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -56,7 +57,7 @@ public class UserHomeController extends AbstractController {
     public void logOut() {
         main.logOut();
         try {
-            changeScreen("Login.fxml", logOutButton, main);
+            changeScreen(new FXMLLoader(getClass().getResource("Login.fxml")), logOutButton, main);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,11 +65,11 @@ public class UserHomeController extends AbstractController {
 
     @FXML
     public void createGroup() throws IOException {
-    	changeScreen("CreateGroup.fxml", createGroupButton, main);
+    	changeScreen(new FXMLLoader(getClass().getResource("CreateGroup.fxml")), createGroupButton, main);
     }
 
     @FXML
     public void joinGroup() throws IOException {
-    	changeScreen("JoinGroup.fxml", joinGroupButton, main);
+    	changeScreen(new FXMLLoader(getClass().getResource("JoinGroup.fxml")), joinGroupButton, main);
     }
 }

@@ -3,6 +3,7 @@ package jobblett.ui;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -34,7 +35,7 @@ public class LogInnController extends AbstractController {
     }
     @FXML
     public void goToCreateUser() throws IOException {
-        changeScreen("CreateUser.fxml", createAccount, main);
+        changeScreen(new FXMLLoader(getClass().getResource("CreateUser.fxml")), createAccount, main);
     }
 
    @FXML
@@ -46,7 +47,7 @@ public class LogInnController extends AbstractController {
             errorMessage.setText("Wrong username or password");
         else {
         	main.logIn(user);
-            changeScreen("UserHome.fxml", login, main);
+            changeScreen(new FXMLLoader(getClass().getResource("UserHome.fxml")), login, main);
         	}
         }
 
