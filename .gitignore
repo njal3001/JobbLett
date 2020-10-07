@@ -9,6 +9,8 @@ target/
 *.iml
 .idea/
 .eclipse
+.classpath
+.project
 
 # ignore macOS temporary files
 .DS_Store
