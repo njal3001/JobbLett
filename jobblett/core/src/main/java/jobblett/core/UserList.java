@@ -37,7 +37,6 @@ public class UserList implements Iterable<User> {
         }
         this.users.addAll(Arrays.asList(users));
     }
-
     
     /**
      * Lets the user log into their account
