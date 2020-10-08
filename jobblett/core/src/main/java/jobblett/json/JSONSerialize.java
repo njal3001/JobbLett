@@ -2,11 +2,9 @@ package jobblett.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import jobblett.core.Group;
-import jobblett.core.JobShift;
-import jobblett.core.Main;
-import jobblett.core.User;
+import jobblett.core.*;
 
 import java.io.File;
 import java.time.Duration;
@@ -36,12 +34,15 @@ public class JSONSerialize {
      */
     public void exportJSON() {
         try {
-            // create object mapper instance
+
             ObjectMapper objectMapper = new ObjectMapper();
+
             objectMapper.registerModule(new JavaTimeModule());
+            objectMapper.registerModule(new CoreModule());
+
             objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-            // convert map file to JSON
             objectMapper.writeValue(new File(fileLocation), object);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -64,7 +65,7 @@ public class JSONSerialize {
 
         gruppe7.getJobShifts().addJobShift(new JobShift(main.getUserList().getUser("nora"), LocalDateTime.now(), Duration.ofHours(2),"Dette er Olav sin skift."));
 
-        new JSONSerialize(main,"main.json").exportJSON();
-        //new JSONSerialize(main,"defaultMain.json").exportJSON();
+        //new JSONSerialize(main,"main.json").exportJSON();
+        new JSONSerialize(main,"defaultMain.json").exportJSON();
     }
 }
