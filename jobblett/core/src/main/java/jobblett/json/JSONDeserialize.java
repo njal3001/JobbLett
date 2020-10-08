@@ -56,17 +56,16 @@ public class JSONDeserialize {
    * Imports main.json and returns a new Main.class instance with tha data.
    *
    * @return Main.class object
+   * @deprecated Use updateMain(main) with new Main-instance instead.
    */
   public Main importJSON() {
     Main main = null;
     try {
       // deserialize json string
       main = objectMapper.readValue(reader, Main.class);
-
     } catch (Exception ex) {
       ex.printStackTrace();
     }
-
     return main;
   }
 

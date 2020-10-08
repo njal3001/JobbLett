@@ -16,15 +16,15 @@ public abstract class AbstractController {
     protected User activeUser;
     protected Group activeGroup;
 
-    protected AbstractController(){
-        main = new Main();
-    }
-
     protected void setMain(Main main){
         this.main = main;
         this.activeUser = main.getLoggedIn();
         this.activeGroup = main.getActiveGroup();
         update();
+    }
+
+    protected Main getMain() {
+        return main;
     }
 
     // Burde finnes en bedre måte enn å bruke node hver gang for å finne stage

@@ -22,16 +22,23 @@ public class User {
     private String password;
     private String givenName;
     private String familyName;
+
     /**
      * Checks if the parameters are valid before creating instance a User.
      * Allows JSON to create empty Users.
      * 
-     * @param userName
+     * @param username
      * @param password
      * @param givenName
      * @param familyName
      */
-    public User(String username, String password, String givenName, String familyName){
+    @JsonCreator
+    public User(
+            @JsonProperty("username") String username,
+            @JsonProperty("password") String password,
+            @JsonProperty("givenName") String givenName,
+            @JsonProperty("familyName") String familyName
+    ){
         if (username != null) if(!validUsername(username)) throw new IllegalArgumentException("Not a valid userName");
         this.username = username;
         setPassword(password);

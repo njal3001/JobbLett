@@ -4,11 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jobblett.core.Group;
+import jobblett.core.JobShift;
 import jobblett.core.Main;
 import jobblett.core.User;
 
 import java.io.File;
 import java.time.Duration;
+import java.time.LocalDateTime;
 
 /**
  * Used to serialize Main.class to main.json in the systems user-folder.
@@ -45,9 +47,9 @@ public class JSONSerialize {
         }
     }
 
-    /*
+
     public static void main(String[] args) {
-        Main main = new Main(true);
+        Main main = new Main();
         Group gruppe7 = main.getGroupList().newGroup("Gruppe7");
 
         main.getUserList().addUser(new User("olav", "bestePassord123", "Olav", "Nordmann"));
@@ -62,7 +64,7 @@ public class JSONSerialize {
 
         gruppe7.getJobShifts().addJobShift(new JobShift(main.getUserList().getUser("nora"), LocalDateTime.now(), Duration.ofHours(2),"Dette er Olav sin skift."));
 
-        new JSONSerialize(main,"defaultMain.json").exportJSON();
+        new JSONSerialize(main,"main.json").exportJSON();
+        //new JSONSerialize(main,"defaultMain.json").exportJSON();
     }
-    */
 }
