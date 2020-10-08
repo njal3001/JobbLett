@@ -32,8 +32,7 @@ public class LogInnController extends AbstractController {
     // Må fikse teksten på FXML
 
     public LogInnController() {
-        super.main = new Main();
-        new JSONDeserialize().updateMain(super.main);
+        super.main = new JSONDeserialize().importJSON();
     }
 
     @Override
