@@ -44,6 +44,8 @@ public class JobShift{
   }
 
   public void setStartingTime(LocalDateTime startingTime) {
+    if(startingTime.isBefore(LocalDateTime.now()))
+      throw new IllegalArgumentException("Starting time must be later than the current time");
     this.startingTime = startingTime;
   }
 
