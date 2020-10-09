@@ -9,11 +9,12 @@ import java.nio.charset.StandardCharsets;
 /**
  * Data object representing a User in real life.
  */
+/*
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property = "username")
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS,
         property = "type")
-        
+    */
 public class User {
     // username is final after being initialized
     private final String username;
@@ -22,19 +23,28 @@ public class User {
     private String password;
     private String givenName;
     private String familyName;
+
     /**
      * Checks if the parameters are valid before creating instance a User.
      * Allows JSON to create empty Users.
      * 
-     * @param userName
+     * @param username
      * @param password
      * @param givenName
      * @param familyName
      */
     public User(String username, String password, String givenName, String familyName){
-        if (username != null) if(!validUsername(username)) throw new IllegalArgumentException("Not a valid userName");
+        this(username, password, givenName, familyName, false);
+    }
+
+    public User(String username, String password, String givenName, String familyName, boolean passwordHashed) {
+        if(!validUsername(username)) throw new IllegalArgumentException("Not a valid userName");
         this.username = username;
-        setPassword(password);
+        if (passwordHashed) {
+            this.password = password;
+        } else {
+            setPassword(password);
+        }
         setName(givenName, familyName);
     }
 
@@ -162,7 +172,15 @@ public class User {
                 .toString();
         return this.password.matches(hashedPassword);
     }
-    
+
+    /**
+     * Only used by JSON Serializer
+     * @return hashedPassword
+     */
+    public String getHashedPassword() {
+        return password;
+    }
+
     @Override
 	public String toString(){
         return givenName + " " + familyName + " (@" + username + ")";

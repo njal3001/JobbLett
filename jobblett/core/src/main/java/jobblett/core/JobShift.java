@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.ANY,
-    setterVisibility = JsonAutoDetect.Visibility.ANY)
 public class JobShift{
 
   private User user;
@@ -14,36 +12,29 @@ public class JobShift{
   private Duration duration;
   private String info;
 
-  @JsonCreator
-  public JobShift(@JsonProperty("user") User user, @JsonProperty("startingTime") LocalDateTime startingTime,
-      @JsonProperty("duration") Duration duration, @JsonProperty("info") String info) {
+  public JobShift(User user, LocalDateTime startingTime, Duration duration, String info) {
     setUser(user);
     setStartingTime(startingTime);
     setDuration(duration);
     setInfo(info);
   }
 
-  @JsonGetter
   public User getUser() {
     return user;
   }
 
-  @JsonGetter
   public LocalDateTime getStartingTime() {
     return startingTime;
   }
 
-  @JsonGetter
   public Duration getDuration() {
     return duration;
   }
 
-  @JsonIgnore
   public LocalDateTime getEndingTime() {
     return startingTime.plus(duration);
   }
 
-  @JsonGetter
   public String getInfo() {
     return info;
   }

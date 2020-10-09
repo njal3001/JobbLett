@@ -8,7 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import jobblett.core.Main;
 import jobblett.core.User;
+import jobblett.json.JSONDeserialize;
 
 public class LoginController extends AbstractController {
 
@@ -28,6 +30,10 @@ public class LoginController extends AbstractController {
     PasswordField passwordField;
 
     // Må fikse teksten på FXML
+
+    public LogInnController() {
+        super.main = new JSONDeserialize().importJSON();
+    }
 
     @Override
     public void update(){
