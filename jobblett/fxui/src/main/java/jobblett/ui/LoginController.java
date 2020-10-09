@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import jobblett.core.User;
 
-public class LogInnController extends AbstractController {
+public class LoginController extends AbstractController {
 
     @FXML
     Button createAccount;
@@ -19,7 +19,7 @@ public class LogInnController extends AbstractController {
     Button login;
 
     @FXML
-    TextField userName;
+    TextField usernameField;
 
     @FXML
     Text errorMessage;
@@ -33,6 +33,7 @@ public class LogInnController extends AbstractController {
     public void update(){
         errorMessage.setText("");
     }
+    
     @FXML
     public void goToCreateUser() throws IOException {
         changeScreen(new FXMLLoader(getClass().getResource("CreateUser.fxml")), createAccount, main);
@@ -40,7 +41,7 @@ public class LogInnController extends AbstractController {
 
    @FXML
     public void logInToUserHome() throws IOException{
-        String userName = this.userName.getText();
+        String userName = this.usernameField.getText();
         String password = this.passwordField.getText();
         User user = main.getUserList().login(userName, password);
         if (user == null) 

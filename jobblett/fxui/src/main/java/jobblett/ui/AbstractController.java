@@ -20,7 +20,7 @@ public abstract class AbstractController {
         main = new Main();
     }
 
-    protected void setMain(Main main){
+    public void setMain(Main main){
         this.main = main;
         this.activeUser = main.getLoggedIn();
         this.activeGroup = main.getActiveGroup();
