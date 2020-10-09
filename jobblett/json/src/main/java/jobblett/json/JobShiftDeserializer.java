@@ -27,7 +27,9 @@ public class JobShiftDeserializer extends JsonDeserializer<JobShift> {
         //LocalDateTime startingTime = new ObjectMapper().treeToValue(node.get("startingTime"), LocalDateTime.class);
         //Duration duration = new ObjectMapper().treeToValue(node.get("duration"), Duration.class);
         String info = node.get("info").asText();
-        return new JobShift(user,startingTime,duration,info);
+        JobShift jobShift = new JobShift(user,LocalDateTime.now().plusYears(1),duration,info);
+        jobShift.setStartingTimeOverride(startingTime);
+        return jobShift;
     }
 
     @Override

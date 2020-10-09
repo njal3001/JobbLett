@@ -46,7 +46,7 @@ public class CreateShiftController extends AbstractController {
     @Override
     public void update() {
         // Lists all members
-        for (User user : activeGroup)
+        for (User user : getActiveGroup())
             members.getItems().add(user);
     }
 
@@ -63,7 +63,7 @@ public class CreateShiftController extends AbstractController {
             LocalDateTime startingTime = getStartingTime(date.getValue(), fromField.getText());
             Duration duration = getDuration(fromField.getText(), toField.getText());
             JobShift newShift = new JobShift(user, startingTime, duration, info);
-            activeGroup.addJobShift(newShift, activeUser);
+            getActiveGroup().addJobShift(newShift, getLoggedIn());
             goBack();
         } catch(Exception e){
             e.printStackTrace();

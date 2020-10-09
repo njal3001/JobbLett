@@ -30,7 +30,7 @@ public class CreateGroupController extends AbstractController {
         String groupName = groupNameField.getText();
         try{
             Group newGroup = main.getGroupList().newGroup(groupName);
-            newGroup.addUser(activeUser);
+            newGroup.addUser(getLoggedIn());
             main.setActiveGroup(newGroup);
             changeScreen(new FXMLLoader(getClass().getResource("GroupHome.fxml")), createGroupButton, main);
         } catch(Exception e){

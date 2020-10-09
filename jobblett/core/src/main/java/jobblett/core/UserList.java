@@ -1,7 +1,5 @@
 package jobblett.core;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

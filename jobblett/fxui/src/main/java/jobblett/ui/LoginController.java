@@ -1,16 +1,15 @@
 package jobblett.ui;
 
-import java.io.IOException;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import jobblett.core.Main;
 import jobblett.core.User;
 import jobblett.json.JSONDeserialize;
+
+import java.io.IOException;
 
 public class LoginController extends AbstractController {
 
@@ -31,7 +30,7 @@ public class LoginController extends AbstractController {
 
     // Må fikse teksten på FXML
 
-    public LogInnController() {
+    public LoginController() {
         super.main = new JSONDeserialize().importJSON();
     }
 

@@ -1,9 +1,5 @@
 package jobblett.core;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import jobblett.json.JSONDeserialize;
-import jobblett.json.JSONSerialize;
-
 public class Main {
 
     private UserList userList = new UserList();

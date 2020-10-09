@@ -1,7 +1,6 @@
 package jobblett.core;
 
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.annotation.*;
+
 import com.google.common.hash.Hashing;
 
 import java.nio.charset.StandardCharsets;

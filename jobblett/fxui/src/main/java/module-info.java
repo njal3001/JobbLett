@@ -3,6 +3,7 @@ module jobblett.fxui {
 	requires transitive javafx.graphics;
 	requires javafx.controls;
 	requires jobblett.core;
+	requires jobblett.json;
 
 	exports jobblett.ui;
 

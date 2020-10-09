@@ -31,12 +31,12 @@ public class UserHomeController extends AbstractController {
 
     public void update() {
         // Sets full name on top of the screen
-        String givenName = activeUser.getGivenName();
-        String familyName = activeUser.getFamilyName();
+        String givenName = getLoggedIn().getGivenName();
+        String familyName = getLoggedIn().getFamilyName();
         userFullName.setText(givenName + " " + familyName);
 
         // Lists all groups
-        for (Group group : main.getGroupList().getGroups(activeUser)) {
+        for (Group group : main.getGroupList().getGroups(getLoggedIn())) {
             Text text = new Text(group.getGroupName());
             groups.getItems().add(text);
             text.setOnMouseClicked(new EventHandler<MouseEvent>() {
