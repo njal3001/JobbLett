@@ -1,7 +1,5 @@
 package jobblett.core;
 
-import com.fasterxml.jackson.annotation.*;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -124,7 +122,6 @@ public class Group implements Iterable<User> {
      *
      * @return amount of members
      */
-    @JsonIgnore
     public int getGroupSize() {
         return this.groupMembers.size();
     }

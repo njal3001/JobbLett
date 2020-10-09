@@ -45,6 +45,11 @@
             <groupId>org.testfx</groupId>
             <artifactId>testfx-junit5</artifactId>
         </dependency>
+        <dependency>
+            <groupId>gr2007.jobblett</groupId>
+            <artifactId>json</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -33,17 +33,17 @@ public class ShiftViewController extends AbstractController{
     @Override
     public void update() {
         // Sets GroupName on top of the screen
-        groupName.setText(activeGroup.getGroupName());
+        groupName.setText(getActiveGroup().getGroupName());
 
         // Shows GroupID
-        groupID.setText("GroupID: " + activeGroup.getGroupID());
+        groupID.setText("GroupID: " + getActiveGroup().getGroupID());
 
        // Lists all members
-        for (JobShift shift : activeGroup.getJobShifts()) {
+        for (JobShift shift : getActiveGroup().getJobShifts()) {
             Text text = new Text(shift.toString());
             shifts.getItems().add(text);
         }
-        newShiftButton.setVisible(activeGroup.isAdmin(activeUser));
+        newShiftButton.setVisible(getActiveGroup().isAdmin(getLoggedIn()));
     }
 
     @FXML

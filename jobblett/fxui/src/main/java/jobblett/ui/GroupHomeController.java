@@ -32,13 +32,13 @@ public class GroupHomeController extends AbstractController{
     @Override
     public void update() {
         // Sets GroupName on top of the screen
-        groupName.setText(activeGroup.getGroupName());
+        groupName.setText(getActiveGroup().getGroupName());
 
         // Shows GroupID
-        groupID.setText("GroupID: " + activeGroup.getGroupID());
+        groupID.setText("GroupID: " + getActiveGroup().getGroupID());
 
         // Lists all members
-        for (User user : activeGroup) {
+        for (User user : getActiveGroup()) {
             Text text = new Text(user.toString());
             members.getItems().add(text);
         }

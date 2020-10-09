@@ -13,14 +13,18 @@ import java.io.IOException;
 public abstract class AbstractController {
     
     protected Main main;
-    protected User activeUser;
-    protected Group activeGroup;
 
     protected void setMain(Main main){
         this.main = main;
-        this.activeUser = main.getLoggedIn();
-        this.activeGroup = main.getActiveGroup();
         update();
+    }
+
+    protected Group getActiveGroup() {
+        return main.getActiveGroup();
+    }
+
+    protected User getLoggedIn() {
+        return main.getLoggedIn();
     }
 
     protected Main getMain() {

@@ -1,7 +1,5 @@
 package jobblett.core;
 
-import com.fasterxml.jackson.annotation.*;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -41,6 +39,16 @@ public class JobShift{
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  /**
+   * Used by JSONDeserializer.
+   * Maybe use an alternative implementation.
+   *
+   * @param startingTime
+   */
+  public void setStartingTimeOverride(LocalDateTime startingTime) {
+    this.startingTime = startingTime;
   }
 
   public void setStartingTime(LocalDateTime startingTime) {
