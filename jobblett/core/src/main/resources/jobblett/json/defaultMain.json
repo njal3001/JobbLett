@@ -1,26 +1,22 @@
 {
   "userList" : {
     "users" : [ {
-      "type" : "jobblett.core.User",
-      "userName" : "olav",
+      "username" : "olav",
       "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
       "givenName" : "Olav",
       "familyName" : "Nordmann"
     }, {
-      "type" : "jobblett.core.User",
-      "userName" : "nora",
+      "username" : "nora",
       "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
       "givenName" : "Nora",
       "familyName" : "Bekkestad"
     }, {
-      "type" : "jobblett.core.User",
-      "userName" : "petter",
+      "username" : "petter",
       "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
       "givenName" : "Petter",
       "familyName" : "Petterson"
     }, {
-      "type" : "jobblett.core.User",
-      "userName" : "david",
+      "username" : "david",
       "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
       "givenName" : "David",
       "familyName" : "Berg"
@@ -28,19 +24,20 @@
   },
   "groupList" : {
     "groups" : [ {
-      "groupID" : 7709,
       "groupName" : "Gruppe7",
       "groupMembers" : [ "olav", "nora", "petter", "david" ],
+      "groupID" : 6293,
       "jobShifts" : {
         "jobShifts" : [ {
           "user" : "nora",
-          "startingTime" : [ 2020, 9, 30, 14, 52, 2, 252904000 ],
-          "duration" : 7200.000000000,
+          "startingTime" : "2020-10-09T01:11:46.147960",
+          "duration" : 7200,
           "info" : "Dette er Olav sin skift."
         } ]
-      }
+      },
+      "admin" : "olav"
     } ]
   },
-  "loggedIn" : null,
-  "activeGroup" : null
+  "loggedIn" : "null",
+  "activeGroup" : "null"
 }

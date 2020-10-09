@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 /**
  * Handles all of the JobShifts created.
  */
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class JobShiftList implements Iterable<JobShift> {
 
     List<JobShift> jobShifts = new ArrayList<>();

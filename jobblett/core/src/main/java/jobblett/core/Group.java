@@ -9,8 +9,6 @@ import java.util.Iterator;
 /**
  * Represents a group in jobblett.
  */
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property = "groupID")
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Group implements Iterable<User> {
 
     private String groupName;
@@ -35,8 +33,7 @@ public class Group implements Iterable<User> {
      * @param groupName the groupName
      * @param groupID the groupID
      */
-    @JsonCreator
-    public Group(@JsonProperty("groupName") String groupName, @JsonProperty("groupID") int groupID) {
+    public Group(String groupName, int groupID) {
         setGroupName(groupName);
         this.groupID = groupID;
     }
