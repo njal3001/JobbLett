@@ -1,14 +1,21 @@
 package jobblett.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
 import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.util.WaitForAsyncUtils;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -25,41 +32,43 @@ public class UserHomeTest extends ApplicationTest {
 
   private UserHomeController controller;
 
-  //Midlertidig?
+  // Midlertidig?
   private Group group1;
   private Group group2;
+  private User user;
+  private Main main;
 
   @Override
-  public void start(final Stage stage) throws Exception{
+  public void start(final Stage stage) throws Exception {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("UserHome.fxml"));
     Parent root = loader.load();
     controller = loader.getController();
     stage.setScene(new Scene(root));
     stage.show();
 
-    //Midlertidig
+    // Midlertidig
     controller.setMain(getMain());
   }
 
-  //Midlertidig, initalisering med json testdata skal implementeres
-  private Main getMain(){
-     User user = new User("CorrectUsername", "CorrectPassword12345", "Ole", "Dole");
-     Main main = new Main();
-     group1 = main.getGroupList().newGroup("Test Group 1");
-     group2 = main.getGroupList().newGroup("Test Group 2");
-     group2.addUser(user);
-     main.getUserList().addUser(user);
-     main.logIn(user);
-     return main;
+  // Midlertidig, initalisering med json testdata skal implementeres
+  private Main getMain() {
+    user = new User("CorrectUsername", "CorrectPassword12345", "Ole", "Dole");
+    main = new Main();
+    group1 = main.getGroupList().newGroup("Test Group 1");
+    group2 = main.getGroupList().newGroup("Test Group 2");
+    group2.addUser(user);
+    main.getUserList().addUser(user);
+    main.logIn(user);
+    return main;
   }
 
   @Test
-  public void testController(){
+  public void testController() {
     assertNotNull(controller);
   }
 
   @Test
-  public void testCreateGroup_validGroupName(){
+  public void testCreateGroup_validGroupName() {
     tryToCreateGroup("Group Name");
     Text groupName = lookup("#groupName").query();
     assertEquals("Group Name", groupName.getText());
@@ -68,25 +77,25 @@ public class UserHomeTest extends ApplicationTest {
   }
 
   @Test
-  public void testCreateGroup_invalidGroupName(){
+  public void testCreateGroup_invalidGroupName() {
     tryToCreateGroup("    ");
     assertErrorMessage("Group name must have at least 2 characters");
   }
 
-  private void tryToCreateGroup(String groupName){
+  private void tryToCreateGroup(String groupName) {
     clickOn("#createGroupButton");
     clickOn("#groupNameField").write(groupName);
     clickOn("#createGroupButton");
   }
 
-  private void assertErrorMessage(String expected){
+  private void assertErrorMessage(String expected) {
     Text errorMessage = lookup("#errorMessage").query();
     assertEquals(expected, errorMessage.getText());
   }
 
   // Får error, klarer ikke å finne ut hvorfor
   @Test
-  public void testJoinGroup_validGroupId(){
+  public void testJoinGroup_validGroupId() {
     tryToJoinGroup(String.valueOf(group1.getGroupID()));
     Text groupName = lookup("#groupName").query();
     assertEquals(group1.getGroupName(), groupName.getText());

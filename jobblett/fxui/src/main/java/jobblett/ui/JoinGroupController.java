@@ -22,7 +22,7 @@ public class JoinGroupController extends AbstractController {
     @FXML
     Button goBackButton;
 
-    // Fungerer ikke, vet ikke hvorfor, heller ingen melding hvis man skriver inn feil kode
+    // Fungerer ikke, vet ikke hvorfor
     @FXML
     public void initalize(){
         // Sets a listener to prevent non-integers on groupID
@@ -52,6 +52,7 @@ public class JoinGroupController extends AbstractController {
         try{
             Group group = main.getGroupList().getGroup(groupID);
             group.addUser(main.getLoggedIn());
+            main.setActiveGroup(group);
             changeScreen(new FXMLLoader(getClass().getResource("GroupHome.fxml")), joinGroupButton, main);
         } catch(Exception e){
             errorMessage.setText(e.getMessage());
