@@ -61,4 +61,19 @@ public class UserList implements Iterable<User> {
                 "users=" + users +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof UserList) {
+            UserList newUsers = (UserList) o;
+            return users.equals(newUsers.users);
+        }
+        else return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        assert false : "hashCode not designed";
+        return 42; // any arbitrary constant will do
+    }
 }

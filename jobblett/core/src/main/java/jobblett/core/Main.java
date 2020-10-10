@@ -111,4 +111,34 @@ public class Main {
         this.activeGroup = activeGroup;
         //serializeMain();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        if (o instanceof Main) {
+            Main main = (Main) o;
+            if (!this.userList.equals(main.userList)) return false;
+            if (!this.groupList.equals(main.groupList)) return false;
+            if (this.loggedIn == null) {
+                if (main.loggedIn != null) return false;
+            }
+            else {
+                if (!this.loggedIn.equals(main.loggedIn)) return false;
+            }
+            if (this.activeGroup == null) {
+                if (main.activeGroup != null) return false;
+            }
+            else {
+                if (!this.activeGroup.equals(main.activeGroup)) return false;
+            }
+            return true;
+        }
+        else return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        assert false : "hashCode not designed";
+        return 42; // any arbitrary constant will do
+    }
 }
