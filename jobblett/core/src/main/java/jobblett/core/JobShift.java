@@ -10,11 +10,17 @@ public class JobShift{
   private Duration duration;
   private String info;
 
-  public JobShift(User user, LocalDateTime startingTime, Duration duration, String info) {
+  public JobShift(User user, LocalDateTime startingTime, Duration duration, String info, boolean overrideStartTime) {
     setUser(user);
-    setStartingTime(startingTime);
     setDuration(duration);
     setInfo(info);
+
+    if (overrideStartTime) this.startingTime = startingTime;
+    else setStartingTime(startingTime);
+  }
+
+  public JobShift(User user, LocalDateTime startingTime, Duration duration, String info) {
+    this(user,startingTime,duration,info,false);
   }
 
   public User getUser() {
@@ -41,15 +47,6 @@ public class JobShift{
     this.user = user;
   }
 
-  /**
-   * Used by JSONDeserializer.
-   * Maybe use an alternative implementation.
-   *
-   * @param startingTime
-   */
-  public void setStartingTimeOverride(LocalDateTime startingTime) {
-    this.startingTime = startingTime;
-  }
 
   public void setStartingTime(LocalDateTime startingTime) {
     if(startingTime.isBefore(LocalDateTime.now()))
@@ -69,5 +66,18 @@ public class JobShift{
   public String toString() {
     return "JobShift{" + "user=" + user + ", startingTime=" + startingTime + ", duration=" + duration + ", info='"
         + info + '\'' + '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof JobShift) {
+      JobShift jobsHift = (JobShift) o;
+      if (!this.user.equals(jobsHift.user)) return false;
+      if (!this.startingTime.equals(jobsHift.startingTime)) return false;
+      if (!this.duration.equals(jobsHift.duration)) return false;
+      if (!this.info.equals(jobsHift.info)) return false;
+      return true;
+    }
+    else return super.equals(o);
   }
 }

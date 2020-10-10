@@ -1,10 +1,7 @@
 package jobblett.core;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -59,5 +56,14 @@ public class JobShiftList implements Iterable<JobShift> {
         return "JobShiftList{" +
                 "jobShifts=" + jobShifts +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof JobShiftList) {
+            JobShiftList jobShiftList = (JobShiftList) o;
+            return jobShifts.equals(jobShiftList.jobShifts);
+        }
+        else return super.equals(o);
     }
 }
