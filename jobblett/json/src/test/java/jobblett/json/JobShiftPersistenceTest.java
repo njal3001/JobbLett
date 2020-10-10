@@ -3,31 +3,29 @@ package jobblett.json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import jobblett.core.*;
+import jobblett.core.Group;
+import jobblett.core.JobShift;
+import jobblett.core.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class JobShiftListPersistenceTest {
+public class JobShiftPersistenceTest {
 
-    JobShiftList jobShiftList = new JobShiftList();
+    JobShift jobShift;
 
     @BeforeAll
     public void setUp(){
         User olav = new User("olav", "bestePassord123", "Olav", "Nordmann");
-        User nora = new User("nora", "bestePassord123", "Nora", "Bekkestad");
-
-        JobShift jobShift1 = new JobShift(olav, LocalDateTime.parse("2021-10-10T17:10:53.798134"), Duration.ofSeconds(7200),"Cool info",true);
-        JobShift jobShift2 = new JobShift(nora, LocalDateTime.now(), Duration.ofSeconds(7200),"Cool test info",true);
-        jobShiftList.addJobShift(jobShift1);
-        jobShiftList.addJobShift(jobShift2);
+        jobShift = new JobShift(olav, LocalDateTime.parse("2021-10-10T17:10:53.798134"), Duration.ofSeconds(7200),"Cool info",true);
     }
 
     @Test
@@ -40,7 +38,7 @@ public class JobShiftListPersistenceTest {
         String result = "";
 
         try {
-            result = mapper.writeValueAsString(jobShiftList);
+            result = mapper.writeValueAsString(jobShift);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -52,8 +50,8 @@ public class JobShiftListPersistenceTest {
         mapper.registerModule(new CoreModule());
 
         try {
-            JobShiftList newJobShiftList = mapper.readValue(result,JobShiftList.class);
-            assertTrue(newJobShiftList.equals(jobShiftList));
+            JobShift newGroup = mapper.readValue(result,JobShift.class);
+            assertTrue(newGroup.equals(jobShift));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             fail(e);
@@ -62,7 +60,7 @@ public class JobShiftListPersistenceTest {
     }
 
     public static void main(String[] args) {
-        JobShiftListPersistenceTest test = new JobShiftListPersistenceTest();
+        JobShiftPersistenceTest test = new JobShiftPersistenceTest();
         test.setUp();
         test.persistenceTest();
     }

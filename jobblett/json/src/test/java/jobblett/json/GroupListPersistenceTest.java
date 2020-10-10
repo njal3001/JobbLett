@@ -10,10 +10,12 @@ import jobblett.core.Main;
 import jobblett.core.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GroupListPersistenceTest {
 
     GroupList groupList = new GroupList();
