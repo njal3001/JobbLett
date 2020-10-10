@@ -90,7 +90,9 @@ public class Group implements Iterable<User> {
      */
     private void checkExistingUser(User user) throws IllegalArgumentException {
         if (this.groupMembers.contains(user)) {
-            throw new IllegalArgumentException("This user is already in the group");
+          //Vet ikke om jeg skal ha det sånn, passer bedre for UIen, 
+          //men er mer passende generelt å skrive "User is already a member of the group"
+            throw new IllegalArgumentException("You are already a member of the group");
         }
     }
 
