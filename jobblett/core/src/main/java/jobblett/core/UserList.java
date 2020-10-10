@@ -61,4 +61,9 @@ public class UserList implements Iterable<User> {
                 "users=" + users +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return users.equals(o);
+    }
 }
