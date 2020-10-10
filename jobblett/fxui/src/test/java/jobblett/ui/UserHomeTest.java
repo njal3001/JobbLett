@@ -41,7 +41,7 @@ public class UserHomeTest extends ApplicationTest {
     controller.setMain(getMain());
   }
 
-  //Midlertidig
+  //Midlertidig, initalisering med json testdata skal implementeres
   private Main getMain(){
      User user = new User("CorrectUsername", "CorrectPassword12345", "Ole", "Dole");
      Main main = new Main();

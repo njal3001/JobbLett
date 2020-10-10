@@ -35,7 +35,7 @@ public class GroupHomeTest extends ApplicationTest{
     controller.setMain(getMain());
   }
 
-  //Midlertidig
+  //Midlertidig, initalisering med json testdata skal implementeres
   private Main getMain(){
     user = new User("CorrectUsername", "CorrectPassword12345", "Ole", "Dole");
     user2 = new User("CorrectUsername2", "CorrectPassword12345", "Hans", "Henrik");
@@ -50,7 +50,7 @@ public class GroupHomeTest extends ApplicationTest{
     return main;
   }
 
-  //Samme metode brukes i flere tester
+  //Samme metode brukes i flere tester, lage superklasse for slike metoder?
   @Test
   public void testController(){
     assertNotNull(controller);
