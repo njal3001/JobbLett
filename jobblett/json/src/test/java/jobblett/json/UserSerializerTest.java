@@ -1,12 +1,7 @@
 package jobblett.json;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
-
-import java.util.Iterator;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jobblett.core.User;
@@ -22,6 +17,17 @@ public class UserSerializerTest {
         mapper = new ObjectMapper();
         mapper.registerModule(new CoreModule());
     }
+
+    /*
+    {
+    User:
+      "username" : "olav",
+      "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
+      "givenName" : "Olav",
+      "familyName" : "Nordmann"
+    }
+
+    */
 
     @Test
     public void testUserSerializer() throws JsonProcessingException {
