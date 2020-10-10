@@ -187,6 +187,7 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
+        if (o == null) return false;
         if (o instanceof User) {
             User user = (User) o;
             if (!this.username.equals(user.username)) return false;
@@ -196,5 +197,11 @@ public class User {
             return true;
         }
         else return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        assert false : "hashCode not designed";
+        return 42; // any arbitrary constant will do
     }
 }

@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class JobShiftDeserializer extends JsonDeserializer<JobShift> {
 
     public JobShift deserialize(JsonNode node) throws IOException, JsonProcessingException {
-        String username = node.get("user").asText();
+        //String username = node.get("user").asText();
         //User user = main.getUserList().getUser(username);
         User user = new UserDeserializer().deserialize(node.get("user"));
         LocalDateTime startingTime = LocalDateTime.parse(node.get("startingTime").asText());

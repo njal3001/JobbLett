@@ -146,4 +146,10 @@ public class GroupList implements Iterable<Group> {
         }
         else return super.equals(o);
     }
+
+    @Override
+    public int hashCode() {
+        assert false : "hashCode not designed";
+        return 42; // any arbitrary constant will do
+    }
 }

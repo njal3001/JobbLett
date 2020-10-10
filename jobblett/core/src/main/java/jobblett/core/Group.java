@@ -185,6 +185,12 @@ public class Group implements Iterable<User> {
             }
             return true;
         }
-        else return super.equals(o);
+        else return false;
+    }
+
+    @Override
+    public int hashCode() {
+        assert false : "hashCode not designed";
+        return 42; // any arbitrary constant will do
     }
 }
