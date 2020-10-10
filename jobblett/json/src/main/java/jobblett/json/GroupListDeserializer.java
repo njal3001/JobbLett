@@ -22,7 +22,7 @@ public class GroupListDeserializer extends StdDeserializer<GroupList> {
         ArrayNode arrayNode = (ArrayNode) node.get("groups");
         GroupList groupList = new GroupList();
         for (JsonNode groupNode : arrayNode) {
-            groupList.addGroup(new GroupDeserializer().deserialize(groupNode, main));
+            groupList.addGroup(new GroupDeserializer().deserialize(groupNode));
         }
         return groupList;
     }
