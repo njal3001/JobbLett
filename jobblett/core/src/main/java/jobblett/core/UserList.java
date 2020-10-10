@@ -64,6 +64,10 @@ public class UserList implements Iterable<User> {
 
     @Override
     public boolean equals(Object o) {
-        return users.equals(o);
+        if (o instanceof UserList) {
+            UserList newUsers = (UserList) o;
+            return users.equals(newUsers.users);
+        }
+        else return super.equals(o);
     }
 }
