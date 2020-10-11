@@ -1,0 +1,65 @@
+@startuml
+namespace jobblett.ui {
+    class CreateUserController {
+        +createAccount(): void
+        +goToLogIn(): void
+    }
+    class CreateShiftController {
+        +update(): void
+        +goBack(): void
+        +createShift(): void
+    }
+    class App {
+        +start(Stage): void
+        {static} +main(String[]): void
+    }
+    class CreateGroupController {
+        +goToUserHome(): void
+        +createGroup(): void
+    }
+    class LoginController {
+        +update(): void
+        +goToCreateUser(): void
+        +logInToUserHome(): void
+    }
+    class UserHomeController {
+        #update(): void
+        +logOut(): void
+        +createGroup(): void
+        +joinGroup(): void
+    }
+    class JoinGroupController {
+        +update(): void
+        +goToUserHome(): void
+        +joinGroup(): void
+    }
+    class ShiftViewController {
+        +update(): void
+        +backButton(): void
+        +goToCreateShift(): void
+    }
+    class GroupHomeController {
+        +update(): void
+        +backButton(): void
+        +viewShifts(): void
+    }
+    abstract class AbstractController {
+        #main: Main
+        #setMain(Main): void
+        #getActiveGroup(): Group
+        #getLoggedIn(): User
+        #getMain(): Main
+        #changeScreen(FXMLLoader, Node, Main): void
+        #update(): void
+    }
+    AbstractController <|-- CreateUserController
+    AbstractController <|-- CreateShiftController
+    javafx.application.Application <|-- App
+    AbstractController <|-- CreateGroupController
+    AbstractController <|-- LoginController
+    AbstractController <|-- UserHomeController
+    AbstractController <|-- JoinGroupController
+    AbstractController <|-- ShiftViewController
+    AbstractController <|-- GroupHomeController
+}
+@enduml
