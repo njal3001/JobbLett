@@ -26,5 +26,6 @@ en gruppe-ID for å bli med i en gruppe. Denne gruppe ID-en er tilfeldig generer
 er medlem i testgruppen for å se Gruppe ID-en. Hvis du skriver inn gruppe ID-en skal din bruker også bli medlem av gruppen.
 
 
-<b>Instruksjoner for gruppeøving 1:</b>
+<b>Arkitekturdiagram:</b>
+
 ![](pictures/architecturediagram.png)
