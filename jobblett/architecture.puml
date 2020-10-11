@@ -1,0 +1,33 @@
+@startuml
+
+component core{
+package joblett.core
+}
+
+component fxui{
+package joblett.ui
+}
+
+component json{
+package joblett.json
+}
+
+component google.guava{
+}
+
+component javafx{
+	component fxml{
+	}
+}
+component jackson{
+}
+
+joblett.ui ..>fxml
+joblett.core ..> google.guava
+joblett.ui ..> joblett.core
+joblett.json ..> jackson
+joblett.ui ..> joblett.json
+joblett.json ..> joblett.core
+
+
+@enduml
