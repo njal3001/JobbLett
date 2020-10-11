@@ -1,0 +1,113 @@
+@startuml
+namespace jobblett.json {
+    class JobShiftSerializer {
+        +serialize(): void
+    }
+    class GroupListSerializer {
+        +serialize(GroupList, JsonGenerator, SerializerProvider): void
+    }
+    class MainSerializer {
+        +serialize(Main, JsonGenerator, SerializerProvider): void
+    }
+    class GroupListDeserializer {
+        +deserialize(JsonNode, Main): GroupList
+        +deserialize(JsonParser, DeserializationContext): GroupList
+    }
+    class JSONSerialize {
+        +JSONSerialize(Object, String)
+        +exportJSON(): void
+        {static} +main(String[]): void
+    }
+    class GroupSerializer {
+        +serialize(Group, JsonGenerator, SerializerProvider): void
+    }
+    class JobShiftListSerializer {
+        +serialize(JobShiftList, JsonGenerator, SerializerProvider): void
+    }
+    class MainDeserializer {
+        +deserialize(JsonNode): Main
+        +deserialize(JsonParser, DeserializationContext): Main
+    }
+    class JSONDeserialize {
+        +- -importJSON- -(): Main
+    }
+    class UserListDeserializer {
+        +deserialize(JsonNode): UserList
+        +deserialize(JsonParser, DeserializationContext): UserList
+    }
+    class JobShiftDeserializer {
+        +deserialize(JsonNode): JobShift
+        +deserialize(JsonParser, DeserializationContext): JobShift
+    }
+    class UserDeserializer {
+        +deserialize(JsonNode): User
+        +deserialize(JsonParser, DeserializationContext): User
+    }
+    class UserSerializer {
+        +serialize(User, JsonGenerator, SerializerProvider): void
+    }
+    class UserListSerializer {
+        +serialize(UserList, JsonGenerator, SerializerProvider): void
+    }
+    class CoreModule
+    class GroupDeserializer {
+        +deserialize(JsonNode): Group
+        +deserialize(JsonParser, DeserializationContext): Group
+    }
+    class JobShiftListDeserializer {
+        +deserialize(JsonNode): JobShiftList
+        +deserialize(JsonParser, DeserializationContext): JobShiftList
+    }
+    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-- JobShiftSerializer
+    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-- GroupListSerializer
+    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-- MainSerializer
+    com.fasterxml.jackson.databind.deser.std.StdDeserializer <|-- GroupListDeserializer
+    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-- GroupSerializer
+    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-- JobShiftListSerializer
+    com.fasterxml.jackson.databind.deser.std.StdDeserializer <|-- MainDeserializer
+    com.fasterxml.jackson.databind.deser.std.StdDeserializer <|-- UserListDeserializer
+    com.fasterxml.jackson.databind.JsonDeserializer <|-- JobShiftDeserializer
+    com.fasterxml.jackson.databind.JsonDeserializer <|-- UserDeserializer
+    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-- UserSerializer
+    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-- UserListSerializer
+    com.fasterxml.jackson.databind.module.SimpleModule <|-- CoreModule
+    com.fasterxml.jackson.databind.deser.std.StdDeserializer <|-- GroupDeserializer
+    com.fasterxml.jackson.databind.deser.std.StdDeserializer <|-- JobShiftListDeserializer
+}
+namespace com.fasterxml.jackson.databind.ser.std {
+    abstract class StdSerializer<T> {
+        #_handledType: Class<T>
+        {abstract} +serialize(T, JsonGenerator, SerializerProvider): void
+    }
+}
+namespace com.fasterxml.jackson.databind.deser.std {
+    abstract class StdDeserializer<T> {
+        {static} #F_MASK_INT_COERCIONS: int
+        {static} #F_MASK_ACCEPT_ARRAYS: int
+        #_valueClass: Class<?>
+        #_valueType: JavaType
+    }
+}
+namespace com.fasterxml.jackson.databind {
+    abstract class JsonDeserializer<T> {
+        {abstract} +deserialize(JsonParser, DeserializationContext): T
+    }
+}
+namespace com.fasterxml.jackson.databind.module {
+    class SimpleModule {
+        #_name: String
+        #_version: Version
+        #_serializers: SimpleSerializers
+        #_deserializers: SimpleDeserializers
+        #_keySerializers: SimpleSerializers
+        #_keyDeserializers: SimpleKeyDeserializers
+        #_abstractTypes: SimpleAbstractTypeResolver
+        #_valueInstantiators: SimpleValueInstantiators
+        #_deserializerModifier: BeanDeserializerModifier
+        #_serializerModifier: BeanSerializerModifier
+        #_mixins: HashMap<Class<?>, Class<?>>
+        #_subtypes: LinkedHashSet<NamedType>
+        #_namingStrategy: PropertyNamingStrategy
+    }
+}
+@enduml
