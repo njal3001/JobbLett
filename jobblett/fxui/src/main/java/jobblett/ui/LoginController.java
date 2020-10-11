@@ -28,8 +28,6 @@ public class LoginController extends AbstractController {
     @FXML
     PasswordField passwordField;
 
-    // Må fikse teksten på FXML
-
     public LoginController() {
         super.main = new JSONDeserialize().importJSON();
     }

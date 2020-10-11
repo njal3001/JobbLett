@@ -2,69 +2,26 @@ package jobblett.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
-import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.util.WaitForAsyncUtils;
-
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import jobblett.core.Group;
-import jobblett.core.Main;
-import jobblett.core.User;
 
-public class UserHomeTest extends ApplicationTest {
-
-  // Må endre på testdata i forhold til json
-
-  private UserHomeController controller;
-
-  // Midlertidig?
-  private Group group1;
-  private Group group2;
-  private User user;
-  private Main main;
+public class UserHomeTest extends JobbLettTest {
 
   @Override
   public void start(final Stage stage) throws Exception {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("UserHome.fxml"));
-    Parent root = loader.load();
-    controller = loader.getController();
-    stage.setScene(new Scene(root));
-    stage.show();
-
-    // Midlertidig
-    controller.setMain(getMain());
+    fxmlFileName = "UserHome.fxml";
+    super.start(stage);
   }
 
-  // Midlertidig, initalisering med json testdata skal implementeres
-  private Main getMain() {
-    user = new User("CorrectUsername", "CorrectPassword12345", "Ole", "Dole");
-    main = new Main();
-    group1 = main.getGroupList().newGroup("Test Group 1");
-    group2 = main.getGroupList().newGroup("Test Group 2");
-    group2.addUser(user);
-    main.getUserList().addUser(user);
-    main.logIn(user);
-    return main;
-  }
-
-  @Test
-  public void testController() {
-    assertNotNull(controller);
+  @Override
+  protected void setupData() {
+    super.setupData();
+    main.logIn(user1);
   }
 
   @Test
@@ -93,12 +50,11 @@ public class UserHomeTest extends ApplicationTest {
     assertEquals(expected, errorMessage.getText());
   }
 
-  // Får error, klarer ikke å finne ut hvorfor
   @Test
   public void testJoinGroup_validGroupId() {
-    tryToJoinGroup(String.valueOf(group1.getGroupID()));
+    tryToJoinGroup(String.valueOf(group2.getGroupID()));
     Text groupName = lookup("#groupName").query();
-    assertEquals(group1.getGroupName(), groupName.getText());
+    assertEquals(group2.getGroupName(), groupName.getText());
     clickOn("#backToHome");
     assertListViewHasItem(group1.getGroupName());
   }
@@ -114,17 +70,20 @@ public class UserHomeTest extends ApplicationTest {
     assertNotNull(groups.getItems().stream().filter(text -> text.getText().equals(itemText)).findFirst().orElse(null));
   }
 
-  //The group ID TextField should only accept numbers
+  //The group ID TextField should only accept numbers of maximum length 4
   @Test
   public void testJoinGroup_writeInvalidInput(){
-    tryToJoinGroup("abcd");
+    tryToJoinGroup("a");
     TextField groupIdField = lookup("#groupIdField").query();
     assertEquals(0, groupIdField.getText().length());
+    assertErrorMessage("Invalid group ID");
+    clickOn("#groupIdField").write("100000");
+    assertEquals(4, groupIdField.getText().length());
   }
 
   @Test
   public void testJoinGroup_alreadyPartOfGroup(){
-    tryToJoinGroup(String.valueOf(group2.getGroupID()));
+    tryToJoinGroup(String.valueOf(group1.getGroupID()));
     assertErrorMessage("You are already a member of the group");
   }
 
@@ -138,5 +97,4 @@ public class UserHomeTest extends ApplicationTest {
   public void testGoToGroup(){
     
   }
-
 }

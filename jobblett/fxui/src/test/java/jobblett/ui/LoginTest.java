@@ -2,57 +2,18 @@ package jobblett.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.stream.Collectors;
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testfx.framework.junit5.ApplicationTest;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import jobblett.core.Main;
-import jobblett.core.User;
 
-public class LoginTest extends ApplicationTest {
-
-  // Må endre på testdata i forhold til json
-
-  private LoginController controller;
-
-  //Midlertidig?
-  private User user;
+public class LoginTest extends JobbLettTest {
 
   @Override
   public void start(final Stage stage) throws Exception{
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
-    Parent root = loader.load();
-    controller = loader.getController();
-    stage.setScene(new Scene(root));
-    stage.show();
-
-    //Midlertidig
-    controller.setMain(getMain());
-  }
-
-  //Midlertidig, initalisering med json testdata skal implementeres
-  private Main getMain(){
-     user = new User("CorrectUsername", "CorrectPassword12345", "Ole", "Dole");
-     Main main = new Main();
-     main.getUserList().addUser(user);
-     return main;
-  }
-
-  @Test
-  public void testController(){
-    assertNotNull(controller);
+    fxmlFileName = "Login.fxml";
+    super.start(stage);
   }
 
   @Test
@@ -64,10 +25,10 @@ public class LoginTest extends ApplicationTest {
 
   @Test
   public void testLogin_correctPasswordAndUsername(){
-    tryToLogin(user.getUserName(), "CorrectPassword12345");
+    tryToLogin(user1.getUserName(), "CorrectPassword12345");
     Text fullNameText = lookup("#userFullName").query();
     assertNotNull(fullNameText);
-    assertEquals(user.getGivenName() + " " + user.getFamilyName(), fullNameText.getText());
+    assertEquals(user1.getGivenName() + " " + user1.getFamilyName(), fullNameText.getText());
   }
 
   @Test

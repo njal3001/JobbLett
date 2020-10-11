@@ -33,8 +33,6 @@ public class CreateUserController extends AbstractController {
     @FXML
     Button goBackButton;
 
-    //Må fikse teksten på FXML
-
     @FXML
     public void createAccount() throws IOException {
         String username = this.username.getText();
