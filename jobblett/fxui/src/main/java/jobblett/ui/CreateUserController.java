@@ -37,6 +37,7 @@ public class CreateUserController extends AbstractController {
 
     @FXML
     public void createAccount() throws IOException {
+        errorMessage.setText("");
         String username = this.username.getText();
         String password = this.password.getText();
         String givenName = this.givenName.getText();
@@ -44,8 +45,8 @@ public class CreateUserController extends AbstractController {
         try {
             User newUser = new User(username, password, givenName, familyName);
             main.getUserList().addUser(newUser);
-        	main.logIn(newUser);
-        	changeScreen(new FXMLLoader(getClass().getResource("UserHome.fxml")), createAccountButton, main);
+        	  main.logIn(newUser);
+        	  changeScreen(new FXMLLoader(getClass().getResource("UserHome.fxml")), createAccountButton, main);
         } catch(Exception e) {
             errorMessage.setText(e.getMessage());
         }
