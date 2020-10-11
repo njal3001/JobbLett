@@ -7,43 +7,6 @@ public class Main {
     private User loggedIn = null;
     private Group activeGroup = null;
 
-
-    /**
-     * Initializes a new instance of Main
-     * @param skipImport is used to easily create and update defaultMain.json (Only used by developers!)
-     */
-    /*
-    public Main(boolean skipImport) {
-       if (!skipImport) {
-           JSONDeserialize importer = new JSONDeserialize();
-           importer.updateMain(this);
-       }
-    }
-    */
-    
-    /**
-     * Initializes a new instance of Main with import
-     */
-    /*
-    public Main() {
-        this(false);
-    }
-    */
-
-
-    /**
-     * Saves data to main.json
-     */
-        /*
-    public void serializeMain() {
-        JSONSerialize serializer = new JSONSerialize(this, "main.json");
-        serializer.exportJSON();
-    } 
-    */
-
-    
-    
- 
     public GroupList getGroupList() {
         return groupList;
     }

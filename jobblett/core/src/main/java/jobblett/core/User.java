@@ -37,7 +37,7 @@ public class User {
     }
 
     public User(String username, String password, String givenName, String familyName, boolean passwordHashed) {
-        if(!validUsername(username)) throw new IllegalArgumentException("Not a valid userName");
+        if(!validUsername(username)) throw new IllegalArgumentException("Not a valid username");
         this.username = username;
         if (passwordHashed) {
             this.password = password;

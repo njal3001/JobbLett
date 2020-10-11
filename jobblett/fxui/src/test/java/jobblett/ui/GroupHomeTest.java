@@ -11,11 +11,10 @@ import javafx.stage.Stage;
 public class GroupHomeTest extends JobbLettTest{
 
   @Override
-  public void start(final Stage stage) throws Exception{
-    fxmlFileName = "GroupHome.fxml";
-    super.start(stage);
+  protected String giveFxmlFileName() {
+    return "GroupHome.fxml";
   }
-
+  
   @Override
   protected void setupData(){
     super.setupData();

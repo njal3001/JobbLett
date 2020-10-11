@@ -8,14 +8,12 @@ import org.junit.jupiter.api.Test;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class UserHomeTest extends JobbLettTest {
 
   @Override
-  public void start(final Stage stage) throws Exception {
-    fxmlFileName = "UserHome.fxml";
-    super.start(stage);
+  protected String giveFxmlFileName() {
+    return "UserHome.fxml";
   }
 
   @Override

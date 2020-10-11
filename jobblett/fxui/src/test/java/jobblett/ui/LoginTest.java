@@ -6,14 +6,12 @@ import org.junit.jupiter.api.Test;
 
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class LoginTest extends JobbLettTest {
 
   @Override
-  public void start(final Stage stage) throws Exception{
-    fxmlFileName = "Login.fxml";
-    super.start(stage);
+  protected String giveFxmlFileName() {
+    return "Login.fxml";
   }
 
   @Test

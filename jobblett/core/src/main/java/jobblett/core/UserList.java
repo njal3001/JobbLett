@@ -8,8 +8,7 @@ import java.util.Iterator;
 public class UserList implements Iterable<User> {
     
     private Collection<User> users = new ArrayList<>();
-
-
+    
     /**
      * Checks whether if it exist a user with the given username.
      * @param username the username to be checked
@@ -30,7 +29,7 @@ public class UserList implements Iterable<User> {
     public void addUser(User... users) {
         for (User user : users) {
             if (getUser(user.getUserName()) != null)
-                throw new IllegalArgumentException("User with the same username already exist.");
+                throw new IllegalArgumentException("User with the same username already exists");
         }
         this.users.addAll(Arrays.asList(users));
     }

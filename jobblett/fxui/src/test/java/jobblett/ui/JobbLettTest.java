@@ -16,6 +16,7 @@ import jobblett.core.JobShift;
 import jobblett.core.Main;
 import jobblett.core.User;
 
+//Abstract class which all other UI test classes inherit from
 public abstract class JobbLettTest extends ApplicationTest{
 
   protected Main main;
@@ -24,12 +25,14 @@ public abstract class JobbLettTest extends ApplicationTest{
   protected JobShift jobShift1, jobShift2;
 
   protected AbstractController controller;
-  protected String fxmlFileName;
 
-  //Alle subklasser må oppdatere fxmlFileName for at det ikke skal komme error
+  //Subclasses implement this method to give the FXML file name 
+  //for the starting scene of the test
+  protected abstract String giveFxmlFileName();
+
   @Override
   public void start(final Stage stage) throws Exception{
-    FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFileName));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource(giveFxmlFileName()));
     Parent root = loader.load();
     controller = loader.getController();
     stage.setScene(new Scene(root));

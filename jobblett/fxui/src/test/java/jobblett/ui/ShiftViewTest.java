@@ -7,11 +7,10 @@ import javafx.stage.Stage;
 public class ShiftViewTest extends JobbLettTest{
 
   @Override
-  public void start(final Stage stage) throws Exception {
-    fxmlFileName = "ShiftView.fxml";
-    super.start(stage);
+  protected String giveFxmlFileName() {
+    return "ShiftView.fxml";
   }
-
+  
   @Override
   protected void setupData(){
     super.setupData();
