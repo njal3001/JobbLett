@@ -29,7 +29,8 @@ public class UserHomeController extends AbstractController {
     @FXML
     Button joinGroupButton;
 
-    public void update() {
+    @Override
+    protected void update() {
         // Sets full name on top of the screen
         String givenName = getLoggedIn().getGivenName();
         String familyName = getLoggedIn().getFamilyName();

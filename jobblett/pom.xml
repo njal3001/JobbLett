@@ -72,7 +72,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.0.0-M5</version>
                     <configuration>
-                        <argLine>--add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED</argLine>
+                        <argLine>${argLine} --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED</argLine>
                     </configuration>
                 </plugin>
                 <!-- Run the checkstyle code quality tool -->
@@ -111,6 +111,7 @@
                     <version>4.0.4</version>
                     <configuration>
                         <xmlOutput>false</xmlOutput>
+                        <htmlOutput>true</htmlOutput>
                     </configuration>
                     <executions>
                         <execution>

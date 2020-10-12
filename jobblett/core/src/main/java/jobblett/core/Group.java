@@ -90,7 +90,9 @@ public class Group implements Iterable<User> {
      */
     private void checkExistingUser(User user) throws IllegalArgumentException {
         if (this.groupMembers.contains(user)) {
-            throw new IllegalArgumentException("This user is already in the group");
+          //Vet ikke om jeg skal ha det sånn, passer bedre for UIen, 
+          //men er mer passende generelt å skrive "User is already a member of the group"
+            throw new IllegalArgumentException("You are already a member of the group");
         }
     }
 
@@ -160,8 +162,35 @@ public class Group implements Iterable<User> {
         return this.groupName + ": " + members;
     }
 
+
     @Override
     public Iterator<User> iterator() {
         return groupMembers.iterator();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Group) {
+            Group group = (Group) o;
+
+            for (User thatUser : group) {
+                if (getUser(thatUser.getUserName())==null) return false;
+                User thisUser = getUser(thatUser.getUserName());
+                if (!thisUser.equals(thatUser)) return false;
+            }
+            for (User thisUser : this) {
+                if (group.getUser(thisUser.getUserName())==null) return false;
+                User thatUser = group.getUser(thisUser.getUserName());
+                if (!thatUser.equals(thisUser)) return false;
+            }
+            return true;
+        }
+        else return false;
+    }
+
+    @Override
+    public int hashCode() {
+        assert false : "hashCode not designed";
+        return 42; // any arbitrary constant will do
     }
 }
