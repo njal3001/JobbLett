@@ -162,8 +162,35 @@ public class Group implements Iterable<User> {
         return this.groupName + ": " + members;
     }
 
+
     @Override
     public Iterator<User> iterator() {
         return groupMembers.iterator();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Group) {
+            Group group = (Group) o;
+
+            for (User thatUser : group) {
+                if (getUser(thatUser.getUserName())==null) return false;
+                User thisUser = getUser(thatUser.getUserName());
+                if (!thisUser.equals(thatUser)) return false;
+            }
+            for (User thisUser : this) {
+                if (group.getUser(thisUser.getUserName())==null) return false;
+                User thatUser = group.getUser(thisUser.getUserName());
+                if (!thatUser.equals(thisUser)) return false;
+            }
+            return true;
+        }
+        else return false;
+    }
+
+    @Override
+    public int hashCode() {
+        assert false : "hashCode not designed";
+        return 42; // any arbitrary constant will do
     }
 }

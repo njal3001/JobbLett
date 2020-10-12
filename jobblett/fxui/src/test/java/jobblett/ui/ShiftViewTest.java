@@ -1,34 +1,22 @@
 package jobblett.ui;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 
 import org.junit.jupiter.api.Test;
-import org.testfx.framework.junit5.ApplicationTest;
-
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ShiftViewTest extends ApplicationTest{
-
-  private ShiftViewController controller;
+public class ShiftViewTest extends JobbLettTest{
 
   @Override
-  public void start(final Stage stage) throws Exception {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("ShiftView.fxml"));
-    Parent root = loader.load();
-    controller = loader.getController();
-    stage.setScene(new Scene(root));
-    stage.show();
-    assertNotNull(controller);
+  protected String giveFxmlFileName() {
+    return "ShiftView.fxml";
   }
-
-
-  @Test
-  public void testController() {
-    assertNotNull(controller);
+  
+  @Override
+  protected void setupData(){
+    super.setupData();
+    main.logIn(user1);
+    main.setActiveGroup(group1);
+    // ....
   }
 
   //To be implemented
@@ -39,6 +27,4 @@ public class ShiftViewTest extends ApplicationTest{
   @Test
   public void testJobShiftsView_isSorted() {
   }
-
-
 }

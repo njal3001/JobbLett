@@ -12,49 +12,64 @@ import jobblett.core.User;
 
 public class CreateUserController extends AbstractController {
 
-    @FXML
-    Button createAccountButton;
+  @FXML
+  Button createAccountButton;
 
-    @FXML
-    TextField username;
+  @FXML
+  TextField username;
 
-    @FXML
-    PasswordField password;
+  @FXML
+  PasswordField password;
 
-    @FXML
-    TextField givenName;
+  @FXML
+  TextField givenName;
 
-    @FXML
-    TextField familyName;
-    
-    @FXML
-    Text errorMessage;
-    
-    @FXML
-    Button goBackButton;
+  @FXML
+  TextField familyName;
 
-    //Må fikse teksten på FXML
+  @FXML
+  Text errorMessage;
 
-    @FXML
-    public void createAccount() throws IOException {
-        errorMessage.setText("");
-        String username = this.username.getText();
-        String password = this.password.getText();
-        String givenName = this.givenName.getText();
-        String familyName = this.familyName.getText();
-        try {
-            User newUser = new User(username, password, givenName, familyName);
-            main.getUserList().addUser(newUser);
-        	  main.logIn(newUser);
-        	  changeScreen(new FXMLLoader(getClass().getResource("UserHome.fxml")), createAccountButton, main);
-        } catch(Exception e) {
-            errorMessage.setText(e.getMessage());
-        }
+  @FXML
+  Button goBackButton;
+
+  @FXML
+  public void createAccount() throws IOException {
+    String username = this.username.getText();
+    String password = this.password.getText();
+    String givenName = this.givenName.getText();
+    String familyName = this.familyName.getText();
+
+    String errorMessageText = "";
+
+    //Dette burde kanskje heller vært en feilmelding man fikk direkte fra User klassen i core
+    if (!User.validUsername(username))
+      errorMessageText += "Not a valid username\n";
+    if (!User.validPassword(password))
+      errorMessageText += "Not a valid password\n";
+    if (!User.validName(givenName))
+      errorMessageText += "Not a valid given name\n";
+    if (!User.validName(familyName))
+      errorMessageText += "Not a valid family name";
+
+    User newUser = null;
+    try {
+      newUser = new User(username, password, givenName, familyName);
+    } catch(IllegalArgumentException e){
+      errorMessage.setText(errorMessageText);
+      return;
     }
-    
-    @FXML
-    public void goToLogIn() throws IOException {
-    	changeScreen(new FXMLLoader(getClass().getResource("Login.fxml")), goBackButton, main);
+    try{
+      main.getUserList().addUser(newUser);
+      main.logIn(newUser);
+      changeScreen(new FXMLLoader(getClass().getResource("UserHome.fxml")), createAccountButton, main);
+    } catch (Exception e) {
+      errorMessage.setText(e.getMessage());
     }
-        
+  }
+
+  @FXML
+  public void goToLogIn() throws IOException {
+    changeScreen(new FXMLLoader(getClass().getResource("Login.fxml")), goBackButton, main);
+  }
 }

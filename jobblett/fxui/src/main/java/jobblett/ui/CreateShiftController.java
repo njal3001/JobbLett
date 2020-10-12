@@ -42,7 +42,6 @@ public class CreateShiftController extends AbstractController {
     // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme
     // kode hver gang vi skal vise noe med listView
     // Har bare lagt inn en dato greie på UI en så man kan ikke ha et skift som går fra 23:00 - 07:00 f.eks
-    // Må også ha med errorMessage ved feil inndata.
 
     @Override
     public void update() {

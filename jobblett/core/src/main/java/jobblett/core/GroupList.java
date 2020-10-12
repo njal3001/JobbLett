@@ -127,5 +127,29 @@ public class GroupList implements Iterable<Group> {
         return s.toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof GroupList) {
+            GroupList groupList = (GroupList) o;
+            /*for (Group thatGroup : groupList) {
+                if (getGroup(thatGroup.getGroupID())==null) return false;
+                Group thisGroup = getGroup(thatGroup.getGroupID());
+                if (!thisGroup.equals(thatGroup)) return false;
+            }
+            for (Group thisGroup : this) {
+                if (groupList.getGroup(thisGroup.getGroupID())==null) return false;
+                Group thatGroup = groupList.getGroup(thisGroup.getGroupID());
+                if (!thatGroup.equals(thisGroup)) return false;
+            }
+            return true;*/
+            return this.groups.equals(groupList.groups);
+        }
+        else return super.equals(o);
+    }
 
+    @Override
+    public int hashCode() {
+        assert false : "hashCode not designed";
+        return 42; // any arbitrary constant will do
+    }
 }
