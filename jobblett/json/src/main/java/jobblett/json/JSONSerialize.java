@@ -63,7 +63,7 @@ public class JSONSerialize {
         gruppe7.addUser(main.getUserList().getUser("petter"));
         gruppe7.addUser(main.getUserList().getUser("david"));
 
-        gruppe7.getJobShifts().addJobShift(new JobShift(main.getUserList().getUser("nora"), LocalDateTime.now().plusYears(1), Duration.ofHours(2),"Dette er Olav sin skift."));
+        gruppe7.getJobShifts().addJobShift(new JobShift(main.getUserList().getUser("nora"), LocalDateTime.now(), Duration.ofHours(2),"Dette er Olav sin skift."));
 
         //new JSONSerialize(main,"main.json").exportJSON();
         new JSONSerialize(main,"defaultMain.json").exportJSON();

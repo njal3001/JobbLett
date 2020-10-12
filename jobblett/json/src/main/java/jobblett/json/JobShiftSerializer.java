@@ -22,7 +22,7 @@ public class JobShiftSerializer extends StdSerializer<JobShift> {
     public void serialize(JobShift o, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartObject();
 
-        jsonGenerator.writeObjectField("user",o.getUser());
+        jsonGenerator.writeStringField("user",o.getUser().getUserName());
         jsonGenerator.writeStringField("startingTime",o.getStartingTime().toString());
         jsonGenerator.writeNumberField("duration",o.getDuration().getSeconds());
         jsonGenerator.writeStringField("info",o.getInfo());

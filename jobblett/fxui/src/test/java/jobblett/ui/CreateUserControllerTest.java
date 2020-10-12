@@ -3,25 +3,55 @@ package jobblett.ui;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
+import org.testfx.api.FxAssert;
+import org.testfx.api.FxRobot;
+import org.testfx.framework.junit5.ApplicationTest;
 
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+import jobblett.core.Main;
 
-public class CreateUserControllerTest extends JobbLettTest {
+public class CreateUserControllerTest extends ApplicationTest {
+  private AbstractController controller;
+  private Main main;
 
-  @Override
-  protected String giveFxmlFileName() {
-    return "CreateUser.fxml";
+  public void start(final Stage primaryStage) throws Exception {
+    // muligens en testFXMLfil
+    final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateUser.fxml"));
+    final Parent parent = fxmlLoader.load();
+    this.controller = fxmlLoader.getController();
+    // fiks en getMain i abstraktkontroller
+    this.main = this.controller.main;
+    primaryStage.setScene(new Scene(parent));
+    primaryStage.show();
   }
+  
 
+  @Test
+  public void testController() {
+    assertNotNull(controller);
+  }
+//fjerne??
   @Test
   public void testErrorMessages() {
     Text errorMessage = lookup("#errorMessage").query();
-    assertEquals(errorMessage.getText(),"");
+    assertEquals("", errorMessage.getText());
     clickOn("#createAccountButton");
-    assertNotEquals(errorMessage.getText(),"");
+    assertNotEquals("",errorMessage.getText());
   }
 
   @Test
@@ -31,36 +61,34 @@ public class CreateUserControllerTest extends JobbLettTest {
     TextField nodeInLoginScene = lookup("#usernameField").query();
     assertNotNull(nodeInLoginScene);
   }
-
-  private void assertErrorMessage(String expected){
-    Text errorMessage = lookup("#errorMessage").query();
-    assertEquals(expected, errorMessage.getText());
-  }
-
-  @Test
-  public void testCreateUser_invalidUserData(){
-    tryToCreateUser("", "", "", "");
-    assertErrorMessage("Not a valid username\nNot a valid password\nNot a valid given name\nNot a valid family name");
-  }
   
-  @Test
-  public void testCreateUser_validUserData(){
-    tryToCreateUser("Test3", "Password12345", "Ole", "Dole");
-    Text userFullName = lookup("#userFullName").query();
-    assertEquals("Ole Dole", userFullName.getText());
-  }
+@Test
+public void testCreateInvalidAccount() {
+  //Creating an invalid account, should not change screen
+  clickOn("#username").write("invalid username");
+  clickOn("#password").write("invalidpassword");
+  clickOn("#givenName").write("wr0ngN4me");
+  clickOn("#familyName").write("n4me");
+  clickOn("#createAccountButton");
+  //confirm errormessage, fjerne?
+  assertNotEquals("", ((Text)lookup("#errorMessage").query()).getText());
+  //confirm that scene has not changed, by confirming that we can find a node in createuseFXML
+  TextField nodeInCreateAccountScene = lookup("#username").query();
+  assertNotNull(nodeInCreateAccountScene);
+ }
 
-  @Test
-  public void testCreateUser_usernameTaken(){
-    tryToCreateUser("CorrectUsername", "CorrectPassword12345", "Ole", "Dole");
-    assertErrorMessage("User with the same username already exists");
-  }
-
-  private void tryToCreateUser(String username, String password, String givenName, String familyName){
-    clickOn("#username").write(username);
-    clickOn("#password").write(password);
-    clickOn("#givenName").write(givenName);
-    clickOn("#familyName").write(familyName);
-    clickOn("#createAccountButton");
-  }
+public void testCreateValidAccount(){
+   //Creating an valid account, should change screen
+  clickOn("#username").
+  clickOn("#username").write("Validuser1");
+  clickOn("#password").write("ValidPass123");
+  clickOn("#givenName").write("valid");
+  clickOn("#familyName").write("name");
+  clickOn("#createAccountButton");
+  //confirm no errormessage
+  assertEquals("", ((Text) lookup("#errorMessage").query()).getText());
+  //confirm that scene changed, by confirming that we can find a node in UserHomeFXML
+  TextField nodeInUserHomeScene = lookup("#createGroupButton").query();
+  assertNotNull(nodeInUserHomeScene);
+}
 }

@@ -9,25 +9,25 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.UserHomeController">
     <children>
         <ListView fx:id="groups" layoutX="80.0" layoutY="133.0" prefHeight="160.0" prefWidth="200.0" />
-        <Text fx:id="userFullName" layoutX="41.0" layoutY="35.0" text="User" textAlignment="CENTER" wrappingWidth="250">
+        <Text fx:id="userFullName" layoutX="41.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User" textAlignment="CENTER" wrappingWidth="278.22900390625">
             <font>
-                <Font name="Arial" size="20.0" />
+                <Font name="Arial" size="22.0" />
             </font>
         </Text>
-        <Button fx:id="logOutButton" layoutX="232.0" layoutY="547.0" onAction="#logOut" text="Log out">
+        <Button fx:id="logOutButton" layoutX="232.0" layoutY="547.0" mnemonicParsing="false" onAction="#logOut" text="Log out">
             <font>
                 <Font name="Arial" size="13.0" />
             </font>
         </Button>
-        <Button fx:id="joinGroupButton" layoutX="59.0" layoutY="308.0" onAction="#joinGroup" text="Join group">
+        <Button fx:id="joinGroupButton" layoutX="59.0" layoutY="308.0" mnemonicParsing="false" onAction="#joinGroup" text="Join group">
             <font>
                 <Font name="Arial" size="13.0" />
             </font>
         </Button>
-        <Button fx:id="createGroupButton" layoutX="232.0" layoutY="307.0" onAction="#createGroup" text="Create group" />
-        <Text layoutX="128.0" layoutY="115.0" text="Your groups:">
+        <Button fx:id="createGroupButton" layoutX="232.0" layoutY="307.0" mnemonicParsing="false" onAction="#createGroup" text="Create group" />
+        <Text layoutX="128.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your groups:" wrappingWidth="105.0">
             <font>
-                <Font name="Arial" size="17.0" />
+                <Font size="17.0" />
             </font>
         </Text>
     </children>

@@ -26,7 +26,9 @@ public class CreateGroupController extends AbstractController {
     }
 
    @FXML
-    public void createGroup() throws IOException{
+    public void createGroup(){
+      errorMessage.setText("Message:hfg");
+      System.out.println(errorMessage.getText());
         String groupName = groupNameField.getText();
         try{
             Group newGroup = main.getGroupList().newGroup(groupName);
@@ -34,7 +36,15 @@ public class CreateGroupController extends AbstractController {
             main.setActiveGroup(newGroup);
             changeScreen(new FXMLLoader(getClass().getResource("GroupHome.fxml")), createGroupButton, main);
         } catch(Exception e){
-            errorMessage.setText(e.getMessage());
+          if(e.getMessage()==null){
+            System.out.println("hewiewhireh");
+          }
+          System.out.println(e.getStackTrace());
+            System.out.println(errorMessage.getText());
+            errorMessage.setText("Message"+e.getMessage());
+             System.out.println(errorMessage.getText());
+
+            System.out.println(e.getMessage());
         }
         }
 

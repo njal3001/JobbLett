@@ -7,6 +7,43 @@ public class Main {
     private User loggedIn = null;
     private Group activeGroup = null;
 
+
+    /**
+     * Initializes a new instance of Main
+     * @param skipImport is used to easily create and update defaultMain.json (Only used by developers!)
+     */
+    /*
+    public Main(boolean skipImport) {
+       if (!skipImport) {
+           JSONDeserialize importer = new JSONDeserialize();
+           importer.updateMain(this);
+       }
+    }
+    */
+    
+    /**
+     * Initializes a new instance of Main with import
+     */
+    /*
+    public Main() {
+        this(false);
+    }
+    */
+
+
+    /**
+     * Saves data to main.json
+     */
+        /*
+    public void serializeMain() {
+        JSONSerialize serializer = new JSONSerialize(this, "main.json");
+        serializer.exportJSON();
+    } 
+    */
+
+    
+    
+ 
     public GroupList getGroupList() {
         return groupList;
     }
@@ -73,35 +110,5 @@ public class Main {
     public void setActiveGroup(Group activeGroup) {
         this.activeGroup = activeGroup;
         //serializeMain();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null) return false;
-        if (o instanceof Main) {
-            Main main = (Main) o;
-            if (!this.userList.equals(main.userList)) return false;
-            if (!this.groupList.equals(main.groupList)) return false;
-            if (this.loggedIn == null) {
-                if (main.loggedIn != null) return false;
-            }
-            else {
-                if (!this.loggedIn.equals(main.loggedIn)) return false;
-            }
-            if (this.activeGroup == null) {
-                if (main.activeGroup != null) return false;
-            }
-            else {
-                if (!this.activeGroup.equals(main.activeGroup)) return false;
-            }
-            return true;
-        }
-        else return super.equals(o);
-    }
-
-    @Override
-    public int hashCode() {
-        assert false : "hashCode not designed";
-        return 42; // any arbitrary constant will do
     }
 }

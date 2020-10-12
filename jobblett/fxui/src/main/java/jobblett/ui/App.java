@@ -15,7 +15,6 @@ public class App extends Application {
     final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
     final Parent parent = fxmlLoader.load();
     primaryStage.setScene(new Scene(parent));
-    primaryStage.setTitle("Jobblett");
     primaryStage.show();
     primaryStage.setOnCloseRequest(event -> {
       AbstractController loader = fxmlLoader.getController();

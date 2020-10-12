@@ -17,10 +17,6 @@ public class UserSerializer extends StdSerializer<User> {
 
     @Override
     public void serialize(User o, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        if (o == null) {
-            jsonGenerator.writeNull();
-            return;
-        }
         jsonGenerator.writeStartObject();
         jsonGenerator.writeStringField("username",o.getUserName());
         jsonGenerator.writeStringField("password",o.getHashedPassword());

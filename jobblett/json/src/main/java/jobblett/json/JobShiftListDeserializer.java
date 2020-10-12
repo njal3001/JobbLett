@@ -17,11 +17,11 @@ public class JobShiftListDeserializer extends StdDeserializer<JobShiftList> {
         super(JobShiftList.class);
     }
 
-    public JobShiftList deserialize(JsonNode node) throws IOException, JsonProcessingException {
+    public JobShiftList deserialize(JsonNode node, Main main) throws IOException, JsonProcessingException {
         ArrayNode arrayNode = (ArrayNode) node.get("jobShifts");
         JobShiftList jobShiftList = new JobShiftList();
         for (JsonNode jobShiftNode : arrayNode) {
-            jobShiftList.addJobShift(new JobShiftDeserializer().deserialize(jobShiftNode));
+            jobShiftList.addJobShift(new JobShiftDeserializer().deserialize(jobShiftNode, main));
         }
         return jobShiftList;
     }
@@ -29,6 +29,6 @@ public class JobShiftListDeserializer extends StdDeserializer<JobShiftList> {
     @Override
     public JobShiftList deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         TreeNode treeNode = jsonParser.getCodec().readTree(jsonParser);
-        return deserialize((JsonNode) treeNode);
+        return deserialize((JsonNode) treeNode, new Main());
     }
 }

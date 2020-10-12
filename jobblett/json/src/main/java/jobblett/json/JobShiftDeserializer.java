@@ -19,22 +19,22 @@ import java.time.LocalDateTime;
 
 public class JobShiftDeserializer extends JsonDeserializer<JobShift> {
 
-    public JobShift deserialize(JsonNode node) throws IOException, JsonProcessingException {
-        //String username = node.get("user").asText();
-        //User user = main.getUserList().getUser(username);
-        User user = new UserDeserializer().deserialize(node.get("user"));
+    public JobShift deserialize(JsonNode node, Main main) throws IOException, JsonProcessingException {
+        String username = node.get("user").asText();
+        User user = main.getUserList().getUser(username);
         LocalDateTime startingTime = LocalDateTime.parse(node.get("startingTime").asText());
         Duration duration = Duration.ofSeconds(node.get("duration").asLong());
         //LocalDateTime startingTime = new ObjectMapper().treeToValue(node.get("startingTime"), LocalDateTime.class);
         //Duration duration = new ObjectMapper().treeToValue(node.get("duration"), Duration.class);
         String info = node.get("info").asText();
-        JobShift jobShift = new JobShift(user,startingTime,duration,info,true);
+        JobShift jobShift = new JobShift(user,LocalDateTime.now().plusYears(1),duration,info);
+        jobShift.setStartingTimeOverride(startingTime);
         return jobShift;
     }
 
     @Override
     public JobShift deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         TreeNode node = jsonParser.getCodec().readTree(jsonParser);
-        return deserialize((JsonNode) node);
+        return deserialize((JsonNode) node, new Main());
     }
 }

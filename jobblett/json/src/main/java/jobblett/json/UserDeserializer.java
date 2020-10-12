@@ -15,7 +15,6 @@ import java.io.IOException;
 public class UserDeserializer extends JsonDeserializer<User> {
 
     public User deserialize(JsonNode node) throws IOException, JsonProcessingException {
-        if (node.isNull()) return null;
         String username = node.get("username").asText();
         String password = node.get("password").asText();
         String givenName = node.get("givenName").asText();

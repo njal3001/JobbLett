@@ -17,18 +17,17 @@ public class GroupDeserializer extends StdDeserializer<Group> {
         super(Group.class);
     }
 
-    public Group deserialize(JsonNode node) throws IOException, JsonProcessingException {
+    public Group deserialize(JsonNode node, Main main) throws IOException, JsonProcessingException {
         String groupName = node.get("groupName").asText();
         Integer groupID = node.get("groupID").asInt();
 
         ArrayNode usersArrayNode = (ArrayNode) node.get("groupMembers");
         Group group = new Group(groupName, groupID);
         for (JsonNode userNode : usersArrayNode) {
-            //User user = main.getUserList().getUser(userNode.asText());
-            User user = new UserDeserializer().deserialize(userNode);
+            User user = main.getUserList().getUser(userNode.asText());
             group.addUser(user);
         }
-        JobShiftList jobShiftList = new JobShiftListDeserializer().deserialize(node.get("jobShifts"));
+        JobShiftList jobShiftList = new JobShiftListDeserializer().deserialize(node.get("jobShifts"),main);
         for (JobShift jobShift : jobShiftList) {
             group.addJobShift(jobShift,group.getAdmin());
         }
@@ -39,6 +38,6 @@ public class GroupDeserializer extends StdDeserializer<Group> {
     @Override
     public Group deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         TreeNode treeNode = jsonParser.getCodec().readTree(jsonParser);
-        return deserialize((JsonNode) treeNode);
+        return deserialize((JsonNode) treeNode, new Main());
     }
 }
