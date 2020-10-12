@@ -38,11 +38,11 @@ som kan legge til og fjerne jobbshift.
 
 ![](pictures/classdiagramCore.png)
 
-<b>Klassediagram Core: </b>
+<b>Klassediagram Json: </b>
 
 ![](pictures/classdiagramJson.png)
 
-<b>Klassediagram Core: </b>
+<b>Klassediagram UI: </b>
 
 ![](pictures/classdiagramUI.png)
 
