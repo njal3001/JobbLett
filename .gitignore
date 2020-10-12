@@ -12,6 +12,7 @@ target/
 .eclipse
 .classpath
 .project
+.vscode
 
 # ignore macOS temporary files
 .DS_Store

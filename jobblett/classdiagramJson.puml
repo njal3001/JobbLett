@@ -58,21 +58,43 @@ namespace jobblett.json {
         +deserialize(JsonNode): JobShiftList
         +deserialize(JsonParser, DeserializationContext): JobShiftList
     }
-    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-- JobShiftSerializer
-    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-- GroupListSerializer
-    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-- MainSerializer
-    com.fasterxml.jackson.databind.deser.std.StdDeserializer <|-- GroupListDeserializer
-    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-- GroupSerializer
-    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-- JobShiftListSerializer
-    com.fasterxml.jackson.databind.deser.std.StdDeserializer <|-- MainDeserializer
-    com.fasterxml.jackson.databind.deser.std.StdDeserializer <|-- UserListDeserializer
+
+    MainSerializer -[hidden]down-|>GroupListSerializer
+    GroupListSerializer -[hidden]down-|>JobShiftListSerializer
+    JobShiftListSerializer -[hidden]down-|>UserListSerializer
+    UserListSerializer -[hidden]down-|>JobShiftSerializer
+    JobShiftSerializer -[hidden]down-|>GroupSerializer
+    GroupSerializer -[hidden]down-|>UserSerializer
+
+    MainDeserializer -[hidden]down-|>GroupListDeserializer
+    GroupListDeserializer -[hidden]down-|>JobShiftListDeserializer
+    JobShiftListDeserializer -[hidden]down-|>UserListDeserializer
+    UserListDeserializer -[hidden]down-|>JobShiftDeserializer
+    JobShiftDeserializer -[hidden]down-|>GroupDeserializer
+    GroupDeserializer -[hidden]down-|>UserDeserializer
+
+    CoreModule -[hidden]down-|> JSONSerialize
+    JSONSerialize -[hidden]down-|> JSONDeserialize
+    
+    com.fasterxml.jackson.databind.module.SimpleModule -[hidden]right-> MainDeserializer
+
+
+    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-right- JobShiftSerializer
+    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-right- GroupListSerializer
+    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-right- MainSerializer
+    com.fasterxml.jackson.databind.deser.std.StdDeserializer <|-left- GroupListDeserializer
+    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-right- GroupSerializer
+    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-right- JobShiftListSerializer
+    com.fasterxml.jackson.databind.deser.std.StdDeserializer <|-left- MainDeserializer
+    com.fasterxml.jackson.databind.deser.std.StdDeserializer <|-left- UserListDeserializer
     com.fasterxml.jackson.databind.JsonDeserializer <|-- JobShiftDeserializer
     com.fasterxml.jackson.databind.JsonDeserializer <|-- UserDeserializer
-    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-- UserSerializer
-    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-- UserListSerializer
-    com.fasterxml.jackson.databind.module.SimpleModule <|-- CoreModule
-    com.fasterxml.jackson.databind.deser.std.StdDeserializer <|-- GroupDeserializer
-    com.fasterxml.jackson.databind.deser.std.StdDeserializer <|-- JobShiftListDeserializer
+    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-right- UserSerializer
+    com.fasterxml.jackson.databind.ser.std.StdSerializer <|-right- UserListSerializer
+    com.fasterxml.jackson.databind.module.SimpleModule <|-left- CoreModule
+    com.fasterxml.jackson.databind.deser.std.StdDeserializer <|-left- GroupDeserializer
+    com.fasterxml.jackson.databind.deser.std.StdDeserializer <|-left- JobShiftListDeserializer
+    
 }
 namespace com.fasterxml.jackson.databind.ser.std {
     abstract class StdSerializer<T> {
