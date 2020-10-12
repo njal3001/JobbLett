@@ -28,7 +28,6 @@ public class CreateUserControllerTest extends JobbLettTest {
   public void testGoToLogin(){
     clickOn("#goBackButton");
     //Checks if it finds a node from Login.fxml, which confirms that the scene has been changed
-    //Tror denne noden er i begge scenene, så må byttes ut hvis vi skal ha denne testen
     TextField nodeInLoginScene = lookup("#usernameField").query();
     assertNotNull(nodeInLoginScene);
   }
