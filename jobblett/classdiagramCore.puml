@@ -1,0 +1,106 @@
+@startuml
+    namespace jobblett.core {
+        class Group {
+            +Group gorup
+            - String getGroupName
+            - Collection<User> groupMembers
+            - int getGroupID
+            - JobShiftList jobShifts
+            - User admin
+            +addJobShift(JobShift, User): void
+            +addUser(User): void
+            +isAdmin(User): boolean
+            +removeUser(User): boolean
+            +getUser(): User
+            +setGroupName(String): void
+            +getGroupSize(): int
+            +getGroupName(): String
+            +getGroupID(): int
+            +iterator(): Iterator<User>
+        }
+        Group --> User: admin
+        class User {
+            +User user
+            - String password
+            - String givenName
+            - String familyName
+            {static} +validName(String): boolean
+            {static} +validUsername(String): boolean
+            {static} +validPassword(String): boolean
+            +setPassword(String): void
+            +setName(String, String): void
+            +getUserName(): String
+            +getGivenName(): String
+            +getFamilyName(): String
+            +matchesPassword(String): boolean
+            +getHashedPassword(): String
+            - formatName(String) : String
+        }
+        class JobShiftList {
+        List<JobShift> jobShifts
+            +addJobShift(JobShift): void
+            +removeJobShift(JobShift): boolean
+            +iterator(): Iterator<JobShift>
+        }
+        class JobShiftStartTimeComparator {
+        - {static} long serialVersionUID
+            +compare(JobShift, JobShift): int
+        }
+        class JobShift {
+        - User user
+        -LocalDateTime startingTime
+        - Duration duration
+            +JobShift(User, LocalDateTime, Duration, String, boolean)
+            +JobShift(User, LocalDateTime, Duration, String)
+            +getStartingTime(): LocalDateTime
+            +getDuration(): Duration
+            +getEndingTime(): LocalDateTime
+            +getInfo(): String
+            +setStartingTime(LocalDateTime): void
+            +setDuration(Duration): void
+            +setInfo(String): void
+        }
+        class UserList {
+        - Collection<User> users
+            +getUser(String): User
+            +addUser(User...): void
+            +login(String, String): User
+            +iterator(): Iterator<User>
+        }
+        class GroupList {
+        - Collection<Group> groupList
+        - generateGroupID(): int
+        - getGroupIDs(): Collection<Integer>
+            +newGroup(String): Group
+            +addGroup(Group): boolean
+            +removeGroup(Group): boolean
+            +getGroup(int): Group
+            +getGroups(User): Collection<Group>
+            +getGroupSize(): int
+            +iterator(): Iterator<Group>
+        }
+        class Main {
+        -UserList userLis
+        - GroupList groupList
+        - User loggedIn
+        - Group activeGroup
+            +logIn(User): void
+            +logOut(): void
+        }
+        Group --> "*" JobShift: jobShifts
+        JobShiftList --> "*" JobShift: jobShifts
+        java.util.Comparator <|.. JobShiftStartTimeComparator
+        java.io.Serializable <|.. JobShiftStartTimeComparator
+        JobShift --> User: user
+        Main --> "*" Group: groupList
+        Main --> User: loggedIn
+        Main --> "*" User: userList\nactiveGroup
+    }
+    namespace java.util {
+        interface Comparator<T> {
+        }
+    }
+    namespace java.io {
+        interface Serializable
+    }
+@enduml

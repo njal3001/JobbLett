@@ -1,0 +1,47 @@
+@startuml
+
+-Class  Group{
+- String GroupName
+- Collection <User> groupMembers
+- int groupID
+- JobShiftList jobShifts
+- User admin
+
++ addjobShift()
++ addUser()
++ isAdmin()
++ getAdmin()
++ removeUser()
++ getUser()
++ setGroupName()
++ getGroupSize()
++ getGroupName()
++ getGroupID()
+
+}
+Group }|..|{ User
+Group -- JobShift
+Group -- JobShiftList
+Group -- GroupList
+-Class GroupList{
+-Collection<Group> groups
+-generateGroupId()
++addGroup()
++removeGroup()
++getGroup()
++getGroups()
++getGroupSize()
+}
+
+Class JobShift
+Class JobShiftList
+class JobShiftStartTimeComparator
+Class User
+Class UserList
+
+
+
+
+
+
+@enduml

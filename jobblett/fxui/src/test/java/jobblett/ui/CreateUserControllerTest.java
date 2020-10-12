@@ -57,7 +57,7 @@ public class CreateUserControllerTest extends ApplicationTest {
   @Test
   public void testGoToLogin(){
     clickOn("#goBackButton");
-    //sjekker at den finner nodene osm finnes i loginfxml, som bekrefter at den byttet scene
+    //Checks if it finds a node from Login.fxml, which confirms that the scene has been changed
     TextField nodeInLoginScene = lookup("#usernameField").query();
     assertNotNull(nodeInLoginScene);
   }

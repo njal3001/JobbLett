@@ -39,7 +39,7 @@ public class CreateShiftControllerTest extends JobbLettTest {
   public void testGetStartingTime(){
 
   }*/
-
+////må ha mer errormessage i createshift og endre litt på createshift før vi lager denne delen.
   /*@Test
   public void testCreateValidShift(){
     ListView<User> members= lookup("#members").query();
