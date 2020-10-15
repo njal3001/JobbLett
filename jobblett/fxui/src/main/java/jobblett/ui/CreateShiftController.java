@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -36,12 +38,19 @@ public class CreateShiftController extends AbstractController {
     Button goBackButton;
 
     @FXML
-    Button createShiftButton;
+    Button newShiftButton;
 
-    // Må fikse teksten på FXML
+    @FXML
+    Button editShiftButton;
+
+    @FXML
+    Button deleteShiftButton;
+    
+    @FXML
+    Text errorMessage;
+
     // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme
     // kode hver gang vi skal vise noe med listView
-    // Har bare lagt inn en dato greie på UI en så man kan ikke ha et skift som går fra 23:00 - 07:00 f.eks
 
     @Override
     public void update() {
@@ -66,7 +75,7 @@ public class CreateShiftController extends AbstractController {
             getActiveGroup().addJobShift(newShift, getLoggedIn());
             goBack();
         } catch(Exception e){
-            e.printStackTrace();
+            errorMessage.setText(e.getMessage());
         }
     }
 
@@ -85,7 +94,7 @@ public class CreateShiftController extends AbstractController {
             int minute = Integer.parseInt(timeString.substring(splitIndex + 1));
             return LocalTime.of(hour, minute);
         } catch(Exception e){
-            return null;
+            throw new IllegalArgumentException("Time period is not written on the correct format");
         }
     }
 }

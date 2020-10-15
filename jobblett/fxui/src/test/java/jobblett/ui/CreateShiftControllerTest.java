@@ -27,13 +27,15 @@ public class CreateShiftControllerTest extends JobbLettTest {
     main.setActiveGroup(group1);
   }
 
-    @Test
+  /*
+  @Test
   public void testGoBack(){
     clickOn("#goBackButton");
     //checks if a node in the ShiftView.fxml exists on the current screen, which confirms that we are on the correct scene
     Button nodeInShiftViewScene = ((Button) lookup("#newShiftButton").query());
     assertNotNull(nodeInShiftViewScene);
   }
+  */
   /*
   @Test
   public void testGetStartingTime(){

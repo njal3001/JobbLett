@@ -9,52 +9,80 @@ import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import jobblett.core.JobShift;
 
-public class ShiftViewController extends AbstractController{
-    
-    @FXML
-    Text groupName;
+public class ShiftViewController extends AbstractController {
 
-    @FXML
-    ListView<Text> shifts;
+  //Ødela UIen når jeg la til nye knapper, må fikses
 
-    @FXML
-    Text groupID;
+  @FXML
+  Text groupName;
 
-    @FXML
-    Button backToGroup;
+  @FXML
+  ListView<JobShift> shifts;
 
-    @FXML
-    Text shiftsText;
+  @FXML
+  Button backToGroup;
 
-    @FXML 
-    Button newShiftButton;
+  @FXML
+  Button newShiftButton;
 
+  @FXML
+  Button editShiftButton;
 
-    @Override
-    public void update() {
-        // Sets GroupName on top of the screen
-        groupName.setText(getActiveGroup().getGroupName());
+  @FXML
+  Button deleteShiftButton;
 
-        // Shows GroupID
-        groupID.setText("GroupID: " + getActiveGroup().getGroupID());
+  @Override
+  public void update() {
+    // Sets group name on top of the screen
+    groupName.setText(getActiveGroup().getGroupName());
 
-       // Lists all members
-        for (JobShift shift : getActiveGroup().getJobShifts()) {
-            Text text = new Text(shift.toString());
-            shifts.getItems().add(text);
-        }
-        newShiftButton.setVisible(getActiveGroup().isAdmin(getLoggedIn()));
+    shifts.setCellFactory(shifts -> {
+      JobShiftListCell listCell = new JobShiftListCell();
+      return listCell;
+    });
+
+    shifts.getSelectionModel().selectedItemProperty().
+    addListener(listener -> {updateButtons();});
+    updateView();
+    updateButtons();
+    newShiftButton.setVisible(getActiveGroup().isAdmin(getLoggedIn()));
+  }
+
+  @FXML
+  public void backButton() throws IOException {
+    changeScreen(new FXMLLoader(getClass().getResource("GroupHome.fxml")), backToGroup, main);
+  }
+
+  @FXML
+  public void goToCreateShift() throws IOException {
+    changeScreen(new FXMLLoader(getClass().getResource("CreateShift.fxml")), newShiftButton, main);
+  }
+
+  @FXML
+  public void goToEditShift() throws IOException {
+    changeScreen(new FXMLLoader(getClass().getResource("EditShift.fxml")), newShiftButton, main);
+  }
+
+  @FXML
+  public void handleDeleteShift() throws IOException {
+    int index = shifts.getSelectionModel().getSelectedIndex();
+    JobShift selectedJobShift = shifts.getItems().get(index);
+    if(selectedJobShift != null){
+      getActiveGroup().getJobShifts().removeJobShift(selectedJobShift);
+      updateView();
     }
+  }
+  // Burde kanskje bruke observable for å kalle på denne metoden
+  // Lists all job shifts
+  private void updateView(){
+    shifts.getItems().clear();
+    for (JobShift shift : getActiveGroup().getJobShifts())
+      shifts.getItems().add(shift);
+  }
 
-    @FXML
-    public void backButton() throws IOException {
-        changeScreen(new FXMLLoader(getClass().getResource("GroupHome.fxml")), backToGroup, main);
-    }
-
-    @FXML
-    public void goToCreateShift() throws IOException {
-        changeScreen(new FXMLLoader(getClass().getResource("CreateShift.fxml")), newShiftButton, main);
-    }
-    
-    
+  private void updateButtons(){
+    boolean disable = shifts.getSelectionModel().getSelectedIndex() == -1;
+    editShiftButton.setDisable(disable);
+    deleteShiftButton.setDisable(disable);
+  }
 }

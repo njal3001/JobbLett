@@ -40,7 +40,7 @@ public class CreateUserControllerTest extends JobbLettTest {
   @Test
   public void testCreateUser_invalidUserData(){
     tryToCreateUser("", "", "", "");
-    assertErrorMessage("Not a valid username\nNot a valid password\nNot a valid given name\nNot a valid family name");
+    assertErrorMessage("Not a valid username\nNot a valid password\nNot a valid name");
   }
   
   @Test
@@ -62,5 +62,5 @@ public class CreateUserControllerTest extends JobbLettTest {
     clickOn("#givenName").write(givenName);
     clickOn("#familyName").write(familyName);
     clickOn("#createAccountButton");
-  }
+  } 
 }
