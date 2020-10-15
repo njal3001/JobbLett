@@ -1,15 +1,12 @@
 package jobblett.ui;
 
-import java.io.IOException;
-
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import jobblett.core.JobShift;
 
-public class ShiftViewController extends AbstractController{
+public class ShiftViewController extends ScreenController{
     
     @FXML
     Text groupName;
@@ -31,30 +28,28 @@ public class ShiftViewController extends AbstractController{
 
 
     @Override
-    public void update() {
+    public void onScreenDisplayed() {
         // Sets GroupName on top of the screen
-        groupName.setText(getActiveGroup().getGroupName());
+        groupName.setText(main.getActiveGroup().getGroupName());
 
         // Shows GroupID
-        groupID.setText("GroupID: " + getActiveGroup().getGroupID());
+        groupID.setText("GroupID: " + main.getActiveGroup().getGroupID());
 
        // Lists all members
-        for (JobShift shift : getActiveGroup().getJobShifts()) {
+        for (JobShift shift : main.getActiveGroup().getJobShifts()) {
             Text text = new Text(shift.toString());
             shifts.getItems().add(text);
         }
-        newShiftButton.setVisible(getActiveGroup().isAdmin(getLoggedIn()));
+        newShiftButton.setVisible(main.getActiveGroup().isAdmin(main.getLoggedIn()));
     }
 
     @FXML
-    public void backButton() throws IOException {
-        changeScreen(new FXMLLoader(getClass().getResource("GroupHome.fxml")), backToGroup, main);
+    public void backButton(){
+        mainController.setScreen(App.GROUP_HOME_ID);
     }
 
     @FXML
-    public void goToCreateShift() throws IOException {
-        changeScreen(new FXMLLoader(getClass().getResource("CreateShift.fxml")), newShiftButton, main);
+    public void goToCreateShift(){
+      mainController.setScreen(App.CREATE_SHIFT_ID);
     }
-    
-    
 }

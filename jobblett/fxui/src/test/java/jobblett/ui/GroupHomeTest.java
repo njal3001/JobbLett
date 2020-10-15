@@ -6,13 +6,12 @@ import org.junit.jupiter.api.Test;
 
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class GroupHomeTest extends JobbLettTest{
 
   @Override
-  protected String giveFxmlFileName() {
-    return "GroupHome.fxml";
+  protected String giveID() {
+    return App.GROUP_HOME_ID;
   }
   
   @Override

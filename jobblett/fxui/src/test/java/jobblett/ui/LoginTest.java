@@ -10,8 +10,8 @@ import javafx.scene.text.Text;
 public class LoginTest extends JobbLettTest {
 
   @Override
-  protected String giveFxmlFileName() {
-    return "Login.fxml";
+  protected String giveID() {
+    return App.LOGIN_ID;
   }
 
   @Test

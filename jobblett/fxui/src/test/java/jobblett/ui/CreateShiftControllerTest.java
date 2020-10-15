@@ -14,10 +14,9 @@ import jobblett.core.User;
 
 //Koder som er kommentert ut skal implementeres ettersom deres funksjoner er implementert i controlleren.
 public class CreateShiftControllerTest extends JobbLettTest {
-
   @Override
-  protected String giveFxmlFileName() {
-    return "CreateShift.fxml";
+  protected String giveID() {
+    return App.CREATE_SHIFT_ID;
   }
 
   @Override
@@ -26,27 +25,24 @@ public class CreateShiftControllerTest extends JobbLettTest {
     main.logIn(user1);
     main.setActiveGroup(group1);
   }
+  
 
-    @Test
+  @Test
   public void testGoBack(){
     clickOn("#goBackButton");
     //checks if a node in the ShiftView.fxml exists on the current screen, which confirms that we are on the correct scene
     Button nodeInShiftViewScene = ((Button) lookup("#newShiftButton").query());
     assertNotNull(nodeInShiftViewScene);
   }
-  /*
+
   @Test
   public void testGetStartingTime(){
-
-  }*/
-////må ha mer errormessage i createshift og endre litt på createshift før vi lager denne delen.
-  /*@Test
+  }
+  
+  //må ha mer errormessage i createshift og endre litt på createshift før vi lager denne delen.
+  @Test
   public void testCreateValidShift(){
-    ListView<User> members= lookup("#members").query();
-    assertNotNull(members);
-    clickOn(members.)
-  }*/
-
+  }
 
   @Test
   public void testNotEmptyUserList(){
@@ -55,5 +51,5 @@ public class CreateShiftControllerTest extends JobbLettTest {
     //There should be more than zero members in the ListView
     assertNotEquals(0,members.getItems().size());
   }
-//må ha mer errormessage i createshift!
+  //må ha mer errormessage i createshift!
 }

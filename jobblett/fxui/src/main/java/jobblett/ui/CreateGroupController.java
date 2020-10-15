@@ -1,42 +1,37 @@
 package jobblett.ui;
 
-import java.io.IOException;
-
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import jobblett.core.Group;
 
-public class CreateGroupController extends AbstractController {
+public class CreateGroupController extends ScreenController {
 
-    @FXML
-    Button createGroupButton;
-    @FXML
-    TextField groupNameField;
-    @FXML
-    Text errorMessage;
-    @FXML
-    Button goBackButton;
+  @FXML
+  Button createGroupButton;
+  @FXML
+  TextField groupNameField;
+  @FXML
+  Text errorMessage;
+  @FXML
+  Button goBackButton;
 
-    @FXML
-    public void goToUserHome() throws IOException {
-        changeScreen(new FXMLLoader(getClass().getResource("UserHome.fxml")), goBackButton, main);
+  @FXML
+  public void goToUserHome() {
+    mainController.setScreen(App.USER_HOME_ID);
+  }
+
+  @FXML
+  public void createGroup(){
+    String groupName = groupNameField.getText();
+    try {
+      Group newGroup = main.getGroupList().newGroup(groupName);
+      newGroup.addUser(main.getLoggedIn());
+      main.setActiveGroup(newGroup);
+      mainController.setScreen(App.GROUP_HOME_ID);
+    } catch (Exception e) {
+      errorMessage.setText(e.getMessage());
     }
-
-   @FXML
-    public void createGroup() throws IOException{
-        String groupName = groupNameField.getText();
-        try{
-            Group newGroup = main.getGroupList().newGroup(groupName);
-            newGroup.addUser(getLoggedIn());
-            main.setActiveGroup(newGroup);
-            changeScreen(new FXMLLoader(getClass().getResource("GroupHome.fxml")), createGroupButton, main);
-        } catch(Exception e){
-            errorMessage.setText(e.getMessage());
-        }
-        }
-
-
+  }
 }

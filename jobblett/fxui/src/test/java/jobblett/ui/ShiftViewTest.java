@@ -2,13 +2,12 @@ package jobblett.ui;
 
 
 import org.junit.jupiter.api.Test;
-import javafx.stage.Stage;
 
 public class ShiftViewTest extends JobbLettTest{
 
   @Override
-  protected String giveFxmlFileName() {
-    return "ShiftView.fxml";
+  protected String giveID() {
+    return App.SHIFT_VIEW_ID;
   }
   
   @Override

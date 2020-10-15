@@ -12,8 +12,8 @@ import javafx.scene.text.Text;
 public class CreateUserControllerTest extends JobbLettTest {
 
   @Override
-  protected String giveFxmlFileName() {
-    return "CreateUser.fxml";
+  protected String giveID() {
+    return App.CREATE_USER_ID;
   }
 
   @Test

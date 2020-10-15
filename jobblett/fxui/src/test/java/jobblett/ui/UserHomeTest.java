@@ -12,8 +12,8 @@ import javafx.scene.text.Text;
 public class UserHomeTest extends JobbLettTest {
 
   @Override
-  protected String giveFxmlFileName() {
-    return "UserHome.fxml";
+  protected String giveID() {
+    return App.USER_HOME_ID;
   }
 
   @Override
