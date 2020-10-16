@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import jobblett.core.Group;
 
-public class JoinGroupController extends ScreenController {
+public class JoinGroupController extends SceneController {
 
   @FXML
   Button joinGroupButton;
@@ -21,7 +21,7 @@ public class JoinGroupController extends ScreenController {
 
   // Fungerer ikke, vet ikke hvorfor
   @Override
-  public void onScreenDisplayed() {
+  public void onSceneDisplayed() {
     // Sets a listener to prevent non-integers on groupID
     groupIdField.textProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue.length() != 0) {
@@ -38,7 +38,7 @@ public class JoinGroupController extends ScreenController {
 
   @FXML
   public void goToUserHome(){
-    mainController.setScreen(App.USER_HOME_ID);
+    mainController.setScene(App.USER_HOME_ID);
   }
 
   @FXML
@@ -60,7 +60,7 @@ public class JoinGroupController extends ScreenController {
     try{
       group.addUser(main.getLoggedIn());
       main.setActiveGroup(group);
-      mainController.setScreen(App.GROUP_HOME_ID);
+      mainController.setScene(App.GROUP_HOME_ID);
     } catch(Exception e){
       errorMessage.setText(e.getMessage());
     }

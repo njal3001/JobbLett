@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class CreateShiftController extends ScreenController {
+public class CreateShiftController extends SceneController {
 
   @FXML
   ListView<User> members;
@@ -44,7 +44,7 @@ public class CreateShiftController extends ScreenController {
   // fra 23:00 - 07:00 f.eks
 
   @Override
-  public void onScreenDisplayed() {
+  public void onSceneDisplayed() {
     // Lists all members
     for (User user : main.getActiveGroup())
       members.getItems().add(user);
@@ -52,7 +52,7 @@ public class CreateShiftController extends ScreenController {
 
   @FXML
   public void goBack() throws IOException {
-    mainController.setScreen(App.SHIFT_VIEW_ID);
+    mainController.setScene(App.SHIFT_VIEW_ID);
   }
 
   @FXML

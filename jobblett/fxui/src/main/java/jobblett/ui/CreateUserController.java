@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import jobblett.core.User;
 
-public class CreateUserController extends ScreenController {
+public class CreateUserController extends SceneController {
 
   @FXML
   Button createAccountButton;
@@ -61,7 +61,7 @@ public class CreateUserController extends ScreenController {
     try{
       main.getUserList().addUser(newUser);
       main.logIn(newUser);
-      mainController.setScreen(App.USER_HOME_ID);
+      mainController.setScene(App.USER_HOME_ID);
     } catch (Exception e) {
       errorMessage.setText(e.getMessage());
     }
@@ -69,6 +69,6 @@ public class CreateUserController extends ScreenController {
 
   @FXML
   public void goToLogIn(){
-    mainController.setScreen(App.LOGIN_ID);
+    mainController.setScene(App.LOGIN_ID);
   }
 }

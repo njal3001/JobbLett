@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import jobblett.core.Main;
 
-//Uses code is from: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
+//Code is inspired by: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
 
 public class App extends Application {
 
@@ -33,34 +33,32 @@ public class App extends Application {
   public static final String CREATE_SHIFT_ID = "CreateShift";
   public static final String CREATE_SHIFT_FILE = "CreateShift.fxml";
 
-  private MainController mainContainer;
+  private MainController mainController;
 
   @Override
   public void start(Stage primaryStage) {
     primaryStage.setTitle("Jobblett");
 
-    mainContainer = new MainController();
+    mainController = new MainController(primaryStage);
 
     // Her kan man laste inn main fra fil istedet
-    mainContainer.setMain(new Main());
+    mainController.setMain(new Main());
 
-    mainContainer.loadScreen(LOGIN_ID, LOGIN_FILE);
-    mainContainer.loadScreen(CREATE_USER_ID, CREATE_USER_FILE);
-    mainContainer.loadScreen(USER_HOME_ID, USER_HOME_FILE);
-    mainContainer.loadScreen(JOIN_GROUP_ID, JOIN_GROUP_FILE);
-    mainContainer.loadScreen(CREATE_GROUP_ID, CREATE_GROUP_FILE);
-    mainContainer.loadScreen(GROUP_HOME_ID, GROUP_HOME_FILE);
-    mainContainer.loadScreen(SHIFT_VIEW_ID, SHIFT_VIEW_FILE);
-    mainContainer.loadScreen(CREATE_SHIFT_ID, CREATE_SHIFT_FILE);
+    mainController.loadScene(LOGIN_ID, LOGIN_FILE);
+    mainController.loadScene(CREATE_USER_ID, CREATE_USER_FILE);
+    mainController.loadScene(USER_HOME_ID, USER_HOME_FILE);
+    mainController.loadScene(JOIN_GROUP_ID, JOIN_GROUP_FILE);
+    mainController.loadScene(CREATE_GROUP_ID, CREATE_GROUP_FILE);
+    mainController.loadScene(GROUP_HOME_ID, GROUP_HOME_FILE);
+    mainController.loadScene(SHIFT_VIEW_ID, SHIFT_VIEW_FILE);
+    mainController.loadScene(CREATE_SHIFT_ID, CREATE_SHIFT_FILE);
 
-    mainContainer.setScreen(LOGIN_ID);
-    Scene scene = new Scene(mainContainer);
-    primaryStage.setScene(scene);
+    mainController.setScene(LOGIN_ID);
     primaryStage.show();
   }
 
-  public MainController getMainContainer() {
-    return mainContainer;
+  public MainController getMainController() {
+    return mainController;
   }
 
   public static void main(final String[] args) {

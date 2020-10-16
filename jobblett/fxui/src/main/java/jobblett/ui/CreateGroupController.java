@@ -6,7 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import jobblett.core.Group;
 
-public class CreateGroupController extends ScreenController {
+public class CreateGroupController extends SceneController {
 
   @FXML
   Button createGroupButton;
@@ -19,7 +19,7 @@ public class CreateGroupController extends ScreenController {
 
   @FXML
   public void goToUserHome() {
-    mainController.setScreen(App.USER_HOME_ID);
+    mainController.setScene(App.USER_HOME_ID);
   }
 
   @FXML
@@ -29,7 +29,7 @@ public class CreateGroupController extends ScreenController {
       Group newGroup = main.getGroupList().newGroup(groupName);
       newGroup.addUser(main.getLoggedIn());
       main.setActiveGroup(newGroup);
-      mainController.setScreen(App.GROUP_HOME_ID);
+      mainController.setScene(App.GROUP_HOME_ID);
     } catch (Exception e) {
       errorMessage.setText(e.getMessage());
     }

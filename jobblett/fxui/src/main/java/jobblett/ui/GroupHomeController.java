@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 
-public class GroupHomeController extends ScreenController{
+public class GroupHomeController extends SceneController{
 
     @FXML
     Text groupName;
@@ -27,13 +27,14 @@ public class GroupHomeController extends ScreenController{
     // Må legge til en måte at man kan se hvem som er admin
 
     @Override
-    public void onScreenDisplayed() {
+    public void onSceneDisplayed() {
         // Sets GroupName on top of the screen
         groupName.setText(main.getActiveGroup().getGroupName());
 
         // Shows GroupID
         groupID.setText("GroupID: " + main.getActiveGroup().getGroupID());
 
+        members.getItems().clear();
         // Lists all members
         for (User user : main.getActiveGroup()) {
             Text text = new Text(user.toString());
@@ -43,11 +44,11 @@ public class GroupHomeController extends ScreenController{
 
     @FXML
     public void backButton(){
-        mainController.setScreen(App.USER_HOME_ID);
+        mainController.setScene(App.USER_HOME_ID);
     }
     
     @FXML
     public void viewShifts(){
-        mainController.setScreen(App.SHIFT_VIEW_ID);
+        mainController.setScene(App.SHIFT_VIEW_ID);
     }
 }

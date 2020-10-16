@@ -8,7 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import jobblett.core.Group;
 
-public class UserHomeController extends ScreenController {
+public class UserHomeController extends SceneController {
 
     @FXML
     ListView<Text> groups;
@@ -26,12 +26,13 @@ public class UserHomeController extends ScreenController {
     Button joinGroupButton;
 
     @Override
-    public void onScreenDisplayed() {
+    public void onSceneDisplayed() {
         // Sets full name on top of the screen
         String givenName = main.getLoggedIn().getGivenName();
         String familyName = main.getLoggedIn().getFamilyName();
         userFullName.setText(givenName + " " + familyName);
 
+        groups.getItems().clear();
         // Lists all groups
         for (Group group : main.getGroupList().getGroups(main.getLoggedIn())) {
             Text text = new Text(group.getGroupName());
@@ -40,7 +41,7 @@ public class UserHomeController extends ScreenController {
                 @Override
                 public void handle(MouseEvent event) {
                     main.setActiveGroup(group);
-                    mainController.setScreen(App.GROUP_HOME_ID);
+                    mainController.setScene(App.GROUP_HOME_ID);
                 }
             });
         }
@@ -49,16 +50,16 @@ public class UserHomeController extends ScreenController {
     @FXML
     public void logOut() {
         main.logOut();
-        mainController.setScreen(App.LOGIN_ID);
+        mainController.setScene(App.LOGIN_ID);
     }
 
     @FXML
     public void createGroup(){
-    	mainController.setScreen(App.CREATE_GROUP_ID);
+    	mainController.setScene(App.CREATE_GROUP_ID);
     }
 
     @FXML
     public void joinGroup(){
-      mainController.setScreen(App.JOIN_GROUP_ID);
+      mainController.setScene(App.JOIN_GROUP_ID);
     }
 }

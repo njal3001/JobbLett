@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import jobblett.core.User;
 
-public class LoginController extends ScreenController {
+public class LoginController extends SceneController {
 
   @FXML
   Button createAccount;
@@ -25,13 +25,13 @@ public class LoginController extends ScreenController {
   PasswordField passwordField;
 
   @Override
-  public void onScreenDisplayed() {
+  public void onSceneDisplayed() {
     errorMessage.setText("");
   }
 
   @FXML
   public void goToCreateUser(){
-    mainController.setScreen(App.CREATE_USER_ID);
+    mainController.setScene(App.CREATE_USER_ID);
   }
 
   @FXML
@@ -43,7 +43,7 @@ public class LoginController extends ScreenController {
       errorMessage.setText("Wrong username or password");
     else {
       main.logIn(user);
-      mainController.setScreen(App.USER_HOME_ID);
+      mainController.setScene(App.USER_HOME_ID);
     }
   }
 }

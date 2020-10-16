@@ -6,7 +6,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import jobblett.core.JobShift;
 
-public class ShiftViewController extends ScreenController{
+public class ShiftViewController extends SceneController{
     
     @FXML
     Text groupName;
@@ -28,13 +28,14 @@ public class ShiftViewController extends ScreenController{
 
 
     @Override
-    public void onScreenDisplayed() {
+    public void onSceneDisplayed() {
         // Sets GroupName on top of the screen
         groupName.setText(main.getActiveGroup().getGroupName());
 
         // Shows GroupID
         groupID.setText("GroupID: " + main.getActiveGroup().getGroupID());
 
+        shifts.getItems().clear();
        // Lists all members
         for (JobShift shift : main.getActiveGroup().getJobShifts()) {
             Text text = new Text(shift.toString());
@@ -45,11 +46,11 @@ public class ShiftViewController extends ScreenController{
 
     @FXML
     public void backButton(){
-        mainController.setScreen(App.GROUP_HOME_ID);
+        mainController.setScene(App.GROUP_HOME_ID);
     }
 
     @FXML
     public void goToCreateShift(){
-      mainController.setScreen(App.CREATE_SHIFT_ID);
+      mainController.setScene(App.CREATE_SHIFT_ID);
     }
 }

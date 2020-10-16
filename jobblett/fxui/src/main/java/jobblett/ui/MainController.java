@@ -6,18 +6,26 @@ import java.util.Map;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import jobblett.core.Main;
 
-//Code is from: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
+//Code is inspired by: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
 
 //This controller changes the screen in the app
-public class MainController extends Pane {
+public class MainController{
 
-  private Map<String, Node> screens = new HashMap<String, Node>();
-  private Map<String, ScreenController> screenControllers = new HashMap<String, ScreenController>();
+  private Stage stage;
+
+  private Map<String, Scene> scenes = new HashMap<String, Scene>();
+  private Map<String, SceneController> sceneControllers = new HashMap<String, SceneController>();
 
   private Main main;
+
+  public MainController(Stage stage){
+    this.stage = stage;
+  }
 
   public void setMain(Main main) {
     this.main = main;
@@ -27,62 +35,38 @@ public class MainController extends Pane {
     return main;
   }
 
-  // Add the screen to the collection
-  public void addScreen(String name, Node screen) {
-    screens.put(name, screen);
+  public Scene getScene(String name) {
+    return scenes.get(name);
   }
 
-  // Returns the Node with the appropriate name
-  public Node getScreen(String name) {
-    return screens.get(name);
-  }
-
-  // Loads the fxml file, add the screen to the screens collection and
-  // finally injects the screenPane to the controller.
-  public boolean loadScreen(String name, String resource) {
+  //Vet ikke om vi heller burde bruke throws her
+  public void loadScene(String name, String resource) {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
-      Parent loadScreen = (Parent) loader.load();
-      ScreenController screenController = ((ScreenController) loader.getController());
-      screenController.setMainController(this);
-      addScreen(name, loadScreen);
-      screenControllers.put(name, screenController);
-      return true;
+      Parent parent = loader.load();
+      Scene scene = new Scene(parent);
+      SceneController sceneController = ((SceneController) loader.getController());
+      sceneController.setMainController(this);
+      scenes.put(name, scene);
+      sceneControllers.put(name, sceneController);
     } catch (Exception e) {
-      return false;
+      e.printStackTrace();
     }
   }
 
-  // This method tries to displayed the screen with a predefined name.
-  // First it makes sure the screen has been already loaded. Then if there is more
-  // than
-  // one screen the new screen is been added second, and then the current screen
-  // is removed.
-  // If there isn't any screen being displayed, the new screen is just added to
-  // the root.
-  public boolean setScreen(final String name) {
-    if (screens.get(name) != null) { // screen loaded
-      if (!getChildren().isEmpty()) // if there is more than one screen
-        getChildren().remove(0); // remove the displayed screen
-      getChildren().add(0, screens.get(name)); // add the screen
-      getScreenController(name).onScreenDisplayed();
-      return true;
-    } else {
-      return false;
+  public void setScene(final String name) {
+    if (scenes.get(name) != null){
+      stage.setScene(scenes.get(name));
+      getSceneController(name).onSceneDisplayed();
     }
   }
 
-  // This method will remove the screen with the given name from the collection of
-  // screens
-  public boolean unloadScreen(String name) {
-    if (screens.remove(name) == null || screenControllers.remove(name) == null) {
-      return false;
-    } else {
-      return true;
-    }
+  public void unloadScreen(String name) {
+    scenes.remove(name);
+    sceneControllers.remove(name);
   }
 
-  public ScreenController getScreenController(String name) {
-    return screenControllers.get(name);
+  public SceneController getSceneController(String name) {
+    return sceneControllers.get(name);
   }
 }

@@ -21,38 +21,27 @@ public abstract class JobbLettTest extends ApplicationTest {
   protected Group group1, group2;
   protected JobShift jobShift1, jobShift2;
 
-  protected ScreenController controller;
+  protected SceneController controller;
 
-  // Subclasses implement this method to give the screen ID
-  // for the starting screen of the test
+  // Subclasses implement this method to give the scene ID
+  // for the starting scene of the test
   protected abstract String giveID();
 
-  private MainController mainContainer;
+  private MainController mainController;
 
   @Override
   public void start(final Stage primaryStage) throws Exception {
-    mainContainer = new MainController();
-
-    mainContainer.loadScreen(App.LOGIN_ID, App.LOGIN_FILE);
-    mainContainer.loadScreen(App.CREATE_USER_ID, App.CREATE_USER_FILE);
-    mainContainer.loadScreen(App.USER_HOME_ID, App.USER_HOME_FILE);
-    mainContainer.loadScreen(App.JOIN_GROUP_ID, App.JOIN_GROUP_FILE);
-    mainContainer.loadScreen(App.CREATE_GROUP_ID, App.CREATE_GROUP_FILE);
-    mainContainer.loadScreen(App.GROUP_HOME_ID, App.GROUP_HOME_FILE);
-    mainContainer.loadScreen(App.SHIFT_VIEW_ID, App.SHIFT_VIEW_FILE);
-    mainContainer.loadScreen(App.CREATE_SHIFT_ID, App.CREATE_SHIFT_FILE);
-
-    Scene scene = new Scene(mainContainer);
-    primaryStage.setScene(scene);
-    primaryStage.show();
+    App app = new App();
+    app.start(primaryStage);
+    mainController = app.getMainController();
   }
 
   @BeforeEach
   public void initalize() {
     setupData();
-    mainContainer.setMain(main);
-    mainContainer.setScreen(giveID());
-    controller = mainContainer.getScreenController(giveID());
+    mainController.setMain(main);
+    mainController.setScene(giveID());
+    controller = mainController.getSceneController(giveID());
   }
 
   protected void setupData() {
@@ -67,7 +56,8 @@ public abstract class JobbLettTest extends ApplicationTest {
     group1.addUser(user2);
   }
 
-  /*
-   * @Test public void testController(){ assertNotNull(controller); }
-   */
+  @Test 
+  public void testController(){ 
+    assertNotNull(controller); 
+  }
 }
