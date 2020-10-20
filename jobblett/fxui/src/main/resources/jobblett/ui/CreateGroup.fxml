@@ -24,10 +24,10 @@
                 <Font name="Arial" size="13.0" />
             </font>
         </Button>
-              <Button fx:id="goBackButton" layoutX="76.0" layoutY="294.0" mnemonicParsing="false" onAction="#goToUserHome" text="Back">
-         <font>
-            <Font name="Arial" size="13.0" />
-         </font>
-      </Button>
+        <Button fx:id="goBackButton" layoutX="76.0" layoutY="294.0" mnemonicParsing="false" onAction="#goToUserHome" text="Back">
+            <font>
+                <Font name="Arial" size="13.0" />
+            </font>
+        </Button>
     </children>
 </Pane>

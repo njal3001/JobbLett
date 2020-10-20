@@ -1,0 +1,46 @@
+{
+  "groups" : [ {
+    "groupName" : "Gruppe7",
+    "groupMembers" : [ {
+      "username" : "olav",
+      "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
+      "givenName" : "Olav",
+      "familyName" : "Nordmann"
+    }, {
+      "username" : "nora",
+      "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
+      "givenName" : "Nora",
+      "familyName" : "Bekkestad"
+    }, {
+      "username" : "petter",
+      "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
+      "givenName" : "Petter",
+      "familyName" : "Petterson"
+    }, {
+      "username" : "david",
+      "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
+      "givenName" : "David",
+      "familyName" : "Berg"
+    } ],
+    "groupID" : 6803,
+    "jobShifts" : {
+      "jobShifts" : [ {
+        "user" : {
+          "username" : "nora",
+          "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
+          "givenName" : "Nora",
+          "familyName" : "Bekkestad"
+        },
+        "startingTime" : "2021-10-15T17:44:04.738",
+        "duration" : 7200,
+        "info" : "Dette er Olav sin skift."
+      } ]
+    },
+    "admins" : [ {
+      "username" : "olav",
+      "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
+      "givenName" : "Olav",
+      "familyName" : "Nordmann"
+    } ]
+  } ]
+}

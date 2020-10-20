@@ -11,11 +11,9 @@ public class CoreModule extends SimpleModule {
         super.addSerializer(GroupList.class, new GroupListSerializer());
         super.addSerializer(JobShift.class, new JobShiftSerializer());
         super.addSerializer(JobShiftList.class, new JobShiftListSerializer());
-        super.addSerializer(Main.class, new MainSerializer());
         super.addSerializer(UserList.class, new UserListSerializer());
         super.addSerializer(User.class, new UserSerializer());
 
-        super.addDeserializer(Main.class, new MainDeserializer());
         super.addDeserializer(Group.class, new GroupDeserializer());
         super.addDeserializer(GroupList.class, new GroupListDeserializer());
         super.addDeserializer(JobShift.class, new JobShiftDeserializer());

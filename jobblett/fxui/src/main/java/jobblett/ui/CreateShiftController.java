@@ -37,17 +37,12 @@ public class CreateShiftController extends SceneController {
   @FXML
   Button createShiftButton;
 
-  // Må fikse teksten på FXML
-  // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme
-  // kode hver gang vi skal vise noe med listView
-  // Har bare lagt inn en dato greie på UI en så man kan ikke ha et skift som går
-  // fra 23:00 - 07:00 f.eks
-
   @Override
   public void onSceneDisplayed() {
     // Lists all members
-    for (User user : main.getActiveGroup())
+    for (User user : mainController.getActiveGroup()){
       members.getItems().add(user);
+    }
   }
 
   @FXML
@@ -63,7 +58,7 @@ public class CreateShiftController extends SceneController {
       LocalDateTime startingTime = getStartingTime(date.getValue(), fromField.getText());
       Duration duration = getDuration(fromField.getText(), toField.getText());
       JobShift newShift = new JobShift(user, startingTime, duration, info);
-      main.getActiveGroup().addJobShift(newShift, main.getLoggedIn());
+      mainController.getActiveGroup().addJobShift(newShift, mainController.getActiveUser());
       goBack();
     } catch (Exception e) {
       e.printStackTrace();

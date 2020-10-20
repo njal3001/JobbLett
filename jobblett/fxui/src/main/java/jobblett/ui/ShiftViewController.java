@@ -30,18 +30,18 @@ public class ShiftViewController extends SceneController{
     @Override
     public void onSceneDisplayed() {
         // Sets GroupName on top of the screen
-        groupName.setText(main.getActiveGroup().getGroupName());
+        groupName.setText(mainController.getActiveGroup().getGroupName());
 
         // Shows GroupID
-        groupID.setText("GroupID: " + main.getActiveGroup().getGroupID());
+        groupID.setText("GroupID: " + mainController.getActiveGroup().getGroupID());
 
         shifts.getItems().clear();
        // Lists all members
-        for (JobShift shift : main.getActiveGroup().getJobShifts()) {
+        for (JobShift shift : mainController.getActiveGroup().getJobShifts()) {
             Text text = new Text(shift.toString());
             shifts.getItems().add(text);
         }
-        newShiftButton.setVisible(main.getActiveGroup().isAdmin(main.getLoggedIn()));
+        newShiftButton.setVisible(mainController.getActiveGroup().isAdmin(mainController.getActiveUser()));
     }
 
     @FXML

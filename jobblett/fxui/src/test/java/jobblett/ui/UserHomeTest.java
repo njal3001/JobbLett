@@ -1,13 +1,12 @@
 package jobblett.ui;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import org.junit.jupiter.api.Test;
-
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class UserHomeTest extends JobbLettTest {
 
@@ -19,7 +18,7 @@ public class UserHomeTest extends JobbLettTest {
   @Override
   protected void setupData() {
     super.setupData();
-    main.logIn(user1);
+    activeUser = user1;
   }
 
   @Test
@@ -55,7 +54,7 @@ public class UserHomeTest extends JobbLettTest {
     assertEquals(group2.getGroupName(), groupName.getText());
     clickOn("#backToHome");
     assertListViewHasItem(group1.getGroupName());
-  }
+  } 
 
   @Test
   public void testJoinGroup_invalidGroupId(){
@@ -83,7 +82,7 @@ public class UserHomeTest extends JobbLettTest {
   public void testJoinGroup_alreadyPartOfGroup(){
     tryToJoinGroup(String.valueOf(group1.getGroupID()));
     assertErrorMessage("You are already a member of the group");
-  }
+  } 
 
   private void tryToJoinGroup(String groupId){
     clickOn("#joinGroupButton");

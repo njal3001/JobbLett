@@ -5,19 +5,25 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
+
 import javafx.stage.Stage;
-import jobblett.core.Group;
-import jobblett.core.JobShift;
-import jobblett.core.Main;
-import jobblett.core.User;
+import jobblett.core.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.ApplicationTest;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 //Abstract class which all other UI test classes inherit from
 public abstract class JobbLettTest extends ApplicationTest {
 
-  protected Main main;
+  protected UserList userList;
+  protected GroupList groupList;
   protected User user1, user2;
   protected Group group1, group2;
   protected JobShift jobShift1, jobShift2;
+  protected User activeUser;
+  protected Group activeGroup;
 
   protected SceneController controller;
 
@@ -32,7 +38,10 @@ public abstract class JobbLettTest extends ApplicationTest {
     mainController = new MainController(primaryStage);
 
     setupData();
-    mainController.setMain(main);
+    mainController.setUserList(userList);
+    mainController.setGroupList(groupList);
+    mainController.setActiveUser(activeUser);
+    mainController.setActiveGroup(activeGroup);
 
     mainController.loadScene(App.LOGIN_ID, App.LOGIN_FILE);
     mainController.loadScene(App.CREATE_USER_ID, App.CREATE_USER_FILE);
@@ -49,13 +58,14 @@ public abstract class JobbLettTest extends ApplicationTest {
   }
 
   protected void setupData() {
-    main = new Main();
+    userList = new UserList();
+    groupList = new GroupList();
     user1 = new User("CorrectUsername", "CorrectPassword12345", "Ole", "Dole");
     user2 = new User("CorrectUsername2", "CorrectPassword12345", "Hans", "Henrik");
-    main.getUserList().addUser(user1);
-    main.getUserList().addUser(user2);
-    group1 = main.getGroupList().newGroup("Test Group 1");
-    group2 = main.getGroupList().newGroup("Test Group 2");
+    userList.addUser(user1);
+    userList.addUser(user2);
+    group1 = groupList.newGroup("Test Group 1");
+    group2 = groupList.newGroup("Test Group 2");
     group1.addUser(user1);
     group1.addUser(user2);
   }

@@ -13,8 +13,8 @@ public class ShiftViewTest extends JobbLettTest{
   @Override
   protected void setupData(){
     super.setupData();
-    main.logIn(user1);
-    main.setActiveGroup(group1);
+    activeUser = user1;
+    activeGroup = group1;
     // ....
   }
 

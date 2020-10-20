@@ -7,6 +7,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import jobblett.core.Group;
+import jobblett.core.User;
 
 public class UserHomeController extends SceneController {
 
@@ -28,19 +29,20 @@ public class UserHomeController extends SceneController {
     @Override
     public void onSceneDisplayed() {
         // Sets full name on top of the screen
-        String givenName = main.getLoggedIn().getGivenName();
-        String familyName = main.getLoggedIn().getFamilyName();
+        User activeUser = mainController.getActiveUser();
+        String givenName = activeUser.getGivenName();
+        String familyName = activeUser.getFamilyName();
         userFullName.setText(givenName + " " + familyName);
 
         groups.getItems().clear();
         // Lists all groups
-        for (Group group : main.getGroupList().getGroups(main.getLoggedIn())) {
+        for (Group group : mainController.getGroupList().getGroups(mainController.getActiveUser())) {
             Text text = new Text(group.getGroupName());
             groups.getItems().add(text);
             text.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    main.setActiveGroup(group);
+                    mainController.setActiveGroup(group);
                     mainController.setScene(App.GROUP_HOME_ID);
                 }
             });
@@ -49,7 +51,7 @@ public class UserHomeController extends SceneController {
 
     @FXML
     public void logOut() {
-        main.logOut();
+        mainController.setActiveUser(null);
         mainController.setScene(App.LOGIN_ID);
     }
 

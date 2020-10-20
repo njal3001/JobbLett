@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import jobblett.core.User;
 
+
 //Koder som er kommentert ut skal implementeres ettersom deres funksjoner er implementert i controlleren.
 public class CreateShiftControllerTest extends JobbLettTest {
 
@@ -19,8 +20,8 @@ public class CreateShiftControllerTest extends JobbLettTest {
   @Override
   protected void setupData() {
     super.setupData();
-    main.logIn(user1);
-    main.setActiveGroup(group1);
+    activeUser = user1;
+    activeGroup = group1;
   }
   
 
@@ -28,10 +29,11 @@ public class CreateShiftControllerTest extends JobbLettTest {
   public void testGoBack(){
     clickOn("#goBackButton");
     //checks if a node in the ShiftView.fxml exists on the current screen, which confirms that we are on the correct scene
-    Button nodeInShiftViewScene = ((Button) lookup("#newShiftButton").query());
+    Button nodeInShiftViewScene = lookup("#newShiftButton").query();
     assertNotNull(nodeInShiftViewScene);
   }
 
+  /*
   @Test
   public void testGetStartingTime(){
   }
@@ -40,10 +42,15 @@ public class CreateShiftControllerTest extends JobbLettTest {
   @Test
   public void testCreateValidShift(){
   }
+    ListView<User> members= lookup("#members").query();
+    assertNotNull(members);
+    clickOn(members.)
+  }*/
+
 
   @Test
   public void testNotEmptyUserList(){
-    ListView<User> members= lookup("#members").query();
+    ListView<User> members = lookup("#members").query();
     assertNotNull(members);
     //There should be more than zero members in the ListView
     assertNotEquals(0,members.getItems().size());

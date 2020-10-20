@@ -1,11 +1,8 @@
 package jobblett.json;
 
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import jobblett.core.Main;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jobblett.core.User;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.*;
 import java.net.URL;
@@ -17,21 +14,23 @@ import java.nio.file.Paths;
  * Used to deserialize main.json to Main.class from the systems user-folder. Imports the data-file
  * from $USER_HOME/.jobblett/main.json
  */
-public class JSONDeserialize {
+public class JSONDeserialize<Type> {
     ObjectMapper objectMapper;
     Reader reader;
+    Class<?> classType;
 
     /**
      * Initializes a JSONDeserialize-instance and reads main.json.
      */
-    public JSONDeserialize() {
+    public JSONDeserialize(Class<?> classType) {
+        this.classType = classType;
         File f = new File(System.getProperty("user.home") + "/.jobblett");
         // noinspection ResultOfMethodCallIgnored
         boolean mkdir = f.mkdir();
         if (mkdir) useDefaultValues();
         else {
             try {
-                Path path = Paths.get(System.getProperty("user.home") + "/.jobblett", "main.json");
+                Path path = Paths.get(System.getProperty("user.home") + "/.jobblett", classType.getSimpleName()+".json");
                 reader = new FileReader(path.toFile(), StandardCharsets.UTF_8);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
@@ -49,7 +48,7 @@ public class JSONDeserialize {
     }
 
     private void useDefaultValues() {
-        URL url = getClass().getResource("defaultMain.json");
+        URL url = getClass().getResource("default"+classType.getSimpleName()+".json");
         try {
             this.reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -61,17 +60,16 @@ public class JSONDeserialize {
      * Imports main.json and returns a new Main.class instance with tha data.
      *
      * @return Main.class object
-     * @deprecated Use updateMain(main) with new Main-instance instead.
      */
-    public Main importJSON() {
-        Main main = null;
+    public Type importJSON() {
+        Type obj = null;
         try {
             // deserialize json string
-            main = objectMapper.readValue(reader, Main.class);
+            obj = (Type) objectMapper.readValue(reader, classType);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return main;
+        return obj;
     }
 
 /*    *//**

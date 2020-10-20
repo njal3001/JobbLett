@@ -1,8 +1,10 @@
 package jobblett.core;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 /**
  * Represents a group in jobblett.
@@ -13,7 +15,7 @@ public class Group implements Iterable<User> {
     private Collection<User> groupMembers = new ArrayList<>();
     private final int groupID;
     private JobShiftList jobShifts = new JobShiftList();
-    private User admin;
+    private Collection<User> admins = new ArrayList<>();
 
 
     // Føles ikke riktig å gjøre det slik, men tenker at vi må ha noe logikk som gjør at en vanlig user ikke kan lage job shift. 
@@ -46,17 +48,25 @@ public class Group implements Iterable<User> {
     public void addUser(User user) throws IllegalArgumentException {
         checkExistingUser(user);
         // The first member to join the group becomes admin
-        if(groupMembers.size() == 0 && admin == null)
-            admin = user;
+        if(groupMembers.size() == 0 && admins.isEmpty())
+            admins.add(user);
         this.groupMembers.add(user);
     }
 
     public boolean isAdmin(User user){
-        return user == admin;
+        return admins.contains(user);
     }
 
-    public User getAdmin(){
-        return admin;
+    public Collection<User> getAdmins(){
+        return admins.stream().collect(Collectors.toList());
+    }
+
+    public boolean addAdmin(User user) {
+        return admins.add(user);
+    }
+
+    public boolean removeAdmin(User user) {
+        return admins.remove(user);
     }
 
     /**
@@ -158,7 +168,8 @@ public class Group implements Iterable<User> {
         for (User user : this) {
             members.append(user.toString()).append(", ");
         }
-        members.setLength(members.length() - 2);
+        if(members.length() >= 2)
+          members.setLength(members.length() - 2);
         return this.groupName + ": " + members;
     }
 

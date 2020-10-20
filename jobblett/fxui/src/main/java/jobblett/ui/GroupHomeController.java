@@ -1,10 +1,10 @@
 package jobblett.ui;
 
-import javafx.scene.control.Button;
-import jobblett.core.User;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
+import jobblett.core.User;
 
 public class GroupHomeController extends SceneController{
 
@@ -29,14 +29,14 @@ public class GroupHomeController extends SceneController{
     @Override
     public void onSceneDisplayed() {
         // Sets GroupName on top of the screen
-        groupName.setText(main.getActiveGroup().getGroupName());
+        groupName.setText(mainController.getActiveGroup().getGroupName());
 
         // Shows GroupID
-        groupID.setText("GroupID: " + main.getActiveGroup().getGroupID());
+        groupID.setText("GroupID: " + mainController.getActiveGroup().getGroupID());
 
         members.getItems().clear();
         // Lists all members
-        for (User user : main.getActiveGroup()) {
+        for (User user : mainController.getActiveGroup()) {
             Text text = new Text(user.toString());
             members.getItems().add(text);
         }

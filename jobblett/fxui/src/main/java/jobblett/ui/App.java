@@ -3,9 +3,12 @@ package jobblett.ui;
 import java.io.IOException;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import jobblett.core.Main;
+
+import jobblett.core.GroupList;
+import jobblett.core.UserList;
+import jobblett.json.JSONDeserialize;
+import jobblett.json.JSONSerialize;
 
 //Code is inspired by: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
 
@@ -43,8 +46,10 @@ public class App extends Application {
 
     mainController = new MainController(primaryStage);
 
-    // Her kan man laste inn main fra fil istedet
-    mainController.setMain(new Main());
+    UserList userList = new JSONDeserialize<UserList>(UserList.class).importJSON();
+    GroupList groupList = new JSONDeserialize<GroupList>(GroupList.class).importJSON();
+    mainController.setUserList(userList);
+    mainController.setGroupList(groupList);
 
     mainController.loadScene(LOGIN_ID, LOGIN_FILE);
     mainController.loadScene(CREATE_USER_ID, CREATE_USER_FILE);
@@ -57,6 +62,11 @@ public class App extends Application {
 
     mainController.setScene(LOGIN_ID);
     primaryStage.show();
+
+    primaryStage.setOnCloseRequest(event -> {
+      new JSONSerialize(groupList).exportJSON();
+      new JSONSerialize(userList).exportJSON();
+    });
   }
 
   public MainController getMainController() {

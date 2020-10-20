@@ -5,12 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import jobblett.core.Main;
+import jobblett.core.Group;
+import jobblett.core.GroupList;
+import jobblett.core.User;
+import jobblett.core.UserList;
 
 //Code is inspired by: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
 
@@ -22,18 +23,45 @@ public class MainController {
   private Map<String, Scene> scenes = new HashMap<String, Scene>();
   private Map<String, SceneController> sceneControllers = new HashMap<String, SceneController>();
 
-  private Main main;
+  private UserList userList;
+  private GroupList groupList;
+  private User activeUser;
+  private Group activeGroup;
 
   public MainController(Stage stage) {
     this.stage = stage;
   }
 
-  public void setMain(Main main) {
-    this.main = main;
+  public void setUserList(UserList userList) {
+    this.userList = userList;
   }
 
-  public Main getMain() {
-    return main;
+  public UserList getUserList(){
+    return userList;
+  }
+
+  public void setGroupList(GroupList groupList) {
+    this.groupList = groupList;
+  }
+
+   public GroupList getGroupList() {
+    return groupList;
+  }
+
+  public void setActiveUser(User activeUser) {
+    this.activeUser = activeUser;
+  }
+
+  public User getActiveUser() {
+    return activeUser;
+  }
+
+  public void setActiveGroup(Group activeGroup) {
+    this.activeGroup = activeGroup;
+  }
+
+  public Group getActiveGroup() {
+    return activeGroup;
   }
 
   public Scene getScene(String name) {

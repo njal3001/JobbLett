@@ -1,11 +1,11 @@
 package jobblett.ui;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import org.junit.jupiter.api.Test;
-
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class GroupHomeTest extends JobbLettTest{
 
@@ -17,13 +17,12 @@ public class GroupHomeTest extends JobbLettTest{
   @Override
   protected void setupData(){
     super.setupData();
-    main.logIn(user1);
-    main.setActiveGroup(group1);
+    activeUser = user1;
+    activeGroup = group1;
   }
 
   @Test
   public void testMembersShowingInView(){
-    assertNotNull(user1);
     assertListViewHasItem(user1.toString());
     assertListViewHasItem(user2.toString());
   }
@@ -31,7 +30,7 @@ public class GroupHomeTest extends JobbLettTest{
   @Test
   public void testCorrectGroupId(){
     Text groupIdText = lookup("#groupID").query();
-    assertEquals("GroupID: " + String.valueOf(group1.getGroupID()), groupIdText.getText());
+    assertEquals("GroupID: " + group1.getGroupID(), groupIdText.getText());
   }
 
   private void assertListViewHasItem(String itemText){
