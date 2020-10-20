@@ -1,5 +1,7 @@
 package jobblett.ui;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -36,7 +38,7 @@ public class App extends Application {
   private MainController mainController;
 
   @Override
-  public void start(Stage primaryStage) {
+  public void start(Stage primaryStage) throws IOException {
     primaryStage.setTitle("Jobblett");
 
     mainController = new MainController(primaryStage);

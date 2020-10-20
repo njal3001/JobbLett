@@ -2,11 +2,9 @@ package jobblett.ui;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import jobblett.core.Group;
 import jobblett.core.JobShift;
@@ -31,16 +29,22 @@ public abstract class JobbLettTest extends ApplicationTest {
 
   @Override
   public void start(final Stage primaryStage) throws Exception {
-    App app = new App();
-    app.start(primaryStage);
-    mainController = app.getMainController();
-  }
+    mainController = new MainController(primaryStage);
 
-  @BeforeEach
-  public void initalize() {
     setupData();
     mainController.setMain(main);
+
+    mainController.loadScene(App.LOGIN_ID, App.LOGIN_FILE);
+    mainController.loadScene(App.CREATE_USER_ID, App.CREATE_USER_FILE);
+    mainController.loadScene(App.USER_HOME_ID, App.USER_HOME_FILE);
+    mainController.loadScene(App.JOIN_GROUP_ID, App.JOIN_GROUP_FILE);
+    mainController.loadScene(App.CREATE_GROUP_ID, App.CREATE_GROUP_FILE);
+    mainController.loadScene(App.GROUP_HOME_ID, App.GROUP_HOME_FILE);
+    mainController.loadScene(App.SHIFT_VIEW_ID, App.SHIFT_VIEW_FILE);
+    mainController.loadScene(App.CREATE_SHIFT_ID, App.CREATE_SHIFT_FILE);
+
     mainController.setScene(giveID());
+    primaryStage.show();
     controller = mainController.getSceneController(giveID());
   }
 

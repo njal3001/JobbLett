@@ -1,5 +1,6 @@
 package jobblett.ui;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ import jobblett.core.Main;
 //Code is inspired by: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
 
 //This controller changes the screen in the app
-public class MainController{
+public class MainController {
 
   private Stage stage;
 
@@ -23,7 +24,7 @@ public class MainController{
 
   private Main main;
 
-  public MainController(Stage stage){
+  public MainController(Stage stage) {
     this.stage = stage;
   }
 
@@ -39,9 +40,7 @@ public class MainController{
     return scenes.get(name);
   }
 
-  //Vet ikke om vi heller burde bruke throws her
-  public void loadScene(String name, String resource) {
-    try {
+  public void loadScene(String name, String resource) throws IOException {
       FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
       Parent parent = loader.load();
       Scene scene = new Scene(parent);
@@ -49,9 +48,6 @@ public class MainController{
       sceneController.setMainController(this);
       scenes.put(name, scene);
       sceneControllers.put(name, sceneController);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
   }
 
   public void setScene(final String name) {

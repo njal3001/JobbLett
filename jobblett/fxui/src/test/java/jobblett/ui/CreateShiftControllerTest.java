@@ -1,12 +1,8 @@
 package jobblett.ui;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -14,6 +10,7 @@ import jobblett.core.User;
 
 //Koder som er kommentert ut skal implementeres ettersom deres funksjoner er implementert i controlleren.
 public class CreateShiftControllerTest extends JobbLettTest {
+
   @Override
   protected String giveID() {
     return App.CREATE_SHIFT_ID;
