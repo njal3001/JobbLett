@@ -2,34 +2,18 @@
 
 <?import javafx.scene.control.Button ?>
 <?import javafx.scene.control.ListView ?>
-<<<<<<< HEAD
 <?import javafx.scene.layout.Pane ?>
-=======
 <?import javafx.scene.layout.* ?>
->>>>>>> origin/27-functional-ui-for-user-story-2
 <?import javafx.scene.text.Font ?>
 <?import javafx.scene.text.Text ?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.ShiftViewController">
     <children>
-<<<<<<< HEAD
-        <Text fx:id="groupName" layoutX="83.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group name" textAlignment="CENTER" wrappingWidth="177.22900390625">
-=======
         <Text fx:id="groupName" layoutX="83.0" layoutY="55.0" text="Group name" textAlignment="CENTER" wrappingWidth="177.22900390625">
->>>>>>> origin/27-functional-ui-for-user-story-2
             <font>
                 <Font name="Arial" size="22.0" />
             </font>
         </Text>
-<<<<<<< HEAD
-        <Text layoutX="152.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All shifts:" />
-        <Text fx:id="groupID" layoutX="80.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GroupID: " wrappingWidth="96.79052734375" />
-        <ListView fx:id="shifts" layoutX="80.0" layoutY="168.0" prefHeight="200.0" prefWidth="200.0" />
-        <Button fx:id="newShiftButton" layoutX="134.0" layoutY="386.0" mnemonicParsing="false" onAction="#goToCreateShift" text="Add new shift" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
-        <Button fx:id="backToGroup" layoutX="253.0" layoutY="576.0" mnemonicParsing="false" onAction="#backButton" text="Back" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
-    </children>
-</Pane>
-=======
         <Text layoutX="152.0" layoutY="165.0" text="All shifts:" />
         <ListView fx:id="shifts" layoutX="80.0" layoutY="168.0" prefHeight="200.0" prefWidth="200.0" />
         <Button fx:id="backToGroup" layoutX="253.0" layoutY="576.0" onAction="#backButton" text="Back" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
@@ -41,4 +25,3 @@
     </children>
 </Pane>
 
->>>>>>> origin/27-functional-ui-for-user-story-2
