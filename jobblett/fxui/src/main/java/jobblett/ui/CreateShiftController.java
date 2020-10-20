@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -37,12 +39,26 @@ public class CreateShiftController extends SceneController {
   @FXML
   Button createShiftButton;
 
+  @FXML
+  Button newShiftButton;
+
+  @FXML
+  Button editShiftButton;
+
+  @FXML
+  Button deleteShiftButton;
+
+  @FXML
+  Text errorMessage;
+
+  // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme
+  // kode hver gang vi skal vise noe med listView
+
   @Override
   public void onSceneDisplayed() {
     // Lists all members
-    for (User user : mainController.getActiveGroup()){
+    for (User user : mainController.getActiveGroup())
       members.getItems().add(user);
-    }
   }
 
   @FXML
@@ -51,7 +67,7 @@ public class CreateShiftController extends SceneController {
   }
 
   @FXML
-  public void createShift(){
+  public void createShift() {
     try {
       User user = members.getSelectionModel().getSelectedItem();
       String info = infoArea.getText();
@@ -61,7 +77,7 @@ public class CreateShiftController extends SceneController {
       mainController.getActiveGroup().addJobShift(newShift, mainController.getActiveUser());
       goBack();
     } catch (Exception e) {
-      e.printStackTrace();
+      errorMessage.setText(e.getMessage());
     }
   }
 
@@ -80,7 +96,7 @@ public class CreateShiftController extends SceneController {
       int minute = Integer.parseInt(timeString.substring(splitIndex + 1));
       return LocalTime.of(hour, minute);
     } catch (Exception e) {
-      return null;
+      throw new IllegalArgumentException("Time period is not written on the correct format");
     }
   }
 }

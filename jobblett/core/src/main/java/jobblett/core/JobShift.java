@@ -10,6 +10,7 @@ public class JobShift{
   private Duration duration;
   private String info;
 
+  //Fjerne override startTime og gjøre det sånn at utdaterte shift ikke blir lagd av serializer istedet?
   public JobShift(User user, LocalDateTime startingTime, Duration duration, String info, boolean overrideStartTime) {
     setUser(user);
     setDuration(duration);

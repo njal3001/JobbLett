@@ -25,6 +25,7 @@ public class CreateShiftControllerTest extends JobbLettTest {
   }
   
 
+  /*
   @Test
   public void testGoBack(){
     clickOn("#goBackButton");
@@ -33,6 +34,7 @@ public class CreateShiftControllerTest extends JobbLettTest {
     assertNotNull(nodeInShiftViewScene);
   }
 
+  */
   /*
   @Test
   public void testGetStartingTime(){
