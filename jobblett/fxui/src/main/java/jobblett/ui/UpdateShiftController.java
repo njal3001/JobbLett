@@ -15,8 +15,11 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
-public class CreateShiftController extends SceneController {
+public class UpdateShiftController extends SceneController {
+
+  public final static DateTimeFormatter EXPECTED_TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
 
   @FXML
   ListView<User> members;
@@ -51,18 +54,43 @@ public class CreateShiftController extends SceneController {
   @FXML
   Text errorMessage;
 
+  private JobShift activeJobShift;
+
   // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme
   // kode hver gang vi skal vise noe med listView
 
   @Override
   public void onSceneDisplayed() {
     // Lists all members
+    members.getItems().clear();
     for (User user : mainController.getActiveGroup())
       members.getItems().add(user);
+    errorMessage.setText("");
+
+
+    if (activeJobShift == null) {
+      // Create new JobShift
+      fromField.setText("");
+      toField.setText("");
+      date.setValue(LocalDate.now());
+      infoArea.setText("");
+      createShiftButton.setText("Create shift");
+    } else {
+      // Update existing JobShift
+      if (activeJobShift.getUser() != null) members.getSelectionModel().select(activeJobShift.getUser());
+      String fromTime = activeJobShift.getStartingTime().format(UpdateShiftController.EXPECTED_TIME_FORMAT);
+      String toTime = activeJobShift.getEndingTime().format(UpdateShiftController.EXPECTED_TIME_FORMAT);
+      date.setValue(activeJobShift.getStartingTime().toLocalDate());
+      fromField.setText(fromTime);
+      toField.setText(toTime);
+      infoArea.setText(activeJobShift.getInfo());
+      createShiftButton.setText("Update shift");
+    }
   }
 
   @FXML
   public void goBack() throws IOException {
+    activeJobShift = null;
     mainController.setScene(App.SHIFT_VIEW_ID);
   }
 
@@ -73,8 +101,18 @@ public class CreateShiftController extends SceneController {
       String info = infoArea.getText();
       LocalDateTime startingTime = getStartingTime(date.getValue(), fromField.getText());
       Duration duration = getDuration(fromField.getText(), toField.getText());
-      JobShift newShift = new JobShift(user, startingTime, duration, info);
-      mainController.getActiveGroup().addJobShift(newShift, mainController.getActiveUser());
+      if (activeJobShift == null) {
+        // New JobShift
+        activeJobShift = new JobShift(user, startingTime, duration, info);
+        mainController.getActiveGroup().addJobShift(activeJobShift, mainController.getActiveUser());
+      }
+      else {
+        // Updating existing JobShift
+        activeJobShift.setUser(user);
+        activeJobShift.setStartingTime(startingTime);
+        activeJobShift.setDuration(duration);
+        activeJobShift.setInfo(info);
+      }
       goBack();
     } catch (Exception e) {
       errorMessage.setText(e.getMessage());
@@ -98,5 +136,9 @@ public class CreateShiftController extends SceneController {
     } catch (Exception e) {
       throw new IllegalArgumentException("Time period is not written on the correct format");
     }
+  }
+
+  protected void setActiveJobShift(JobShift activeJobShift) {
+    this.activeJobShift = activeJobShift;
   }
 }

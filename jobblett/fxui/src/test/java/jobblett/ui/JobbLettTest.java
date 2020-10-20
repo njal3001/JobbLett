@@ -8,9 +8,6 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 import javafx.stage.Stage;
 import jobblett.core.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.testfx.framework.junit5.ApplicationTest;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -50,7 +47,7 @@ public abstract class JobbLettTest extends ApplicationTest {
     mainController.loadScene(App.CREATE_GROUP_ID, App.CREATE_GROUP_FILE);
     mainController.loadScene(App.GROUP_HOME_ID, App.GROUP_HOME_FILE);
     mainController.loadScene(App.SHIFT_VIEW_ID, App.SHIFT_VIEW_FILE);
-    mainController.loadScene(App.CREATE_SHIFT_ID, App.CREATE_SHIFT_FILE);
+    mainController.loadScene(App.UPDATE_SHIFT_ID, App.UPDATE_SHIFT_FILE);
 
     mainController.setScene(giveID());
     primaryStage.show();

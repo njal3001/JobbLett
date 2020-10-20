@@ -1,6 +1,8 @@
 package jobblett.ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,10 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import jobblett.core.Group;
-import jobblett.core.GroupList;
-import jobblett.core.User;
-import jobblett.core.UserList;
+import jobblett.core.*;
 
 //Code is inspired by: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
 
@@ -41,7 +40,35 @@ public class MainController {
   }
 
   public void setGroupList(GroupList groupList) {
-    this.groupList = groupList;
+    GroupList newGroupList = new GroupList();
+    for (Group group : groupList) {
+      // Remove duplicate users and replace with original users
+      Collection<User> duplicateUsers = new ArrayList<>();
+      for (User user : group) {
+        if (userList.getUser(user.getUserName()) != null)
+          duplicateUsers.add(user);
+        else
+          System.out.println("The user " + user.toString() + " is not contained in userList but contained in " + group.toString() + ".");
+      }
+      for (User user : duplicateUsers) {
+        User originalUser = userList.getUser(user.getUserName());
+        group.removeUser(user);
+        group.addUser(originalUser);
+      }
+
+      // Remove duplicate users in JobShifts
+      for (JobShift shift : group.getJobShifts()) {
+        User user = shift.getUser();
+        if (user == null) break;
+        User originalUser = userList.getUser(user.getUserName());
+        if (originalUser != null)
+          shift.setUser(originalUser);
+        else
+          System.out.println("The user " + user.toString() + " is not contained in userList but contained in " + shift.toString() + ".");
+      }
+      newGroupList.addGroup(group);
+    }
+    this.groupList = newGroupList;
   }
 
    public GroupList getGroupList() {

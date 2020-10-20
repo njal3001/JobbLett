@@ -17,7 +17,6 @@ public class JoinGroupController extends SceneController {
   @FXML
   Button goBackButton;
 
-  // Fungerer ikke, vet ikke hvorfor
   @Override
   public void onSceneDisplayed() {
     // Sets a listener to prevent non-integers on groupID

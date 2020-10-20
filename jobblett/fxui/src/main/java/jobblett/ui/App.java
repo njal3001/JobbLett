@@ -35,8 +35,8 @@ public class App extends Application {
   public static final String SHIFT_VIEW_ID = "ShiftView";
   public static final String SHIFT_VIEW_FILE = "ShiftView.fxml";
 
-  public static final String CREATE_SHIFT_ID = "CreateShift";
-  public static final String CREATE_SHIFT_FILE = "CreateShift.fxml";
+  public static final String UPDATE_SHIFT_ID = "UpdateShift";
+  public static final String UPDATE_SHIFT_FILE = "UpdateShift.fxml";
 
   private MainController mainController;
 
@@ -58,7 +58,7 @@ public class App extends Application {
     mainController.loadScene(CREATE_GROUP_ID, CREATE_GROUP_FILE);
     mainController.loadScene(GROUP_HOME_ID, GROUP_HOME_FILE);
     mainController.loadScene(SHIFT_VIEW_ID, SHIFT_VIEW_FILE);
-    mainController.loadScene(CREATE_SHIFT_ID, CREATE_SHIFT_FILE);
+    mainController.loadScene(UPDATE_SHIFT_ID, UPDATE_SHIFT_FILE);
 
     mainController.setScene(LOGIN_ID);
     primaryStage.show();
