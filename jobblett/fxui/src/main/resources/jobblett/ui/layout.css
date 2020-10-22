@@ -1,0 +1,56 @@
+
+/*Palette*/
+{
+  dark-primary-color: #0097A7;
+  default-primary-color: #00BCD4;
+  light-primary-color: #B8D8D8;
+  text-primary-color: #FFFFFF;
+  accent-color: #F0F0FF;
+  primary-text-color: #212121;
+  secondary-text-color: #757575;
+  divider-color: #BDBDBD;
+  even-cell-background-color: #FFFFFF;
+  odd-cell-background-color: #FAFAFF;
+}
+
+.root {
+  -fx-background-color: dark-primary-color;
+}
+
+.button{
+  -fx-font: 13px "Arial";
+  -fx-text-fill: primary-text-color;
+  -fx-padding: 5;
+  -fx-background-color: accent-color;
+}
+
+.button:hover {
+    /*-fx-background-color: divider-color;*/
+    -fx-scale-y: 1.075;
+
+}
+
+.button:pressed {
+    -fx-scale-y: 0.975;
+    -fx-scale-x: 0.975;
+}
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color:light-primary-color;
+    -fx-text-fill: primary-Text-color;
+}
+
+.list-cell:even {
+    -fx-background-color: even-cell-background-color;
+    -fx-text-fill: primary-text-color;
+}
+
+.list-cell:odd {
+    -fx-background-color: odd-cell-background-color;
+    -fx-text-fill: primary-text-color;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: divider-color;
+    -fx-text-fill: primary-text-color;
+}
