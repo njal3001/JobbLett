@@ -1,13 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button ?>
-<?import javafx.scene.control.ListView ?>
-<?import javafx.scene.layout.Pane ?>
-<?import javafx.scene.layout.* ?>
-<?import javafx.scene.text.Font ?>
-<?import javafx.scene.text.Text ?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.ShiftViewController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.ShiftViewController">
     <children>
         <Text fx:id="groupName" layoutX="83.0" layoutY="55.0" text="Group name" textAlignment="CENTER" wrappingWidth="177.22900390625">
             <font>
@@ -16,12 +15,9 @@
         </Text>
         <Text layoutX="152.0" layoutY="165.0" text="All shifts:" />
         <ListView fx:id="shifts" layoutX="80.0" layoutY="168.0" prefHeight="200.0" prefWidth="200.0" />
-        <Button fx:id="backToGroup" layoutX="253.0" layoutY="576.0" onAction="#backButton" text="Back" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
-        <HBox layoutX="50" layoutY="386.0">
-            <Button fx:id="newShiftButton" onAction="#goToCreateShift" text="Add new shift" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
-            <Button fx:id="editShiftButton" onAction="#goToEditShift" text="Edit shift"></Button>
-            <Button fx:id="deleteShiftButton" onAction="#handleDeleteShift" text="Delete shift"></Button>
-        </HBox>
+        <Button fx:id="backToGroup" layoutX="35.0" layoutY="576.0" onAction="#backButton" text="Back" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
+         <Button fx:id="newShiftButton" layoutX="54.0" layoutY="404.0" onAction="#goToCreateShift" prefWidth="91.0" text="Add new shift" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
+         <Button fx:id="editShiftButton" layoutX="150.0" layoutY="404.0" onAction="#goToEditShift" text="Edit shift" />
+         <Button fx:id="deleteShiftButton" layoutX="215.0" layoutY="404.0" onAction="#handleDeleteShift" text="Delete shift" />
     </children>
 </Pane>
-
