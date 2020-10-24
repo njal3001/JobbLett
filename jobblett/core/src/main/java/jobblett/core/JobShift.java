@@ -72,11 +72,14 @@ public class JobShift{
   @Override
   public boolean equals(Object o) {
     if (o instanceof JobShift) {
-      JobShift jobsHift = (JobShift) o;
-      if (!this.user.equals(jobsHift.user)) return false;
-      if (!this.startingTime.equals(jobsHift.startingTime)) return false;
-      if (!this.duration.equals(jobsHift.duration)) return false;
-      if (!this.info.equals(jobsHift.info)) return false;
+      JobShift jobShift = (JobShift) o;
+      if(this.user != null) {
+        if (!this.user.equals(jobShift.user)) return false;
+      }
+      else if (jobShift.user != null) return false;
+      if (!this.startingTime.equals(jobShift.startingTime)) return false;
+      if (!this.duration.equals(jobShift.duration)) return false;
+      if (!this.info.equals(jobShift.info)) return false;
       return true;
     }
     else return super.equals(o);
