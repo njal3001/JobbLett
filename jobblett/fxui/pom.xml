@@ -36,7 +36,7 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
         </dependency>
-        <!-- Test with TextFX -->
+        <!-- Test with TestFX -->
         <dependency>
             <groupId>org.testfx</groupId>
             <artifactId>testfx-core</artifactId>
