@@ -69,10 +69,6 @@ public class App extends Application {
     });
   }
 
-  public MainController getMainController() {
-    return mainController;
-  }
-
   public static void main(final String[] args) {
     launch(args);
   }
