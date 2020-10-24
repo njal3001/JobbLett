@@ -43,15 +43,6 @@ public class UpdateShiftController extends SceneController {
   Button createShiftButton;
 
   @FXML
-  Button newShiftButton;
-
-  @FXML
-  Button editShiftButton;
-
-  @FXML
-  Button deleteShiftButton;
-
-  @FXML
   Text errorMessage;
 
   private JobShift activeJobShift;
