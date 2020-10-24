@@ -1,7 +1,5 @@
 package jobblett.restapi;
 
-import jobblett.core.Group;
-import jobblett.core.GroupList;
 import jobblett.core.User;
 import jobblett.core.UserList;
 import org.slf4j.Logger;
@@ -15,13 +13,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 
-@Path(UserListService.USERLIST_SERVICE_PATH)
-public class UserListService {
+public class UserListResource {
     public static final String USERLIST_SERVICE_PATH = "userlist";
-    private static final Logger LOG = LoggerFactory.getLogger(UserListService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserListResource.class);
 
-    @Inject
     private UserList userList;
+
+    public UserListResource(UserList userList) {
+        this.userList= userList;
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -30,7 +30,7 @@ public class UserListService {
     }
 
     @Path("/{userName}")
-    public UserResource getGroup(@PathParam("userName") String userName) {
+    public UserResource getUser(@PathParam("userName") String userName) {
         User user = userList.getUser(userName);
         LOG.debug("Sub-resource for User "+userName+": "+user);
         return new UserResource(user);
