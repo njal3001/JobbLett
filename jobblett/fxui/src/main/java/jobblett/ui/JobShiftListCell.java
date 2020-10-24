@@ -48,7 +48,7 @@ public class JobShiftListCell extends ListCell<JobShift>{
   //String representation of the job shift, which is used by the cell
   private String formatJobShift(JobShift jobShift){
     String s = "";
-    s += jobShift.getUser().toString() + "\t";
+    if (jobShift.getUser()!=null) s += jobShift.getUser().toString() + "\t";
     LocalDateTime startingDateTime = jobShift.getStartingTime();
     s += startingDateTime.getYear() + "-" + formatNumber(startingDateTime.getMonthValue()) + "-" + 
       formatNumber(startingDateTime.getDayOfMonth()) + "\t";
