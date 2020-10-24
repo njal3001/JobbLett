@@ -12,7 +12,7 @@ public class GroupHomeController extends SceneController{
     Text groupName;
 
     @FXML
-    ListView<Text> members;
+    ListView<User> members;
 
     @FXML
     Text groupID;
@@ -36,10 +36,8 @@ public class GroupHomeController extends SceneController{
 
         members.getItems().clear();
         // Lists all members
-        for (User user : mainController.getActiveGroup()) {
-            Text text = new Text(user.toString());
-            members.getItems().add(text);
-        }
+        for (User user : mainController.getActiveGroup())
+            members.getItems().add(user);
     }
 
     @FXML

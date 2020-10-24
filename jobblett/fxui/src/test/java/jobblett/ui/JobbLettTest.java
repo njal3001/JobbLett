@@ -2,33 +2,37 @@ package jobblett.ui;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-
 
 import javafx.stage.Stage;
 import jobblett.core.*;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 //Abstract class which all other UI test classes inherit from
 public abstract class JobbLettTest extends ApplicationTest {
 
-  protected UserList userList;
-  protected GroupList groupList;
   protected User user1, user2;
   protected Group group1, group2;
   protected JobShift jobShift1, jobShift2;
-  protected User activeUser;
-  protected Group activeGroup;
+  protected MainController mainController;
 
   protected SceneController controller;
+
+  protected UIAssertions uiAssertions;
 
   // Subclasses implement this method to give the scene ID
   // for the starting scene of the test
   protected abstract String giveID();
 
-  private MainController mainController;
+  // Subclasses implement these methods to give the active user and group
+  // for the starting scene of the test
+  protected abstract User giveActiveUser();
+  protected abstract Group giveActiveGroup();
+
+ 
+  private UserList userList;
+  private GroupList groupList;
 
   @Override
   public void start(final Stage primaryStage) throws Exception {
@@ -37,8 +41,8 @@ public abstract class JobbLettTest extends ApplicationTest {
     setupData();
     mainController.setUserList(userList);
     mainController.setGroupList(groupList);
-    mainController.setActiveUser(activeUser);
-    mainController.setActiveGroup(activeGroup);
+    mainController.setActiveUser(giveActiveUser());
+    mainController.setActiveGroup(giveActiveGroup());
 
     mainController.loadScene(App.LOGIN_ID, App.LOGIN_FILE);
     mainController.loadScene(App.CREATE_USER_ID, App.CREATE_USER_FILE);
@@ -67,8 +71,18 @@ public abstract class JobbLettTest extends ApplicationTest {
     group1.addUser(user2);
   }
 
+  @BeforeEach
+  public void setUp(){
+    uiAssertions = new UIAssertions(mainController);
+  }
+
   @Test 
   public void testController(){ 
     assertNotNull(controller); 
+  }
+
+  @Test
+  public void testInitialScene(){
+    uiAssertions.assertOnScene(giveID());
   }
 }

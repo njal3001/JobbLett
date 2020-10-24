@@ -12,7 +12,7 @@ import jobblett.core.User;
 public class UserHomeController extends SceneController {
 
     @FXML
-    ListView<Text> groups;
+    ListView<Group> groups;
 
     @FXML
     Text userFullName;
@@ -34,19 +34,15 @@ public class UserHomeController extends SceneController {
         String familyName = activeUser.getFamilyName();
         userFullName.setText(givenName + " " + familyName);
 
+        groups.setCellFactory(groups -> {
+          GroupListCell listCell = new GroupListCell(mainController);
+          return listCell;
+        });
+
         groups.getItems().clear();
         // Lists all groups
-        for (Group group : mainController.getGroupList().getGroups(mainController.getActiveUser())) {
-            Text text = new Text(group.getGroupName());
-            groups.getItems().add(text);
-            text.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    mainController.setActiveGroup(group);
-                    mainController.setScene(App.GROUP_HOME_ID);
-                }
-            });
-        }
+        for (Group group : mainController.getGroupList().getGroups(mainController.getActiveUser()))
+            groups.getItems().add(group);
     }
 
     @FXML

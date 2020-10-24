@@ -9,7 +9,9 @@ import org.junit.jupiter.api.Test;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
+import jobblett.core.Group;
 import jobblett.core.JobShift;
+import jobblett.core.User;
 
 public class ShiftViewControllerTest extends JobbLettTest{
 
@@ -17,15 +19,17 @@ public class ShiftViewControllerTest extends JobbLettTest{
   protected String giveID() {
     return App.SHIFT_VIEW_ID;
   }
-  
+
   @Override
-  protected void setupData(){
-    super.setupData();
-    activeUser = user1;
-    activeGroup = group1;
-    // ....
+  protected User giveActiveUser(){
+    return user1;
   }
 
+  @Override
+  protected Group giveActiveGroup(){
+    return group1;
+  }
+  
   //To be implemented
   @Test
   public void testJobShiftsView_correctText() {

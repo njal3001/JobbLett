@@ -31,6 +31,10 @@ public class MainController {
     this.stage = stage;
   }
 
+  public Stage getStage(){
+    return stage;
+  }
+
   public void setUserList(UserList userList) {
     this.userList = userList;
   }

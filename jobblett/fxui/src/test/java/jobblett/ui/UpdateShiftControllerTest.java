@@ -13,6 +13,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
+import jobblett.core.Group;
 import jobblett.core.JobShift;
 import jobblett.core.User;
 
@@ -25,21 +26,23 @@ public class UpdateShiftControllerTest extends JobbLettTest {
   }
 
   @Override
-  protected void setupData() {
-    super.setupData();
-    activeUser = user1;
-    activeGroup = group1;
+  protected User giveActiveUser(){
+    return user1;
+  }
+
+  @Override
+  protected Group giveActiveGroup(){
+    return group1;
   }
 
   @Test
   public void testGoBack() {
     clickOn("#goBackButton");
-    // checks if a node in the ShiftView.fxml exists on the current scene, which
-    // confirms that we are on the correct scene
-    Button nodeInShiftViewScene = lookup("#editShiftButton").query();
-    assertNotNull(nodeInShiftViewScene);
+    uiAssertions.assertOnScene(App.SHIFT_VIEW_ID);
   }
 
+  // Denne metoden burde gjøres litt mer dekkende, altså at riktige feilmeldinger kommer opp i forhold til
+  // hva som var feil med inputen
   @Test
   public void testErrorMessage() {
     Text ErrorMessageField = lookup("#errorMessage").query();
@@ -51,12 +54,10 @@ public class UpdateShiftControllerTest extends JobbLettTest {
   }
 
   @Test
-  public void testNotEmptyUserList() {
-    ListView<User> members = lookup("#members").query();
-    assertNotNull(members);
-    // There should be more than zero members in the ListView
-    assertNotEquals(0, members.getItems().size(), "There should be more than zero members in the ListView");
-  }
+  public void testUsersView_HasUsers() {
+    uiAssertions.assertListViewHasItem("members", user1);
+    uiAssertions.assertListViewHasItem("members", user2);
+    }
 
   @Test
   public void testValidShift() {
