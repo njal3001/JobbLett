@@ -125,7 +125,7 @@ public class UpdateShiftController extends SceneController {
       int minute = Integer.parseInt(timeString.substring(splitIndex + 1));
       return LocalTime.of(hour, minute);
     } catch (Exception e) {
-      throw new IllegalArgumentException("Time period is not written on the correct format");
+      throw new IllegalArgumentException("Time period is not written in the correct format");
     }
   }
 

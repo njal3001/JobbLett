@@ -38,6 +38,10 @@ public class GroupHomeController extends SceneController{
         // Lists all members
         for (User user : mainController.getActiveGroup())
             members.getItems().add(user);
+        
+        //Sets the ListView uninteractable
+        members.setMouseTransparent(true);
+        //members.setFocusTraversable(false);
     }
 
     @FXML

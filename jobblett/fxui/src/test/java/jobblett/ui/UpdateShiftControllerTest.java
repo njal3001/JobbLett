@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -19,6 +21,17 @@ import jobblett.core.User;
 
 //Koder som er kommentert ut skal implementeres ettersom deres funksjoner er implementert i controlleren.
 public class UpdateShiftControllerTest extends JobbLettTest {
+  // Creating dates for the tests
+LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
+LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+ 
+// tomorrow in string
+String dateInFuture = tomorrow.format(formatter);
+//yesterday in string
+String dateInPast = yesterday.format(formatter);  
+
 
   @Override
   protected String giveID() {
@@ -49,8 +62,7 @@ public class UpdateShiftControllerTest extends JobbLettTest {
     assertEquals("", ErrorMessageField.getText(), "Errormessage should be empty, when no action is done");
     clickOn("#createShiftButton");
     // An errormessage should be visible when creating an empty shift
-    assertNotEquals("", ErrorMessageField.getText(),
-        "The user should get an errormessage when creating an invalid shift");
+    assertNotEquals("", ErrorMessageField.getText(), "The user should get an errormessage when creating an invalid shift");
   }
 
   @Test
@@ -68,10 +80,14 @@ public class UpdateShiftControllerTest extends JobbLettTest {
 
     clickOn("#newShiftButton");
     clickOn("#members");
+    //choosing the first memeber
     type(KeyCode.ENTER);
-    DatePicker date = lookup("#date").query();
-    //Setting shift for tomorrow(future)
-    date.setValue(LocalDate.now().plusDays(1));
+    clickOn("#date");
+    //erasing the prewritten date
+    type(KeyCode.BACK_SPACE,10);
+    //writing the date for tomorrow(future)
+    write(dateInFuture);
+    type(KeyCode.ENTER);
     // Setting up valid times for the shifts
     clickOn("#fromField");
     write("08:00");
@@ -79,50 +95,27 @@ public class UpdateShiftControllerTest extends JobbLettTest {
     write("15:30");
     // Adding additional info for the shift
     clickOn("#infoArea");
-    write("We are testing creatShift");
+    write("We are testing valid creatShift");
     // Creating the shift
     clickOn("#createShiftButton");
 
     // verifying that the shift is showing in the listview
     assertEquals((amountBefore + 1), preShifts.getItems().size(),
         "The recently created shift wasn't added in the ShiftView");
-  }
+   }
 
-  // Testing that you´re not able to create differant invalid shifts:
-  
-   // Kommentert vekk inntil denne feilen er fikset i appen, IKKE FJERN TESTEN
-    /*
-    @Test public void testUnassignedShift(){ 
-    //Should not be able to create shift without selecting an employee 
-    DatePicker date = lookup("#date").query();
-    //Setting shift for tomorrow(future)
-    date.setValue(LocalDate.now().plusDays(1));
-    //Setting up valid times for the shifts 
-    clickOn("#fromField");
-    write("08:00"); 
-    clickOn("#toField"); 
-    write("15:30"); 
-    //Adding additional info for the shift 
-    clickOn("#infoArea"); 
-    write("We are testing unassigned shift");
-    //Creating the shift 
-    clickOn("#createShiftButton");
-    
-    //The shift should not have been created, and we should still be in UpdateShift.fxml with an error message.
-    //Verifying that we are still on the same scene, by looking for a unique Node in Updateshift.fxml. 
-    ListView<User> members = lookup("#members").query(); 
-    assertNotNull(members);
-    
-    }*/
-   
+  // Testing that you´re not able to create different invalid shifts:
   @Test
   public void testShiftInPast() {
     clickOn("#members");
     type(KeyCode.ENTER);
     // The date will be set to yesterday to make sure that the shift is in the past.
-    DatePicker date = lookup("#date").query();
-    //Setting shift for tomorrow(future)
-    date.setValue(LocalDate.now().minusDays(1));
+    clickOn("#date");
+    //erasing the prewritten date
+    type(KeyCode.BACK_SPACE,10);
+    //writing the date for yesterday(past)
+    write(dateInPast);
+    type(KeyCode.ENTER);
     // Setting up valid times for the shifts
     clickOn("#fromField");
     write("08:00");
@@ -137,34 +130,40 @@ public class UpdateShiftControllerTest extends JobbLettTest {
     // The shift should not have been created, and we should still be in UpdateShift.fxml with an error message.
     // Verifying that we are getting an errormessage in UpdateShift.fxml
     assertNotEquals("", ((Text) lookup("#errorMessage").query()).getText(), "No errormessages are shown");
+    //verifying that we are getting correct errormessage
+    uiAssertions.assertText("errorMessage", "Starting time must be later than the current time");
   }
-  
 
-//kommentert vekk inntil feilen er fikset i controller, IKKE FJERN
-/*  
-@Test
-  public void testStartBeforeEnd(){
+  @Test
+  public void testInvalidTimeFormat(){
     clickOn("#members");
     type(KeyCode.ENTER);
-    // The date will be set to tomorrow(future).
-    DatePicker date = lookup("#date").query();
-    //Setting shift for tomorrow(future)
-    date.setValue(LocalDate.now().plusDays(1));
-    // Setting up invalid times for the shifts
+    // The date will be set to yesterday to make sure that the shift is in the past.
+    clickOn("#date");
+    //erasing the prewritten date
+    type(KeyCode.BACK_SPACE,10);
+    //writing the date for yesterday(past)
+    write(dateInFuture);
+    type(KeyCode.ENTER);
+    // Setting up ivalid times for the shifts
     clickOn("#fromField");
-    write("15:00");
+    write("wrongInput");
     clickOn("#toField");
-    write("08:30");
+    write("123Wrong");
     // Adding additional info for the shift
     clickOn("#infoArea");
-    write("We are testing creating shift that ends before it starts.");
+    write("We are testing creating shift with invalid timeformat");
     // Creating the shift
     clickOn("#createShiftButton");
 
     // The shift should not have been created, and we should still be in UpdateShift.fxml with an error message.
     // Verifying that we are getting an errormessage in UpdateShift.fxml
     assertNotEquals("", ((Text) lookup("#errorMessage").query()).getText(), "No errormessages are shown");
-  }*/
+    //verifying that we are getting correct errormessage
+    uiAssertions.assertText("errorMessage", "Time period is not written in the correct format");
+ 
+  }
+  
 
 
 }
