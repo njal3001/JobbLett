@@ -1,6 +1,7 @@
 package jobblett.ui;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ public class MainController {
   private GroupList groupList;
   private User activeUser;
   private Group activeGroup;
+
 
   public MainController(Stage stage) {
     this.stage = stage;

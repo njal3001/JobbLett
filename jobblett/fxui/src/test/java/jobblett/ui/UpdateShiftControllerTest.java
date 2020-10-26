@@ -1,5 +1,8 @@
 package jobblett.ui;
 
+import javafx.application.Platform;
+import javafx.scene.control.ListCell;
+import org.assertj.core.internal.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -26,11 +30,11 @@ LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
 LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
 
 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
- 
+
 // tomorrow in string
 String dateInFuture = tomorrow.format(formatter);
 //yesterday in string
-String dateInPast = yesterday.format(formatter);  
+String dateInPast = yesterday.format(formatter);
 
 
   @Override
@@ -53,6 +57,7 @@ String dateInPast = yesterday.format(formatter);
     clickOn("#goBackButton");
     uiAssertions.assertOnScene(App.SHIFT_VIEW_ID);
   }
+
 
   // Denne metoden burde gjøres litt mer dekkende, altså at riktige feilmeldinger kommer opp i forhold til
   // hva som var feil med inputen
@@ -91,11 +96,14 @@ String dateInPast = yesterday.format(formatter);
     // Setting up valid times for the shifts
     clickOn("#fromField");
     write("08:00");
+    uiAssertions.assertTextField("fromField", "08:00");
     clickOn("#toField");
     write("15:30");
+    uiAssertions.assertTextField("toField", "15:30");
     // Adding additional info for the shift
     clickOn("#infoArea");
-    write("We are testing valid creatShift");
+    write("We are testing valid createShift");
+    uiAssertions.assertTextArea("infoArea", "We are testing valid createShift");
     // Creating the shift
     clickOn("#createShiftButton");
 
@@ -161,9 +169,56 @@ String dateInPast = yesterday.format(formatter);
     assertNotEquals("", ((Text) lookup("#errorMessage").query()).getText(), "No errormessages are shown");
     //verifying that we are getting correct errormessage
     uiAssertions.assertText("errorMessage", "Time period is not written in the correct format");
- 
-  }
-  
 
+  }
+
+  @Test
+  public void updateShift(){
+    UpdateShiftController shiftController = (UpdateShiftController) mainController.getSceneController(App.UPDATE_SHIFT_ID);
+    shiftController.setActiveJobShift(jobShift1);
+    Platform.runLater(() -> {shiftController.onSceneDisplayed();});
+    // shiftController.onSceneDisplayed();
+    clickOn("#date");
+    type(KeyCode.RIGHT,1);
+    clickOn("#members");
+    type(KeyCode.ENTER);
+    uiAssertions.assertDate("date", "2020-10-26");
+    // The date will be set to yesterday to make sure that the shift is in the past.
+    clickOn("#date");
+    //erasing the prewritten date
+    type(KeyCode.BACK_SPACE,10);
+    //writing the date for yesterday(past)
+    write(dateInFuture);
+    type(KeyCode.ENTER);
+    // Setting up ivalid times for the shifts
+    clickOn("#fromField");
+    type(KeyCode.BACK_SPACE,10);
+    type(KeyCode.DELETE,10);
+    write("10:00");
+    uiAssertions.assertTextField("fromField", "10:00");
+    clickOn("#toField");
+    type(KeyCode.BACK_SPACE,10);
+    type(KeyCode.DELETE,10);
+    write("17:00");
+    uiAssertions.assertTextField("toField","17:00");
+    clickOn("#infoArea");
+    type(KeyCode.BACK_SPACE,20);
+    type(KeyCode.DELETE,20);
+    write("We are testing if update jobshift is working");
+    uiAssertions.assertTextArea("infoArea","We are testing if update jobshift is working");
+    // Creating the shift
+    clickOn("#createShiftButton");
+  }
+
+  @Test
+  public void testUpdatedShiftViewCell(){
+    ListCell jobShiftListCell = uiAssertions.findListCell(0);
+    jobShiftListCell.equals(jobShift1);
+
+  }
+
+  public static void main(String[] args) {
+
+  }
 
 }

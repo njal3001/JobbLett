@@ -17,32 +17,31 @@ public class JobShiftListCell extends ListCell<JobShift>{
   @Override
   public void updateItem(JobShift jobShift, boolean empty){
     super.updateItem(jobShift, empty);
-    setText(null);
-    if(empty || jobShift == null)
+    if(empty || jobShift == null) {
       setGraphic(null);
+      setText(null);
+    }
     else{
-      TextFlow textFlow = new TextFlow();
-      Text jobShiftText = new Text(formatJobShift(jobShift));
-      textFlow.getChildren().add(jobShiftText);
-      setGraphic(textFlow);
-      
+      final String shiftText = formatJobShift(jobShift);
+      setText(shiftText);
+
       // When clicked on, the cell toggles between showing the job shift info or not
       setOnMouseClicked(new EventHandler<MouseEvent>(){
         private boolean isExpanded = false;
-        private final Text infoText = new Text("\nInfo:\n" + jobShift.getInfo());
+        private final String infoText = "\nInfo:\n" + jobShift.getInfo();
 
         @Override
         public void handle(MouseEvent event) {
           if(!isExpanded)
-            textFlow.getChildren().add(infoText);
+            setText(shiftText + infoText);
           else
-            textFlow.getChildren().remove(infoText);
-          isExpanded = !isExpanded;
-          setGraphic(textFlow);
+            setText(shiftText);
+            isExpanded = !isExpanded;
         }
       });
     }
   }
+
 
   //Kan eventuelt bruke toString i core klassen, men da vil ikke toStringen bruke info attributten
   //String representation of the job shift, which is used by the cell

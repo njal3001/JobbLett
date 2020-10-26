@@ -19,8 +19,6 @@ import java.time.format.DateTimeFormatter;
 
 public class UpdateShiftController extends SceneController {
 
-  public final static DateTimeFormatter EXPECTED_TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
-
   @FXML
   ListView<User> members;
 
@@ -69,8 +67,8 @@ public class UpdateShiftController extends SceneController {
     } else {
       // Update existing JobShift
       if (activeJobShift.getUser() != null) members.getSelectionModel().select(activeJobShift.getUser());
-      String fromTime = activeJobShift.getStartingTime().format(UpdateShiftController.EXPECTED_TIME_FORMAT);
-      String toTime = activeJobShift.getEndingTime().format(UpdateShiftController.EXPECTED_TIME_FORMAT);
+      String fromTime = activeJobShift.getStartingTime().format(App.EXPECTED_TIME_FORMAT);
+      String toTime = activeJobShift.getEndingTime().format(App.EXPECTED_TIME_FORMAT);
       date.setValue(activeJobShift.getStartingTime().toLocalDate());
       fromField.setText(fromTime);
       toField.setText(toTime);
