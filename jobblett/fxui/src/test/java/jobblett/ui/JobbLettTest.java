@@ -43,8 +43,8 @@ public abstract class JobbLettTest extends ApplicationTest {
     mainController = new MainController(primaryStage);
 
     setupData();
-    mainController.setUserList(userList);
-    mainController.setGroupList(groupList);
+    mainController.access.setUserList(userList);
+    mainController.access.setGroupList(groupList);
     mainController.setActiveUser(giveActiveUser());
     mainController.setActiveGroup(giveActiveGroup());
 

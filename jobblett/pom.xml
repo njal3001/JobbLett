@@ -38,7 +38,7 @@
                 <artifactId>javafx-graphics</artifactId>
                 <version>14.0.2</version>
             </dependency>
-            <!-- Test with TextFX -->
+            <!-- Test with TestFX -->
             <dependency>
                 <groupId>org.testfx</groupId>
                 <artifactId>testfx-core</artifactId>
@@ -163,5 +163,7 @@
         <module>core</module>
         <module>json</module>
         <module>fxui</module>
+        <module>restapi</module>
+        <module>restserver</module>
     </modules>
 </project>

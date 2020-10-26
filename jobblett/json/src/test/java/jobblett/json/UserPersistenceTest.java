@@ -3,13 +3,9 @@ package jobblett.json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import jobblett.core.Group;
 import jobblett.core.User;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -25,7 +21,7 @@ public class UserPersistenceTest {
         // Serializing
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-        mapper.registerModule(new CoreModule());
+        mapper.registerModule(new JobblettCoreModule());
         String result = "";
 
         try {
@@ -38,7 +34,7 @@ public class UserPersistenceTest {
 
         // Deserializing
         mapper = new ObjectMapper();
-        mapper.registerModule(new CoreModule());
+        mapper.registerModule(new JobblettCoreModule());
 
         try {
             User newUser = mapper.readValue(result,User.class);

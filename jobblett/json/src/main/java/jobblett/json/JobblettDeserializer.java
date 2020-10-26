@@ -14,15 +14,15 @@ import java.nio.file.Paths;
  * Used to deserialize main.json to Main.class from the systems user-folder. Imports the data-file
  * from $USER_HOME/.jobblett/main.json
  */
-public class JSONDeserialize<Type> {
+public class JobblettDeserializer<Type> {
     ObjectMapper objectMapper;
     Reader reader;
     Class<?> classType;
 
     /**
-     * Initializes a JSONDeserialize-instance and reads main.json.
+     * Initializes a JobblettDeserializer-instance and reads main.json.
      */
-    public JSONDeserialize(Class<?> classType) {
+    public JobblettDeserializer(Class<?> classType) {
         this.classType = classType;
         File f = new File(System.getProperty("user.home") + "/.jobblett");
         // noinspection ResultOfMethodCallIgnored
@@ -44,7 +44,7 @@ public class JSONDeserialize<Type> {
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
 
-        objectMapper.registerModule(new CoreModule());
+        objectMapper.registerModule(new JobblettCoreModule());
     }
 
     private void useDefaultValues() {
@@ -61,11 +61,27 @@ public class JSONDeserialize<Type> {
      *
      * @return Main.class object
      */
-    public Type importJSON() {
+    public Type deserialize() {
         Type obj = null;
         try {
             // deserialize json string
             obj = (Type) objectMapper.readValue(reader, classType);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return obj;
+    }
+
+    /**
+     * Imports from a String
+     *
+     * @return Main.class object
+     */
+    public Type deserializeString(String value) {
+        Type obj = null;
+        try {
+            // deserialize json string
+            obj = (Type) objectMapper.readValue(value, classType);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

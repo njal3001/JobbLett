@@ -3,7 +3,6 @@ package jobblett.json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import jobblett.core.GroupList;
 import jobblett.core.User;
 import jobblett.core.UserList;
 import org.junit.jupiter.api.BeforeAll;
@@ -32,7 +31,7 @@ public class UserListPersistenceTest {
         // Serializing
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-        mapper.registerModule(new CoreModule());
+        mapper.registerModule(new JobblettCoreModule());
         String result = "";
 
         try {
@@ -45,7 +44,7 @@ public class UserListPersistenceTest {
 
         // Deserializing
         mapper = new ObjectMapper();
-        mapper.registerModule(new CoreModule());
+        mapper.registerModule(new JobblettCoreModule());
 
         try {
             UserList newUserList = mapper.readValue(result,UserList.class);

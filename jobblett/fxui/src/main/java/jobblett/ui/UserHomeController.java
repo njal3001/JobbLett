@@ -41,8 +41,17 @@ public class UserHomeController extends SceneController {
 
         groups.getItems().clear();
         // Lists all groups
-        for (Group group : mainController.getGroupList().getGroups(mainController.getActiveUser()))
-            groups.getItems().add(group);
+        for (Group group : getAccess().getGroups(mainController.getActiveUser())) {
+            Text text = new Text(group.getGroupName());
+            groups.getItems().add(text);
+            text.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    mainController.setActiveGroup(group);
+                    mainController.setScene(App.GROUP_HOME_ID);
+                }
+            });
+        }
     }
 
     @FXML

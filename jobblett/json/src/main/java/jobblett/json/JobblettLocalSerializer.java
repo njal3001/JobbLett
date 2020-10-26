@@ -13,22 +13,22 @@ import java.time.LocalDateTime;
  * Used to serialize Main.class to main.json in the systems user-folder.
  * Saves the data-file in $USER_HOME/.jobblett/main.json
  */
-public class JSONSerialize {
+public class JobblettLocalSerializer {
     Object object;
     String fileLocation;
 
     /**
-     * Initializes a new instance of JSONSerialize and locates the file to serialize to.
+     * Initializes a new instance of JobblettLocalSerializer and locates the file to serialize to.
      *
      * @param object the object that should be serialized
      * @param file the location of the file to write to (relative to jobblett's appdata-folder)
      */
-    private JSONSerialize(Object object, String file) {
+    private JobblettLocalSerializer(Object object, String file) {
         this.object = object;
         this.fileLocation = System.getProperty("user.home")+"/.jobblett/"+file;
     }
 
-    public JSONSerialize(Object object) {
+    public JobblettLocalSerializer(Object object) {
         this(object,object.getClass().getSimpleName()+".json");
     }
 
@@ -41,7 +41,7 @@ public class JSONSerialize {
             ObjectMapper objectMapper = new ObjectMapper();
 
             objectMapper.registerModule(new JavaTimeModule());
-            objectMapper.registerModule(new CoreModule());
+            objectMapper.registerModule(new JobblettCoreModule());
 
             objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
             objectMapper.writeValue(new File(fileLocation), object);
@@ -69,7 +69,7 @@ public class JSONSerialize {
 
         gruppe7.getJobShifts().addJobShift(new JobShift(userList.getUser("nora"), LocalDateTime.now().plusYears(1), Duration.ofHours(2),"Dette er Olav sin skift."));
 
-        new JSONSerialize(userList,"defaultUserList.json").exportJSON();
-        new JSONSerialize(groupList,"defaultGroupList.json").exportJSON();
+        new JobblettLocalSerializer(userList,"defaultUserList.json").exportJSON();
+        new JobblettLocalSerializer(groupList,"defaultGroupList.json").exportJSON();
     }
 }

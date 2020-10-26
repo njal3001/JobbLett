@@ -6,11 +6,6 @@ import java.time.format.DateTimeFormatter;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import jobblett.core.GroupList;
-import jobblett.core.UserList;
-import jobblett.json.JSONDeserialize;
-import jobblett.json.JSONSerialize;
-
 //Code is inspired by: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
 
 public class App extends Application {
@@ -51,10 +46,8 @@ public class App extends Application {
 
     mainController = new MainController(primaryStage);
 
-    UserList userList = new JSONDeserialize<UserList>(UserList.class).importJSON();
-    GroupList groupList = new JSONDeserialize<GroupList>(GroupList.class).importJSON();
-    mainController.setUserList(userList);
-    mainController.setGroupList(groupList);
+
+    mainController.access = new JobblettDirectAccess();
 
     mainController.loadScene(LOGIN_ID, LOGIN_FILE);
     mainController.loadScene(CREATE_USER_ID, CREATE_USER_FILE);
@@ -69,8 +62,7 @@ public class App extends Application {
     primaryStage.show();
 
     primaryStage.setOnCloseRequest(event -> {
-      new JSONSerialize(groupList).exportJSON();
-      new JSONSerialize(userList).exportJSON();
+      mainController.access.save();
     });
   }
 

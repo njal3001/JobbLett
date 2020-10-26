@@ -40,7 +40,7 @@ public class GroupListPersistenceTest {
         // Serializing
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-        mapper.registerModule(new CoreModule());
+        mapper.registerModule(new JobblettCoreModule());
         String result = "";
 
         try {
@@ -53,7 +53,7 @@ public class GroupListPersistenceTest {
 
         // Deserializing
         mapper = new ObjectMapper();
-        mapper.registerModule(new CoreModule());
+        mapper.registerModule(new JobblettCoreModule());
 
         try {
             GroupList newGroupList = mapper.readValue(result,GroupList.class);
