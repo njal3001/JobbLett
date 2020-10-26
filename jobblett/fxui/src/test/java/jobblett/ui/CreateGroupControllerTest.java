@@ -33,7 +33,7 @@ public class CreateGroupControllerTest extends JobbLettTest {
     int groupID = mainController.getActiveGroup().getGroupID();
     clickOn("#backToHome");
     uiAssertions.assertOnScene(App.USER_HOME_ID);
-    uiAssertions.assertListViewHasItem("groups", mainController.getGroupList().getGroup(groupID));
+    uiAssertions.assertListViewHasItem("groups", mainController.access.getGroup(groupID));
   }
 
   @Test

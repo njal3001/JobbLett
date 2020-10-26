@@ -28,6 +28,10 @@ public class MainController {
 
   JobblettAccess access = new JobblettDirectAccess();
 
+  public Stage getStage(){
+    return stage;
+  }
+
   public MainController(Stage stage) {
     this.stage = stage;
   }

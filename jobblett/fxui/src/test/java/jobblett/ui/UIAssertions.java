@@ -17,7 +17,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 
 // Helper class for assertions that are useful for multiple test classes
