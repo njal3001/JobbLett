@@ -1,13 +1,12 @@
 package jobblett.ui;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
+import jobblett.core.Group;
+import jobblett.core.User;
 
 public class CreateUserControllerTest extends JobbLettTest {
 
@@ -16,51 +15,53 @@ public class CreateUserControllerTest extends JobbLettTest {
     return App.CREATE_USER_ID;
   }
 
-  @Test
-  public void testErrorMessages() {
-    Text errorMessage = lookup("#errorMessage").query();
-    assertEquals(errorMessage.getText(),"");
-    clickOn("#createAccountButton");
-    assertNotEquals(errorMessage.getText(),"");
+  @Override
+  protected User giveActiveUser(){
+    return null;
+  }
+
+  @Override
+  protected Group giveActiveGroup(){
+    return null;
   }
 
   @Test
-  public void testGoToLogin(){
+  public void testErrorMessage_EmptyAfterInitalization() {
+    uiAssertions.assertText("errorMessage", "");
+  }
+
+  @Test
+  public void testGoToLogin() {
     clickOn("#goBackButton");
-    //Checks if it finds a node from Login.fxml, which confirms that the scene has been changed
-    TextField nodeInLoginScene = lookup("#usernameField").query();
-    assertNotNull(nodeInLoginScene);
-  }
-
-  private void assertErrorMessage(String expected){
-    Text errorMessage = lookup("#errorMessage").query();
-    assertEquals(expected, errorMessage.getText());
+    uiAssertions.assertOnScene(App.LOGIN_ID);
   }
 
   @Test
-  public void testCreateUser_invalidUserData(){
+  public void testCreateUser_invalidUserData() {
     tryToCreateUser("", "", "", "");
-    assertErrorMessage("Not a valid username\nNot a valid password\nNot a valid name");
+    uiAssertions.assertOnScene(App.CREATE_USER_ID);
+    uiAssertions.assertText("errorMessage", "Not a valid username\nNot a valid password\nNot a valid name");
   }
-  
+
   @Test
-  public void testCreateUser_validUserData(){
+  public void testCreateUser_validUserData() {
     tryToCreateUser("Test3", "Password12345", "Ole", "Dole");
-    Text userFullName = lookup("#userFullName").query();
-    assertEquals("Ole Dole", userFullName.getText());
+    uiAssertions.assertOnScene(App.USER_HOME_ID);
+    uiAssertions.assertText("userFullName", "Ole Dole");
   }
 
   @Test
-  public void testCreateUser_usernameTaken(){
+  public void testCreateUser_usernameTaken() {
     tryToCreateUser("CorrectUsername", "CorrectPassword12345", "Ole", "Dole");
-    assertErrorMessage("User with the same username already exists");
+    uiAssertions.assertOnScene(App.CREATE_USER_ID);
+    uiAssertions.assertText("errorMessage", "User with the same username already exists");
   }
 
-  private void tryToCreateUser(String username, String password, String givenName, String familyName){
+  private void tryToCreateUser(String username, String password, String givenName, String familyName) {
     clickOn("#username").write(username);
     clickOn("#password").write(password);
     clickOn("#givenName").write(givenName);
     clickOn("#familyName").write(familyName);
     clickOn("#createAccountButton");
-  } 
+  }
 }

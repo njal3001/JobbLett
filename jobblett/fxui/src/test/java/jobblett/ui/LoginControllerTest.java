@@ -1,39 +1,45 @@
 package jobblett.ui;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 
-import javafx.scene.control.Button;
-import javafx.scene.text.Text;
+import jobblett.core.Group;
+import jobblett.core.User;
 
-public class LoginTest extends JobbLettTest {
+public class LoginControllerTest extends JobbLettTest {
 
   @Override
   protected String giveID() {
     return App.LOGIN_ID;
   }
 
+  @Override
+  protected User giveActiveUser(){
+    return null;
+  }
+
+  @Override
+  protected Group giveActiveGroup(){
+    return null;
+  }
+
   @Test
   public void testLogin_wrongPasswordAndUsername(){
     tryToLogin("WrongUsername", "WrongPassword12345");
-    Text errorMessage = lookup("#errorMessage").query();
-    assertEquals(errorMessage.getText(), "Wrong username or password");
+    uiAssertions.assertOnScene(App.LOGIN_ID);
+    uiAssertions.assertText("errorMessage", "Wrong username or password");
   } 
 
   @Test
   public void testLogin_correctPasswordAndUsername(){
     tryToLogin(user1.getUserName(), "CorrectPassword12345");
-    Text fullNameText = lookup("#userFullName").query();
-    assertNotNull(fullNameText);
-    assertEquals(user1.getGivenName() + " " + user1.getFamilyName(), fullNameText.getText());
+    uiAssertions.assertOnScene(App.USER_HOME_ID);
+    uiAssertions.assertText("userFullName", user1.getGivenName() + " " + user1.getFamilyName());
   }
 
   @Test
   public void testGoToCreateAccount(){
     clickOn("#createAccount");
-    Button goBackButton = lookup("#goBackButton").query();
-    assertNotNull(goBackButton);
+    uiAssertions.assertOnScene(App.CREATE_USER_ID);
   }
 
   private void tryToLogin(String username, String password){

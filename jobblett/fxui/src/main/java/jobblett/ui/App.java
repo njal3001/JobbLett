@@ -1,6 +1,7 @@
 package jobblett.ui;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -33,6 +34,10 @@ public class App extends Application {
   public static final String UPDATE_SHIFT_ID = "UpdateShift";
   public static final String UPDATE_SHIFT_FILE = "UpdateShift.fxml";
 
+  public final static DateTimeFormatter EXPECTED_TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
+  public final static DateTimeFormatter EXPECTED_DATE_FORMAT = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+
+
   private MainController mainController;
 
   @Override
@@ -59,10 +64,6 @@ public class App extends Application {
     primaryStage.setOnCloseRequest(event -> {
       mainController.access.save();
     });
-  }
-
-  public MainController getMainController() {
-    return mainController;
   }
 
   public static void main(final String[] args) {
