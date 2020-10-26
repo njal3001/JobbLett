@@ -17,9 +17,7 @@ public class UserResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection<User> getUsers() {
-        Collection<User> users = new ArrayList<>();
-        users.forEach(a -> users.add(a));
-        return users;
+    public User getUser() {
+        return user;
     }
 }

@@ -80,7 +80,7 @@ public class JobblettRemoteAccess implements JobblettAccess{
 
     public Collection<Group> getGroups(User user) {
         GroupList groupList = (GroupList) getUpdatedLists().iterator().next();
-        return getGroups(user);
+        return groupList.getGroups(user);
     }
 
     //TODO

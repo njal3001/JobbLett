@@ -25,7 +25,7 @@ public class MainController {
   private User activeUser;
   private Group activeGroup;
 
-  JobblettAccess access;
+  JobblettAccess access = new JobblettDirectAccess();
 
   public MainController(Stage stage) {
     this.stage = stage;
