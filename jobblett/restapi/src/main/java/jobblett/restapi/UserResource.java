@@ -1,6 +1,5 @@
 package jobblett.restapi;
 
-import jobblett.core.Group;
 import jobblett.core.User;
 
 import javax.ws.rs.GET;

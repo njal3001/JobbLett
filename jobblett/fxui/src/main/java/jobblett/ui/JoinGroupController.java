@@ -49,7 +49,7 @@ public class JoinGroupController extends SceneController {
       errorMessage.setText("Invalid group ID");
       return;
     }
-    Group group = mainController.getGroupList().getGroup(groupID);
+    Group group = getAccess().getGroup(groupID);
     if (group == null) {
       errorMessage.setText("No group has the given ID");
       return;

@@ -26,7 +26,7 @@ public class CreateGroupController extends SceneController {
   public void createGroup(){
     String groupName = groupNameField.getText();
     try {
-      Group newGroup = mainController.getGroupList().newGroup(groupName);
+      Group newGroup = getAccess().newGroup(groupName);
       newGroup.addUser(mainController.getActiveUser());
       mainController.setActiveGroup(newGroup);
       mainController.setScene(App.GROUP_HOME_ID);

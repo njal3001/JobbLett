@@ -1,16 +1,15 @@
 package jobblett.restapi;
 
-import javax.inject.Inject;
+import jobblett.core.Group;
+import jobblett.core.GroupList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import jobblett.core.Group;
-import jobblett.core.GroupList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public class GroupListResource {

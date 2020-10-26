@@ -5,7 +5,6 @@ import jobblett.core.UserList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -25,7 +24,7 @@ public class UserListResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public UserList getGroupList() {
+    public UserList getUserList() {
         return userList;
     }
 

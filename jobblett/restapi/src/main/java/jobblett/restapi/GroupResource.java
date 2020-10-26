@@ -26,6 +26,7 @@ public class GroupResource {
         return users;
     }
 
+    // Maybe unnecessary
     @Path("/{userName}")
     public UserResource getUser(@PathParam("userName") String userName) {
         User user = group.getUser(userName);

@@ -36,7 +36,7 @@ public class JobShiftListPersistenceTest {
         // Serializing
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-        mapper.registerModule(new CoreModule());
+        mapper.registerModule(new JobblettCoreModule());
         String result = "";
 
         try {
@@ -49,7 +49,7 @@ public class JobShiftListPersistenceTest {
 
         // Deserializing
         mapper = new ObjectMapper();
-        mapper.registerModule(new CoreModule());
+        mapper.registerModule(new JobblettCoreModule());
 
         try {
             JobShiftList newJobShiftList = mapper.readValue(result,JobShiftList.class);

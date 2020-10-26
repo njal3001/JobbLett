@@ -3,8 +3,8 @@ package jobblett.json;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import jobblett.core.*;
 
-public class CoreModule extends SimpleModule {
-    public CoreModule() {
+public class JobblettCoreModule extends SimpleModule {
+    public JobblettCoreModule() {
         super();
 
         super.addSerializer(Group.class, new GroupSerializer());
