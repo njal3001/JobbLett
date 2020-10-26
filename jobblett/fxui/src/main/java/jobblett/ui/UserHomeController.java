@@ -36,7 +36,7 @@ public class UserHomeController extends SceneController {
 
         groups.getItems().clear();
         // Lists all groups
-        for (Group group : mainController.getGroupList().getGroups(mainController.getActiveUser())) {
+        for (Group group : getAccess().getGroups(mainController.getActiveUser())) {
             Text text = new Text(group.getGroupName());
             groups.getItems().add(text);
             text.setOnMouseClicked(new EventHandler<MouseEvent>() {

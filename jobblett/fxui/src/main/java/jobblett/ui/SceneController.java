@@ -18,4 +18,8 @@ public abstract class SceneController {
   public void onSceneDisplayed(){
 
   }
+
+  protected JobblettAccess getAccess() {
+    return mainController.access;
+  }
 }

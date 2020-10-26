@@ -38,7 +38,7 @@ public class LoginController extends SceneController {
   public void logInToUserHome(){
     String userName = this.usernameField.getText();
     String password = this.passwordField.getText();
-    User user = mainController.getUserList().login(userName, password);
+    User user = getAccess().login(userName,password);
     if (user == null)
       errorMessage.setText("Wrong username or password");
     else {
