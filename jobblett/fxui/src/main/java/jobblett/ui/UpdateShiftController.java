@@ -9,6 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Observable;
 
 public class UpdateShiftController extends SceneController {
 
@@ -44,18 +46,70 @@ public class UpdateShiftController extends SceneController {
   Text errorMessage;
 
   private JobShift activeJobShift;
+  
 
   // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme
   // kode hver gang vi skal vise noe med listView
 
   @Override
   public void onSceneDisplayed() {
+    // setting up dateformat for the datepicker
+    date.setConverter(new StringConverter<LocalDate>() {
+
+      @Override
+      public String toString(LocalDate date) {
+        if (date == null)
+          return "";
+
+        return App.EXPECTED_DATE_FORMAT.format(date);
+      }
+
+      @Override
+      public LocalDate fromString(String dateString) {
+        if (dateString == null || dateString.isEmpty())
+          return null;
+
+        return LocalDate.parse(dateString, App.EXPECTED_DATE_FORMAT);
+      }
+    });
+
+    // making it not able to write in date, the user has to use to calender to pick
+    // a date
+    date.setEditable(false);
+
+
+    fromField.setText("12:00");
+    toField.setText(("19:30"));
+
+    //utbedre til å detektere feil inntast automatisk??
+    fromField.textProperty().addListener((observable, oldValue, newValue) -> {
+      /*
+       * String pattern = "^(?=.*[0-9])(?=.*[:]).{0,}$";
+       * if(!newValue.matches(pattern)){ if(oldValue.matches(pattern))
+       * fromField.setText(oldValue); else fromField.setText("00:00"); }
+       */
+      String exactPattern = "[0-2][0-9]:[0-5][0-9]";
+      if (!newValue.matches(exactPattern))
+        errorMessage.setText("Time period is not written in the correct format");
+      else
+        errorMessage.setText("");
+
+    });
+
+    toField.textProperty().addListener((observable, oldValue, newValue) -> {
+      String exactPattern = "[0-2][0-9]:[0-5][0-9]";
+      if (!newValue.matches(exactPattern))
+        errorMessage.setText("Time period is not written in the correct format");
+      else
+        errorMessage.setText("");
+
+    });
+
     // Lists all members
     members.getItems().clear();
     for (User user : mainController.getActiveGroup())
       members.getItems().add(user);
     errorMessage.setText("");
-
 
     if (activeJobShift == null) {
       // Create new JobShift
@@ -66,7 +120,8 @@ public class UpdateShiftController extends SceneController {
       createShiftButton.setText("Create shift");
     } else {
       // Update existing JobShift
-      if (activeJobShift.getUser() != null) members.getSelectionModel().select(activeJobShift.getUser());
+      if (activeJobShift.getUser() != null)
+        members.getSelectionModel().select(activeJobShift.getUser());
       String fromTime = activeJobShift.getStartingTime().format(App.EXPECTED_TIME_FORMAT);
       String toTime = activeJobShift.getEndingTime().format(App.EXPECTED_TIME_FORMAT);
       date.setValue(activeJobShift.getStartingTime().toLocalDate());
@@ -94,8 +149,7 @@ public class UpdateShiftController extends SceneController {
         // New JobShift
         activeJobShift = new JobShift(user, startingTime, duration, info);
         mainController.getActiveGroup().addJobShift(activeJobShift, mainController.getActiveUser());
-      }
-      else {
+      } else {
         // Updating existing JobShift
         activeJobShift.setUser(user);
         activeJobShift.setStartingTime(startingTime);
