@@ -34,6 +34,11 @@ public class GroupHomeController extends SceneController{
         // Shows GroupID
         groupID.setText("GroupID: " + mainController.getActiveGroup().getGroupID());
 
+        members.setCellFactory(members -> {
+          GroupMemberListCell listCell = new GroupMemberListCell(mainController);
+          return listCell;
+        });
+
         members.getItems().clear();
         // Lists all members
         for (User user : mainController.getActiveGroup())

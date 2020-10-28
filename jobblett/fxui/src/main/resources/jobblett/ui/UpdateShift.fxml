@@ -23,7 +23,7 @@
         </font>
     </Text>
     <Text layoutX="17.0" layoutY="392.0" text="Info:" />
-    <Text fx:id="errorMessage" layoutX="113.0" layoutY="550.0" wrappingWidth="100" />
+    <Text fx:id="errorMessage" layoutX="116.0" layoutY="581.0" wrappingWidth="100" />
     <Text layoutX="17.0" layoutY="280.0" text="Date:" />
     <Text layoutX="17.0" layoutY="325.0" text="Time:" />
     <Text layoutX="132.0" layoutY="325.0" text="-" />

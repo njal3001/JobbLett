@@ -29,7 +29,7 @@ public class JobblettDirectAccess implements JobblettAccess{
 
     @Override
     public void setGroupList(GroupList oldGroupList) {
-        groupList = correctGroupList(oldGroupList,userList);;
+        groupList = correctGroupList(oldGroupList,userList);
     }
 
     @Override
