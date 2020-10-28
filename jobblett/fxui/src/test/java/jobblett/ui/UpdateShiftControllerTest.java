@@ -26,15 +26,14 @@ import jobblett.core.User;
 //Koder som er kommentert ut skal implementeres ettersom deres funksjoner er implementert i controlleren.
 public class UpdateShiftControllerTest extends JobbLettTest {
   // Creating dates for the tests
-LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
-LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+LocalDate tomorrow = LocalDate.now().plusDays(1);
+LocalDate yesterday = LocalDate.now().minusDays(1);
 
-DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
 // tomorrow in string
-String dateInFuture = tomorrow.format(formatter);
+String dateInFuture = tomorrow.format(App.EXPECTED_DATE_FORMAT);
 //yesterday in string
-String dateInPast = yesterday.format(formatter);
+String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
 
 
   @Override
@@ -58,7 +57,7 @@ String dateInPast = yesterday.format(formatter);
     uiAssertions.assertOnScene(App.SHIFT_VIEW_ID);
   }
 
-
+/*
   // Denne metoden burde gjøres litt mer dekkende, altså at riktige feilmeldinger kommer opp i forhold til
   // hva som var feil med inputen
   @Test
@@ -68,7 +67,7 @@ String dateInPast = yesterday.format(formatter);
     clickOn("#createShiftButton");
     // An errormessage should be visible when creating an empty shift
     assertNotEquals("", ErrorMessageField.getText(), "The user should get an errormessage when creating an invalid shift");
-  }
+  }*/
 
   @Test
   public void testUsersView_HasUsers() {
@@ -87,12 +86,9 @@ String dateInPast = yesterday.format(formatter);
     clickOn("#members");
     //choosing the first memeber
     type(KeyCode.ENTER);
-    clickOn("#date");
-    //erasing the prewritten date
-    type(KeyCode.BACK_SPACE,10);
-    //writing the date for tomorrow(future)
-    write(dateInFuture);
-    type(KeyCode.ENTER);
+    //Setting the date for tomorrow(future)
+    DatePicker date = lookup("#date").query();
+    date.setValue(tomorrow);
     // Setting up valid times for the shifts
     clickOn("#fromField");
     write("08:00");
@@ -118,12 +114,8 @@ String dateInPast = yesterday.format(formatter);
     clickOn("#members");
     type(KeyCode.ENTER);
     // The date will be set to yesterday to make sure that the shift is in the past.
-    clickOn("#date");
-    //erasing the prewritten date
-    type(KeyCode.BACK_SPACE,10);
-    //writing the date for yesterday(past)
-    write(dateInPast);
-    type(KeyCode.ENTER);
+    DatePicker date = lookup("#date").query();
+    date.setValue(yesterday);
     // Setting up valid times for the shifts
     clickOn("#fromField");
     write("08:00");
@@ -146,13 +138,9 @@ String dateInPast = yesterday.format(formatter);
   public void testInvalidTimeFormat(){
     clickOn("#members");
     type(KeyCode.ENTER);
-    // The date will be set to yesterday to make sure that the shift is in the past.
-    clickOn("#date");
-    //erasing the prewritten date
-    type(KeyCode.BACK_SPACE,10);
-    //writing the date for yesterday(past)
-    write(dateInFuture);
-    type(KeyCode.ENTER);
+    //Setting the date for tomorrow(future)
+    DatePicker date = lookup("#date").query();
+    date.setValue(tomorrow);
     // Setting up ivalid times for the shifts
     clickOn("#fromField");
     write("wrongInput");
@@ -177,19 +165,13 @@ String dateInPast = yesterday.format(formatter);
     UpdateShiftController shiftController = (UpdateShiftController) mainController.getSceneController(App.UPDATE_SHIFT_ID);
     shiftController.setActiveJobShift(jobShift1);
     Platform.runLater(() -> {shiftController.onSceneDisplayed();});
-    // shiftController.onSceneDisplayed();
-    clickOn("#date");
-    type(KeyCode.RIGHT,1);
+    //choosing the user on top
     clickOn("#members");
     type(KeyCode.ENTER);
-    uiAssertions.assertDate("date", "2020-10-26");
-    // The date will be set to yesterday to make sure that the shift is in the past.
-    clickOn("#date");
-    //erasing the prewritten date
-    type(KeyCode.BACK_SPACE,10);
-    //writing the date for yesterday(past)
-    write(dateInFuture);
-    type(KeyCode.ENTER);
+    uiAssertions.assertDate("date", LocalDateTime.now().plusHours(5).format(App.EXPECTED_DATE_FORMAT));
+   //Setting the date for tomorrow(future)
+    DatePicker date = lookup("#date").query();
+    date.setValue(tomorrow);
     // Setting up ivalid times for the shifts
     clickOn("#fromField");
     type(KeyCode.BACK_SPACE,10);
@@ -214,10 +196,6 @@ String dateInPast = yesterday.format(formatter);
   public void testUpdatedShiftViewCell(){
     ListCell jobShiftListCell = uiAssertions.findListCell(0);
     jobShiftListCell.equals(jobShift1);
-
-  }
-
-  public static void main(String[] args) {
 
   }
 

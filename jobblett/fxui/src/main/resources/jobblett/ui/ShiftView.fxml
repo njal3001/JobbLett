@@ -8,16 +8,19 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.ShiftViewController">
     <children>
-        <Text fx:id="groupName" layoutX="83.0" layoutY="55.0" text="Group name" textAlignment="CENTER" wrappingWidth="177.22900390625">
+        <Text fx:id="groupName" layoutX="115.0" layoutY="38.0" text="Group name" textAlignment="CENTER" wrappingWidth="134.22900390625">
             <font>
                 <Font name="Arial" size="22.0" />
             </font>
         </Text>
-        <Text layoutX="152.0" layoutY="165.0" text="All shifts:" />
-        <ListView fx:id="shifts" layoutX="80.0" layoutY="168.0" prefHeight="200.0" prefWidth="200.0" />
+        <Text layoutX="142.0" layoutY="162.0" text="All shifts:">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+        <ListView fx:id="shifts" layoutX="5.0" layoutY="168.0" prefHeight="200.0" prefWidth="350.0" />
         <Button fx:id="backToGroup" layoutX="35.0" layoutY="576.0" onAction="#backButton" text="Back" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
-         <Button fx:id="newShiftButton" layoutX="54.0" layoutY="404.0" onAction="#goToCreateShift" prefWidth="91.0" text="Add new shift" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
-         <Button fx:id="editShiftButton" layoutX="150.0" layoutY="404.0" onAction="#goToEditShift" text="Edit shift" />
-         <Button fx:id="deleteShiftButton" layoutX="215.0" layoutY="404.0" onAction="#handleDeleteShift" text="Delete shift" />
+         <Button fx:id="newShiftButton" layoutX="135.0" layoutY="380.0" onAction="#goToCreateShift" prefHeight="26.0" prefWidth="95.0" style="-fx-background-color: #a0ffa0;" text="Add new shift" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
+         <Button fx:id="editShiftButton" layoutX="135.0" layoutY="416.0" onAction="#goToEditShift" prefHeight="26.0" prefWidth="95.0" text="Edit shift" />
+         <Button fx:id="deleteShiftButton" layoutX="135.0" layoutY="453.0" onAction="#handleDeleteShift" prefHeight="26.0" prefWidth="95.0" style="-fx-background-color: #ffa0a0;" text="Delete shift" />
     </children>
 </Pane>

@@ -12,8 +12,8 @@
 <Pane prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.UpdateShiftController">
     <ListView fx:id="members" layoutX="66.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0" />
     <DatePicker fx:id="date" layoutX="72.0" layoutY="262.0" prefHeight="27.0" prefWidth="200.0" />
-    <TextField fx:id="fromField" layoutX="70.0" layoutY="307.0" prefHeight="27.0" prefWidth="56.0" />
-    <TextField fx:id="toField" layoutX="144.0" layoutY="307.0" prefHeight="27.0" prefWidth="56.0" />
+    <TextField fx:id="fromField" layoutX="70.0" layoutY="307.0" prefHeight="27.0" prefWidth="56.0" text="12:30" />
+    <TextField fx:id="toField" layoutX="144.0" layoutY="307.0" prefHeight="27.0" prefWidth="56.0" text="19:00" />
     <TextArea fx:id="infoArea" layoutX="66.0" layoutY="379.0" prefHeight="133.0" prefWidth="200.0" />
     <Button fx:id="createShiftButton" layoutX="134.0" layoutY="524.0" onAction="#createShift" text="Create shift" />
     <Button fx:id="goBackButton" layoutX="35.0" layoutY="576.0" onAction="#goBack" text="Back" />
@@ -23,7 +23,7 @@
         </font>
     </Text>
     <Text layoutX="17.0" layoutY="392.0" text="Info:" />
-    <Text fx:id="errorMessage" layoutX="113.0" layoutY="550.0" wrappingWidth="100" />
+    <Text fx:id="errorMessage" layoutX="116.0" layoutY="581.0" wrappingWidth="100" />
     <Text layoutX="17.0" layoutY="280.0" text="Date:" />
     <Text layoutX="17.0" layoutY="325.0" text="Time:" />
     <Text layoutX="132.0" layoutY="325.0" text="-" />
