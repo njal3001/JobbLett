@@ -26,10 +26,14 @@ Som arbeidsgiver ønsker jeg å tildele skift til mine arbeidstakere slik at tea
 Arbeidsgiver må kunne oppgi et tidsperiode for et skift, og knytte dette til en arbeidstaker. Alle skift skal vises på en timeplan på teamets gruppeside. 
 Arbeidsgiver skal også ha mulighet til å redigere/slette et skift. 
 
+I oversikten over skift burde det også være mulig å filtrere bort andres skift, slik at man kun ser sine egne. 
+
 **Viktig å kunne se**
 * Tidspunkt for skift
 * Navnet på personen som har skiftet
+* Info om skiftet
 
 **Viktig å kunne gjøre**
 *  Opprette skift og tildele det til en arbeidstaker
 *  Redigere/slette skift
+*  Filtrere bort andres skift
