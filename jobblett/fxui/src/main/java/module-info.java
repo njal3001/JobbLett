@@ -6,6 +6,7 @@ module jobblett.fxui {
 	requires jobblett.json;
 	requires com.fasterxml.jackson.databind;
 	requires java.net.http;
+	requires java.desktop;
 
 	exports jobblett.ui;
 

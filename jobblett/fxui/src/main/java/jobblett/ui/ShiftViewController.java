@@ -67,7 +67,7 @@ public class ShiftViewController extends SceneController {
     int index = shifts.getSelectionModel().getSelectedIndex();
     JobShift selectedJobShift = shifts.getItems().get(index);
     if (selectedJobShift != null) {
-      mainController.getActiveGroup().getJobShifts().removeJobShift(selectedJobShift);
+      mainController.getActiveGroup().getJobShifts().remove(selectedJobShift);
       updateView();
     }
   }

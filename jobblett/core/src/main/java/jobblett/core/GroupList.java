@@ -1,19 +1,13 @@
 package jobblett.core;
 
-
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 /**
  * Handles all of the groups in the "database".
  */
-public class GroupList implements Iterable<Group> {
-
-    private Collection<Group> groups = new ArrayList<>();
-
+public class GroupList extends JobblettList<Integer, Group> {
     /**
      * Generates a unique groupID with 4 digits which is available.
      *
@@ -42,43 +36,8 @@ public class GroupList implements Iterable<Group> {
     public Group newGroup(String groupName) throws IllegalStateException{
         int groupId = generateGroupId();
         Group group = new Group(groupName,groupId);
-        addGroup(group);
+        add(group);
         return group;
-    }
-
-    /**
-     * Adds the group to the groupList.
-     *
-     * @param group the group to be added
-     * @throws IllegalArgumentException if groupID is already taken
-     */
-    public boolean addGroup(Group group) throws IllegalArgumentException{
-        if(getGroupIds().contains(group.getGroupID()))
-            throw new IllegalArgumentException("Group ID is already taken");
-        return groups.add(group);
-    }
-
-    /**
-     * Removes the group from the groupList.
-     *
-     * @param group the group to be removed
-     * @return true if the group is contained and removed, else false
-     */
-    public boolean removeGroup(Group group) {
-        return groups.remove(group);
-    }
-
-    /**
-     * Searches through the users with the same groupID and returns the first found.
-     *
-     * @param groupID the groupID to look for
-     * @return the group with same groupID and returns null if there is none.
-     */
-    public Group getGroup(int groupID) {
-        return groups.stream()
-                .filter(group -> group.getGroupID() == groupID)
-                .findFirst()
-                .orElse(null);
     }
 
     /**
@@ -90,18 +49,7 @@ public class GroupList implements Iterable<Group> {
      */
     //LagTest
     public Collection<Group> getGroups(User user){
-        return groups.stream()
-                .filter(group -> group.getUser(user.getUserName())==user)
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Gets the amount of groups registered.
-     *
-     * @return amount of groups registered
-     */
-    public int getGroupSize() {
-        return groups.size();
+        return filter(group -> group.getUser(user.getUserName())==user);
     }
 
     /**
@@ -110,46 +58,24 @@ public class GroupList implements Iterable<Group> {
      * @return list of groupIDs (String)
      */
     private Collection<Integer> getGroupIds(){
-        return groups.stream()
+        return stream()
                 .map(Group::getGroupID)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Iterator<Group> iterator() {
-        return groups.iterator();
-    }
-
-    public String toString(){
-        StringBuilder s = new StringBuilder();
-        for(Group group : groups)
-            s.append(group.toString()).append("\n");
-        return s.toString();
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        super.firePropertyChange(propertyName, oldValue, newValue);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o instanceof GroupList) {
-            GroupList groupList = (GroupList) o;
-            /*for (Group thatGroup : groupList) {
-                if (getGroup(thatGroup.getGroupID())==null) return false;
-                Group thisGroup = getGroup(thatGroup.getGroupID());
-                if (!thisGroup.equals(thatGroup)) return false;
-            }
-            for (Group thisGroup : this) {
-                if (groupList.getGroup(thisGroup.getGroupID())==null) return false;
-                Group thatGroup = groupList.getGroup(thisGroup.getGroupID());
-                if (!thatGroup.equals(thisGroup)) return false;
-            }
-            return true;*/
-            return this.groups.equals(groupList.groups);
-        }
-        else return super.equals(o);
+    protected Integer identifier(Group type) {
+        return type.getGroupID();
     }
 
     @Override
-    public int hashCode() {
-        assert false : "hashCode not designed";
-        return 42; // any arbitrary constant will do
+    protected void optionalAlreadyExists() {
+        throw new IllegalArgumentException("Group with same ID already exists");
     }
+
 }

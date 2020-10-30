@@ -49,18 +49,11 @@ public class JobShiftListCell extends ListCell<JobShift>{
     String s = "";
     if (jobShift.getUser()!=null) s += jobShift.getUser().toString() + "\t";
     LocalDateTime startingDateTime = jobShift.getStartingTime();
-    s += startingDateTime.getYear() + "-" + formatNumber(startingDateTime.getMonthValue()) + "-" + 
-      formatNumber(startingDateTime.getDayOfMonth()) + "\t";
+    s += startingDateTime.format(App.EXPECTED_DATE_FORMAT) + "\t";
     LocalDateTime endingDateTime = jobShift.getEndingTime();
-    s += formatNumber(startingDateTime.getHour()) + ":" + formatNumber(startingDateTime.getMinute()) + " - " + 
-    formatNumber(endingDateTime.getHour()) + ":" + formatNumber(endingDateTime.getMinute());
-    return s;
-  }
-
-  private String formatNumber(int number){
-    String s = String.valueOf(number);
-    if(number < 10)
-      s = "0" + s;
+    s += startingDateTime.format(App.EXPECTED_TIME_FORMAT);
+    s += " - ";
+    s += endingDateTime.format(App.EXPECTED_TIME_FORMAT);
     return s;
   }
 }
