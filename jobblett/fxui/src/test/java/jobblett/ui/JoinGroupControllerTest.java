@@ -2,6 +2,7 @@ package jobblett.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import jobblett.core.GroupMemberList;
 import org.junit.jupiter.api.Test;
 
 import javafx.scene.control.TextField;
@@ -56,7 +57,7 @@ public class JoinGroupControllerTest extends JobbLettTest {
   public void testJoinGroup_alreadyPartOfGroup(){
     tryToJoinGroup(String.valueOf(group1.getGroupID()));
     uiAssertions.assertOnScene(App.JOIN_GROUP_ID);
-    uiAssertions.assertText("errorMessage", "You are already a member of the group");
+    uiAssertions.assertText("errorMessage", GroupMemberList.ALREADY_EXIST_ERROR_TEXT);
   } 
 
   private void tryToJoinGroup(String groupId){

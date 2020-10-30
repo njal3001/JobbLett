@@ -3,7 +3,7 @@ package jobblett.core;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class JobShift{
+public class JobShift extends JobblettPropertyChangeSupporter {
 
   private User user;
   private LocalDateTime startingTime;
@@ -46,6 +46,7 @@ public class JobShift{
 
   public void setUser(User user) {
     this.user = user;
+    firePropertyChange("user",getUser());
   }
 
 
@@ -53,14 +54,17 @@ public class JobShift{
     if(startingTime.isBefore(LocalDateTime.now()))
       throw new IllegalArgumentException("Starting time must be later than the current time");
     this.startingTime = startingTime;
+    firePropertyChange("startingTime",getStartingTime());
   }
 
   public void setDuration(Duration duration) {
     this.duration = duration;
+    firePropertyChange("duration",getDuration());
   }
 
   public void setInfo(String info) {
     this.info = info;
+    firePropertyChange("info", getInfo());
   }
 
   @Override

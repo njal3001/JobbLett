@@ -19,7 +19,7 @@ public class JobShiftListDeserializer extends StdDeserializer<JobShiftList> {
         ArrayNode arrayNode = (ArrayNode) node.get("jobShifts");
         JobShiftList jobShiftList = new JobShiftList();
         for (JsonNode jobShiftNode : arrayNode) {
-            jobShiftList.addJobShift(new JobShiftDeserializer().deserialize(jobShiftNode));
+            jobShiftList.add(new JobShiftDeserializer().deserialize(jobShiftNode));
         }
         return jobShiftList;
     }

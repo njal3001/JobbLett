@@ -1,31 +1,21 @@
 package jobblett.core;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.*;
 import java.util.stream.Collectors;
+
 
 /**
  * Represents a group in jobblett.
  */
-public class Group implements Iterable<User> {
+public class Group extends JobblettPropertyChangeSupporter implements Iterable<User>, PropertyChangeListener {
 
     private String groupName;
-    private Collection<User> groupMembers = new ArrayList<>();
+    private GroupMemberList groupMembers = new GroupMemberList();
     private final int groupID;
     private JobShiftList jobShifts = new JobShiftList();
-    private Collection<User> admins = new ArrayList<>();
-
-
-    // Føles ikke riktig å gjøre det slik, men tenker at vi må ha noe logikk som gjør at en vanlig user ikke kan lage job shift. 
-    //Men dette vil ikke bli brukt i kontrolleren siden der fjerner vi bare knappen for å lage job shift hvis man ikke er admin
-    //Burde finne en annen måte å gjøre det på kanskje
-    public void addJobShift(JobShift jobShift, User user) {
-        if(!isAdmin(user))
-            throw new IllegalArgumentException("It's only admin that can add new job shift");
-        jobShifts.addJobShift(jobShift);
-    }
+    private UserList admins = new UserList();
 
     /**
      * Initialize a instance of Group with a groupName and groupID.
@@ -34,9 +24,20 @@ public class Group implements Iterable<User> {
      * @param groupID the groupID
      */
     public Group(String groupName, int groupID) {
+        jobShifts.addListener(this);
         setGroupName(groupName);
         this.groupID = groupID;
     }
+
+    // Føles ikke riktig å gjøre det slik, men tenker at vi må ha noe logikk som gjør at en vanlig user ikke kan lage job shift.
+    //Men dette vil ikke bli brukt i kontrolleren siden der fjerner vi bare knappen for å lage job shift hvis man ikke er admin
+    //Burde finne en annen måte å gjøre det på kanskje
+    public void addJobShift(JobShift jobShift, User user) {
+        if(!isAdmin(user))
+            throw new IllegalArgumentException("It's only admin that can add new job shift");
+        jobShifts.add(jobShift);
+    }
+
 
     /**
      * Adds a user to the group.
@@ -46,11 +47,11 @@ public class Group implements Iterable<User> {
      * @throws IllegalArgumentException if the user is already a groupMember
      */
     public void addUser(User user) throws IllegalArgumentException {
-        checkExistingUser(user);
-        // The first member to join the group becomes admin
-        if(groupMembers.size() == 0 && admins.isEmpty())
-            admins.add(user);
+        UserList oldUsers = new UserList();
+        oldUsers.addAll(groupMembers);
+        //checkExistingUser(user);
         this.groupMembers.add(user);
+        firePropertyChange("groupMembers",oldUsers,groupMembers);
     }
 
     public boolean isAdmin(User user){
@@ -62,11 +63,25 @@ public class Group implements Iterable<User> {
     }
 
     public boolean addAdmin(User user) {
-        return admins.add(user);
+        UserList oldAdmins = new UserList();
+        oldAdmins.addAll(admins);
+
+        boolean result = admins.add(user);
+
+        firePropertyChange("admins",oldAdmins,admins);
+
+        return result;
     }
 
     public boolean removeAdmin(User user) {
-        return admins.remove(user);
+        UserList oldAdmins = new UserList();
+        oldAdmins.addAll(admins);
+
+        boolean result = admins.remove(user);
+
+        firePropertyChange("admins",oldAdmins,admins);
+
+        return result;
     }
 
     /**
@@ -76,7 +91,14 @@ public class Group implements Iterable<User> {
      * @return returns true if the user was contained and removed, else false
      */
     public boolean removeUser(User user) {
-        return this.groupMembers.remove(user);
+        UserList oldUsers = new UserList();
+        oldUsers.addAll(groupMembers);
+
+        boolean result = this.groupMembers.remove(user);
+
+        firePropertyChange("groupMembers",oldUsers,groupMembers);
+
+        return result;
     }
 
     /**
@@ -98,13 +120,13 @@ public class Group implements Iterable<User> {
      * @param user the user that should be checked
      * @throws IllegalArgumentException throws exception if the user already exist.
      */
-    private void checkExistingUser(User user) throws IllegalArgumentException {
+    /*private void checkExistingUser(User user) throws IllegalArgumentException {
         if (this.groupMembers.contains(user)) {
           //Vet ikke om jeg skal ha det sånn, passer bedre for UIen, 
           //men er mer passende generelt å skrive "User is already a member of the group"
             throw new IllegalArgumentException("You are already a member of the group");
         }
-    }
+    }*/
 
     /**
      * Checks if the new group name is valid and changes the groupName.
@@ -114,6 +136,7 @@ public class Group implements Iterable<User> {
      */
     public void setGroupName(String groupName) throws IllegalArgumentException {
         checkGroupName(groupName);
+        firePropertyChange("groupName",this.groupName,groupName);
         this.groupName = groupName;
     }
 
@@ -203,5 +226,11 @@ public class Group implements Iterable<User> {
     public int hashCode() {
         assert false : "hashCode not designed";
         return 42; // any arbitrary constant will do
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        String propertyName = evt.getPropertyName();
+        firePropertyChange(propertyName,evt.getOldValue(),evt.getNewValue());
     }
 }

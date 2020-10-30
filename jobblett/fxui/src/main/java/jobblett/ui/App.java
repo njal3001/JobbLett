@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
+  public static final boolean REST_API_ON = false;
+
   public static final String LOGIN_ID = "Login";
   public static final String LOGIN_FILE = "Login.fxml";
 
@@ -46,9 +48,6 @@ public class App extends Application {
 
     mainController = new MainController(primaryStage);
 
-
-    mainController.access = new JobblettDirectAccess();
-
     mainController.loadScene(LOGIN_ID, LOGIN_FILE);
     mainController.loadScene(CREATE_USER_ID, CREATE_USER_FILE);
     mainController.loadScene(USER_HOME_ID, USER_HOME_FILE);
@@ -60,10 +59,6 @@ public class App extends Application {
 
     mainController.setScene(LOGIN_ID);
     primaryStage.show();
-
-    primaryStage.setOnCloseRequest(event -> {
-      mainController.access.save();
-    });
   }
 
   public static void main(final String[] args) {

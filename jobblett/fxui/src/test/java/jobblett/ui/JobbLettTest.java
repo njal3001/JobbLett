@@ -43,8 +43,7 @@ public abstract class JobbLettTest extends ApplicationTest {
     mainController = new MainController(primaryStage);
 
     setupData();
-    mainController.access.setUserList(userList);
-    mainController.access.setGroupList(groupList);
+    getAccess().setLists(userList,groupList);
     mainController.setActiveUser(giveActiveUser());
     mainController.setActiveGroup(giveActiveGroup());
 
@@ -62,16 +61,21 @@ public abstract class JobbLettTest extends ApplicationTest {
     controller = mainController.getSceneController(giveID());
   }
 
+  public JobblettAccess getAccess() {
+    return mainController.access;
+  }
+
   protected void setupData() {
     userList = new UserList();
     groupList = new GroupList();
     user1 = new User("CorrectUsername", "CorrectPassword12345", "Ole", "Dole");
     user2 = new User("CorrectUsername2", "CorrectPassword12345", "Hans", "Henrik");
-    userList.addUser(user1);
-    userList.addUser(user2);
+    userList.add(user1);
+    userList.add(user2);
     group1 = groupList.newGroup("Test Group 1");
     group2 = groupList.newGroup("Test Group 2");
     group1.addUser(user1);
+    group1.addAdmin(user1);
     group1.addUser(user2);
     jobShift1 = new JobShift(user1, LocalDateTime.now().plusHours(5), Duration.ofHours(5), "Tester jobshift1");
     jobShift2 = new JobShift(user1, LocalDateTime.now().plusHours(2), Duration.ofHours(5), "Tester jobshift2");

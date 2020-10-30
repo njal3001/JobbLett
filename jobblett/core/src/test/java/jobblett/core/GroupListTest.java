@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;;
+import org.junit.jupiter.api.Test;;import java.util.stream.Collectors;
 
 public class GroupListTest {
     
@@ -21,14 +21,14 @@ public class GroupListTest {
 
     @Test
 	public void testAddGroup() {
-        groupList.addGroup(testGroup);
-        assertEquals(testGroup, groupList.getGroup(testGroup.getGroupID()));
+        groupList.add(testGroup);
+        assertEquals(testGroup, groupList.get(testGroup.getGroupID()));
 
 		try {
 			Group group1 = new Group("g1", 1234);
 			Group group2 = new Group("g2", 1234);
-			groupList.addGroup(group1);
-			groupList.addGroup(group2);
+			groupList.add(group1);
+			groupList.add(group2);
 			fail("Should not be able to create two groups with the same ID!");
 		}
 		catch (Exception e) {
@@ -38,16 +38,16 @@ public class GroupListTest {
 
     @Test
     public void testRemoveGroup(){
-        groupList.addGroup(testGroup);
-        groupList.removeGroup(testGroup);
-        assertEquals(null, groupList.getGroup(testGroup.getGroupID()));
+        groupList.add(testGroup);
+        groupList.remove(testGroup);
+        assertEquals(null, groupList.get(testGroup.getGroupID()));
     }
 
     @Test
     public void testGetGroupSize(){
-        assertEquals(0, groupList.getGroupSize());
-        groupList.addGroup(testGroup);
-        assertEquals(1, groupList.getGroupSize());
+        assertEquals(0, groupList.size());
+        groupList.add(testGroup);
+        assertEquals(1, groupList.size());
     }
 
     @Test

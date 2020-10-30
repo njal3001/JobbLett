@@ -32,9 +32,9 @@ public class JobShiftListTest{
 
   @Test
   public void testGetJobShifts_withUserFilter(){
-    jobShiftList.addJobShift(jobShift1);
-    jobShiftList.addJobShift(jobShift2);
-    jobShiftList.addJobShift(jobShift3);
+    jobShiftList.add(jobShift1);
+    jobShiftList.add(jobShift2);
+    jobShiftList.add(jobShift3);
     Collection<JobShift> filteredJobShifts = jobShiftList.getJobShifts(user2);
     assertEquals(1, filteredJobShifts.size());
     assertEquals(jobShift2, filteredJobShifts.iterator().next());
@@ -47,16 +47,16 @@ public class JobShiftListTest{
 
   @Test
   public void testGetJobShifts_changeJobShiftAfterAdding(){
-    jobShiftList.addJobShift(jobShift1);
+    jobShiftList.add(jobShift1);
     jobShift1.setInfo("New info");
     assertEquals("New info", jobShiftList.getJobShifts().iterator().next().getInfo());
   }
 
   @Test
   public void testAddJobShift_isSorted(){
-    jobShiftList.addJobShift(jobShift1);
-    jobShiftList.addJobShift(jobShift2);
-    jobShiftList.addJobShift(jobShift3);
+    jobShiftList.add(jobShift1);
+    jobShiftList.add(jobShift2);
+    jobShiftList.add(jobShift3);
     Iterator<JobShift> it = jobShiftList.iterator();
     assertTrue(it.hasNext());
     assertEquals(jobShift3, it.next());
