@@ -26,7 +26,7 @@ public class MainController {
   private User activeUser;
   private Group activeGroup;
 
-  JobblettAccess access = new JobblettDirectAccess();
+  JobblettAccess access;
 
   public Stage getStage(){
     return stage;
@@ -34,6 +34,9 @@ public class MainController {
 
   public MainController(Stage stage) {
     this.stage = stage;
+    if (App.REST_API_ON);// access = new JobblettRemoteAccess();
+    else access = new JobblettDirectAccess();
+
   }
 
 

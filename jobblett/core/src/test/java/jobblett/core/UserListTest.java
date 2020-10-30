@@ -25,16 +25,16 @@ public void setUp(){
 
 @Test
 public void testGetUser(){
-  assertEquals(null, userList.getUser("User1"));
-  userList.addUser(user1);
-  assertEquals(user1, userList.getUser(user1.getUserName()));
+  assertEquals(null, userList.get("User1"));
+  userList.add(user1);
+  assertEquals(user1, userList.get(user1.getUserName()));
 }
 
 @Test
 public void testAddUser_TwoUsersWithSameUsername(){
-  userList.addUser(user1);
+  userList.add(user1);
   try{
-    userList.addUser(user1);
+    userList.add(user1);
     fail("Exception should be thrown");
   } catch(Exception e){
     assertTrue(e instanceof IllegalArgumentException);
@@ -43,20 +43,20 @@ public void testAddUser_TwoUsersWithSameUsername(){
 
 @Test
 public void testLogin_CorrectUsernameAndPassword(){
-  userList.addUser(user1);
-  assertEquals(user1, userList.login(user1.getUserName(), "Test12345"));
+  userList.add(user1);
+  assertEquals(user1, userList.checkUserNameAndPassword(user1.getUserName(), "Test12345"));
 }
 
 @Test
 public void testLogin_WrongPassword(){
-  userList.addUser(user1);
-  assertEquals(null, userList.login(user1.getUserName(), ""));
+  userList.add(user1);
+  assertEquals(null, userList.checkUserNameAndPassword(user1.getUserName(), ""));
 }
 
 @Test
 public void testIterator(){
-  userList.addUser(user1);
-  userList.addUser(user2);
+  userList.add(user1);
+  userList.add(user2);
   Iterator<User> it = userList.iterator();
   assertTrue(it.hasNext());
   assertEquals(user1, it.next());

@@ -2,12 +2,13 @@ package jobblett.core;
 
 import com.google.common.hash.Hashing;
 
+import java.beans.PropertyChangeSupport;
 import java.nio.charset.StandardCharsets;
 
 /**
  * Data object representing a User in real life.
  */
-public class User {
+public class User extends JobblettPropertyChangeSupporter {
   // username is final after being initialized
   private final String username;
 
@@ -103,6 +104,7 @@ public class User {
   public void setPassword(String password) throws IllegalArgumentException {
     if (validPassword(password)) {
       String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+      firePropertyChange("password",this.password,password);
       this.password = hashedPassword;
     } else
       throw new IllegalArgumentException("Not a valid password");
@@ -117,6 +119,8 @@ public class User {
    */
   public void setName(String givenName, String familyName) throws IllegalArgumentException {
     if (validName(givenName) && validName(familyName)) {
+      firePropertyChange("givenName",this.givenName,givenName);
+      firePropertyChange("familyName",this.familyName,familyName);
       this.givenName = formatName(givenName);
       this.familyName = formatName(familyName);
     } else

@@ -28,7 +28,6 @@ public class GroupDeserializer extends StdDeserializer<Group> {
         ArrayNode usersArrayNode = (ArrayNode) node.get("groupMembers");
         Group group = new Group(groupName, groupID);
         for (JsonNode userNode : usersArrayNode) {
-            //User user = main.getUserList().getUser(userNode.asText());
             User user = new UserDeserializer().deserialize(userNode);
             group.addUser(user);
         }

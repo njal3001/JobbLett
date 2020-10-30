@@ -22,7 +22,7 @@ public class UserListPersistenceTest {
         User user1 = new User("Ola1424", "Godmorgen1234", "Ola","Nordmann");
         User user2 = new User("Per2434", "Godkveld1234", "Per","Gudmunsen");
         User user3 = new User("Herman3434", "Godettermiddag1234", "Herman","Hermansen");
-        userList.addUser(user1,user2,user3);
+        userList.add(user1,user2,user3);
     }
 
     @Test

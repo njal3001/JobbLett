@@ -46,7 +46,7 @@ public class CreateUserController extends SceneController {
 
     try{
       User newUser = new User(username, password, givenName, familyName);
-      getAccess().addUser(newUser);
+      getAccess().add(newUser);
       mainController.setActiveUser(newUser);
       mainController.setScene(App.USER_HOME_ID);
     } catch (Exception e) {

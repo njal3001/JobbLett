@@ -34,6 +34,8 @@ public class CreateGroupController extends SceneController {
     try {
       Group newGroup = getAccess().newGroup(groupName);
       newGroup.addUser(mainController.getActiveUser());
+      // The first member to join the group becomes admin
+      newGroup.addAdmin(mainController.getActiveUser());
       mainController.setActiveGroup(newGroup);
       mainController.setScene(App.GROUP_HOME_ID);
     } catch (Exception e) {
