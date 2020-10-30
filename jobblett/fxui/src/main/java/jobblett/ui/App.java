@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 import javafx.application.Application;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 //Code is inspired by: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
@@ -36,6 +37,9 @@ public class App extends Application {
 
   public final static DateTimeFormatter EXPECTED_TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
   public final static DateTimeFormatter EXPECTED_DATE_FORMAT = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+
+  public static final String FONT_FILE = "Product-Sans-Regular.ttf";
+  public static final String BOLD_FONT_FILE = "Product-Sans-Bold.ttf";
 
 
   private MainController mainController;

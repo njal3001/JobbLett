@@ -18,6 +18,13 @@ public class JoinGroupController extends SceneController {
   Button goBackButton;
 
   @Override
+  public void styleIt() {
+    super.styleIt();
+    goBackButton.setSkin(new JobblettButtonSkin(goBackButton));
+    joinGroupButton.setSkin(new JobblettButtonSkin(joinGroupButton));
+  }
+
+  @Override
   public void onSceneDisplayed() {
     // Sets a listener to prevent non-integers on groupID
     groupIdField.textProperty().addListener((observable, oldValue, newValue) -> {

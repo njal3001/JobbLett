@@ -9,6 +9,7 @@ public class GroupListCell extends ListCell<Group>{
 
   public GroupListCell(MainController mainController){
     this.mainController = mainController;
+    setSkin(new JobblettCellSkin<>(this));
   }
   
   @Override

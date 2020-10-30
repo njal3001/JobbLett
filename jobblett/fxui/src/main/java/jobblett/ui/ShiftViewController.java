@@ -85,4 +85,12 @@ public class ShiftViewController extends SceneController {
     editShiftButton.setDisable(disable);
     deleteShiftButton.setDisable(disable);
   }
+
+  @Override
+  public void styleIt() {
+    super.styleIt();
+    newShiftButton.setSkin(new JobblettButtonSkin(newShiftButton));
+    editShiftButton.setSkin(new JobblettButtonSkin(editShiftButton));
+    deleteShiftButton.setSkin(new JobblettButtonSkin(deleteShiftButton));
+  }
 }

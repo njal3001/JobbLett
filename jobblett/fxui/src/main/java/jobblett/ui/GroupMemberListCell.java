@@ -12,6 +12,7 @@ public class GroupMemberListCell extends ListCell<User>{
 
   public GroupMemberListCell(MainController mainController){
     this.mainController = mainController;
+    setSkin(new JobblettCellSkin<>(this));
   }
   
   @Override
@@ -23,7 +24,7 @@ public class GroupMemberListCell extends ListCell<User>{
     }
     else if(mainController.getActiveGroup().isAdmin(user)){
       setText(user.toString() + " [Admin]");
-      setFont(Font.font("Arial", FontWeight.BOLD,12));
+      setFont(Font.loadFont(JobblettButtonSkin.class.getResourceAsStream(App.BOLD_FONT_FILE),16));
     }
     else{
       setText(user.toString());

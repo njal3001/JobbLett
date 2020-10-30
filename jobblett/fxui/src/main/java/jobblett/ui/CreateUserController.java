@@ -30,6 +30,13 @@ public class CreateUserController extends SceneController {
   @FXML
   Button goBackButton;
 
+  @Override
+  public void styleIt() {
+    super.styleIt();
+    goBackButton.setSkin(new JobblettButtonSkin(goBackButton));
+    createAccountButton.setSkin(new JobblettButtonSkin(createAccountButton));
+  }
+
   @FXML
   public void createAccount() {
     String username = this.username.getText();

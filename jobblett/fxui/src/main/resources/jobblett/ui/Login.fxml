@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.LoginController">
     <children>
-        <Text layoutX="65.0" layoutY="258.0" text="Username:" />
-        <Text layoutX="65.0" layoutY="299.0" text="Password:" />
+        <Text fx:id="username" layoutX="65.0" layoutY="258.0" styleClass="text1" text="Username:" />
+        <Text fx:id="password" layoutX="65.0" layoutY="299.0" smooth="false" styleClass="text1" text="Password:" />
         <TextField fx:id="usernameField" layoutX="151.0" layoutY="240.0" onAction="#logInToUserHome" />
         <PasswordField fx:id="passwordField" layoutX="151.0" layoutY="281.0" onAction="#logInToUserHome" />
-        <Button fx:id="login" layoutX="151.0" layoutY="326.0" onAction="#logInToUserHome" text="Login">
-            <font>
-                <Font name="Arial" size="13.0" />
-            </font>
+        <Button fx:id="login" layoutX="151.0" layoutY="326.0" onAction="#logInToUserHome" prefHeight="27.0" prefWidth="160.0" text="Login">
         </Button>
-        <Button fx:id="createAccount" layoutX="126.0" layoutY="373.0" onAction="#goToCreateUser" text="Create account">
-            <font>
-                <Font name="Arial" size="13.0" />
-            </font>
+        <Button fx:id="createAccount" layoutX="151.0" layoutY="373.0" onAction="#goToCreateUser" prefHeight="27.0" prefWidth="160.0" text="Create account">
         </Button>
         <Text fx:id="errorMessage" layoutX="91.0" layoutY="497.0" />
     </children>
+
 </Pane>

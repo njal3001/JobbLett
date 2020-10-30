@@ -28,6 +28,7 @@ public class UserHomeController extends SceneController {
 
     @Override
     public void onSceneDisplayed() {
+        super.onSceneDisplayed();
         // Sets full name on top of the screen
         User activeUser = mainController.getActiveUser();
         String givenName = activeUser.getGivenName();
@@ -59,5 +60,13 @@ public class UserHomeController extends SceneController {
     @FXML
     public void joinGroup(){
       mainController.setScene(App.JOIN_GROUP_ID);
+    }
+
+    @Override
+    public void styleIt() {
+        super.styleIt();
+        logOutButton.setSkin(new JobblettButtonSkin(logOutButton));
+        createGroupButton.setSkin(new JobblettButtonSkin(createGroupButton));
+        joinGroupButton.setSkin(new JobblettButtonSkin(joinGroupButton));
     }
 }

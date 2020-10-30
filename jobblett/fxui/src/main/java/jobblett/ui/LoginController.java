@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import jobblett.core.User;
 
@@ -22,10 +23,27 @@ public class LoginController extends SceneController {
   Text errorMessage;
 
   @FXML
+  Text username;
+
+  @FXML
+  Text password;
+
+  @FXML
   PasswordField passwordField;
 
   @Override
+  public void styleIt() {
+    super.styleIt();
+    login.setSkin(new JobblettButtonSkin(login));
+    createAccount.setSkin(new JobblettButtonSkin(createAccount));
+    errorMessage.setFont(font);
+    username.setFont(font);
+    password.setFont(font);
+  }
+
+  @Override
   public void onSceneDisplayed() {
+    super.onSceneDisplayed();
     errorMessage.setText("");
   }
 

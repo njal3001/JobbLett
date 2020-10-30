@@ -17,6 +17,12 @@ public class CreateGroupController extends SceneController {
   @FXML
   Button goBackButton;
 
+  @Override
+  public void styleIt() {
+    createGroupButton.setSkin(new JobblettButtonSkin(createGroupButton));
+    goBackButton.setSkin(new JobblettButtonSkin(goBackButton));
+  }
+
   @FXML
   public void goToUserHome() {
     mainController.setScene(App.USER_HOME_ID);

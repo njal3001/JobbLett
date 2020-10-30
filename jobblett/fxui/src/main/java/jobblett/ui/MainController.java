@@ -62,6 +62,7 @@ public class MainController {
       Parent parent = loader.load();
       Scene scene = new Scene(parent);
       SceneController sceneController = ((SceneController) loader.getController());
+      sceneController.styleIt();
       sceneController.setMainController(this);
       scenes.put(name, scene);
       sceneControllers.put(name, sceneController);

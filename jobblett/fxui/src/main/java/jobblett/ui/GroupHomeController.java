@@ -23,6 +23,12 @@ public class GroupHomeController extends SceneController{
     @FXML
     Button goToShifts;
 
+    @Override
+    public void styleIt() {
+        super.styleIt();
+        backToHome.setSkin(new JobblettButtonSkin(backToHome));
+    }
+
     // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme kode hver gang vi skal vise noe med listView
     // Må legge til en måte at man kan se hvem som er admin
 

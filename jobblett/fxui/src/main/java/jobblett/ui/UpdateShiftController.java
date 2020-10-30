@@ -181,6 +181,13 @@ public class UpdateShiftController extends SceneController {
     }
   }
 
+  @Override
+  public void styleIt() {
+    super.styleIt();
+    goBackButton.setSkin(new JobblettButtonSkin(goBackButton));
+    createShiftButton.setSkin(new JobblettButtonSkin(createShiftButton));
+  }
+
   protected void setActiveJobShift(JobShift activeJobShift) {
     this.activeJobShift = activeJobShift;
   }
