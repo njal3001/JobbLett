@@ -1,0 +1,11 @@
+before_script:
+  - cd jobblett
+
+build_no_test:
+    script:
+        mvn install -Pxtests
+
+tests:
+    script:
+        mvn test
+        
