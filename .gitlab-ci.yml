@@ -1,0 +1,18 @@
+before_script:
+  - cd jobblett
+
+image: maven:latest
+
+cache:
+  paths:
+    - .m2/repository
+
+build:
+  stage: build
+  script:
+    - mvn compile
+
+test:
+  stage: test
+  script:
+    - mvn test
