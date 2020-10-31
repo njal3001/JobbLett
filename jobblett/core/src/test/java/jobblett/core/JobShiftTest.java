@@ -15,7 +15,7 @@ private JobShift jobShift;
 
 @BeforeEach
 public void setUp(){
-  User user = new User("user", "Test12345", "Ole", "Dole");
+  User user = new User("user", HashedPassword.hashPassword("Test12345"), "Ole", "Dole");
   jobShift = new JobShift(user, LocalDateTime.now().plusHours(1), Duration.ofHours(4), "Info");
 }
 

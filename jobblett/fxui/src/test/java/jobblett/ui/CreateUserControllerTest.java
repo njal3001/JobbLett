@@ -40,7 +40,7 @@ public class CreateUserControllerTest extends JobbLettTest {
   public void testCreateUser_invalidUserData() {
     tryToCreateUser("", "", "", "");
     uiAssertions.assertOnScene(App.CREATE_USER_ID);
-    uiAssertions.assertText("errorMessage", "Not a valid username\nNot a valid password\nNot a valid name");
+    uiAssertions.assertText("errorMessage", "Not a valid password\nNot a valid username\nNot a valid name");
   }
 
   @Test

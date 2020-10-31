@@ -68,8 +68,8 @@ public abstract class JobbLettTest extends ApplicationTest {
   protected void setupData() {
     userList = new UserList();
     groupList = new GroupList();
-    user1 = new User("CorrectUsername", "CorrectPassword12345", "Ole", "Dole");
-    user2 = new User("CorrectUsername2", "CorrectPassword12345", "Hans", "Henrik");
+    user1 = new User("CorrectUsername", HashedPassword.hashPassword("CorrectPassword12345"), "Ole", "Dole");
+    user2 = new User("CorrectUsername2", HashedPassword.hashPassword("CorrectPassword12345"), "Hans", "Henrik");
     userList.add(user1);
     userList.add(user2);
     group1 = groupList.newGroup("Test Group 1");
