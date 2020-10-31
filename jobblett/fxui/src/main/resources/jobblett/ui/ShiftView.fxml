@@ -5,6 +5,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.control.CheckBox?>
+
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.ShiftViewController">
     <children>
@@ -22,5 +24,7 @@
          <Button fx:id="newShiftButton" layoutX="135.0" layoutY="380.0" onAction="#goToCreateShift" prefHeight="26.0" prefWidth="95.0" style="-fx-background-color: #a0ffa0;" text="Add new shift" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
          <Button fx:id="editShiftButton" layoutX="135.0" layoutY="416.0" onAction="#goToEditShift" prefHeight="26.0" prefWidth="95.0" text="Edit shift" />
          <Button fx:id="deleteShiftButton" layoutX="135.0" layoutY="453.0" onAction="#handleDeleteShift" prefHeight="26.0" prefWidth="95.0" style="-fx-background-color: #ffa0a0;" text="Delete shift" />
+         <Text text="Show only your shifts:" layoutX="135" layoutY="150"></Text>
+         <CheckBox fx:id="toggleUserFilterCheckBox"  layoutX="180" layoutY="150" onAction="#toggleUserFilter"></CheckBox>
     </children>
 </Pane>
