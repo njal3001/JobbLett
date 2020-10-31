@@ -26,6 +26,8 @@ public class LoginController extends SceneController {
 
   @Override
   public void onSceneDisplayed() {
+    usernameField.setText("");
+    passwordField.setText("");
     errorMessage.setText("");
   }
 

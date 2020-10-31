@@ -14,10 +14,7 @@ public abstract class SceneController {
     this.mainController = mainController;
   }
 
-  //Denne metoden kan droppes hvis vi bruker listeners istedet tror jeg
-  public void onSceneDisplayed(){
-
-  }
+  public abstract void onSceneDisplayed();
 
   protected JobblettAccess getAccess() {
     return mainController.access;

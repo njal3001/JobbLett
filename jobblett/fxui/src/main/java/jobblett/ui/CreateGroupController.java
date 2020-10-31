@@ -17,6 +17,12 @@ public class CreateGroupController extends SceneController {
   @FXML
   Button goBackButton;
 
+  @Override
+  public void onSceneDisplayed() {
+    groupNameField.setText("");
+    errorMessage.setText("");
+  }
+
   @FXML
   public void goToUserHome() {
     mainController.setScene(App.USER_HOME_ID);

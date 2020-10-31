@@ -17,8 +17,8 @@ public class JoinGroupController extends SceneController {
   @FXML
   Button goBackButton;
 
-  @Override
-  public void onSceneDisplayed() {
+  @FXML
+  public void initialize(){
     // Sets a listener to prevent non-integers on groupID
     groupIdField.textProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue.length() != 0) {
@@ -31,6 +31,12 @@ public class JoinGroupController extends SceneController {
           }
         }
     });
+  }
+
+  @Override
+  public void onSceneDisplayed() {
+    groupIdField.setText("");
+    errorMessage.setText("");
   }
 
   @FXML

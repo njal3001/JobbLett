@@ -26,6 +26,14 @@ public class UserHomeController extends SceneController {
     @FXML
     Button joinGroupButton;
 
+    @FXML
+    public void initialize(){
+      groups.setCellFactory(groups -> {
+          GroupListCell listCell = new GroupListCell(mainController);
+          return listCell;
+        });
+    }
+
     @Override
     public void onSceneDisplayed() {
         // Sets full name on top of the screen
@@ -33,11 +41,6 @@ public class UserHomeController extends SceneController {
         String givenName = activeUser.getGivenName();
         String familyName = activeUser.getFamilyName();
         userFullName.setText(givenName + " " + familyName);
-
-        groups.setCellFactory(groups -> {
-          GroupListCell listCell = new GroupListCell(mainController);
-          return listCell;
-        });
 
         groups.getItems().clear();
         // Lists all groups

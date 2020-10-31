@@ -30,6 +30,15 @@ public class CreateUserController extends SceneController {
   @FXML
   Button goBackButton;
 
+  @Override
+  public void onSceneDisplayed() {
+    username.setText("");
+    password.setText("");
+    givenName.setText("");
+    familyName.setText("");
+    errorMessage.setText("");
+  }
+
   @FXML
   public void createAccount() {
     String username = this.username.getText();

@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 import javafx.event.EventHandler;
 import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import jobblett.core.JobShift;
 
 public class JobShiftListCell extends ListCell<JobShift>{

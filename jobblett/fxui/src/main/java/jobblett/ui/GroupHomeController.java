@@ -23,8 +23,16 @@ public class GroupHomeController extends SceneController{
     @FXML
     Button goToShifts;
 
-    // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme kode hver gang vi skal vise noe med listView
-    // Må legge til en måte at man kan se hvem som er admin
+    @FXML
+    public void initialize(){
+      members.setCellFactory(members -> {
+          GroupMemberListCell listCell = new GroupMemberListCell(mainController);
+          return listCell;
+        });
+        //Sets the ListView uninteractable
+        members.setMouseTransparent(true);
+        //members.setFocusTraversable(false);
+    }
 
     @Override
     public void onSceneDisplayed() {
@@ -34,19 +42,10 @@ public class GroupHomeController extends SceneController{
         // Shows GroupID
         groupID.setText("GroupID: " + mainController.getActiveGroup().getGroupID());
 
-        members.setCellFactory(members -> {
-          GroupMemberListCell listCell = new GroupMemberListCell(mainController);
-          return listCell;
-        });
-
         members.getItems().clear();
         // Lists all members
         for (User user : mainController.getActiveGroup())
             members.getItems().add(user);
-        
-        //Sets the ListView uninteractable
-        members.setMouseTransparent(true);
-        //members.setFocusTraversable(false);
     }
 
     @FXML
