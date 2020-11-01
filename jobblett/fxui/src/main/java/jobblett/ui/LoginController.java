@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import jobblett.core.HashedPassword;
 import jobblett.core.User;
 
 public class LoginController extends SceneController {
@@ -38,7 +39,7 @@ public class LoginController extends SceneController {
   public void logInToUserHome(){
     String userName = this.usernameField.getText();
     String password = this.passwordField.getText();
-    User user = getAccess().login(userName,password);
+    User user = getAccess().login(userName, HashedPassword.hashPassword(password));
     if (user == null)
       errorMessage.setText("Wrong username or password");
     else {

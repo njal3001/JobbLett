@@ -67,10 +67,10 @@ public class JobblettSerializer extends ObjectMapper{
         GroupList groupList = new GroupList();
         Group gruppe7 = groupList.newGroup("Gruppe7");
 
-        userList.add(new User("olav", "bestePassord123", "Olav", "Nordmann"));
-        userList.add(new User("nora", "bestePassord123", "Nora", "Bekkestad"));
-        userList.add(new User("petter", "bestePassord123", "Petter", "Petterson"));
-        userList.add(new User("david", "bestePassord123", "David", "Berg"));
+        userList.add(new User("olav",HashedPassword.hashPassword( "bestePassord123"), "Olav", "Nordmann"));
+        userList.add(new User("nora",HashedPassword.hashPassword( "bestePassord123"), "Nora", "Bekkestad"));
+        userList.add(new User("petter",HashedPassword.hashPassword( "bestePassord123"), "Petter", "Petterson"));
+        userList.add(new User("david",HashedPassword.hashPassword( "bestePassord123"), "David", "Berg"));
 
         gruppe7.addUser(userList.get("olav"));
         gruppe7.addUser(userList.get("nora"));

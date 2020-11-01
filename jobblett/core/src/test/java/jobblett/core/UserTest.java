@@ -29,20 +29,11 @@ public class UserTest {
         assertFalse(User.validName("+-33"));
     }
 
-    @Test
-    public void testValidPassword() {
-        assertTrue(User.validPassword("NiæØls1254"));
-        assertTrue(User.validPassword("Nk123456"));
-        assertTrue(User.validPassword("Nils+-//1254"));
-        assertFalse(User.validPassword("njal3001"));
-        assertFalse(User.validPassword("nkdkdD22d k"));
-        assertFalse(User.validPassword("nkdkdD2"));
-    }
 
     @Test
     public void testConstructor() {
         try {
-            User u1 = new User("njal3001", "Nils1254", "Nils", "Enge");
+            User u1 = new User("njal3001", HashedPassword.hashPassword("Nils1254"), "Nils", "Enge");
             assertEquals(u1.getUserName(), "njal3001");         
             assertEquals(u1.getGivenName(), "Nils");
             assertEquals(u1.getFamilyName(), "Enge");    
@@ -50,28 +41,28 @@ public class UserTest {
             fail("Exception should not be thrown for this input");
         }
         try {
-            User u2 = new User("", "Nils1254", "Nils", "Enge");
+            User u2 = new User("", HashedPassword.hashPassword("Nils1254"), "Nils", "Enge");
             fail("Exception should be thrown because of invalid username");
         } catch (Exception e) {
             assertTrue(e instanceof IllegalArgumentException);
         }
 
         try {
-            User u2 = new User("njal3001", "", "Nils", "Enge");
+            User u2 = new User("njal3001", HashedPassword.hashPassword(""), "Nils", "Enge");
             fail("Exception should be thrown because of invalid password");
         } catch (Exception e) {
             assertTrue(e instanceof IllegalArgumentException);
         }
 
         try {
-            User u2 = new User("njal3001", "Nils1254", "", "Enge");
+            User u2 = new User("njal3001", HashedPassword.hashPassword("Nils1254"), "", "Enge");
             fail("Exception should be thrown because of invalid given name");
         } catch (Exception e) {
             assertTrue(e instanceof IllegalArgumentException);
         }
 
         try {
-            User u2 = new User("njal3001", "Nils1254", "Nils", "");
+            User u2 = new User("njal3001", HashedPassword.hashPassword("Nils1254"), "Nils", "");
             fail("Exception should be thrown because of invalid family name");
         } catch (Exception e) {
             assertTrue(e instanceof IllegalArgumentException);
@@ -80,7 +71,7 @@ public class UserTest {
 
     @Test
     public void testSetName() {
-        User u1 = new User("njal3001", "Nils1254", "Nils", "Enge");
+        User u1 = new User("njal3001", HashedPassword.hashPassword("Nils1254"), "Nils", "Enge");
         try{
             u1.setName("Kåre", "Heins");
             assertEquals(u1.getGivenName(), "Kåre");
@@ -99,31 +90,8 @@ public class UserTest {
     }
 
     @Test
-    public void testSetPassword() {
-        User u1 = new User("njal3001", "Nils1254", "Nils", "Enge");
-        try{
-            u1.setPassword("Nils1254");
-        } catch(Exception e){
-            fail("Exception should not be thrown for this input");
-        }
-        try{
-            u1.setPassword("");
-            fail("Exception should be thrown");
-        } catch(Exception e){
-            assertTrue(e instanceof IllegalArgumentException);
-        }
-    }
-
-    @Test
-    public void testMatchesPassword() {
-        User u1 = new User("njal3001", "Nils1254", "Nils", "Enge");
-        assertTrue(u1.matchesPassword("Nils1254"));
-        assertFalse(u1.matchesPassword("nils1254"));
-    }
-
-    @Test
     public void testToString() {
-        User u1 = new User("njal3001", "Nils1254", "Nils", "Enge");
+        User u1 = new User("njal3001", HashedPassword.hashPassword("Nils1254"), "Nils", "Enge");
         assertEquals("Nils Enge (@njal3001)", u1.toString());
     }
 

@@ -1,10 +1,5 @@
 package jobblett.core;
 
-import com.google.common.hash.Hashing;
-
-import java.beans.PropertyChangeSupport;
-import java.nio.charset.StandardCharsets;
-
 /**
  * Data object representing a User in real life.
  */
@@ -13,7 +8,7 @@ public class User extends JobblettPropertyChangeSupporter {
   private final String username;
 
   // password and name can be changed after initialization
-  private String password;
+  private HashedPassword password;
   private String givenName;
   private String familyName;
 
@@ -26,29 +21,14 @@ public class User extends JobblettPropertyChangeSupporter {
    * @param givenName
    * @param familyName
    */
-  public User(String username, String password, String givenName, String familyName) {
-    this(username, password, givenName, familyName, false);
-  }
-
   //Sikkert en bedre måte å lage feilmelding...
-
-  // Hadde vært fint med en annen løsning enn å ha passwordHashed boolean, kanskje
-  // at setPassword
-  // kan finne ut om det er et hashed password på egen hånd hvis det går ann
-  public User(String username, String password, String givenName, String familyName, boolean passwordHashed) {
+  public User(String username, HashedPassword password, String givenName, String familyName) {
     String errorMessage = "";
     if (!validUsername(username))
       errorMessage += "Not a valid username\n";
     this.username = username;
-    if (passwordHashed) {
-      this.password = password;
-    } else {
-      try {
-        setPassword(password);
-      } catch (IllegalArgumentException e) {
-        errorMessage += e.getMessage() + "\n";
-      }
-    }
+    if (password == null) throw new NullPointerException();
+    setPassword(password);
     try {
       setName(givenName, familyName);
     } catch (IllegalArgumentException e) {
@@ -84,30 +64,13 @@ public class User extends JobblettPropertyChangeSupporter {
   }
 
   /**
-   * Password criteria: - At least digit - At least 1 lowercase letter - At least
-   * 1 uppercase letter - No whitespace - At least 8 characters
-   * 
-   * @param password
-   * @return true if the criteria are fulfilled, else false
-   */
-  public static boolean validPassword(String password) {
-    String pattern = "^(?=.*[0-9])(?=.*[a-zæøå])(?=.*[A-ZÆØÅ])(?=\\S+$).{8,}$";
-    return password.matches(pattern);
-  }
-
-  /**
    * Validates the password before initializing it. Can be used to change password
-   * 
+   *
    * @param password
    * @throws IllegalArgumentException
    */
-  public void setPassword(String password) throws IllegalArgumentException {
-    if (validPassword(password)) {
-      String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
-      firePropertyChange("password",this.password,password);
-      this.password = hashedPassword;
-    } else
-      throw new IllegalArgumentException("Not a valid password");
+  public void setPassword(HashedPassword password) {
+    this.password = password;
   }
 
   /**
@@ -167,22 +130,11 @@ public class User extends JobblettPropertyChangeSupporter {
   }
 
   /**
-   * Checks whether a password matches the user's password.
-   * 
-   * @param password
-   * @return true if the password matches, else false
-   */
-  public boolean matchesPassword(String password) {
-    String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
-    return this.password.matches(hashedPassword);
-  }
-
-  /**
    * Only used by JSON Serializer
    * 
    * @return hashedPassword
    */
-  public String getHashedPassword() {
+  public HashedPassword getPassword() {
     return password;
   }
 

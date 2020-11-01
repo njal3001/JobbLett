@@ -12,9 +12,9 @@ public class UserList extends JobblettList<String,User> implements Iterable<User
      * @param password password used to check
      * @return the user if logged in, else null
      */
-    public User checkUserNameAndPassword(String username, String password) {
+    public User checkUserNameAndPassword(String username, HashedPassword password) {
         User user = get(username);
-        if (user == null || !user.matchesPassword(password)) 
+        if (user == null || !user.getPassword().equals(password))
             return null;
         else return user;
     }
