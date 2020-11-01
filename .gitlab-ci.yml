@@ -7,12 +7,7 @@ cache:
   paths:
     - .m2/repository
 
-build:
-  stage: build
+install:
+  stage: install
   script:
-    - mvn compile
-
-test:
-  stage: test
-  script:
-    - mvn test
+    - mvn install -DskipTests
