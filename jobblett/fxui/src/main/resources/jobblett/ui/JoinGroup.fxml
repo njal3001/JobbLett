@@ -8,9 +8,9 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.JoinGroupController">
     <children>
-        <Text layoutX="126.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group ID:">
+        <Text styleClass="text" layoutX="126.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group ID:">
             <font>
-                <Font name="Arial" size="25.0" />
+                <Font size="25.0" />
             </font>
         </Text>
         <TextField fx:id="groupIdField" layoutX="76.0" layoutY="225.0" onAction="#joinGroup">
@@ -18,7 +18,7 @@
                 <Font size="19.0" />
             </font>
         </TextField>
-        <Text fx:id="errorMessage" layoutX="93.0" layoutY="517.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="106.16259765625" />
+        <Text styleClass="text" fx:id="errorMessage" layoutX="93.0" layoutY="517.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="106.16259765625" />
         <Button fx:id="joinGroupButton" layoutX="153.0" layoutY="276.0" mnemonicParsing="false" onAction="#joinGroup" text="Join group" />
         <Button fx:id="goBackButton" layoutX="35.0" layoutY="576.0" mnemonicParsing="false" onAction="#goToUserHome" text="Back" />
     </children>

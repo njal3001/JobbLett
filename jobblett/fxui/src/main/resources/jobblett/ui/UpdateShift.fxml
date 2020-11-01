@@ -17,15 +17,15 @@
     <TextArea fx:id="infoArea" layoutX="66.0" layoutY="379.0" prefHeight="133.0" prefWidth="200.0" />
     <Button fx:id="createShiftButton" layoutX="134.0" layoutY="524.0" onAction="#createShift" text="Create shift" />
     <Button fx:id="goBackButton" layoutX="35.0" layoutY="576.0" onAction="#goBack" text="Back" />
-    <Text layoutX="127.0" layoutY="37.0" text="Choose user:">
+    <Text styleClass="text" layoutX="127.0" layoutY="37.0" text="Choose user:">
         <font>
-            <Font name="Arial" size="13.0" />
+            <Font size="13.0" />
         </font>
     </Text>
-    <Text layoutX="17.0" layoutY="392.0" text="Info:" />
-    <Text fx:id="errorMessage" layoutX="116.0" layoutY="581.0" wrappingWidth="100" />
-    <Text layoutX="17.0" layoutY="280.0" text="Date:" />
-    <Text layoutX="17.0" layoutY="325.0" text="Time:" />
-    <Text layoutX="132.0" layoutY="325.0" text="-" />
-    <Text layoutX="205.0" layoutY="325.0" text="Example: 12:30 - 19:00" />
+    <Text styleClass="text" layoutX="17.0" layoutY="392.0" text="Info:" />
+    <Text styleClass="text" fx:id="errorMessage" layoutX="116.0" layoutY="581.0" wrappingWidth="100" />
+    <Text styleClass="text" layoutX="17.0" layoutY="280.0" text="Date:" />
+    <Text styleClass="text" layoutX="17.0" layoutY="325.0" text="Time:" />
+    <Text styleClass="text" layoutX="132.0" layoutY="325.0" text="-" />
+    <Text styleClass="text" layoutX="205.0" layoutY="325.0" text="Example: 12:30 - 19:00" />
 </Pane>

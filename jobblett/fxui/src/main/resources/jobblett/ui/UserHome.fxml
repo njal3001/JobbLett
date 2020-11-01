@@ -13,14 +13,14 @@
         <Button fx:id="createGroupButton" layoutX="237.0" layoutY="308.0" onAction="#createGroup" text="Create group" />
         <Button fx:id="logOutButton" layoutX="291.0" layoutY="15.0" onAction="#logOut" text="Log out" />
 
-        <Text fx:id="userFullName" layoutX="41.0" layoutY="35.0" text="User" textAlignment="CENTER" wrappingWidth="250">
+        <Text styleClass="text" fx:id="userFullName" layoutX="41.0" layoutY="35.0" text="User" textAlignment="CENTER" wrappingWidth="250">
             <font>
-                <Font name="Arial" size="20.0" />
+                <Font size="20.0" />
             </font>
         </Text>
-        <Text layoutX="128.0" layoutY="115.0" text="Your groups:">
+        <Text styleClass="text" fx:id="yourGroupsText" layoutX="128.0" layoutY="115.0" text="Your groups:">
             <font>
-                <Font name="Arial" size="17.0" />
+                <Font size="17.0" />
             </font>
         </Text>
     </children>

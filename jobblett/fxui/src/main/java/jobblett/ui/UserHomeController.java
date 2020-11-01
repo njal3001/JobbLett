@@ -16,6 +16,9 @@ public class UserHomeController extends SceneController {
 
     @FXML
     Text userFullName;
+    
+    @FXML
+    Text yourGroupsText;
 
     @FXML
     Button logOutButton;
@@ -25,6 +28,8 @@ public class UserHomeController extends SceneController {
 
     @FXML
     Button joinGroupButton;
+    
+    
 
     @Override
     public void onSceneDisplayed() {
@@ -68,5 +73,6 @@ public class UserHomeController extends SceneController {
         logOutButton.setSkin(new JobblettButtonSkin(logOutButton));
         createGroupButton.setSkin(new JobblettButtonSkin(createGroupButton));
         joinGroupButton.setSkin(new JobblettButtonSkin(joinGroupButton));
+
     }
 }

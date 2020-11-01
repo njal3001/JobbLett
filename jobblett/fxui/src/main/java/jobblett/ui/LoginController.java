@@ -39,6 +39,7 @@ public class LoginController extends SceneController {
     errorMessage.setFont(font);
     username.setFont(font);
     password.setFont(font);
+    usernameField.setFont(font);
   }
 
   @Override

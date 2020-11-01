@@ -8,12 +8,12 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.ShiftViewController">
     <children>
-        <Text fx:id="groupName" layoutX="115.0" layoutY="38.0" text="Group name" textAlignment="CENTER" wrappingWidth="134.22900390625">
+        <Text styleClass="text" fx:id="groupName" layoutX="115.0" layoutY="38.0" text="Group name" textAlignment="CENTER" wrappingWidth="134.22900390625">
             <font>
-                <Font name="Arial" size="22.0" />
+                <Font size="22.0" />
             </font>
         </Text>
-        <Text layoutX="142.0" layoutY="162.0" text="All shifts:">
+        <Text styleClass="text" layoutX="142.0" layoutY="162.0" text="All shifts:">
          <font>
             <Font size="20.0" />
          </font></Text>

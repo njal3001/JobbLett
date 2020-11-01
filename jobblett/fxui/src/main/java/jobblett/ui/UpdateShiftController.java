@@ -46,7 +46,6 @@ public class UpdateShiftController extends SceneController {
   Text errorMessage;
 
   private JobShift activeJobShift;
-  
 
   // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme
   // kode hver gang vi skal vise noe med listView
@@ -76,12 +75,10 @@ public class UpdateShiftController extends SceneController {
     // making it not able to write in date, the user has to use to calender to pick
     // a date
     date.setEditable(false);
+    date.setDayCellFactory(new DatePickerDayCell(date));
 
 
-    fromField.setText("12:00");
-    toField.setText(("19:30"));
-
-    //utbedre til å detektere feil inntast automatisk??
+    // utbedre til å detektere feil inntast automatisk??
     fromField.textProperty().addListener((observable, oldValue, newValue) -> {
       /*
        * String pattern = "^(?=.*[0-9])(?=.*[:]).{0,}$";
@@ -106,6 +103,9 @@ public class UpdateShiftController extends SceneController {
     });
 
     // Lists all members
+    members.setCellFactory(member -> {
+      return new GroupMemberListCell(this.mainController);
+    });
     members.getItems().clear();
     for (User user : mainController.getActiveGroup())
       members.getItems().add(user);
@@ -113,8 +113,8 @@ public class UpdateShiftController extends SceneController {
 
     if (activeJobShift == null) {
       // Create new JobShift
-      fromField.setText("");
-      toField.setText("");
+      fromField.setText("12:00");
+      toField.setText(("19:30"));
       date.setValue(LocalDate.now());
       infoArea.setText("");
       createShiftButton.setText("Create shift");

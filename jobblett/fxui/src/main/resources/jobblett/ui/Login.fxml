@@ -6,15 +6,15 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.LoginController">
     <children>
-        <Text fx:id="username" layoutX="65.0" layoutY="258.0" styleClass="text1" text="Username:" />
-        <Text fx:id="password" layoutX="65.0" layoutY="299.0" smooth="false" styleClass="text1" text="Password:" />
+        <Text styleClass="text" fx:id="username" layoutX="65.0" layoutY="258.0" text="Username:" />
+        <Text styleClass="text" fx:id="password" layoutX="65.0" layoutY="299.0" smooth="false" text="Password:" />
         <TextField fx:id="usernameField" layoutX="151.0" layoutY="240.0" onAction="#logInToUserHome" />
         <PasswordField fx:id="passwordField" layoutX="151.0" layoutY="281.0" onAction="#logInToUserHome" />
         <Button fx:id="login" layoutX="151.0" layoutY="326.0" onAction="#logInToUserHome" prefHeight="27.0" prefWidth="160.0" text="Login">
         </Button>
         <Button fx:id="createAccount" layoutX="151.0" layoutY="373.0" onAction="#goToCreateUser" prefHeight="27.0" prefWidth="160.0" text="Create account">
         </Button>
-        <Text fx:id="errorMessage" layoutX="91.0" layoutY="497.0" />
+        <Text styleClass="text" fx:id="errorMessage" layoutX="91.0" layoutY="497.0" />
     </children>
 
 </Pane>

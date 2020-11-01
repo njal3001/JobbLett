@@ -1,7 +1,6 @@
-/*@font-face {
-    font-family:'ProductSans';
+@font-face {
     src: url('Product-Sans-Regular.ttf');
-}*/
+}
 /*Palette*/
 {
   dark-primary-color: #0097A7;
@@ -17,34 +16,30 @@
 
 .root {
   -fx-background-color: dark-primary-color;
+  -fx-font-family: "Product Sans"
 }
 
 .button{
   -fx-font-size: 16;
-  -fx-font-family: 'ProductSans', Arial, sans-serif;
+  -fx-font-family: 'Product Sans', Arial, sans-serif;
   -fx-text-fill: text-primary-color;
   -fx-padding: 5;
   -fx-border-radius: 4;
-  -fx-background-color: accent-color;
-  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.1, 0, 2);
 }
 
-.text1{
-  -fx-font-size: 16;
-  -fx-fill: text-primary-color;
+.text{
+  -fx-font-family: 'Product Sans', Arial, sans-serif;
 }
 
-.button:hover {
-    /*-fx-background-color: divider-color;*/
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 15, 0.1, 0, 2);
-}
 
+
+
+/*
 .button:pressed {
     -fx-scale-y: 0.975;
     -fx-scale-x: 0.975;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 9, 0.1, 0, 2);
-}
-
+}*/
+/*
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
     -fx-background-color:light-primary-color;
 }
@@ -59,4 +54,4 @@
 
 .list-cell:filled:hover {
     -fx-background-color: divider-color;
-}
+}*/

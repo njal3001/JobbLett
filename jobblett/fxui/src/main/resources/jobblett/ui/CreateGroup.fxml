@@ -9,9 +9,9 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.CreateGroupController">
     <children>
-        <Text layoutX="121.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group name:">
+        <Text styleClass="text" layoutX="121.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group name:">
             <font>
-                <Font name="Arial" size="25.0" />
+                <Font size="25.0" />
             </font>
         </Text>
         <TextField fx:id="groupNameField" layoutX="76.0" layoutY="225.0" onAction="#createGroup">
@@ -19,11 +19,8 @@
                 <Font size="19.0" />
             </font>
         </TextField>
-        <Text fx:id="errorMessage" layoutX="93.0" layoutY="517.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="106.16259765625" />
+        <Text styleClass="text" fx:id="errorMessage" layoutX="93.0" layoutY="517.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="106.16259765625" />
         <Button fx:id="createGroupButton" layoutX="188.0" layoutY="294.0" mnemonicParsing="false" onAction="#createGroup" text="Create your group">
-            <font>
-                <Font name="Arial" size="13.0" />
-            </font>
          <effect>
             <Blend mode="OVERLAY" />
          </effect>
