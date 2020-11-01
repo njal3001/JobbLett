@@ -8,6 +8,5 @@ cache:
     - .m2/repository
 
 install:
-  stage: install
   script:
     - mvn install -DskipTests
