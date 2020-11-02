@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import jobblett.core.Group;
 
+import static jobblett.ui.JobblettScenes.GROUP_HOME_ID;
+import static jobblett.ui.JobblettScenes.USER_HOME_ID;
+
 public class CreateGroupController extends SceneController {
 
   @FXML
@@ -25,7 +28,7 @@ public class CreateGroupController extends SceneController {
 
   @FXML
   public void goToUserHome() {
-    mainController.setScene(App.USER_HOME_ID);
+    switchScene(USER_HOME_ID);
   }
 
   @FXML
@@ -33,11 +36,11 @@ public class CreateGroupController extends SceneController {
     String groupName = groupNameField.getText();
     try {
       Group newGroup = getAccess().newGroup(groupName);
-      newGroup.addUser(mainController.getActiveUser());
+      newGroup.addUser(getActiveUser());
       // The first member to join the group becomes admin
-      newGroup.addAdmin(mainController.getActiveUser());
-      mainController.setActiveGroup(newGroup);
-      mainController.setScene(App.GROUP_HOME_ID);
+      newGroup.addAdmin(getActiveUser());
+      setActiveGroup(newGroup);
+      switchScene(GROUP_HOME_ID);
     } catch (Exception e) {
       errorMessage.setText(e.getMessage());
     }

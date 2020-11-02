@@ -3,23 +3,29 @@ package jobblett.ui;
 
 //Code is inspired by: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
 
-import javafx.scene.text.Font;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-
+import javafx.stage.Stage;
+import jobblett.core.Group;
+import jobblett.core.User;
 
 //super class for scene controllers
 public abstract class SceneController {
 
-  //Font font = Font.loadFont(SceneController.class.getResourceAsStream(App.FONT_FILE),16);
+  private static Stage stage;
+  private static User activeUser;
+  private static Group activeGroup;
+  private static JobblettAccess access;
 
-  //Klassen har veldig lite funksjonalitet, kan kanskje bruke interface istedet
+  public static void setAccess(JobblettAccess access) {
+    SceneController.access = access;
+  }
 
-  protected MainController mainController;
+  public static void setStage(Stage stage) {
+    SceneController.stage = stage;
+  }
 
-  public void setMainController(MainController mainController) {
-    this.mainController = mainController;
+  public static Stage getStage() {
+    return stage;
   }
 
   //Denne metoden kan droppes hvis vi bruker listeners istedet tror jeg
@@ -30,7 +36,28 @@ public abstract class SceneController {
 
   }
 
-  protected JobblettAccess getAccess() {
-    return mainController.access;
+  public static void setActiveUser(User activeUser) {
+    SceneController.activeUser = activeUser;
+  }
+
+  public static User getActiveUser() {
+    return activeUser;
+  }
+
+  public static void setActiveGroup(Group activeGroup) {
+    SceneController.activeGroup = activeGroup;
+  }
+
+  public static Group getActiveGroup() {
+    return activeGroup;
+  }
+
+  protected static JobblettAccess getAccess() {
+    return access;
+  }
+
+  public static void switchScene(final JobblettScenes jobblettScenes) {
+    stage.setScene(jobblettScenes.getScene());
+    jobblettScenes.getController().onSceneDisplayed();
   }
 }

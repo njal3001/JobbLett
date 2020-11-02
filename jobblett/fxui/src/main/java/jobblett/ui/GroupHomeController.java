@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import jobblett.core.User;
 
+import static jobblett.ui.JobblettScenes.SHIFT_VIEW_ID;
+import static jobblett.ui.JobblettScenes.USER_HOME_ID;
+
 public class GroupHomeController extends SceneController{
 
     @FXML
@@ -35,19 +38,19 @@ public class GroupHomeController extends SceneController{
     @Override
     public void onSceneDisplayed() {
         // Sets GroupName on top of the screen
-        groupName.setText(mainController.getActiveGroup().getGroupName());
+        groupName.setText(getActiveGroup().getGroupName());
 
         // Shows GroupID
-        groupID.setText("GroupID: " + mainController.getActiveGroup().getGroupID());
+        groupID.setText("GroupID: " + getActiveGroup().getGroupID());
 
         members.setCellFactory(members -> {
-          GroupMemberListCell listCell = new GroupMemberListCell(mainController);
+          GroupMemberListCell listCell = new GroupMemberListCell();
           return listCell;
         });
 
         members.getItems().clear();
         // Lists all members
-        for (User user : mainController.getActiveGroup())
+        for (User user : getActiveGroup())
             members.getItems().add(user);
         
         //Sets the ListView uninteractable
@@ -57,11 +60,11 @@ public class GroupHomeController extends SceneController{
 
     @FXML
     public void backButton(){
-        mainController.setScene(App.USER_HOME_ID);
+        switchScene(USER_HOME_ID);
     }
     
     @FXML
     public void viewShifts(){
-        mainController.setScene(App.SHIFT_VIEW_ID);
+        switchScene(SHIFT_VIEW_ID);
     }
 }

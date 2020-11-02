@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import jobblett.core.JobShift;
 
+import static jobblett.ui.JobblettScenes.*;
+
+
 public class ShiftViewController extends SceneController {
 
   @FXML
@@ -29,37 +32,32 @@ public class ShiftViewController extends SceneController {
   @Override
   public void onSceneDisplayed() {
     // Sets group name on top of the screen
-    groupName.setText(mainController.getActiveGroup().getGroupName());
+    groupName.setText(getActiveGroup().getGroupName());
 
-    shifts.setCellFactory(shifts -> {
-      JobShiftListCell listCell = new JobShiftListCell();
-      return listCell;
-    });
+    shifts.setCellFactory(shifts -> new JobShiftListCell());
 
-    shifts.getSelectionModel().selectedItemProperty().addListener(listener -> {
-      updateButtons();
-    });
+    shifts.getSelectionModel().selectedItemProperty().addListener(listener -> updateButtons());
     updateView();
     updateButtons();
-    newShiftButton.setVisible(mainController.getActiveGroup().isAdmin(mainController.getActiveUser()));
+    newShiftButton.setVisible(getActiveGroup().isAdmin(getActiveUser()));
   }
 
   @FXML
   public void backButton() {
-    mainController.setScene(App.GROUP_HOME_ID);
+    switchScene(GROUP_HOME_ID);
   }
 
   @FXML
   public void goToCreateShift() {
-    mainController.setScene(App.UPDATE_SHIFT_ID);
+    switchScene(UPDATE_SHIFT_ID);
   }
 
   @FXML
   public void goToEditShift(){
     JobShift selectedJobShift = shifts.getSelectionModel().getSelectedItem();
-    UpdateShiftController newController = (UpdateShiftController) mainController.getSceneController(App.UPDATE_SHIFT_ID);
+    UpdateShiftController newController = (UpdateShiftController) UPDATE_SHIFT_ID.getController();
     newController.setActiveJobShift(selectedJobShift);
-    mainController.setScene(App.UPDATE_SHIFT_ID);
+    switchScene(UPDATE_SHIFT_ID);
   }
 
   @FXML
@@ -67,7 +65,7 @@ public class ShiftViewController extends SceneController {
     int index = shifts.getSelectionModel().getSelectedIndex();
     JobShift selectedJobShift = shifts.getItems().get(index);
     if (selectedJobShift != null) {
-      mainController.getActiveGroup().getJobShifts().remove(selectedJobShift);
+      getActiveGroup().getJobShifts().remove(selectedJobShift);
       updateView();
     }
   }
@@ -76,7 +74,7 @@ public class ShiftViewController extends SceneController {
   // Lists all job shifts
   private void updateView() {
     shifts.getItems().clear();
-    for (JobShift shift : mainController.getActiveGroup().getJobShifts())
+    for (JobShift shift : getActiveGroup().getJobShifts())
       shifts.getItems().add(shift);
   }
 

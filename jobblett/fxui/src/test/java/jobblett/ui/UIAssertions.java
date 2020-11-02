@@ -5,24 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import javafx.scene.control.*;
-import javafx.scene.text.TextAlignment;
-import jobblett.core.JobShift;
-import org.assertj.core.internal.bytebuddy.asm.Advice;
 import org.testfx.api.FxRobot;
 
 import javafx.scene.Node;
-import javafx.scene.text.Text;
-
-import java.time.LocalDateTime;
 
 // Helper class for assertions that are useful for multiple test classes
 public class UIAssertions extends FxRobot {
-
-  private MainController mainController;
-
-  public UIAssertions(MainController mainController) {
-    this.mainController = mainController;
-  }
 
   public void assertLabel(String fxid, String expected) {
     Label text = lookup("#" + fxid).query();
@@ -55,8 +43,8 @@ public class UIAssertions extends FxRobot {
     assertTrue(listView.getItems().contains(expected));
   }
 
-  public void assertOnScene(String sceneID) {
-    assertEquals(mainController.getScene(sceneID), mainController.getStage().getScene());
+  public void assertOnScene(JobblettScenes sceneID) {
+    assertEquals(sceneID.getScene(), SceneController.getStage().getScene());
   }
 
   // Assumes only one ListView in scene

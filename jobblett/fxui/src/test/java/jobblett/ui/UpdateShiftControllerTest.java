@@ -15,10 +15,11 @@ import java.time.LocalDateTime;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.text.Text;
 import jobblett.core.Group;
 import jobblett.core.JobShift;
 import jobblett.core.User;
+
+import static jobblett.ui.JobblettScenes.*;
 
 //Koder som er kommentert ut skal implementeres ettersom deres funksjoner er implementert i controlleren.
 public class UpdateShiftControllerTest extends JobbLettTest {
@@ -34,8 +35,8 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
 
 
   @Override
-  protected String giveID() {
-    return App.UPDATE_SHIFT_ID;
+  protected JobblettScenes giveID() {
+    return UPDATE_SHIFT_ID;
   }
 
   @Override
@@ -51,7 +52,7 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
   @Test
   public void testGoBack() {
     clickOn("#goBackButton");
-    uiAssertions.assertOnScene(App.SHIFT_VIEW_ID);
+    uiAssertions.assertOnScene(SHIFT_VIEW_ID);
   }
 
 /*
@@ -171,7 +172,7 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
 
   @Test
   public void updateShift(){
-    UpdateShiftController shiftController = (UpdateShiftController) mainController.getSceneController(App.UPDATE_SHIFT_ID);
+    UpdateShiftController shiftController = (UpdateShiftController) UPDATE_SHIFT_ID.getController();
     shiftController.setActiveJobShift(jobShift1);
     Platform.runLater(() -> {shiftController.onSceneDisplayed();});
     //choosing the user on top

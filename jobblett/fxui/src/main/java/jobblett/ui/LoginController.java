@@ -8,6 +8,9 @@ import javafx.scene.control.TextField;
 import jobblett.core.HashedPassword;
 import jobblett.core.User;
 
+import static jobblett.ui.JobblettScenes.CREATE_USER_ID;
+import static jobblett.ui.JobblettScenes.USER_HOME_ID;
+
 public class LoginController extends SceneController {
 
   @FXML
@@ -50,7 +53,7 @@ public class LoginController extends SceneController {
 
   @FXML
   public void goToCreateUser(){
-    mainController.setScene(App.CREATE_USER_ID);
+    switchScene(CREATE_USER_ID);
   }
 
   @FXML
@@ -61,8 +64,8 @@ public class LoginController extends SceneController {
     if (user == null)
       errorMessage.setText("Wrong username or password");
     else {
-      mainController.setActiveUser(user);
-      mainController.setScene(App.USER_HOME_ID);
+      setActiveUser(user);
+      switchScene(USER_HOME_ID);
     }
   }
 }

@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import jobblett.core.Group;
 import jobblett.core.User;
 
+import static jobblett.ui.JobblettScenes.*;
+
 public class UserHomeControllerTest extends JobbLettTest {
 
   @Override
-  protected String giveID() {
-    return App.USER_HOME_ID;
+  protected JobblettScenes giveID() {
+    return USER_HOME_ID;
   }
 
   @Override
@@ -30,18 +32,18 @@ public class UserHomeControllerTest extends JobbLettTest {
   @Test
   public void testGoTo_GroupHome() {
     clickOn(uiAssertions.findListCell(0));
-    uiAssertions.assertOnScene(App.GROUP_HOME_ID);
+    uiAssertions.assertOnScene(GROUP_HOME_ID);
   }
 
   @Test
   public void testGoTo_JoinGroup() {
     clickOn("#joinGroupButton");
-    uiAssertions.assertOnScene(App.JOIN_GROUP_ID);
+    uiAssertions.assertOnScene(JOIN_GROUP_ID);
   }
 
   @Test
   public void testGoTo_CreateGroup() {
     clickOn("#createGroupButton");
-    uiAssertions.assertOnScene(App.CREATE_GROUP_ID);
+    uiAssertions.assertOnScene(CREATE_GROUP_ID);
   }
 }

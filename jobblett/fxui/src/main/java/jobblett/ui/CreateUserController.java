@@ -8,6 +8,9 @@ import javafx.scene.control.TextField;
 import jobblett.core.HashedPassword;
 import jobblett.core.User;
 
+import static jobblett.ui.JobblettScenes.LOGIN_ID;
+import static jobblett.ui.JobblettScenes.USER_HOME_ID;
+
 public class CreateUserController extends SceneController {
 
   @FXML
@@ -58,8 +61,8 @@ public class CreateUserController extends SceneController {
       User newUser = new User(username, password, givenName, familyName);
       if (errorMessageString.length() == 0) {
         getAccess().add(newUser);
-        mainController.setActiveUser(newUser);
-        mainController.setScene(App.USER_HOME_ID);
+        setActiveUser(newUser);
+        switchScene(USER_HOME_ID);
       };
     } catch (IllegalArgumentException e) {
       if (errorMessageString.length() != 0) {
@@ -72,6 +75,6 @@ public class CreateUserController extends SceneController {
 
   @FXML
   public void goToLogIn(){
-    mainController.setScene(App.LOGIN_ID);
+    switchScene(LOGIN_ID);
   }
 }

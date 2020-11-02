@@ -1,5 +1,6 @@
 package jobblett.ui;
 
+import static jobblett.ui.JobblettScenes.SHIFT_VIEW_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
@@ -16,8 +17,8 @@ import jobblett.core.User;
 public class ShiftViewControllerTest extends JobbLettTest{
 
   @Override
-  protected String giveID() {
-    return App.SHIFT_VIEW_ID;
+  protected JobblettScenes giveID() {
+    return SHIFT_VIEW_ID;
   }
 
   @Override
