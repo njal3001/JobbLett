@@ -29,7 +29,7 @@ public class CreateGroupControllerTest extends JobbLettTest {
   public void testCreateGroup_validGroupName() {
     tryToCreateGroup("Group Name");
     uiAssertions.assertOnScene(App.GROUP_HOME_ID);
-    uiAssertions.assertText("groupName", "Group Name");
+    uiAssertions.assertLabel("groupName", "Group Name");
     int groupID = mainController.getActiveGroup().getGroupID();
     clickOn("#backToHome");
     uiAssertions.assertOnScene(App.USER_HOME_ID);
@@ -40,7 +40,7 @@ public class CreateGroupControllerTest extends JobbLettTest {
   public void testCreateGroup_invalidGroupName() {
     tryToCreateGroup("    ");
     uiAssertions.assertOnScene(App.CREATE_GROUP_ID);
-    uiAssertions.assertText("errorMessage", "Group name must have at least 2 characters");
+    uiAssertions.assertLabel("errorMessage", "Group name must have at least 2 characters");
   }
 
   private void tryToCreateGroup(String groupName) {

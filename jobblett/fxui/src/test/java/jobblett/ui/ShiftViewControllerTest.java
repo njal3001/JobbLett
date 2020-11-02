@@ -30,7 +30,7 @@ public class ShiftViewControllerTest extends JobbLettTest{
     return group1;
   }
   
-  //To be implemented
+  //TODO: To be implemented
   @Test
   public void testJobShiftsView_correctText() {
   }
@@ -42,26 +42,7 @@ public class ShiftViewControllerTest extends JobbLettTest{
   @Test
   public void testDeleteShift(){
 
-    ////////////////Vi bør heller ha en shift fra før i jobbletttest///////////////////
-    //adding a shift to test the delete function
-    clickOn("#newShiftButton");
-    clickOn("#members");
-    type(KeyCode.ENTER);
-    DatePicker date = lookup("#date").query();
-    //Setting shift for tomorrow(future)
-    date.setValue(LocalDate.now().plusDays(1));
-    // Setting up valid times for the shifts
-    clickOn("#fromField");
-    write("08:00");
-    clickOn("#toField");
-    write("15:30");
-    // Adding additional info for the shift
-    clickOn("#infoArea");
-    write("We are adding a sample shift to delete");
-    // Creating the shift
-    clickOn("#createShiftButton");
-    /////////////////////////////////////////////////
-
+    // TODO: Control that you are deleting the shift you selected
     //checking the amount of shifts before deleting
     ListView<JobShift> preShifts = lookup("#shifts").query();
     int amountBefore = preShifts.getItems().size();

@@ -13,6 +13,7 @@ public class JobShiftListCell extends ListCell<JobShift>{
 
   //Basic implementasjon av celle for job shift view i ShiftViewController, burde sikkert 
   //endre de to formaterings metodene i bunnen av klassen, men de fungerer
+
   
   @Override
   public void updateItem(JobShift jobShift, boolean empty){

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.GroupHomeController">
     <children>
-        <Text fx:id="groupName" layoutX="83.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group Name" textAlignment="CENTER" wrappingWidth="177.22900390625">
+        <Label fx:id="groupName" layoutX="19.0" layoutY="23.0" prefHeight="95.0" prefWidth="323.0" styleClass="header" text="Group Name" textAlignment="CENTER" wrapText="true">
             <font>
-                <Font name="Arial" size="22.0" />
+                <Font size="22.0" />
             </font>
-        </Text>
-        <Text layoutX="144.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Members:" />
-        <Text fx:id="groupID" layoutX="80.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GroupID: " wrappingWidth="96.79052734375" />
-        <ListView fx:id="members" layoutX="75.0" layoutY="168.0" prefHeight="200.0" prefWidth="210.0" />
+        </Label>
+        <Label layoutX="144.0" layoutY="165.0" text="Members:" />
+        <Label fx:id="groupID" layoutX="80.0" layoutY="486.0" styleClass="info-text" text="GroupID: " />
+        <ListView fx:id="members" layoutX="46.0" layoutY="164.0" prefHeight="200.0" prefWidth="270.0" />
         <Button fx:id="goToShifts" layoutX="118.0" layoutY="377.0" mnemonicParsing="false" onAction="#viewShifts" prefHeight="27.0" prefWidth="125.0" text="View shifts" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
-        <Button fx:id="backToHome" layoutX="35.0" layoutY="576.0" mnemonicParsing="false" onAction="#backButton" text="Back" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
+        <Button fx:id="backToHome" layoutX="35.0" layoutY="576.0" mnemonicParsing="false" onAction="#backButton" styleClass="back" text="Back" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
     </children>
 </Pane>

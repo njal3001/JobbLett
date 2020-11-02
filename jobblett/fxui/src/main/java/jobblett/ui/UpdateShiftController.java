@@ -1,14 +1,9 @@
 package jobblett.ui;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.*;
 import jobblett.core.JobShift;
 import jobblett.core.User;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
@@ -16,8 +11,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Observable;
 
 public class UpdateShiftController extends SceneController {
 
@@ -43,10 +36,9 @@ public class UpdateShiftController extends SceneController {
   Button createShiftButton;
 
   @FXML
-  Text errorMessage;
+  Label errorMessage;
 
   private JobShift activeJobShift;
-  
 
   // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme
   // kode hver gang vi skal vise noe med listView
@@ -76,12 +68,10 @@ public class UpdateShiftController extends SceneController {
     // making it not able to write in date, the user has to use to calender to pick
     // a date
     date.setEditable(false);
+    date.setDayCellFactory(new DatePickerDayCell());
 
 
-    fromField.setText("12:00");
-    toField.setText(("19:30"));
-
-    //utbedre til å detektere feil inntast automatisk??
+    // utbedre til å detektere feil inntast automatisk??
     fromField.textProperty().addListener((observable, oldValue, newValue) -> {
       /*
        * String pattern = "^(?=.*[0-9])(?=.*[:]).{0,}$";
@@ -106,6 +96,9 @@ public class UpdateShiftController extends SceneController {
     });
 
     // Lists all members
+    members.setCellFactory(member -> {
+      return new GroupMemberListCell(this.mainController);
+    });
     members.getItems().clear();
     for (User user : mainController.getActiveGroup())
       members.getItems().add(user);
@@ -113,8 +106,8 @@ public class UpdateShiftController extends SceneController {
 
     if (activeJobShift == null) {
       // Create new JobShift
-      fromField.setText("");
-      toField.setText("");
+      fromField.setText("12:00");
+      toField.setText(("19:30"));
       date.setValue(LocalDate.now());
       infoArea.setText("");
       createShiftButton.setText("Create shift");
@@ -179,6 +172,13 @@ public class UpdateShiftController extends SceneController {
     } catch (Exception e) {
       throw new IllegalArgumentException("Time period is not written in the correct format");
     }
+  }
+
+  @Override
+  public void styleIt() {
+    super.styleIt();
+    goBackButton.setSkin(new ButtonAnimationSkin(goBackButton));
+    createShiftButton.setSkin(new ButtonAnimationSkin(createShiftButton));
   }
 
   protected void setActiveJobShift(JobShift activeJobShift) {
