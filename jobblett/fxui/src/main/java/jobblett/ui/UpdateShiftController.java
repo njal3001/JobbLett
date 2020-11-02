@@ -4,7 +4,6 @@ import javafx.scene.control.*;
 import jobblett.core.JobShift;
 import jobblett.core.User;
 import javafx.fxml.FXML;
-import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
@@ -12,8 +11,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Observable;
 
 public class UpdateShiftController extends SceneController {
 
@@ -71,7 +68,7 @@ public class UpdateShiftController extends SceneController {
     // making it not able to write in date, the user has to use to calender to pick
     // a date
     date.setEditable(false);
-    date.setDayCellFactory(new DatePickerDayCell(date));
+    date.setDayCellFactory(new DatePickerDayCell());
 
 
     // utbedre til å detektere feil inntast automatisk??
@@ -180,8 +177,8 @@ public class UpdateShiftController extends SceneController {
   @Override
   public void styleIt() {
     super.styleIt();
-    goBackButton.setSkin(new JobblettButtonSkin(goBackButton));
-    createShiftButton.setSkin(new JobblettButtonSkin(createShiftButton));
+    goBackButton.setSkin(new ButtonAnimationSkin(goBackButton));
+    createShiftButton.setSkin(new ButtonAnimationSkin(createShiftButton));
   }
 
   protected void setActiveJobShift(JobShift activeJobShift) {

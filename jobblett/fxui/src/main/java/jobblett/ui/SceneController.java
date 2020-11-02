@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 //super class for scene controllers
 public abstract class SceneController {
 
-  Font font = Font.loadFont(SceneController.class.getResourceAsStream(App.FONT_FILE),16);
+  //Font font = Font.loadFont(SceneController.class.getResourceAsStream(App.FONT_FILE),16);
 
   //Klassen har veldig lite funksjonalitet, kan kanskje bruke interface istedet
 

@@ -2,9 +2,9 @@ package jobblett.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import jobblett.core.User;
 
 public class CreateUserController extends SceneController {
@@ -25,7 +25,7 @@ public class CreateUserController extends SceneController {
   TextField familyName;
 
   @FXML
-  Text errorMessage;
+  Label errorMessage;
 
   @FXML
   Button goBackButton;
@@ -33,8 +33,8 @@ public class CreateUserController extends SceneController {
   @Override
   public void styleIt() {
     super.styleIt();
-    goBackButton.setSkin(new JobblettButtonSkin(goBackButton));
-    createAccountButton.setSkin(new JobblettButtonSkin(createAccountButton));
+    goBackButton.setSkin(new ButtonAnimationSkin(goBackButton));
+    createAccountButton.setSkin(new ButtonAnimationSkin(createAccountButton));
   }
 
   @FXML

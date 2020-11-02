@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.text.Text;
 import jobblett.core.JobShift;
 
 public class ShiftViewController extends SceneController {
@@ -90,11 +89,9 @@ public class ShiftViewController extends SceneController {
   @Override
   public void styleIt() {
     super.styleIt();
-    newShiftButton.setSkin(new JobblettButtonSkin(newShiftButton));
-    newShiftButton.setStyle("-fx-background-color: #a0ffa0;");
-    editShiftButton.setSkin(new JobblettButtonSkin(editShiftButton));
-    deleteShiftButton.setSkin(new JobblettButtonSkin(deleteShiftButton));
-    deleteShiftButton.setStyle("-fx-background-color: #ffa0a0;");
-    backToGroup.setSkin(new JobblettButtonSkin(deleteShiftButton));
+    newShiftButton.setSkin(new ButtonAnimationSkin(newShiftButton));
+    editShiftButton.setSkin(new ButtonAnimationSkin(editShiftButton));
+    deleteShiftButton.setSkin(new ButtonAnimationSkin(deleteShiftButton));
+    backToGroup.setSkin(new ButtonAnimationSkin(backToGroup));
   }
 }

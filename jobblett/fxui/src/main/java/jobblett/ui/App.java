@@ -48,6 +48,8 @@ public class App extends Application {
 
   @Override
   public void start(Stage primaryStage) throws IOException {
+    Font.loadFont(ButtonAnimationSkin.class.getResourceAsStream(App.FONT_FILE),16);
+    Font.loadFont(ButtonAnimationSkin.class.getResourceAsStream(App.BOLD_FONT_FILE),16);
     primaryStage.setTitle("Jobblett");
 
     mainController = new MainController(primaryStage);

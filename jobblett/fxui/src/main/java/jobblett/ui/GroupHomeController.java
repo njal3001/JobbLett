@@ -2,20 +2,20 @@ package jobblett.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.text.Text;
 import jobblett.core.User;
 
 public class GroupHomeController extends SceneController{
 
     @FXML
-    Text groupName;
+    Label groupName;
 
     @FXML
     ListView<User> members;
 
     @FXML
-    Text groupID;
+    Label groupID;
 
     @FXML
     Button backToHome;
@@ -26,7 +26,7 @@ public class GroupHomeController extends SceneController{
     @Override
     public void styleIt() {
         super.styleIt();
-        backToHome.setSkin(new JobblettButtonSkin(backToHome));
+        backToHome.setSkin(new ButtonAnimationSkin(backToHome));
     }
 
     // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme kode hver gang vi skal vise noe med listView

@@ -7,11 +7,11 @@ import javafx.scene.control.skin.ButtonSkin;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
-public class JobblettButtonSkin extends ButtonSkin {
+public class ButtonAnimationSkin extends ButtonSkin {
 
-    public JobblettButtonSkin(Button control) {
+    public ButtonAnimationSkin(Button control) {
         super(control);
-        control.setFont(Font.loadFont(JobblettButtonSkin.class.getResourceAsStream(App.FONT_FILE),16));
+        //control.setFont(Font.loadFont(JobblettButtonSkin.class.getResourceAsStream(App.FONT_FILE),16));
         final ScaleTransition fadeIn = new ScaleTransition(Duration.millis(200));
         fadeIn.setNode(control);
         fadeIn.setToX(1.05);
@@ -32,10 +32,10 @@ public class JobblettButtonSkin extends ButtonSkin {
         control.setOnMousePressed(e -> pressedFade.playFromStart());
         
 
-        String style = control.getStyle();
+        /*String style = control.getStyle();
         style+="-fx-background-color:"+JobblettColors.ACCENT_COLOR+";";
         style+="-fx-effect:"+JobblettColors.SHADOW_CONFIG+";";
-        control.setStyle(style);
+        control.setStyle(style);*/
         
     }
 

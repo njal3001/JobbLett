@@ -8,17 +8,17 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.UserHomeController">
     <children>
-        <ListView fx:id="groups" layoutX="80.0" layoutY="133.0" prefHeight="160.0" prefWidth="200.0" />
-        <Button fx:id="joinGroupButton" layoutX="45.0" layoutY="308.0" onAction="#joinGroup" text="Join group" />
-        <Button fx:id="createGroupButton" layoutX="237.0" layoutY="308.0" onAction="#createGroup" text="Create group" />
-        <Button fx:id="logOutButton" layoutX="291.0" layoutY="15.0" onAction="#logOut" text="Log out" />
+        <ListView fx:id="groups" layoutX="58.0" layoutY="202.0" prefHeight="276.0" prefWidth="244.0" />
+        <Button fx:id="joinGroupButton" layoutX="38.0" layoutY="518.0" onAction="#joinGroup" text="Join group" />
+        <Button fx:id="createGroupButton" layoutX="230.0" layoutY="518.0" onAction="#createGroup" text="Create group" />
+        <Button styleClass="back" fx:id="logOutButton" layoutX="291.0" layoutY="15.0" onAction="#logOut" text="Log out" />
 
-        <Label fx:id="userFullName" layoutX="164.0" layoutY="21.0" prefHeight="18.0" prefWidth="32.0" text="User" textAlignment="CENTER">
+        <Label fx:id="userFullName" layoutX="54.0" layoutY="45.0" prefHeight="38.0" prefWidth="253.0" styleClass="header" text="User" textAlignment="CENTER">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <Label fx:id="yourGroupsText" layoutX="144.0" layoutY="108.0" prefHeight="18.0" prefWidth="85.0" text="Your groups:">
+        <Label fx:id="yourGroupsText" layoutX="58.0" layoutY="153.0" prefHeight="26.0" prefWidth="172.0" styleClass="small-header" text="Your groups:">
             <font>
                 <Font size="17.0" />
             </font>
