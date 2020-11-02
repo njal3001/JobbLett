@@ -17,12 +17,12 @@ import java.nio.file.Paths;
 public class JobblettDeserializer<Type> {
     ObjectMapper objectMapper;
     Reader reader;
-    Class<?> classType;
+    Class<Type> classType;
 
     /**
      * Initializes a JobblettDeserializer-instance and reads main.json.
      */
-    public JobblettDeserializer(Class<?> classType) {
+    public JobblettDeserializer(Class<Type> classType) {
         this.classType = classType;
         File f = new File(System.getProperty("user.home") + "/.jobblett");
         // noinspection ResultOfMethodCallIgnored
@@ -56,6 +56,22 @@ public class JobblettDeserializer<Type> {
         }
     }
 
+    public static <T> T useDefaultValues(Class <T> classType) {
+        URL url = JobblettDeserializer.class.getResource("default"+classType.getSimpleName()+".json");
+        Reader reader;
+        T object = null;
+        try {
+            reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new JobblettCoreModule());
+            object = objectMapper.readValue(reader, classType);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return object;
+    }
+
     /**
      * Imports main.json and returns a new Main.class instance with tha data.
      *
@@ -65,7 +81,7 @@ public class JobblettDeserializer<Type> {
         Type obj = null;
         try {
             // deserialize json string
-            obj = (Type) objectMapper.readValue(reader, classType);
+            obj =  objectMapper.readValue(reader, classType);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

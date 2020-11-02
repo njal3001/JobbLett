@@ -4,4 +4,7 @@ module jobblett.restserver {
     requires com.fasterxml.jackson.databind;
     requires jobblett.core;
     requires jersey.server;
+    requires jobblett.restapi;
+    requires jersey.media.json.jackson;
+    requires hk2.api;
 }
