@@ -1,6 +1,8 @@
 package jobblett.ui;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,7 +36,13 @@ public class MainController {
 
   public MainController(Stage stage) {
     this.stage = stage;
-    if (App.REST_API_ON);// access = new JobblettRemoteAccess();
+    if (App.REST_API_ON) {
+      try {
+        access = new JobblettRemoteAccess(new URI(""));// Has to be updated to the right URI
+      } catch (URISyntaxException e) {
+        e.printStackTrace();
+      }
+    }
     else access = new JobblettDirectAccess();
 
   }

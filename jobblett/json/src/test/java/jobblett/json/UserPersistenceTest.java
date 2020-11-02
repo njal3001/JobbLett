@@ -3,6 +3,7 @@ package jobblett.json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import jobblett.core.HashedPassword;
 import jobblett.core.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserPersistenceTest {
 
-    User user = new User("Olavh123","Heisann123456", "Olav", "Hermansen");
+    User user = new User("Olavh123", HashedPassword.hashPassword("Heisann123456"), "Olav", "Hermansen");
 
     @Test
     public void persistenceTest() {

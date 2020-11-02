@@ -3,6 +3,7 @@ package jobblett.json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import jobblett.core.HashedPassword;
 import jobblett.core.JobShift;
 import jobblett.core.User;
 import org.junit.jupiter.api.BeforeAll;
@@ -22,7 +23,7 @@ public class JobShiftPersistenceTest {
 
     @BeforeAll
     public void setUp(){
-        User olav = new User("olav", "bestePassord123", "Olav", "Nordmann");
+        User olav = new User("olav", HashedPassword.hashPassword("bestePassord123"), "Olav", "Nordmann");
         jobShift = new JobShift(olav, LocalDateTime.parse("2021-10-10T17:10:53.798134"), Duration.ofSeconds(7200),"Cool info",true);
     }
 

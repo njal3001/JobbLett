@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import jobblett.core.Group;
 import jobblett.core.GroupList;
+import jobblett.core.HashedPassword;
 import jobblett.core.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -20,10 +21,10 @@ public class GroupListPersistenceTest {
 
     @BeforeAll
     public void setUp(){
-        User olav = new User("olav", "bestePassord123", "Olav", "Nordmann");
-        User nora = new User("nora", "bestePassord123", "Nora", "Bekkestad");
-        User petter = new User("petter", "bestePassord123", "Petter", "Petterson");
-        User david = new User("david", "bestePassord123", "David", "Berg");
+        User olav = new User("olav", HashedPassword.hashPassword("bestePassord123"), "Olav", "Nordmann");
+        User nora = new User("nora", HashedPassword.hashPassword("bestePassord123"), "Nora", "Bekkestad");
+        User petter = new User("petter", HashedPassword.hashPassword("bestePassord123"), "Petter", "Petterson");
+        User david = new User("david", HashedPassword.hashPassword("bestePassord123"), "David", "Berg");
 
         Group group1 = groupList.newGroup("TestGroup1");
         group1.addUser(olav);

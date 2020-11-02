@@ -19,8 +19,8 @@ private User user2;
 @BeforeEach
 public void setUp(){
   userList = new UserList();
-  user1 = new User("User1", "Test12345", "Ole", "Dole");
-  user2 = new User("User2", "Test12345", "Kristoff", "Arntsen");
+  user1 = new User("User1", HashedPassword.hashPassword("Test12345"), "Ole", "Dole");
+  user2 = new User("User2", HashedPassword.hashPassword("Test12345"), "Kristoff", "Arntsen");
 }
 
 @Test
@@ -44,13 +44,13 @@ public void testAddUser_TwoUsersWithSameUsername(){
 @Test
 public void testLogin_CorrectUsernameAndPassword(){
   userList.add(user1);
-  assertEquals(user1, userList.checkUserNameAndPassword(user1.getUserName(), "Test12345"));
+  assertEquals(user1, userList.checkUserNameAndPassword(user1.getUserName(), HashedPassword.hashPassword("Test12345")));
 }
 
 @Test
 public void testLogin_WrongPassword(){
   userList.add(user1);
-  assertEquals(null, userList.checkUserNameAndPassword(user1.getUserName(), ""));
+  assertEquals(null, userList.checkUserNameAndPassword(user1.getUserName(), HashedPassword.hashPassword("TotallyWrongPassword123")));
 }
 
 @Test

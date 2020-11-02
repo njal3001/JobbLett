@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import jobblett.core.HashedPassword;
 import jobblett.core.User;
 
 public class CreateUserController extends SceneController {
@@ -40,18 +41,33 @@ public class CreateUserController extends SceneController {
   @FXML
   public void createAccount() {
     String username = this.username.getText();
-    String password = this.password.getText();
+    String passwordString = this.password.getText();
     String givenName = this.givenName.getText();
     String familyName = this.familyName.getText();
 
+    String errorMessageString = "";
+
+    // Bør vel være en bedre måte å gjøre dette på...
+    HashedPassword password = HashedPassword.hashPassword("defaultPassword123");
+    try {
+      password = HashedPassword.hashPassword(passwordString);
+    } catch (IllegalArgumentException e) {
+      errorMessageString += e.getMessage();
+    }
     try{
       User newUser = new User(username, password, givenName, familyName);
-      getAccess().add(newUser);
-      mainController.setActiveUser(newUser);
-      mainController.setScene(App.USER_HOME_ID);
-    } catch (Exception e) {
-      errorMessage.setText(e.getMessage());
+      if (errorMessageString.length() == 0) {
+        getAccess().add(newUser);
+        mainController.setActiveUser(newUser);
+        mainController.setScene(App.USER_HOME_ID);
+      };
+    } catch (IllegalArgumentException e) {
+      if (errorMessageString.length() != 0) {
+        errorMessageString+="\n";
+      }
+      errorMessageString += e.getMessage();
     }
+    errorMessage.setText(errorMessageString);
   }
 
   @FXML

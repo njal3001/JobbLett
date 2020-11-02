@@ -13,8 +13,8 @@ public class JobblettDirectAccess implements JobblettAccess{
     private GroupList groupList;
 
     public JobblettDirectAccess() {
-        setUserList(new JobblettDeserializer<UserList>(UserList.class).deserialize());
-        setGroupList(new JobblettDeserializer<GroupList>(GroupList.class).deserialize());
+        setUserList(new JobblettDeserializer<>(UserList.class).deserialize());
+        setGroupList(new JobblettDeserializer<>(GroupList.class).deserialize());
         userList.addListener(this);
         groupList.addListener(this);
     }
@@ -54,7 +54,7 @@ public class JobblettDirectAccess implements JobblettAccess{
     }
 
     @Override
-    public User login(String userName, String password) {
+    public User login(String userName, HashedPassword password) {
         return userList.checkUserNameAndPassword(userName,password);
     }
 
