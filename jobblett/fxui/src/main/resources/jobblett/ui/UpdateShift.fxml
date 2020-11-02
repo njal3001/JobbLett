@@ -2,30 +2,30 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <Pane prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.UpdateShiftController">
-    <ListView fx:id="members" layoutX="66.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0" />
-    <DatePicker fx:id="date" layoutX="72.0" layoutY="262.0" prefHeight="27.0" prefWidth="200.0" />
-    <TextField fx:id="fromField" layoutX="70.0" layoutY="307.0" prefHeight="27.0" prefWidth="56.0" text="12:30" />
-    <TextField fx:id="toField" layoutX="144.0" layoutY="307.0" prefHeight="27.0" prefWidth="56.0" text="19:00" />
-    <TextArea fx:id="infoArea" layoutX="66.0" layoutY="379.0" prefHeight="133.0" prefWidth="200.0" />
+    <ListView fx:id="members" layoutX="81.0" layoutY="49.0" prefHeight="200.0" prefWidth="200.0" />
+    <DatePicker fx:id="date" layoutX="81.0" layoutY="266.0" prefHeight="27.0" prefWidth="200.0" />
+    <TextField fx:id="fromField" layoutX="81.0" layoutY="321.0" prefHeight="27.0" prefWidth="56.0"/>
+    <TextField fx:id="toField" layoutX="157.0" layoutY="321.0" prefHeight="27.0" prefWidth="56.0"/>
+    <TextArea fx:id="infoArea" layoutX="77.0" layoutY="379.0" prefHeight="133.0" prefWidth="200.0" />
     <Button fx:id="createShiftButton" layoutX="134.0" layoutY="524.0" onAction="#createShift" text="Create shift" />
     <Button fx:id="goBackButton" layoutX="35.0" layoutY="576.0" onAction="#goBack" text="Back" />
-    <Text styleClass="text" layoutX="127.0" layoutY="37.0" text="Choose user:">
+    <Label layoutX="134.0" layoutY="14.0" prefHeight="43.0" prefWidth="93.0" text="Choose user:">
         <font>
             <Font size="13.0" />
         </font>
-    </Text>
-    <Text styleClass="text" layoutX="17.0" layoutY="392.0" text="Info:" />
-    <Text styleClass="text" fx:id="errorMessage" layoutX="116.0" layoutY="581.0" wrappingWidth="100" />
-    <Text styleClass="text" layoutX="17.0" layoutY="280.0" text="Date:" />
-    <Text styleClass="text" layoutX="17.0" layoutY="325.0" text="Time:" />
-    <Text styleClass="text" layoutX="132.0" layoutY="325.0" text="-" />
-    <Text styleClass="text" layoutX="205.0" layoutY="325.0" text="Example: 12:30 - 19:00" />
+    </Label>
+    <Label layoutX="43.0" layoutY="379.0" text="Info:" />
+    <Label fx:id="errorMessage" layoutX="116.0" layoutY="581.0" />
+    <Label layoutX="41.0" layoutY="271.0" text="Date:" />
+    <Label layoutX="41.0" layoutY="326.0" text="Time:" />
+    <Label layoutX="144.0" layoutY="326.0" text="-" />
+    <Label layoutX="218.0" layoutY="326.0" text="Example: 12:30 - 19:00" />
 </Pane>

@@ -1,13 +1,9 @@
 package jobblett.ui;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.*;
 import jobblett.core.JobShift;
 import jobblett.core.User;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
@@ -43,7 +39,7 @@ public class UpdateShiftController extends SceneController {
   Button createShiftButton;
 
   @FXML
-  Text errorMessage;
+  Label errorMessage;
 
   private JobShift activeJobShift;
 
