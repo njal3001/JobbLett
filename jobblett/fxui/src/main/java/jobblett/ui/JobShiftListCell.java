@@ -14,33 +14,30 @@ public class JobShiftListCell extends ListCell<JobShift>{
   //Basic implementasjon av celle for job shift view i ShiftViewController, burde sikkert 
   //endre de to formaterings metodene i bunnen av klassen, men de fungerer
 
-  
   @Override
   public void updateItem(JobShift jobShift, boolean empty){
-    super.updateItem(jobShift, empty);
+    setGraphic(null);
     if(empty || jobShift == null) {
-      setGraphic(null);
       setText(null);
+      return;
     }
-    else{
-      final String shiftText = formatJobShift(jobShift);
+
+    boolean isNewItem = getItem()==null;
+    super.updateItem(jobShift, empty);
+
+    final String shiftText = formatJobShift(jobShift);
+    if (isNewItem) {
       setText(shiftText);
-
-      // When clicked on, the cell toggles between showing the job shift info or not
-      setOnMouseClicked(new EventHandler<MouseEvent>(){
-        private boolean isExpanded = false;
-        private final String infoText = "\nInfo:\n" + jobShift.getInfo();
-
-        @Override
-        public void handle(MouseEvent event) {
-          if(!isExpanded)
-            setText(shiftText + infoText);
-          else
-            setText(shiftText);
-            isExpanded = !isExpanded;
+      selectedProperty().addListener((o,old,newValue)->{
+        if (isSelected()) {
+          final String infoText = "\nInfo:\n" + jobShift.getInfo();
+          setText(shiftText + infoText);
+        } else {
+          setText(shiftText);
         }
       });
     }
+
   }
 
 
