@@ -1,5 +1,6 @@
 package jobblett.restapi;
 
+import jobblett.core.HashedPassword;
 import jobblett.core.User;
 import jobblett.core.UserList;
 import jobblett.json.JobblettDeserializer;
@@ -51,6 +52,6 @@ public class UserListResource {
         Iterator<String> iterator = userNameAndPassword.iterator();
         String userName = iterator.next();
         String password = iterator.next();
-        return userList.checkUserNameAndPassword(userName,password);
+        return userList.checkUserNameAndPassword(userName, HashedPassword.hashPassword(password));
     }
 }

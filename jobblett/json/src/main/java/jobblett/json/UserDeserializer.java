@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.node.IntNode;
+import jobblett.core.HashedPassword;
 import jobblett.core.User;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
         String password = node.get("password").asText();
         String givenName = node.get("givenName").asText();
         String familyName = node.get("familyName").asText();
-        return new User(username,password,givenName,familyName,true);
+        return new User(username, HashedPassword.alreadyHashed(password),givenName,familyName);
     }
 
     @Override

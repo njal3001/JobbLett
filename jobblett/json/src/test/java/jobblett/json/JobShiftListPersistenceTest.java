@@ -21,8 +21,8 @@ public class JobShiftListPersistenceTest {
 
     @BeforeAll
     public void setUp(){
-        User olav = new User("olav", "bestePassord123", "Olav", "Nordmann");
-        User nora = new User("nora", "bestePassord123", "Nora", "Bekkestad");
+        User olav = new User("olav", HashedPassword.hashPassword("bestePassord123"), "Olav", "Nordmann");
+        User nora = new User("nora", HashedPassword.hashPassword("bestePassord123"), "Nora", "Bekkestad");
 
         JobShift jobShift1 = new JobShift(olav, LocalDateTime.parse("2021-10-10T17:10:53.798134"), Duration.ofSeconds(7200),"Cool info",true);
         JobShift jobShift2 = new JobShift(nora, LocalDateTime.now(), Duration.ofSeconds(7200),"Cool test info",true);

@@ -2,20 +2,20 @@ package jobblett.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.text.Text;
 import jobblett.core.User;
 
 public class GroupHomeController extends SceneController{
 
     @FXML
-    Text groupName;
+    Label groupName;
 
     @FXML
     ListView<User> members;
 
     @FXML
-    Text groupID;
+    Label groupID;
 
     @FXML
     Button backToHome;
@@ -32,6 +32,12 @@ public class GroupHomeController extends SceneController{
         //Sets the ListView uninteractable
         members.setMouseTransparent(true);
         //members.setFocusTraversable(false);
+    }
+
+    @Override
+    public void styleIt() {
+        super.styleIt();
+        backToHome.setSkin(new ButtonAnimationSkin(backToHome));
     }
 
     @Override

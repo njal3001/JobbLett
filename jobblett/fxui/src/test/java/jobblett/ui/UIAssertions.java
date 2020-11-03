@@ -4,17 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.TextAlignment;
 import jobblett.core.JobShift;
 import org.assertj.core.internal.bytebuddy.asm.Advice;
 import org.testfx.api.FxRobot;
 
 import javafx.scene.Node;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 
 import java.time.LocalDateTime;
@@ -28,8 +24,8 @@ public class UIAssertions extends FxRobot {
     this.mainController = mainController;
   }
 
-  public void assertText(String fxid, String expected) {
-    Text text = lookup("#" + fxid).query();
+  public void assertLabel(String fxid, String expected) {
+    Label text = lookup("#" + fxid).query();
     assertEquals(expected, text.getText());
   }
 

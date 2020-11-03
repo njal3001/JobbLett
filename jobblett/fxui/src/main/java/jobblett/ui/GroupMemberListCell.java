@@ -2,8 +2,6 @@ package jobblett.ui;
 
 import javafx.scene.control.ListCell;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import jobblett.core.Group;
 import jobblett.core.User;
 
 public class GroupMemberListCell extends ListCell<User>{
@@ -23,7 +21,7 @@ public class GroupMemberListCell extends ListCell<User>{
     }
     else if(mainController.getActiveGroup().isAdmin(user)){
       setText(user.toString() + " [Admin]");
-      setFont(Font.font("Arial", FontWeight.BOLD,12));
+      setFont(Font.loadFont(ButtonAnimationSkin.class.getResourceAsStream(App.BOLD_FONT_FILE),16));
     }
     else{
       setText(user.toString());

@@ -26,14 +26,14 @@ public class LoginControllerTest extends JobbLettTest {
   public void testLogin_wrongPasswordAndUsername(){
     tryToLogin("WrongUsername", "WrongPassword12345");
     uiAssertions.assertOnScene(App.LOGIN_ID);
-    uiAssertions.assertText("errorMessage", "Wrong username or password");
+    uiAssertions.assertLabel("errorMessage", "Wrong username or password");
   } 
 
   @Test
   public void testLogin_correctPasswordAndUsername(){
     tryToLogin(user1.getUserName(), "CorrectPassword12345");
     uiAssertions.assertOnScene(App.USER_HOME_ID);
-    uiAssertions.assertText("userFullName", user1.getGivenName() + " " + user1.getFamilyName());
+    uiAssertions.assertLabel("userFullName", user1.getGivenName() + " " + user1.getFamilyName());
   }
 
   @Test

@@ -2,8 +2,8 @@ package jobblett.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import jobblett.core.Group;
 
 public class CreateGroupController extends SceneController {
@@ -13,7 +13,7 @@ public class CreateGroupController extends SceneController {
   @FXML
   TextField groupNameField;
   @FXML
-  Text errorMessage;
+  Label errorMessage;
   @FXML
   Button goBackButton;
 
@@ -21,6 +21,11 @@ public class CreateGroupController extends SceneController {
   public void onSceneDisplayed() {
     groupNameField.setText("");
     errorMessage.setText("");
+  }
+  
+  public void styleIt() {
+    createGroupButton.setSkin(new ButtonAnimationSkin(createGroupButton));
+    goBackButton.setSkin(new ButtonAnimationSkin(goBackButton));
   }
 
   @FXML

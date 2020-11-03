@@ -14,7 +14,7 @@ public interface JobblettAccess extends PropertyChangeListener {
 
     public Group getGroup(int groupID);
 
-    public User login(String userName, String password);
+    public User login(String userName, HashedPassword password);
 
     public Collection<Group> getGroups(User user);
 

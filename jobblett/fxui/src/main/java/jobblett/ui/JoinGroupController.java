@@ -2,8 +2,8 @@ package jobblett.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import jobblett.core.Group;
 
 public class JoinGroupController extends SceneController {
@@ -13,24 +13,31 @@ public class JoinGroupController extends SceneController {
   @FXML
   TextField groupIdField;
   @FXML
-  Text errorMessage;
+  Label errorMessage;
   @FXML
   Button goBackButton;
 
   @FXML
-  public void initialize(){
+  public void initialize() {
     // Sets a listener to prevent non-integers on groupID
     groupIdField.textProperty().addListener((observable, oldValue, newValue) -> {
-        if (newValue.length() != 0) {
-          try {
-            int i = Integer.parseInt(newValue);
-            if (i >= 10000)
-              groupIdField.setText(oldValue);
-          } catch (NumberFormatException e) {
+      if (newValue.length() != 0) {
+        try {
+          int i = Integer.parseInt(newValue);
+          if (i >= 10000)
             groupIdField.setText(oldValue);
-          }
+        } catch (NumberFormatException e) {
+          groupIdField.setText(oldValue);
         }
+      }
     });
+  }
+
+  @Override
+  public void styleIt() {
+    super.styleIt();
+    goBackButton.setSkin(new ButtonAnimationSkin(goBackButton));
+    joinGroupButton.setSkin(new ButtonAnimationSkin(joinGroupButton));
   }
 
   @Override
@@ -40,18 +47,18 @@ public class JoinGroupController extends SceneController {
   }
 
   @FXML
-  public void goToUserHome(){
+  public void goToUserHome() {
     mainController.setScene(App.USER_HOME_ID);
   }
 
   @FXML
-  public void joinGroup(){
+  public void joinGroup() {
     int groupID = 0;
 
-    //Disse error meldingene kan sikkert hentes direkte fra core
+    // Disse error meldingene kan sikkert hentes direkte fra core
     try {
       groupID = Integer.parseInt(groupIdField.getText());
-    } catch(NumberFormatException e){
+    } catch (NumberFormatException e) {
       errorMessage.setText("Invalid group ID");
       return;
     }
@@ -60,11 +67,11 @@ public class JoinGroupController extends SceneController {
       errorMessage.setText("No group has the given ID");
       return;
     }
-    try{
+    try {
       group.addUser(mainController.getActiveUser());
       mainController.setActiveGroup(group);
       mainController.setScene(App.GROUP_HOME_ID);
-    } catch(Exception e){
+    } catch (Exception e) {
       errorMessage.setText(e.getMessage());
     }
   }

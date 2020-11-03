@@ -30,7 +30,7 @@ public class JoinGroupControllerTest extends JobbLettTest {
   public void testJoinGroup_validGroupId() {
     tryToJoinGroup(String.valueOf(group2.getGroupID()));
     uiAssertions.assertOnScene(App.GROUP_HOME_ID);
-    uiAssertions.assertText("groupName", group2.getGroupName());
+    uiAssertions.assertLabel("groupName", group2.getGroupName());
     clickOn("#backToHome");
     uiAssertions.assertOnScene(App.USER_HOME_ID);
     uiAssertions.assertListViewHasItem("groups", group2);
@@ -40,7 +40,7 @@ public class JoinGroupControllerTest extends JobbLettTest {
   public void testJoinGroup_invalidGroupId(){
     tryToJoinGroup("0");
     uiAssertions.assertOnScene(App.JOIN_GROUP_ID);
-    uiAssertions.assertText("errorMessage", "No group has the given ID");
+    uiAssertions.assertLabel("errorMessage", "No group has the given ID");
   }
 
   //The group ID TextField should only accept numbers of maximum length 4
@@ -57,7 +57,7 @@ public class JoinGroupControllerTest extends JobbLettTest {
   public void testJoinGroup_alreadyPartOfGroup(){
     tryToJoinGroup(String.valueOf(group1.getGroupID()));
     uiAssertions.assertOnScene(App.JOIN_GROUP_ID);
-    uiAssertions.assertText("errorMessage", GroupMemberList.ALREADY_EXIST_ERROR_TEXT);
+    uiAssertions.assertLabel("errorMessage", GroupMemberList.ALREADY_EXIST_ERROR_TEXT);
   } 
 
   private void tryToJoinGroup(String groupId){

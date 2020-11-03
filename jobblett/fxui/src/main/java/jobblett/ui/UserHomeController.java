@@ -1,11 +1,9 @@
 package jobblett.ui;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import jobblett.core.Group;
 import jobblett.core.User;
 
@@ -15,7 +13,7 @@ public class UserHomeController extends SceneController {
     ListView<Group> groups;
 
     @FXML
-    Text userFullName;
+    Label userFullName;
 
     @FXML
     Button logOutButton;
@@ -25,6 +23,8 @@ public class UserHomeController extends SceneController {
 
     @FXML
     Button joinGroupButton;
+    
+    
 
     @FXML
     public void initialize(){
@@ -62,5 +62,13 @@ public class UserHomeController extends SceneController {
     @FXML
     public void joinGroup(){
       mainController.setScene(App.JOIN_GROUP_ID);
+    }
+
+    @Override
+    public void styleIt() {
+        super.styleIt();
+        logOutButton.setSkin(new ButtonAnimationSkin(logOutButton));
+        createGroupButton.setSkin(new ButtonAnimationSkin(createGroupButton));
+        joinGroupButton.setSkin(new ButtonAnimationSkin(joinGroupButton));
     }
 }

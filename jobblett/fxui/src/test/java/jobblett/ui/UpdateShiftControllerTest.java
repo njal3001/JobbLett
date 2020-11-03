@@ -1,8 +1,8 @@
 package jobblett.ui;
 
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import org.assertj.core.internal.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,10 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
@@ -91,9 +88,13 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
     date.setValue(tomorrow);
     // Setting up valid times for the shifts
     clickOn("#fromField");
+    type(KeyCode.BACK_SPACE,5);
+    type(KeyCode.DELETE,5);
     write("08:00");
     uiAssertions.assertTextField("fromField", "08:00");
     clickOn("#toField");
+    type(KeyCode.BACK_SPACE,5);
+    type(KeyCode.DELETE,5);
     write("15:30");
     uiAssertions.assertTextField("toField", "15:30");
     // Adding additional info for the shift
@@ -118,8 +119,12 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
     date.setValue(yesterday);
     // Setting up valid times for the shifts
     clickOn("#fromField");
+    type(KeyCode.BACK_SPACE,5);
+    type(KeyCode.DELETE,5);
     write("08:00");
     clickOn("#toField");
+    type(KeyCode.BACK_SPACE,5);
+    type(KeyCode.DELETE,5);
     write("15:30");
     // Adding additional info for the shift
     clickOn("#infoArea");
@@ -129,9 +134,9 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
 
     // The shift should not have been created, and we should still be in UpdateShift.fxml with an error message.
     // Verifying that we are getting an errormessage in UpdateShift.fxml
-    assertNotEquals("", ((Text) lookup("#errorMessage").query()).getText(), "No errormessages are shown");
+    assertNotEquals("", ((Label) lookup("#errorMessage").query()).getText(), "No errormessages are shown");
     //verifying that we are getting correct errormessage
-    uiAssertions.assertText("errorMessage", "Starting time must be later than the current time");
+    uiAssertions.assertLabel("errorMessage", "Starting time must be later than the current time");
   }
 
   @Test
@@ -143,8 +148,12 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
     date.setValue(tomorrow);
     // Setting up ivalid times for the shifts
     clickOn("#fromField");
+    type(KeyCode.BACK_SPACE,5);
+    type(KeyCode.DELETE,5);
     write("wrongInput");
     clickOn("#toField");
+    type(KeyCode.BACK_SPACE,5);
+    type(KeyCode.DELETE,5);
     write("123Wrong");
     // Adding additional info for the shift
     clickOn("#infoArea");
@@ -154,9 +163,9 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
 
     // The shift should not have been created, and we should still be in UpdateShift.fxml with an error message.
     // Verifying that we are getting an errormessage in UpdateShift.fxml
-    assertNotEquals("", ((Text) lookup("#errorMessage").query()).getText(), "No errormessages are shown");
+    assertNotEquals("", ((Label) lookup("#errorMessage").query()).getText(), "No errormessages are shown");
     //verifying that we are getting correct errormessage
-    uiAssertions.assertText("errorMessage", "Time period is not written in the correct format");
+    uiAssertions.assertLabel("errorMessage", "Time period is not written in the correct format");
 
   }
 

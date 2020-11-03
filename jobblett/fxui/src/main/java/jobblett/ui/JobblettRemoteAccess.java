@@ -69,10 +69,10 @@ public class JobblettRemoteAccess implements JobblettAccess{
     }
 
     @Override
-    public User login(String userName, String password) {
+    public User login(String userName, HashedPassword password) {
         Collection<String> userNameAndPassword = new ArrayList<>();
         userNameAndPassword.add(userName);
-        userNameAndPassword.add(password);
+        userNameAndPassword.add(password.toString());
         String userNameAndPasswordString = new JobblettSerializer().writeValueAsString(userNameAndPassword);
         return getFromServer(User.class,JOBBLETT_SERVICE_PATH+"/"+USER_LIST_SERVICE_PATH+"/login/"+userNameAndPasswordString);
     }

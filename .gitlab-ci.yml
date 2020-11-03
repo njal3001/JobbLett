@@ -1,0 +1,12 @@
+before_script:
+  - cd jobblett
+
+image: maven:latest
+
+cache:
+  paths:
+    - .m2/repository
+
+install:
+  script:
+    - mvn install -DskipTests

@@ -6,15 +6,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.text.Text;
 import jobblett.core.JobShift;
 import jobblett.core.User;
 
 public class ShiftViewController extends SceneController {
 
   @FXML
-  Text groupName;
+  Label groupName;
 
   @FXML
   ListView<JobShift> shifts;
@@ -121,5 +121,14 @@ public class ShiftViewController extends SceneController {
     boolean disable = shifts.getSelectionModel().getSelectedIndex() == -1;
     editShiftButton.setDisable(disable);
     deleteShiftButton.setDisable(disable);
+  }
+
+  @Override
+  public void styleIt() {
+    super.styleIt();
+    newShiftButton.setSkin(new ButtonAnimationSkin(newShiftButton));
+    editShiftButton.setSkin(new ButtonAnimationSkin(editShiftButton));
+    deleteShiftButton.setSkin(new ButtonAnimationSkin(deleteShiftButton));
+    backToGroup.setSkin(new ButtonAnimationSkin(backToGroup));
   }
 }
