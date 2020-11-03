@@ -69,6 +69,7 @@ public abstract class JobbLettTest extends ApplicationTest {
     jobShift1 = new JobShift(user1, LocalDateTime.now().plusHours(5), Duration.ofHours(5), "Tester jobshift1");
     jobShift2 = new JobShift(user1, LocalDateTime.now().plusHours(2), Duration.ofHours(5), "Tester jobshift2");
     group1.addJobShift(jobShift1,user1);
+    group1.addJobShift(jobShift2, user1);
   }
 
   @BeforeEach

@@ -34,4 +34,10 @@ public class GroupHomeTest extends JobbLettTest{
   public void testCorrectGroupId(){
     uiAssertions.assertLabel("groupID", "GroupID: " + group1.getGroupID());
   }
+
+  //TODO To be implemented
+  @Test
+  public void testAdminVisibility(){
+
+  }
 }
