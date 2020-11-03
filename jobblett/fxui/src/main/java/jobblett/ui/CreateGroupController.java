@@ -21,6 +21,11 @@ public class CreateGroupController extends SceneController {
   Button goBackButton;
 
   @Override
+  public void onSceneDisplayed() {
+    groupNameField.setText("");
+    errorMessage.setText("");
+  }
+  
   public void styleIt() {
     createGroupButton.setSkin(new ButtonAnimationSkin(createGroupButton));
     goBackButton.setSkin(new ButtonAnimationSkin(goBackButton));

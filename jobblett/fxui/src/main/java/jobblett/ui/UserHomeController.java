@@ -28,20 +28,18 @@ public class UserHomeController extends SceneController {
     
     
 
+    @FXML
+    public void initialize(){
+      groups.setCellFactory(groups -> new GroupListCell(mainController));
+    }
+
     @Override
     public void onSceneDisplayed() {
-        super.onSceneDisplayed();
         // Sets full name on top of the screen
         User activeUser = getActiveUser();
         String givenName = activeUser.getGivenName();
         String familyName = activeUser.getFamilyName();
         userFullName.setText(givenName + " " + familyName);
-
-        groups.setCellFactory(groups -> {
-          GroupListCell listCell = new GroupListCell();
-          return listCell;
-        });
-
         groups.getItems().clear();
         // Lists all groups
         for (Group group : getAccess().getGroups(getActiveUser()))

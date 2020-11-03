@@ -20,6 +20,22 @@ public class JoinGroupController extends SceneController {
   @FXML
   Button goBackButton;
 
+  @FXML
+  public void initialize() {
+    // Sets a listener to prevent non-integers on groupID
+    groupIdField.textProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue.length() != 0) {
+        try {
+          int i = Integer.parseInt(newValue);
+          if (i >= 10000)
+            groupIdField.setText(oldValue);
+        } catch (NumberFormatException e) {
+          groupIdField.setText(oldValue);
+        }
+      }
+    });
+  }
+
   @Override
   public void styleIt() {
     super.styleIt();
@@ -29,18 +45,8 @@ public class JoinGroupController extends SceneController {
 
   @Override
   public void onSceneDisplayed() {
-    // Sets a listener to prevent non-integers on groupID
-    groupIdField.textProperty().addListener((observable, oldValue, newValue) -> {
-        if (newValue.length() != 0) {
-          try {
-            int i = Integer.parseInt(newValue);
-            if (i >= 10000)
-              groupIdField.setText(oldValue);
-          } catch (NumberFormatException e) {
-            groupIdField.setText(oldValue);
-          }
-        }
-    });
+    groupIdField.setText("");
+    errorMessage.setText("");
   }
 
   @FXML
@@ -49,13 +55,13 @@ public class JoinGroupController extends SceneController {
   }
 
   @FXML
-  public void joinGroup(){
+  public void joinGroup() {
     int groupID = 0;
 
-    //Disse error meldingene kan sikkert hentes direkte fra core
+    // Disse error meldingene kan sikkert hentes direkte fra core
     try {
       groupID = Integer.parseInt(groupIdField.getText());
-    } catch(NumberFormatException e){
+    } catch (NumberFormatException e) {
       errorMessage.setText("Invalid group ID");
       return;
     }

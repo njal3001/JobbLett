@@ -35,6 +35,14 @@ public class CreateUserController extends SceneController {
   Button goBackButton;
 
   @Override
+  public void onSceneDisplayed() {
+    username.setText("");
+    password.setText("");
+    givenName.setText("");
+    familyName.setText("");
+    errorMessage.setText("");
+  }
+  
   public void styleIt() {
     super.styleIt();
     goBackButton.setSkin(new ButtonAnimationSkin(goBackButton));

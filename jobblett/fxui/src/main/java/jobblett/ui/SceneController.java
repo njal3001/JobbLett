@@ -28,9 +28,7 @@ public abstract class SceneController {
     return stage;
   }
 
-  //Denne metoden kan droppes hvis vi bruker listeners istedet tror jeg
-  public void onSceneDisplayed(){
-  }
+  public abstract void onSceneDisplayed();
 
   public void styleIt() {
 

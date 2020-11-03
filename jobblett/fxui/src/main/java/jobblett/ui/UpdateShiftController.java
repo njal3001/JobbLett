@@ -3,6 +3,7 @@ package jobblett.ui;
 import javafx.scene.control.*;
 import jobblett.core.JobShift;
 import jobblett.core.User;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.util.StringConverter;
 
@@ -11,6 +12,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 import static jobblett.ui.JobblettScenes.SHIFT_VIEW_ID;
 
@@ -42,11 +44,8 @@ public class UpdateShiftController extends SceneController {
 
   private JobShift activeJobShift;
 
-  // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme
-  // kode hver gang vi skal vise noe med listView
-
-  @Override
-  public void onSceneDisplayed() {
+  @FXML
+  public void initialize(){
     // setting up dateformat for the datepicker
     date.setConverter(new StringConverter<LocalDate>() {
 
@@ -72,31 +71,40 @@ public class UpdateShiftController extends SceneController {
     date.setEditable(false);
     date.setDayCellFactory(new DatePickerDayCell());
 
-
-    // utbedre til å detektere feil inntast automatisk??
-    fromField.textProperty().addListener((observable, oldValue, newValue) -> {
+    //Det her er litt mye logikk, burde kanskje heller ligge i en core klasse?
+    ChangeListener<String> listener = (observable, oldValue, newValue) -> {
+      
       /*
        * String pattern = "^(?=.*[0-9])(?=.*[:]).{0,}$";
        * if(!newValue.matches(pattern)){ if(oldValue.matches(pattern))
        * fromField.setText(oldValue); else fromField.setText("00:00"); }
        */
-      String exactPattern = "[0-2][0-9]:[0-5][0-9]";
-      if (!newValue.matches(exactPattern))
+
+      if(newValue.length() > 5){
         errorMessage.setText("Time period is not written in the correct format");
-      else
+        return;
+      }
+
+      //Finnes definitivt bedre måter å gjøre dette på
+      List<String> patterns = List.of("[0-2]", "[0-9]", ":", "[0-5]", "[0-9]");
+ 
+      for (int i = 0; i < newValue.length(); i++){
+        if(!String.valueOf(newValue.charAt(i)).matches(patterns.get(i))){
+          errorMessage.setText("Time period is not written in the correct format");
+          return;
+        }
+      }
         errorMessage.setText("");
+    };
+    //utbedre til å detektere feil inntast automatisk??
+    fromField.textProperty().addListener(listener);
+    toField.textProperty().addListener(listener);
+  }
+  
 
-    });
-
-    toField.textProperty().addListener((observable, oldValue, newValue) -> {
-      String exactPattern = "[0-2][0-9]:[0-5][0-9]";
-      if (!newValue.matches(exactPattern))
-        errorMessage.setText("Time period is not written in the correct format");
-      else
-        errorMessage.setText("");
-
-    });
-
+  @Override
+  public void onSceneDisplayed() {
+    
     // Lists all members
     members.setCellFactory(member -> {
       return new GroupMemberListCell();

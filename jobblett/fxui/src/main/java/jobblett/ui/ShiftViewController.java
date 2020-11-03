@@ -1,10 +1,15 @@
 package jobblett.ui;
 
+import java.util.List;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import jobblett.core.JobShift;
+import jobblett.core.User;
 
 import static jobblett.ui.JobblettScenes.*;
 
@@ -29,17 +34,31 @@ public class ShiftViewController extends SceneController {
   @FXML
   Button deleteShiftButton;
 
+
+  @FXML
+  CheckBox toggleUserFilterCheckBox;
+
+  @FXML
+  public void initialize(){
+    shifts.setCellFactory(shifts -> new JobShiftListCell());
+    shifts.getSelectionModel().selectedItemProperty().addListener(listener -> updateButtons());
+  }
+
   @Override
   public void onSceneDisplayed() {
     // Sets group name on top of the screen
     groupName.setText(getActiveGroup().getGroupName());
-
-    shifts.setCellFactory(shifts -> new JobShiftListCell());
-
-    shifts.getSelectionModel().selectedItemProperty().addListener(listener -> updateButtons());
+    toggleUserFilterCheckBox.setSelected(false);
     updateView();
     updateButtons();
-    newShiftButton.setVisible(getActiveGroup().isAdmin(getActiveUser()));
+    setButtonVisibility();
+  }
+
+  private void setButtonVisibility(){
+    List<Button> buttons = List.of(newShiftButton, editShiftButton, deleteShiftButton);
+    boolean visible = getActiveGroup().isAdmin(getActiveUser());
+    for(Button button : buttons)
+      button.setVisible(visible);
   }
 
   @FXML
@@ -70,12 +89,30 @@ public class ShiftViewController extends SceneController {
     }
   }
 
+  @FXML
+  public void toggleUserFilter(ActionEvent event){
+    CheckBox checkBox = (CheckBox) event.getSource();
+    if(checkBox.isSelected())
+      updateView(getActiveUser());
+    else
+      updateView();
+  }
+
   // Burde kanskje bruke observable for å kalle på denne metoden
   // Lists all job shifts
   private void updateView() {
-    shifts.getItems().clear();
-    for (JobShift shift : getActiveGroup().getJobShifts())
-      shifts.getItems().add(shift);
+    //Endre metode navn kanskje?
+    updateView(getActiveGroup().getJobShifts().getJobShifts());
+  }
+
+  private void updateView(User user) {
+    updateView(getActiveGroup().getJobShifts().getJobShifts(user));
+  }
+
+  private void updateView(List<JobShift> shifts){
+    this.shifts.getItems().clear();
+    for (JobShift shift : shifts)
+      this.shifts.getItems().add(shift);
   }
 
   private void updateButtons() {

@@ -2,6 +2,8 @@ package jobblett.core;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class JobShift extends JobblettPropertyChangeSupporter {
 
@@ -93,5 +95,12 @@ public class JobShift extends JobblettPropertyChangeSupporter {
   public int hashCode() {
     assert false : "hashCode not designed";
     return 42; // any arbitrary constant will do
+  }
+
+  public static void main(String[] args) {
+    String patternString = "([0-2])([0-9])(:)([0-5])([0-9])";
+    Pattern pattern = Pattern.compile(patternString);
+    Matcher matcher = pattern.matcher("12:00");
+    System.out.print(matcher.group(1));
   }
 }
