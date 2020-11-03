@@ -28,7 +28,7 @@ public class GroupHomeController extends SceneController{
 
     @FXML
     public void initialize(){
-      members.setCellFactory(members -> new GroupMemberListCell(mainController));
+      members.setCellFactory(members -> new GroupMemberListCell());
         //Sets the ListView uninteractable
         members.setMouseTransparent(true);
         //members.setFocusTraversable(false);

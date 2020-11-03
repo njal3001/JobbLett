@@ -30,7 +30,7 @@ public class UserHomeController extends SceneController {
 
     @FXML
     public void initialize(){
-      groups.setCellFactory(groups -> new GroupListCell(mainController));
+      groups.setCellFactory(groups -> new GroupListCell());
     }
 
     @Override
