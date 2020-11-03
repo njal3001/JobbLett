@@ -1,5 +1,6 @@
 package jobblett.ui;
 
+import static jobblett.ui.JobblettScenes.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
@@ -10,8 +11,8 @@ import jobblett.core.User;
 public class CreateUserControllerTest extends JobbLettTest {
 
   @Override
-  protected String giveID() {
-    return App.CREATE_USER_ID;
+  protected JobblettScenes giveID() {
+    return CREATE_USER_ID;
   }
 
   @Override
@@ -32,27 +33,27 @@ public class CreateUserControllerTest extends JobbLettTest {
   @Test
   public void testGoToLogin() {
     clickOn("#goBackButton");
-    uiAssertions.assertOnScene(App.LOGIN_ID);
+    uiAssertions.assertOnScene(LOGIN_ID);
   }
 
   @Test
   public void testCreateUser_invalidUserData() {
     tryToCreateUser("", "", "", "");
-    uiAssertions.assertOnScene(App.CREATE_USER_ID);
+    uiAssertions.assertOnScene(CREATE_USER_ID);
     uiAssertions.assertLabel("errorMessage", "Not a valid password\nNot a valid username\nNot a valid name");
   }
 
   @Test
   public void testCreateUser_validUserData() {
     tryToCreateUser("Test3", "Password12345", "Ole", "Dole");
-    uiAssertions.assertOnScene(App.USER_HOME_ID);
+    uiAssertions.assertOnScene(USER_HOME_ID);
     uiAssertions.assertLabel("userFullName", "Ole Dole");
   }
 
   @Test
   public void testCreateUser_usernameTaken() {
     tryToCreateUser("CorrectUsername", "CorrectPassword12345", "Ole", "Dole");
-    uiAssertions.assertOnScene(App.CREATE_USER_ID);
+    uiAssertions.assertOnScene(CREATE_USER_ID);
     uiAssertions.assertLabel("errorMessage", "User with the same username already exists");
   }
 

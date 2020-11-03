@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+import static jobblett.ui.JobblettScenes.SHIFT_VIEW_ID;
+
 public class UpdateShiftController extends SceneController {
 
   @FXML
@@ -105,10 +107,10 @@ public class UpdateShiftController extends SceneController {
     
     // Lists all members
     members.setCellFactory(member -> {
-      return new GroupMemberListCell(this.mainController);
+      return new GroupMemberListCell();
     });
     members.getItems().clear();
-    for (User user : mainController.getActiveGroup())
+    for (User user : getActiveGroup())
       members.getItems().add(user);
     errorMessage.setText("");
 
@@ -136,7 +138,7 @@ public class UpdateShiftController extends SceneController {
   @FXML
   public void goBack() throws IOException {
     activeJobShift = null;
-    mainController.setScene(App.SHIFT_VIEW_ID);
+    switchScene(SHIFT_VIEW_ID);
   }
 
   @FXML
@@ -149,7 +151,7 @@ public class UpdateShiftController extends SceneController {
       if (activeJobShift == null) {
         // New JobShift
         activeJobShift = new JobShift(user, startingTime, duration, info);
-        mainController.getActiveGroup().addJobShift(activeJobShift, mainController.getActiveUser());
+        getActiveGroup().addJobShift(activeJobShift, getActiveUser());
       } else {
         // Updating existing JobShift
         activeJobShift.setUser(user);

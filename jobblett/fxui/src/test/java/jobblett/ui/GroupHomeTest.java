@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import jobblett.core.Group;
 import jobblett.core.User;
 
+import static jobblett.ui.JobblettScenes.GROUP_HOME_ID;
+
 public class GroupHomeTest extends JobbLettTest{
 
   @Override
-  protected String giveID() {
-    return App.GROUP_HOME_ID;
+  protected JobblettScenes giveID() {
+    return GROUP_HOME_ID;
   }
 
   @Override

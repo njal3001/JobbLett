@@ -7,6 +7,8 @@ import javafx.scene.control.ListView;
 import jobblett.core.Group;
 import jobblett.core.User;
 
+import static jobblett.ui.JobblettScenes.*;
+
 public class UserHomeController extends SceneController {
 
     @FXML
@@ -28,40 +30,36 @@ public class UserHomeController extends SceneController {
 
     @FXML
     public void initialize(){
-      groups.setCellFactory(groups -> {
-          GroupListCell listCell = new GroupListCell(mainController);
-          return listCell;
-        });
+      groups.setCellFactory(groups -> new GroupListCell());
     }
 
     @Override
     public void onSceneDisplayed() {
         // Sets full name on top of the screen
-        User activeUser = mainController.getActiveUser();
+        User activeUser = getActiveUser();
         String givenName = activeUser.getGivenName();
         String familyName = activeUser.getFamilyName();
         userFullName.setText(givenName + " " + familyName);
-
         groups.getItems().clear();
         // Lists all groups
-        for (Group group : mainController.access.getGroups(mainController.getActiveUser()))
+        for (Group group : getAccess().getGroups(getActiveUser()))
             groups.getItems().add(group);
     }
 
     @FXML
     public void logOut() {
-        mainController.setActiveUser(null);
-        mainController.setScene(App.LOGIN_ID);
+        setActiveUser(null);
+        switchScene(LOGIN_ID);
     }
 
     @FXML
     public void createGroup(){
-    	mainController.setScene(App.CREATE_GROUP_ID);
+    	switchScene(CREATE_GROUP_ID);
     }
 
     @FXML
     public void joinGroup(){
-      mainController.setScene(App.JOIN_GROUP_ID);
+      switchScene(JOIN_GROUP_ID);
     }
 
     @Override

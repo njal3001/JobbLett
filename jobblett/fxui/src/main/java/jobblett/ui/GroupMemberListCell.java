@@ -5,12 +5,6 @@ import javafx.scene.text.Font;
 import jobblett.core.User;
 
 public class GroupMemberListCell extends ListCell<User>{
-
-  private MainController mainController;
-
-  public GroupMemberListCell(MainController mainController){
-    this.mainController = mainController;
-  }
   
   @Override
   public void updateItem(User user, boolean empty){
@@ -19,7 +13,7 @@ public class GroupMemberListCell extends ListCell<User>{
       setGraphic(null);
       setText(null);
     }
-    else if(mainController.getActiveGroup().isAdmin(user)){
+    else if(SceneController.getActiveGroup().isAdmin(user)){
       setText(user.toString() + " [Admin]");
       setFont(Font.loadFont(ButtonAnimationSkin.class.getResourceAsStream(App.BOLD_FONT_FILE),16));
     }

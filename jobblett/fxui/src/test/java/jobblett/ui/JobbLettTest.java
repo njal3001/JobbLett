@@ -1,5 +1,6 @@
 package jobblett.ui;
 
+import static jobblett.ui.SceneController.switchScene;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +19,6 @@ public abstract class JobbLettTest extends ApplicationTest {
   protected User user1, user2;
   protected Group group1, group2;
   protected JobShift jobShift1, jobShift2;
-  protected MainController mainController;
 
 
   protected SceneController controller;
@@ -27,7 +27,7 @@ public abstract class JobbLettTest extends ApplicationTest {
 
   // Subclasses implement this method to give the scene ID
   // for the starting scene of the test
-  protected abstract String giveID();
+  protected abstract JobblettScenes giveID();
 
   // Subclasses implement these methods to give the active user and group
   // for the starting scene of the test
@@ -40,29 +40,18 @@ public abstract class JobbLettTest extends ApplicationTest {
 
   @Override
   public void start(final Stage primaryStage) throws Exception {
-    mainController = new MainController(primaryStage);
-
+    App.loadScenes(primaryStage);
     setupData();
     getAccess().setLists(userList,groupList);
-    mainController.setActiveUser(giveActiveUser());
-    mainController.setActiveGroup(giveActiveGroup());
-
-    mainController.loadScene(App.LOGIN_ID, App.LOGIN_FILE);
-    mainController.loadScene(App.CREATE_USER_ID, App.CREATE_USER_FILE);
-    mainController.loadScene(App.USER_HOME_ID, App.USER_HOME_FILE);
-    mainController.loadScene(App.JOIN_GROUP_ID, App.JOIN_GROUP_FILE);
-    mainController.loadScene(App.CREATE_GROUP_ID, App.CREATE_GROUP_FILE);
-    mainController.loadScene(App.GROUP_HOME_ID, App.GROUP_HOME_FILE);
-    mainController.loadScene(App.SHIFT_VIEW_ID, App.SHIFT_VIEW_FILE);
-    mainController.loadScene(App.UPDATE_SHIFT_ID, App.UPDATE_SHIFT_FILE);
-
-    mainController.setScene(giveID());
+    SceneController.setActiveUser(giveActiveUser());
+    SceneController.setActiveGroup(giveActiveGroup());
+    switchScene(giveID());
     primaryStage.show();
-    controller = mainController.getSceneController(giveID());
+    controller = giveID().getController();
   }
 
   public JobblettAccess getAccess() {
-    return mainController.access;
+    return SceneController.getAccess();
   }
 
   protected void setupData() {
@@ -84,7 +73,7 @@ public abstract class JobbLettTest extends ApplicationTest {
 
   @BeforeEach
   public void setUp(){
-    uiAssertions = new UIAssertions(mainController);
+    uiAssertions = new UIAssertions();
   }
 
   @Test 

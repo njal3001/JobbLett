@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import jobblett.core.Group;
 
+import static jobblett.ui.JobblettScenes.GROUP_HOME_ID;
+import static jobblett.ui.JobblettScenes.USER_HOME_ID;
+
 public class JoinGroupController extends SceneController {
 
   @FXML
@@ -47,8 +50,8 @@ public class JoinGroupController extends SceneController {
   }
 
   @FXML
-  public void goToUserHome() {
-    mainController.setScene(App.USER_HOME_ID);
+  public void goToUserHome(){
+    switchScene(USER_HOME_ID);
   }
 
   @FXML
@@ -67,11 +70,11 @@ public class JoinGroupController extends SceneController {
       errorMessage.setText("No group has the given ID");
       return;
     }
-    try {
-      group.addUser(mainController.getActiveUser());
-      mainController.setActiveGroup(group);
-      mainController.setScene(App.GROUP_HOME_ID);
-    } catch (Exception e) {
+    try{
+      group.addUser(getActiveUser());
+      setActiveGroup(group);
+      switchScene(GROUP_HOME_ID);
+    } catch(Exception e){
       errorMessage.setText(e.getMessage());
     }
   }

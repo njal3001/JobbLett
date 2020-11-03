@@ -99,6 +99,23 @@
   -fx-background-radius: 5;
 }
 
+.check-box {
+  -fx-border-width: 0;
+}
+
+.check-box .box{
+  -fx-background-color:  default-primary-color;
+  -fx-border-width: 2;
+  -fx-border-color: text-primary-color;
+  -fx-border-radius: 10;
+  -fx-alignment: center;
+}
+
+.check-box:selected .box .mark{
+  -fx-background-color:  text-primary-color;
+  -fx-border-color: text-primary-color;
+}
+
 /*id usage conflicts with fx:id so use styleClass instead*/
 .delete {
   -fx-background-color:  alert-red-color;

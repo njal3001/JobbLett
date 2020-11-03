@@ -1,5 +1,6 @@
 package jobblett.ui;
 
+import static jobblett.ui.JobblettScenes.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import jobblett.core.GroupMemberList;
@@ -12,8 +13,8 @@ import jobblett.core.User;
 public class JoinGroupControllerTest extends JobbLettTest {
 
   @Override
-  protected String giveID() {
-    return App.JOIN_GROUP_ID;
+  protected JobblettScenes giveID() {
+    return JOIN_GROUP_ID;
   }
 
   @Override
@@ -29,17 +30,17 @@ public class JoinGroupControllerTest extends JobbLettTest {
   @Test
   public void testJoinGroup_validGroupId() {
     tryToJoinGroup(String.valueOf(group2.getGroupID()));
-    uiAssertions.assertOnScene(App.GROUP_HOME_ID);
+    uiAssertions.assertOnScene(GROUP_HOME_ID);
     uiAssertions.assertLabel("groupName", group2.getGroupName());
     clickOn("#backToHome");
-    uiAssertions.assertOnScene(App.USER_HOME_ID);
+    uiAssertions.assertOnScene(USER_HOME_ID);
     uiAssertions.assertListViewHasItem("groups", group2);
   } 
 
   @Test
   public void testJoinGroup_invalidGroupId(){
     tryToJoinGroup("0");
-    uiAssertions.assertOnScene(App.JOIN_GROUP_ID);
+    uiAssertions.assertOnScene(JOIN_GROUP_ID);
     uiAssertions.assertLabel("errorMessage", "No group has the given ID");
   }
 
@@ -56,7 +57,7 @@ public class JoinGroupControllerTest extends JobbLettTest {
   @Test
   public void testJoinGroup_alreadyPartOfGroup(){
     tryToJoinGroup(String.valueOf(group1.getGroupID()));
-    uiAssertions.assertOnScene(App.JOIN_GROUP_ID);
+    uiAssertions.assertOnScene(JOIN_GROUP_ID);
     uiAssertions.assertLabel("errorMessage", GroupMemberList.ALREADY_EXIST_ERROR_TEXT);
   } 
 

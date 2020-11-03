@@ -20,7 +20,8 @@ public class JobShiftListCell extends ListCell<JobShift>{
       return;
     }
 
-    boolean isNewItem = getItem()==null;
+    //TODO: bør gjøres på en bedre måte... Nå legger den ny listener hver gang den oppdateres (den gamle slettes ikke)
+    boolean isNewItem = getItem()!=jobShift;
     super.updateItem(jobShift, empty);
 
     final String shiftText = formatJobShift(jobShift);
