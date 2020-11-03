@@ -24,7 +24,7 @@
          <Button fx:id="newShiftButton" layoutX="135.0" layoutY="380.0" onAction="#goToCreateShift" prefHeight="26.0" prefWidth="95.0" style="-fx-background-color: #a0ffa0;" text="Add new shift" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
          <Button fx:id="editShiftButton" layoutX="135.0" layoutY="416.0" onAction="#goToEditShift" prefHeight="26.0" prefWidth="95.0" text="Edit shift" />
          <Button fx:id="deleteShiftButton" layoutX="135.0" layoutY="453.0" onAction="#handleDeleteShift" prefHeight="26.0" prefWidth="95.0" style="-fx-background-color: #ffa0a0;" text="Delete shift" />
-         <Text text="Show only your shifts:" layoutX="135" layoutY="150"></Text>
-         <CheckBox fx:id="toggleUserFilterCheckBox"  layoutX="180" layoutY="150" onAction="#toggleUserFilter"></CheckBox>
+         <Text text="Show only your shifts:" layoutX="35.0" layoutY="513.0"></Text>
+         <CheckBox fx:id="toggleUserFilterCheckBox"  layoutX="162.0" layoutY="500.0" onAction="#toggleUserFilter"></CheckBox>
     </children>
 </Pane>
