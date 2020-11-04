@@ -46,7 +46,7 @@ public class GroupHomeController extends SceneController{
         groupName.setText(getActiveGroup().getGroupName());
 
         // Shows GroupID
-        groupID.setText("GroupID: " + getActiveGroup().getGroupID());
+        groupID.setText("GroupID: " + getActiveGroup().getGroupId());
 
         members.getItems().clear();
         // Lists all members

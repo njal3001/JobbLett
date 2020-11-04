@@ -8,8 +8,6 @@ import jobblett.core.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.stream.Collectors;
 
 public class GroupSerializer extends StdSerializer<Group> {
 
@@ -28,7 +26,7 @@ public class GroupSerializer extends StdSerializer<Group> {
         //Collection<String> usernames = groupMembers.stream().map(u -> u.getUserName()).collect(Collectors.toList());
         jsonGenerator.writeObjectField("groupMembers",groupMembers);
 
-        jsonGenerator.writeNumberField("groupID",o.getGroupID());
+        jsonGenerator.writeNumberField("groupID",o.getGroupId());
         jsonGenerator.writeObjectField("jobShifts",o.getJobShifts());
         jsonGenerator.writeObjectField("admins",o.getAdmins());
 

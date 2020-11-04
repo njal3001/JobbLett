@@ -29,7 +29,7 @@ public class JoinGroupControllerTest extends JobbLettTest {
 
   @Test
   public void testJoinGroup_validGroupId() {
-    tryToJoinGroup(String.valueOf(group2.getGroupID()));
+    tryToJoinGroup(String.valueOf(group2.getGroupId()));
     uiAssertions.assertOnScene(GROUP_HOME_ID);
     uiAssertions.assertLabel("groupName", group2.getGroupName());
     clickOn("#backToHome");
@@ -56,7 +56,7 @@ public class JoinGroupControllerTest extends JobbLettTest {
 
   @Test
   public void testJoinGroup_alreadyPartOfGroup(){
-    tryToJoinGroup(String.valueOf(group1.getGroupID()));
+    tryToJoinGroup(String.valueOf(group1.getGroupId()));
     uiAssertions.assertOnScene(JOIN_GROUP_ID);
     uiAssertions.assertLabel("errorMessage", GroupMemberList.ALREADY_EXIST_ERROR_TEXT);
   } 
