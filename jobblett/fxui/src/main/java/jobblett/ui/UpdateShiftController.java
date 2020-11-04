@@ -99,7 +99,7 @@ public class UpdateShiftController extends SceneController {
     toField.textProperty().addListener(listener);
   }
 
-//TODO: trenger kanskje ikke fet skrift for admin her?
+  //TODO: trenger kanskje ikke fet skrift for admin her?
   @Override public void onSceneDisplayed() {
 
     // Lists all members
