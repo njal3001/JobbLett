@@ -3,15 +3,18 @@ package jobblett.ui;
 import static jobblett.ui.SceneController.switchScene;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import javafx.stage.Stage;
+import jobblett.core.Group;
+import jobblett.core.GroupList;
+import jobblett.core.HashedPassword;
+import jobblett.core.JobShift;
+import jobblett.core.User;
+import jobblett.core.UserList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-
-import javafx.stage.Stage;
-import jobblett.core.*;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
 
 //Abstract class which all other UI test classes inherit from
 public abstract class JobbLettTest extends ApplicationTest {
@@ -24,6 +27,8 @@ public abstract class JobbLettTest extends ApplicationTest {
   protected SceneController controller;
 
   protected UIAssertions uiAssertions;
+  private UserList userList;
+  private GroupList groupList;
 
   // Subclasses implement this method to give the scene ID
   // for the starting scene of the test
@@ -32,17 +37,13 @@ public abstract class JobbLettTest extends ApplicationTest {
   // Subclasses implement these methods to give the active user and group
   // for the starting scene of the test
   protected abstract User giveActiveUser();
+
   protected abstract Group giveActiveGroup();
 
- 
-  private UserList userList;
-  private GroupList groupList;
-
-  @Override
-  public void start(final Stage primaryStage) throws Exception {
+  @Override public void start(final Stage primaryStage) throws Exception {
     App.loadScenes(primaryStage);
     setupData();
-    getAccess().setLists(userList,groupList);
+    getAccess().setLists(userList, groupList);
     SceneController.setActiveUser(giveActiveUser());
     SceneController.setActiveGroup(giveActiveGroup());
     switchScene(giveID());
@@ -57,8 +58,11 @@ public abstract class JobbLettTest extends ApplicationTest {
   protected void setupData() {
     userList = new UserList();
     groupList = new GroupList();
-    user1 = new User("CorrectUsername", HashedPassword.hashPassword("CorrectPassword12345"), "Ole", "Dole");
-    user2 = new User("CorrectUsername2", HashedPassword.hashPassword("CorrectPassword12345"), "Hans", "Henrik");
+    user1 = new User("CorrectUsername", HashedPassword.hashPassword("CorrectPassword12345"), "Ole",
+        "Dole");
+    user2 =
+        new User("CorrectUsername2", HashedPassword.hashPassword("CorrectPassword12345"), "Hans",
+            "Henrik");
     userList.add(user1);
     userList.add(user2);
     group1 = groupList.newGroup("Test Group 1");
@@ -66,24 +70,23 @@ public abstract class JobbLettTest extends ApplicationTest {
     group1.addUser(user1);
     group1.addAdmin(user1);
     group1.addUser(user2);
-    jobShift1 = new JobShift(user1, LocalDateTime.now().plusHours(5), Duration.ofHours(5), "Tester jobshift1");
-    jobShift2 = new JobShift(user1, LocalDateTime.now().plusHours(2), Duration.ofHours(5), "Tester jobshift2");
-    group1.addJobShift(jobShift1,user1);
+    jobShift1 = new JobShift(user1, LocalDateTime.now().plusHours(5), Duration.ofHours(5),
+        "Tester jobshift1");
+    jobShift2 = new JobShift(user1, LocalDateTime.now().plusHours(2), Duration.ofHours(5),
+        "Tester jobshift2");
+    group1.addJobShift(jobShift1, user1);
     group1.addJobShift(jobShift2, user1);
   }
 
-  @BeforeEach
-  public void setUp(){
+  @BeforeEach public void setUp() {
     uiAssertions = new UIAssertions();
   }
 
-  @Test 
-  public void testController(){ 
-    assertNotNull(controller); 
+  @Test public void testController() {
+    assertNotNull(controller);
   }
 
-  @Test
-  public void testInitialScene(){
+  @Test public void testInitialScene() {
     uiAssertions.assertOnScene(giveID());
   }
 }

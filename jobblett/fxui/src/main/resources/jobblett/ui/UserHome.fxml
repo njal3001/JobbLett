@@ -5,22 +5,26 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.UserHomeController">
+<Pane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css"
+      xmlns="http://javafx.com/javafx/11.0.1" fx:controller="jobblett.ui.UserHomeController">
     <children>
-        <ListView fx:id="groups" layoutX="58.0" layoutY="202.0" prefHeight="276.0" prefWidth="244.0" />
-        <Button fx:id="joinGroupButton" layoutX="38.0" layoutY="518.0" onAction="#joinGroup" text="Join group" />
-        <Button fx:id="createGroupButton" layoutX="230.0" layoutY="518.0" onAction="#createGroup" text="Create group" />
-        <Button styleClass="back" fx:id="logOutButton" layoutX="291.0" layoutY="15.0" onAction="#logOut" text="Log out" />
+        <ListView fx:id="groups" layoutX="58.0" layoutY="202.0" prefHeight="276.0" prefWidth="244.0"/>
+        <Button fx:id="joinGroupButton" layoutX="38.0" layoutY="518.0" onAction="#joinGroup" text="Join group"/>
+        <Button fx:id="createGroupButton" layoutX="230.0" layoutY="518.0" onAction="#createGroup" text="Create group"/>
+        <Button styleClass="back" fx:id="logOutButton" layoutX="291.0" layoutY="15.0" onAction="#logOut"
+                text="Log out"/>
 
-        <Label fx:id="userFullName" layoutX="54.0" layoutY="45.0" prefHeight="38.0" prefWidth="253.0" styleClass="header" text="User" textAlignment="CENTER">
+        <Label fx:id="userFullName" layoutX="54.0" layoutY="45.0" prefHeight="38.0" prefWidth="253.0"
+               styleClass="header" text="User" textAlignment="CENTER">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
-        <Label fx:id="yourGroupsText" layoutX="58.0" layoutY="153.0" prefHeight="26.0" prefWidth="172.0" styleClass="small-header" text="Your groups:">
+        <Label fx:id="yourGroupsText" layoutX="58.0" layoutY="153.0" prefHeight="26.0" prefWidth="172.0"
+               styleClass="small-header" text="Your groups:">
             <font>
-                <Font size="17.0" />
+                <Font size="17.0"/>
             </font>
         </Label>
     </children>

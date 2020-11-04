@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.CreateGroupController">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<Pane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css"
+      xmlns="http://javafx.com/javafx/11.0.1" fx:controller="jobblett.ui.CreateGroupController">
     <children>
-        <Label layoutX="35.0" layoutY="171.0" prefHeight="38.0" prefWidth="290.0" styleClass="header" text="Group name:" textAlignment="CENTER">
-         <font>
-            <Font size="31.0" />
-         </font></Label>
+        <Label layoutX="35.0" layoutY="171.0" prefHeight="38.0" prefWidth="290.0" styleClass="header" text="Group name:"
+               textAlignment="CENTER">
+            <font>
+                <Font size="31.0"/>
+            </font>
+        </Label>
         <TextField fx:id="groupNameField" layoutX="69.0" layoutY="230.0" onAction="#createGroup">
             <font>
-                <Font size="19.0" />
+                <Font size="19.0"/>
             </font>
         </TextField>
-        <Label fx:id="errorMessage" layoutX="93.0" layoutY="517.0" styleClass="error_message" />
-        <Button fx:id="createGroupButton" layoutX="180.0" layoutY="294.0" mnemonicParsing="false" onAction="#createGroup" text="Create your group">
-         <effect>
-            <Blend mode="OVERLAY" />
-         </effect>
+        <Label fx:id="errorMessage" layoutX="93.0" layoutY="517.0" styleClass="error_message"/>
+        <Button fx:id="createGroupButton" layoutX="180.0" layoutY="294.0" mnemonicParsing="false"
+                onAction="#createGroup" text="Create your group">
+            <effect>
+                <Blend mode="OVERLAY"/>
+            </effect>
         </Button>
-        <Button fx:id="goBackButton" layoutX="71.0" layoutY="294.0" mnemonicParsing="false" onAction="#goToUserHome" styleClass="back" text="Back" />
+        <Button fx:id="goBackButton" layoutX="71.0" layoutY="294.0" mnemonicParsing="false" onAction="#goToUserHome"
+                styleClass="back" text="Back"/>
     </children>
 </Pane>
