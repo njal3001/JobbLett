@@ -18,7 +18,7 @@ public abstract class JobbLettTest extends ApplicationTest {
 
   protected User user1, user2;
   protected Group group1, group2;
-  protected JobShift jobShift1, jobShift2;
+  protected JobShift jobShift1, jobShift2, jobShift3;
 
 
   protected SceneController controller;
@@ -68,8 +68,10 @@ public abstract class JobbLettTest extends ApplicationTest {
     group1.addUser(user2);
     jobShift1 = new JobShift(user1, LocalDateTime.now().plusHours(5), Duration.ofHours(5), "Tester jobshift1");
     jobShift2 = new JobShift(user1, LocalDateTime.now().plusHours(2), Duration.ofHours(5), "Tester jobshift2");
+    jobShift3 = new JobShift(user2, LocalDateTime.now().plusHours(7), Duration.ofHours(5), "Tester jobshift3");
     group1.addJobShift(jobShift1,user1);
     group1.addJobShift(jobShift2, user1);
+    group1.addJobShift(jobShift3, user1);
   }
 
   @BeforeEach

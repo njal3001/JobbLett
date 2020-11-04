@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 import org.junit.jupiter.api.Test;
 
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
@@ -83,7 +83,7 @@ public class ShiftViewControllerTest extends JobbLettTest{
 
     //Now our new shift should be in the middle of the ListView.
     clickOn(shifts);
-    assertEquals(3, shifts.getItems().size(), "There are not three shifts in the shiftView");
+    assertEquals(4, shifts.getItems().size(), "There are not three shifts in the shiftView");
     type(KeyCode.ENTER);
     type(KeyCode.DOWN);
     JobShift newShift = shifts.getSelectionModel().getSelectedItem();
@@ -91,6 +91,19 @@ public class ShiftViewControllerTest extends JobbLettTest{
     assertNotEquals(shiftAtTop, newShift, "The shift that shall be on the top, is in the middle.");
     
 
+  }
+
+  @Test
+  public void testUserFilter(){
+    ListView<JobShift> shifts = lookup("#shifts").query();
+    assertEquals(3, shifts.getItems().size());
+    CheckBox toggleUserFilterCheckBox = (CheckBox) lookup("#toggleUserFilterCheckBox").query();
+    clickOn(toggleUserFilterCheckBox);
+    assertEquals(2, shifts.getItems().size());
+    assertEquals(jobShift2, (JobShift) uiAssertions.findListCell(0).getItem());
+    assertEquals(jobShift1, (JobShift) uiAssertions.findListCell(1).getItem());
+    clickOn(toggleUserFilterCheckBox);
+    assertEquals(3, shifts.getItems().size());
   }
 
   @Test
