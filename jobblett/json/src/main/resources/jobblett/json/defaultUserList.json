@@ -1,23 +1,28 @@
 {
-  "users" : [ {
-    "username" : "olav",
-    "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
-    "givenName" : "Olav",
-    "familyName" : "Nordmann"
-  }, {
-    "username" : "nora",
-    "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
-    "givenName" : "Nora",
-    "familyName" : "Bekkestad"
-  }, {
-    "username" : "petter",
-    "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
-    "givenName" : "Petter",
-    "familyName" : "Petterson"
-  }, {
-    "username" : "david",
-    "password" : "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
-    "givenName" : "David",
-    "familyName" : "Berg"
-  } ]
+  "users": [
+    {
+      "username": "olav",
+      "password": "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
+      "givenName": "Olav",
+      "familyName": "Nordmann"
+    },
+    {
+      "username": "nora",
+      "password": "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
+      "givenName": "Nora",
+      "familyName": "Bekkestad"
+    },
+    {
+      "username": "petter",
+      "password": "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
+      "givenName": "Petter",
+      "familyName": "Petterson"
+    },
+    {
+      "username": "david",
+      "password": "4eedeb97e95c27b0479f786733b3a71bc47a2f61f795cac1b29bc77b58b4df71",
+      "givenName": "David",
+      "familyName": "Berg"
+    }
+  ]
 }
