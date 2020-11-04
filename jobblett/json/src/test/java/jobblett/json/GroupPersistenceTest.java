@@ -1,5 +1,6 @@
 package jobblett.json;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -56,10 +57,9 @@ import org.junit.jupiter.api.TestInstance;
     // Deserializing
     mapper = new ObjectMapper();
     mapper.registerModule(new JobblettCoreModule());
-
     try {
       Group newGroup = mapper.readValue(result, Group.class);
-      assertTrue(newGroup.equals(group));
+      assertEquals(group, newGroup);
     } catch (JsonProcessingException e) {
       e.printStackTrace();
       fail(e);
