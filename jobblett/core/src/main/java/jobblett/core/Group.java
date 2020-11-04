@@ -29,12 +29,17 @@ public class Group extends JobblettPropertyChangeSupporter implements Iterable<U
         this.groupID = groupID;
     }
 
+    //TODO: Kanskje endre på denne metoden, litt rart at den tar inn en User
     // Føles ikke riktig å gjøre det slik, men tenker at vi må ha noe logikk som gjør at en vanlig user ikke kan lage job shift.
     //Men dette vil ikke bli brukt i kontrolleren siden der fjerner vi bare knappen for å lage job shift hvis man ikke er admin
     //Burde finne en annen måte å gjøre det på kanskje
     public void addJobShift(JobShift jobShift, User user) {
-        if(!isAdmin(user))
-            throw new IllegalArgumentException("It's only admin that can add new job shift");
+        if(!groupMembers.contains(jobShift.getUser())){
+          throw new IllegalArgumentException("Job shift user is not a member of the group");
+        }
+        if(!isAdmin(user)){
+          throw new IllegalArgumentException("It's only admin that can add new job shift");
+        }
         jobShifts.add(jobShift);
     }
 
@@ -63,6 +68,9 @@ public class Group extends JobblettPropertyChangeSupporter implements Iterable<U
     }
 
     public boolean addAdmin(User user) {
+      if(!groupMembers.contains(user)){
+        throw new IllegalArgumentException("User is not a member of the group");
+      }
         UserList oldAdmins = new UserList();
         oldAdmins.addAll(admins);
 
@@ -108,10 +116,7 @@ public class Group extends JobblettPropertyChangeSupporter implements Iterable<U
      * @return  returns the user if found, else null.
      */
     public User getUser(String username) {
-        return groupMembers.stream()
-                .filter(group -> group.getUserName().equals(username))
-                .findFirst()
-                .orElse(null);
+        return groupMembers.get(username);
     }
 
     /**
@@ -181,6 +186,7 @@ public class Group extends JobblettPropertyChangeSupporter implements Iterable<U
         return groupID;
     }
 
+    //TODO: Burde kanskje hete getJobShiftList istedet 
     public JobShiftList getJobShifts() {
         return jobShifts;
     }

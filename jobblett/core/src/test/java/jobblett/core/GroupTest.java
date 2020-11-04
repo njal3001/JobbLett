@@ -6,15 +6,22 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Iterator;
+
 public class GroupTest {
     
     private Group group;
-    User user1;
+    User user1, user2;
+    JobShift jobshift1;
 
     @BeforeEach
     public void setUp(){
         group = new Group("test", 1);
         user1 = new User("test1", HashedPassword.hashPassword("Passord123"), "Kari", "Testermann");
+        user2 = new User("test2", HashedPassword.hashPassword("Passord123"), "Kari", "Testermann");
+        jobshift1 = new JobShift(user1, LocalDateTime.now().plusHours(5), Duration.ofHours(5), "Info");
     }
 	
 	@Test
@@ -57,12 +64,79 @@ public class GroupTest {
 
     @Test
     public void testToString() {
-        User user2 = new User("test2", HashedPassword.hashPassword("Passord123"), "Kari", "Testermann");
         group.addUser(user1);
         group.addUser(user2);
         assertEquals("test: Kari Testermann (@test1), Kari Testermann (@test2)", group.toString());
     }
     
-    //Burde kanskje ha test for iterable også
+    @Test
+    public void testIterator(){
+      group.addUser(user1);
+      group.addUser(user2);
+      Iterator<User> iter = group.iterator();
+      assertTrue(iter.hasNext());
+      assertEquals(user1, iter.next());
+      assertTrue(iter.hasNext());
+      assertEquals(user2, iter.next());
+      assertFalse(iter.hasNext());
+    }
+
+    @Test
+    public void testAddAdmin_userInGroup(){
+      group.addUser(user1);
+      assertFalse(group.isAdmin(user1));
+      group.addAdmin(user1);
+      assertTrue(group.isAdmin(user1));
+    }
+
+    @Test
+    public void testAddAdmin_userNotInGroup(){
+      try{
+        group.addAdmin(user1);
+        fail("Exception should be thrown");
+      } catch(Exception e){
+        assertTrue(e instanceof IllegalArgumentException);
+      }
+    }
+
+    @Test
+    public void testRemoveAdmin(){
+      group.addUser(user1);
+      group.addAdmin(user1);
+      group.removeAdmin(user1);
+      assertFalse(group.isAdmin(user1));
+    }
+
+    @Test
+    public void testAddJobShift_jobshiftUserInGroup(){
+      group.addUser(user1);
+      group.addAdmin(user1);
+      group.addJobShift(jobshift1, user1);
+      assertTrue(group.getJobShifts().contains(jobshift1));
+    }
+
+    @Test
+    public void testAddJobShift_jobshiftUserNotInGroup(){
+      group.addUser(user2);
+      group.addAdmin(user2);
+      try{
+        group.addJobShift(jobshift1, user2);
+        fail("Exception should be thrown");
+      } catch(Exception e){
+        assertTrue(e instanceof IllegalArgumentException);
+      }
+    }
+
+    @Test
+    public void testAddJobShift_userNotAdmin(){
+      group.addUser(user1);
+      try{
+        group.addJobShift(jobshift1, user1);
+        fail("Exception should be thrown");
+      } catch(Exception e){
+        assertTrue(e instanceof IllegalArgumentException);
+      }
+    }
+    //TODO: Skal vi ha property changed tester på alle klassene som bruker det?
 }
 
