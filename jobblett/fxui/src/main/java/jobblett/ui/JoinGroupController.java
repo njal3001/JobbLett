@@ -1,7 +1,7 @@
 package jobblett.ui;
 
-import static jobblett.ui.JobblettScenes.GROUP_HOME_ID;
-import static jobblett.ui.JobblettScenes.USER_HOME_ID;
+import static jobblett.ui.JobblettScenes.GROUP_HOME;
+import static jobblett.ui.JobblettScenes.USER_HOME;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -47,7 +47,7 @@ public class JoinGroupController extends SceneController {
   }
 
   @FXML public void goToUserHome() {
-    switchScene(USER_HOME_ID);
+    switchScene(USER_HOME);
   }
 
   /**
@@ -71,7 +71,7 @@ public class JoinGroupController extends SceneController {
     try {
       group.addUser(getActiveUser());
       setActiveGroup(group);
-      switchScene(GROUP_HOME_ID);
+      switchScene(GROUP_HOME);
     } catch (Exception e) {
       errorMessage.setText(e.getMessage());
     }

@@ -84,4 +84,8 @@ public class UIAssertions extends FxRobot {
     assertEquals(expectedString, stringShownOnCell,
         "The string shown in the cell is not the same as expected");
   }
+
+  public void assertBoldText(ListCell<Object> listCell) {
+    assertEquals("Bold", listCell.getFont().getStyle());
+  }
 }

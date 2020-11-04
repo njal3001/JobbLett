@@ -1,7 +1,7 @@
 package jobblett.ui;
 
-import static jobblett.ui.JobblettScenes.SHIFT_VIEW_ID;
-import static jobblett.ui.JobblettScenes.UPDATE_SHIFT_ID;
+import static jobblett.ui.JobblettScenes.SHIFT_VIEW;
+import static jobblett.ui.JobblettScenes.UPDATE_SHIFT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -31,21 +31,21 @@ public class UpdateShiftControllerTest extends JobbLettTest {
   String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
 
 
-  @Override protected JobblettScenes giveID() {
-    return UPDATE_SHIFT_ID;
+  @Override protected JobblettScenes giveId() {
+    return UPDATE_SHIFT;
   }
 
-  @Override protected User giveActiveUser() {
+  @Override protected User optionalActiveUser() {
     return user1;
   }
 
-  @Override protected Group giveActiveGroup() {
+  @Override protected Group optionalActiveGroup() {
     return group1;
   }
 
   @Test public void testGoBack() {
     clickOn("#goBackButton");
-    uiAssertions.assertOnScene(SHIFT_VIEW_ID);
+    uiAssertions.assertOnScene(SHIFT_VIEW);
   }
 
 /*
@@ -162,7 +162,7 @@ public class UpdateShiftControllerTest extends JobbLettTest {
   }
 
   @Test public void testUpdateShift() {
-    UpdateShiftController shiftController = (UpdateShiftController) UPDATE_SHIFT_ID.getController();
+    UpdateShiftController shiftController = (UpdateShiftController) UPDATE_SHIFT.getController();
     shiftController.setActiveJobShift(jobShift1);
     Platform.runLater(() -> {
       shiftController.onSceneDisplayed();
@@ -170,8 +170,7 @@ public class UpdateShiftControllerTest extends JobbLettTest {
     //choosing the user on top
     clickOn("#members");
     type(KeyCode.ENTER);
-    uiAssertions
-        .assertDate("date", LocalDateTime.now().plusHours(5).format(App.EXPECTED_DATE_FORMAT));
+    uiAssertions.assertDate("date", LocalDateTime.now().plusHours(5).format(App.EXPECTED_DATE_FORMAT));
     //Setting the date for tomorrow(future)
     DatePicker date = lookup("#date").query();
     date.setValue(tomorrow);
@@ -193,12 +192,17 @@ public class UpdateShiftControllerTest extends JobbLettTest {
     uiAssertions.assertTextArea("infoArea", "We are testing if update jobshift is working");
     // Creating the shift
     clickOn("#createShiftButton");
-  }
 
-  @Test public void testUpdatedShiftViewCell() {
+    //testing that the updates shift is still references as the same shift
     ListCell jobShiftListCell = uiAssertions.findListCell(0);
     jobShiftListCell.equals(jobShift1);
-
   }
+
+  //TODO vi må fikse test som ikke lar det trykke på tidligere datoer
+/*  @Test public void datePickerTest() {
+    DatePicker datePicker = lookup("#date").query();
+    datePicker.setValue(yesterday);
+    System.out.println(datePicker.getValue());
+  }*/
 
 }

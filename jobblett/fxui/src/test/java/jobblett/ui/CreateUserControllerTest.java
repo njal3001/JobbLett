@@ -1,8 +1,8 @@
 package jobblett.ui;
 
-import static jobblett.ui.JobblettScenes.CREATE_USER_ID;
-import static jobblett.ui.JobblettScenes.LOGIN_ID;
-import static jobblett.ui.JobblettScenes.USER_HOME_ID;
+import static jobblett.ui.JobblettScenes.CREATE_USER;
+import static jobblett.ui.JobblettScenes.LOGIN;
+import static jobblett.ui.JobblettScenes.USER_HOME;
 
 import jobblett.core.Group;
 import jobblett.core.User;
@@ -10,17 +10,10 @@ import org.junit.jupiter.api.Test;
 
 public class CreateUserControllerTest extends JobbLettTest {
 
-  @Override protected JobblettScenes giveID() {
-    return CREATE_USER_ID;
+  @Override protected JobblettScenes giveId() {
+    return CREATE_USER;
   }
 
-  @Override protected User giveActiveUser() {
-    return null;
-  }
-
-  @Override protected Group giveActiveGroup() {
-    return null;
-  }
 
   @Test public void testErrorMessage_EmptyAfterInitalization() {
     uiAssertions.assertLabel("errorMessage", "");
@@ -28,25 +21,25 @@ public class CreateUserControllerTest extends JobbLettTest {
 
   @Test public void testGoToLogin() {
     clickOn("#goBackButton");
-    uiAssertions.assertOnScene(LOGIN_ID);
+    uiAssertions.assertOnScene(LOGIN);
   }
 
   @Test public void testCreateUser_invalidUserData() {
     tryToCreateUser("", "", "", "");
-    uiAssertions.assertOnScene(CREATE_USER_ID);
+    uiAssertions.assertOnScene(CREATE_USER);
     uiAssertions.assertLabel("errorMessage",
         "Not a valid password\nNot a valid username\nNot a valid name");
   }
 
   @Test public void testCreateUser_validUserData() {
     tryToCreateUser("Test3", "Password12345", "Ole", "Dole");
-    uiAssertions.assertOnScene(USER_HOME_ID);
+    uiAssertions.assertOnScene(USER_HOME);
     uiAssertions.assertLabel("userFullName", "Ole Dole");
   }
 
   @Test public void testCreateUser_usernameTaken() {
     tryToCreateUser("CorrectUsername", "CorrectPassword12345", "Ole", "Dole");
-    uiAssertions.assertOnScene(CREATE_USER_ID);
+    uiAssertions.assertOnScene(CREATE_USER);
     uiAssertions.assertLabel("errorMessage", "User with the same username already exists");
   }
 

@@ -1,7 +1,7 @@
 package jobblett.ui;
 
-import static jobblett.ui.JobblettScenes.CREATE_USER_ID;
-import static jobblett.ui.JobblettScenes.USER_HOME_ID;
+import static jobblett.ui.JobblettScenes.CREATE_USER;
+import static jobblett.ui.JobblettScenes.USER_HOME;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -44,7 +44,7 @@ public class LoginController extends SceneController {
   }
 
   @FXML public void goToCreateUser() {
-    switchScene(CREATE_USER_ID);
+    switchScene(CREATE_USER);
   }
 
   /**
@@ -58,7 +58,7 @@ public class LoginController extends SceneController {
       errorMessage.setText("Wrong username or password");
     } else {
       setActiveUser(user);
-      switchScene(USER_HOME_ID);
+      switchScene(USER_HOME);
     }
   }
 }

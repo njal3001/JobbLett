@@ -25,14 +25,19 @@ public abstract class JobbLettTest extends ApplicationTest {
 
   protected UIAssertions uiAssertions;
 
+  //TODO find a better name, we are not calling them ID
   // Subclasses implement this method to give the scene ID
   // for the starting scene of the test
-  protected abstract JobblettScenes giveID();
+  protected abstract JobblettScenes giveId();
 
   // Subclasses implement these methods to give the active user and group
   // for the starting scene of the test
-  protected abstract User giveActiveUser();
-  protected abstract Group giveActiveGroup();
+  protected User optionalActiveUser() {
+    return null;
+  }
+  protected Group optionalActiveGroup(){
+    return null;
+  }
 
  
   private UserList userList;
@@ -40,14 +45,14 @@ public abstract class JobbLettTest extends ApplicationTest {
 
   @Override
   public void start(final Stage primaryStage) throws Exception {
-    App.loadScenes(primaryStage);
+    App.commonStart(primaryStage);
     setupData();
     getAccess().setLists(userList,groupList);
-    SceneController.setActiveUser(giveActiveUser());
-    SceneController.setActiveGroup(giveActiveGroup());
-    switchScene(giveID());
+    SceneController.setActiveUser(optionalActiveUser());
+    SceneController.setActiveGroup(optionalActiveGroup());
+    switchScene(giveId());
     primaryStage.show();
-    controller = giveID().getController();
+    controller = giveId().getController();
   }
 
   public JobblettAccess getAccess() {
@@ -86,6 +91,6 @@ public abstract class JobbLettTest extends ApplicationTest {
 
   @Test
   public void testInitialScene(){
-    uiAssertions.assertOnScene(giveID());
+    uiAssertions.assertOnScene(giveId());
   }
 }

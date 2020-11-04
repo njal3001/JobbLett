@@ -1,6 +1,6 @@
 package jobblett.ui;
 
-import static jobblett.ui.JobblettScenes.GROUP_HOME_ID;
+import static jobblett.ui.JobblettScenes.GROUP_HOME;
 import static jobblett.ui.SceneController.switchScene;
 
 import javafx.scene.control.ListCell;
@@ -18,7 +18,7 @@ public class GroupListCell extends ListCell<Group> {
       setText(group.getGroupName());
       setOnMouseClicked((event) -> {
         SceneController.setActiveGroup(group);
-        switchScene(GROUP_HOME_ID);
+        switchScene(GROUP_HOME);
       });
 
     }
