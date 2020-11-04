@@ -7,37 +7,41 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-
-<Pane prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.CreateUserController">
+<Pane xmlns:fx="http://javafx.com/fxml/1" prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css"
+      xmlns="http://javafx.com/javafx/11.0.1" fx:controller="jobblett.ui.CreateUserController">
     <Label layoutX="61.0" layoutY="153.0" text="Username:">
         <font>
-            <Font size="16.0" />
+            <Font size="16.0"/>
         </font>
-      <styleClass>
-         <String fx:value="info-text" />
-         <String fx:value="root" />
-      </styleClass>
+        <styleClass>
+            <String fx:value="info-text"/>
+            <String fx:value="root"/>
+        </styleClass>
     </Label>
     <Label layoutX="61.0" layoutY="206.0" text="Password:">
-      <styleClass>
-         <String fx:value="info-text" />
-         <String fx:value="root" />
-      </styleClass></Label>
+        <styleClass>
+            <String fx:value="info-text"/>
+            <String fx:value="root"/>
+        </styleClass>
+    </Label>
     <Label layoutX="48.0" layoutY="261.0" text="Given name:">
-      <styleClass>
-         <String fx:value="info-text" />
-         <String fx:value="root" />
-      </styleClass></Label>
+        <styleClass>
+            <String fx:value="info-text"/>
+            <String fx:value="root"/>
+        </styleClass>
+    </Label>
     <Label layoutX="48.0" layoutY="318.0" text="Family name:">
-      <styleClass>
-         <String fx:value="info-text" />
-         <String fx:value="root" />
-      </styleClass></Label>
-    <TextField fx:id="username" layoutX="146.0" layoutY="151.0" onAction="#createAccount" />
-    <PasswordField fx:id="password" layoutX="146.0" layoutY="204.0" onAction="#createAccount" />
-    <TextField fx:id="givenName" layoutX="146.0" layoutY="259.0" onAction="#createAccount" />
-    <TextField fx:id="familyName" layoutX="146.0" layoutY="316.0" onAction="#createAccount" />
-    <Button fx:id="createAccountButton" layoutX="177.0" layoutY="371.0" onAction="#createAccount" text="Create account" />
-    <Label styleClass="error_message" fx:id="errorMessage" layoutX="85" layoutY="500.0" />
-    <Button styleClass="back" fx:id="goBackButton" layoutX="35.0" layoutY="576.0" onAction="#goToLogIn" text="Back" />
+        <styleClass>
+            <String fx:value="info-text"/>
+            <String fx:value="root"/>
+        </styleClass>
+    </Label>
+    <TextField fx:id="username" layoutX="146.0" layoutY="151.0" onAction="#createAccount"/>
+    <PasswordField fx:id="password" layoutX="146.0" layoutY="204.0" onAction="#createAccount"/>
+    <TextField fx:id="givenName" layoutX="146.0" layoutY="259.0" onAction="#createAccount"/>
+    <TextField fx:id="familyName" layoutX="146.0" layoutY="316.0" onAction="#createAccount"/>
+    <Button fx:id="createAccountButton" layoutX="177.0" layoutY="371.0" onAction="#createAccount"
+            text="Create account"/>
+    <Label styleClass="error_message" fx:id="errorMessage" layoutX="85" layoutY="500.0"/>
+    <Button styleClass="back" fx:id="goBackButton" layoutX="35.0" layoutY="576.0" onAction="#goToLogIn" text="Back"/>
 </Pane>

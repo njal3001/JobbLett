@@ -1,30 +1,25 @@
 package jobblett.ui;
 
+import static jobblett.ui.JobblettScenes.CREATE_USER_ID;
+import static jobblett.ui.JobblettScenes.LOGIN_ID;
 import static jobblett.ui.SceneController.switchScene;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
-
-import org.junit.jupiter.api.Test;
-import org.testfx.framework.junit5.ApplicationTest;
-
 import javafx.application.Platform;
 import javafx.stage.Stage;
-
-import static jobblett.ui.JobblettScenes.*;
+import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.ApplicationTest;
 
 public class SceneControllerTest extends ApplicationTest {
 
   // Vet ikke helt hvordan vi skal lage denne testen
 
-  @Override
-  public void start(final Stage primaryStage) throws IOException {
+  @Override public void start(final Stage primaryStage) throws IOException {
     App.loadScenes(primaryStage);
   }
 
-  @Test
-  public void testSetScene() {
+  @Test public void testSetScene() {
     Platform.runLater(() -> {
       switchScene(LOGIN_ID);
       assertEquals(LOGIN_ID.getScene(), SceneController.getStage().getScene());

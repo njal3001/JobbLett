@@ -15,34 +15,40 @@ public class User extends JobblettPropertyChangeSupporter {
   /**
    * Checks if the parameters are valid before creating instance a User. Allows
    * JSON to create empty Users.
-   * 
-   * @param username
-   * @param password
-   * @param givenName
-   * @param familyName
+   *
+   * @param username TODO
+   * @param password TODO
+   * @param givenName TODO
+   * @param familyName TODO
    */
   //Sikkert en bedre måte å lage feilmelding...
   public User(String username, HashedPassword password, String givenName, String familyName) {
     String errorMessage = "";
-    if (!validUsername(username))
+    if (!validUsername(username)) {
       errorMessage += "Not a valid username\n";
+    }
     this.username = username;
-    if (password == null) throw new NullPointerException();
+    if (password == null) {
+      throw new NullPointerException();
+    }
     setPassword(password);
     try {
       setName(givenName, familyName);
     } catch (IllegalArgumentException e) {
       errorMessage += e.getMessage();
     }
-    if (errorMessage.length() != 0)
+    if (errorMessage.length() != 0) {
       throw new IllegalArgumentException(errorMessage);
+    }
   }
 
   /**
-   * Name criteria: - Contains only letters - At least 2 characters
-   * 
-   * @param name
-   * @return true if the criteria are fulfilled, else false
+   * Name criteria:
+   *  - Contains only letters.
+   *  - At least 2 characters.
+   *
+   * @param name TODO
+   * @return true if the criteria are fulfilled, else false TODO
    */
   public static boolean validName(String name) {
     String pattern = "[a-zA-ZæøåÆØÅ]{2,}";
@@ -52,10 +58,13 @@ public class User extends JobblettPropertyChangeSupporter {
   // Username criteria:
   // No whitespace
   // At least 2 characters
+
   /**
-   * Username criteria: - No whitespace - At least 2 characters
-   * 
-   * @param username
+   * Username criteria:
+   *  - No whitespace.
+   *  - At least 2 characters.
+   *
+   * @param username TODO
    * @return true if the criteria are fulfilled, else false
    */
   public static boolean validUsername(String username) {
@@ -64,10 +73,10 @@ public class User extends JobblettPropertyChangeSupporter {
   }
 
   /**
-   * Validates the password before initializing it. Can be used to change password
+   * Validates the password before initializing it. Can be used to change password.
    *
-   * @param password
-   * @throws IllegalArgumentException
+   * @param password TODO
+   * @throws IllegalArgumentException TODO
    */
   public void setPassword(HashedPassword password) {
     this.password = password;
@@ -75,26 +84,27 @@ public class User extends JobblettPropertyChangeSupporter {
 
   /**
    * Validates the name before initializing it.
-   * 
-   * @param givenName
-   * @param familyName
-   * @throws IllegalArgumentException
+   *
+   * @param givenName TODO
+   * @param familyName TODO
+   * @throws IllegalArgumentException TODO
    */
   public void setName(String givenName, String familyName) throws IllegalArgumentException {
     if (validName(givenName) && validName(familyName)) {
-      firePropertyChange("givenName",this.givenName,givenName);
-      firePropertyChange("familyName",this.familyName,familyName);
+      firePropertyChange("givenName", this.givenName, givenName);
+      firePropertyChange("familyName", this.familyName, familyName);
       this.givenName = formatName(givenName);
       this.familyName = formatName(familyName);
-    } else
+    } else {
       throw new IllegalArgumentException("Not a valid name");
+    }
   }
 
   /**
    * Formats the first letter to uppercase, and the rest to lowercase.
-   * 
-   * @param name
-   * @return
+   *
+   * @param name TODO
+   * @return TODO
    */
   private String formatName(String name) {
     return String.valueOf(name.charAt(0)).toUpperCase() + name.substring(1).toLowerCase();
@@ -102,8 +112,8 @@ public class User extends JobblettPropertyChangeSupporter {
 
   /**
    * Gets the username. The unique ID for each user.
-   * 
-   * @return
+   *
+   * @return TODO
    */
   public String getUserName() {
     return this.username;
@@ -112,8 +122,8 @@ public class User extends JobblettPropertyChangeSupporter {
   /**
    * Gets the given name of an user. This is not unique. Use username to get
    * unique identifier for a user.
-   * 
-   * @return
+   *
+   * @return TODO
    */
   public String getGivenName() {
     return this.givenName;
@@ -122,48 +132,51 @@ public class User extends JobblettPropertyChangeSupporter {
   /**
    * Gets the family name of an user. This is not unique. Use username to get
    * unique identifier for a user.
-   * 
-   * @return
+   *
+   * @return TODO
    */
   public String getFamilyName() {
     return this.familyName;
   }
 
   /**
-   * Only used by JSON Serializer
-   * 
+   * Only used by JSON Serializer.
+   *
    * @return hashedPassword
    */
   public HashedPassword getPassword() {
     return password;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return givenName + " " + familyName + " (@" + username + ")";
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (o == null)
+  @Override public boolean equals(Object o) {
+    if (o == null) {
       return false;
+    }
     if (o instanceof User) {
       User user = (User) o;
-      if (!this.username.equals(user.username))
+      if (!this.username.equals(user.username)) {
         return false;
-      if (!this.password.equals(user.password))
+      }
+      if (!this.password.equals(user.password)) {
         return false;
-      if (!this.givenName.equals(user.givenName))
+      }
+      if (!this.givenName.equals(user.givenName)) {
         return false;
-      if (!this.familyName.equals(user.familyName))
+      }
+      if (!this.familyName.equals(user.familyName)) {
         return false;
+      }
       return true;
-    } else
+    } else {
       return super.equals(o);
+    }
   }
 
-  @Override
-  public int hashCode() {
+  @Override public int hashCode() {
     assert false : "hashCode not designed";
     return 42; // any arbitrary constant will do
   }

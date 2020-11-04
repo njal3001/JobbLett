@@ -6,24 +6,34 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" styleClass="root" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.ShiftViewController">
+<Pane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="640.0" prefWidth="360.0" styleClass="root" stylesheets="@layout.css"
+      xmlns="http://javafx.com/javafx/11.0.1" fx:controller="jobblett.ui.ShiftViewController">
     <children>
-        <Label fx:id="groupName" layoutX="25.0" layoutY="14.0" prefHeight="91.0" prefWidth="310.0" styleClass="header" text="Group name" textAlignment="CENTER" wrapText="true">
+        <Label fx:id="groupName" layoutX="25.0" layoutY="14.0" prefHeight="91.0" prefWidth="310.0" styleClass="header"
+               text="Group name" textAlignment="CENTER" wrapText="true">
             <font>
-                <Font size="22.0" />
+                <Font size="22.0"/>
             </font>
         </Label>
         <Label layoutX="19.0" layoutY="130.0" styleClass="small-header" text="All shifts:">
-         <font>
-            <Font size="20.0" />
-         </font></Label>
-        <ListView fx:id="shifts" layoutX="5.0" layoutY="168.0" prefHeight="200.0" prefWidth="350.0" />
-        <Button fx:id="backToGroup" layoutX="35.0" layoutY="576.0" onAction="#backButton" styleClass="back" text="Back" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
-         <Button fx:id="newShiftButton" layoutX="276.0" layoutY="566.0" onAction="#goToCreateShift" prefHeight="50.0" prefWidth="50.0" styleClass="add" text="+" textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS" />
-         <Button fx:id="editShiftButton" layoutX="47.0" layoutY="394.0" onAction="#goToEditShift" prefHeight="26.0" prefWidth="95.0" text="Edit shift" />
-         <Button fx:id="deleteShiftButton" layoutX="206.0" layoutY="394.0" onAction="#handleDeleteShift" prefHeight="26.0" prefWidth="95.0" styleClass="delete" text="Delete shift" />
-        <Label layoutX="202.0" layoutY="133.0" prefHeight="20.0" prefWidth="117.0" style="-fx-alignment: baseline-right;" styleClass="info-text" text="Only my shifts" />
-        <CheckBox fx:id="toggleUserFilterCheckBox" alignment="CENTER" layoutX="325.0" layoutY="131.0" onAction="#toggleUserFilter" prefHeight="26.0" prefWidth="24.0" selected="true" />
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Label>
+        <ListView fx:id="shifts" layoutX="5.0" layoutY="168.0" prefHeight="200.0" prefWidth="350.0"/>
+        <Button fx:id="backToGroup" layoutX="35.0" layoutY="576.0" onAction="#backButton" styleClass="back" text="Back"
+                textAlignment="CENTER" textFill="#111111" textOverrun="WORD_ELLIPSIS"/>
+        <Button fx:id="newShiftButton" layoutX="276.0" layoutY="566.0" onAction="#goToCreateShift" prefHeight="50.0"
+                prefWidth="50.0" styleClass="add" text="+" textAlignment="CENTER" textFill="#111111"
+                textOverrun="WORD_ELLIPSIS"/>
+        <Button fx:id="editShiftButton" layoutX="47.0" layoutY="394.0" onAction="#goToEditShift" prefHeight="26.0"
+                prefWidth="95.0" text="Edit shift"/>
+        <Button fx:id="deleteShiftButton" layoutX="206.0" layoutY="394.0" onAction="#handleDeleteShift"
+                prefHeight="26.0" prefWidth="95.0" styleClass="delete" text="Delete shift"/>
+        <Label layoutX="202.0" layoutY="133.0" prefHeight="20.0" prefWidth="117.0"
+               style="-fx-alignment: baseline-right;" styleClass="info-text" text="Only my shifts"/>
+        <CheckBox fx:id="toggleUserFilterCheckBox" alignment="CENTER" layoutX="325.0" layoutY="131.0"
+                  onAction="#toggleUserFilter" prefHeight="26.0" prefWidth="24.0" selected="true"/>
     </children>
 </Pane>

@@ -1,55 +1,49 @@
 package jobblett.ui;
 
-import javafx.application.Platform;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import org.junit.jupiter.api.Test;
-
+import static jobblett.ui.JobblettScenes.SHIFT_VIEW_ID;
+import static jobblett.ui.JobblettScenes.UPDATE_SHIFT_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+import javafx.application.Platform;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import jobblett.core.Group;
 import jobblett.core.JobShift;
 import jobblett.core.User;
-
-import static jobblett.ui.JobblettScenes.*;
+import org.junit.jupiter.api.Test;
 
 //Koder som er kommentert ut skal implementeres ettersom deres funksjoner er implementert i controlleren.
 public class UpdateShiftControllerTest extends JobbLettTest {
   // Creating dates for the tests
-LocalDate tomorrow = LocalDate.now().plusDays(1);
-LocalDate yesterday = LocalDate.now().minusDays(1);
+  LocalDate tomorrow = LocalDate.now().plusDays(1);
+  LocalDate yesterday = LocalDate.now().minusDays(1);
 
-////disse brukes ikke//////
-// tomorrow in string
-String dateInFuture = tomorrow.format(App.EXPECTED_DATE_FORMAT);
-//yesterday in string
-String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
+  ////disse brukes ikke//////
+  // tomorrow in string
+  String dateInFuture = tomorrow.format(App.EXPECTED_DATE_FORMAT);
+  //yesterday in string
+  String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
 
 
-  @Override
-  protected JobblettScenes giveID() {
+  @Override protected JobblettScenes giveID() {
     return UPDATE_SHIFT_ID;
   }
 
-  @Override
-  protected User giveActiveUser(){
+  @Override protected User giveActiveUser() {
     return user1;
   }
 
-  @Override
-  protected Group giveActiveGroup(){
+  @Override protected Group giveActiveGroup() {
     return group1;
   }
 
-  @Test
-  public void testGoBack() {
+  @Test public void testGoBack() {
     clickOn("#goBackButton");
     uiAssertions.assertOnScene(SHIFT_VIEW_ID);
   }
@@ -66,14 +60,12 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
     assertNotEquals("", ErrorMessageField.getText(), "The user should get an errormessage when creating an invalid shift");
   }*/
 
-  @Test
-  public void testUsersView_HasUsers() {
+  @Test public void testUsersView_HasUsers() {
     uiAssertions.assertListViewHasItem("members", user1);
     uiAssertions.assertListViewHasItem("members", user2);
-    }
+  }
 
-  @Test
-  public void testValidShift() {
+  @Test public void testValidShift() {
     // Getting the amount of shifts before we create our new shift
     clickOn("#goBackButton");
     ListView<JobShift> preShifts = lookup("#shifts").query();
@@ -88,13 +80,13 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
     date.setValue(tomorrow);
     // Setting up valid times for the shifts
     clickOn("#fromField");
-    type(KeyCode.BACK_SPACE,5);
-    type(KeyCode.DELETE,5);
+    type(KeyCode.BACK_SPACE, 5);
+    type(KeyCode.DELETE, 5);
     write("08:00");
     uiAssertions.assertTextField("fromField", "08:00");
     clickOn("#toField");
-    type(KeyCode.BACK_SPACE,5);
-    type(KeyCode.DELETE,5);
+    type(KeyCode.BACK_SPACE, 5);
+    type(KeyCode.DELETE, 5);
     write("15:30");
     uiAssertions.assertTextField("toField", "15:30");
     // Adding additional info for the shift
@@ -107,11 +99,10 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
     // verifying that the shift is showing in the listview
     assertEquals((amountBefore + 1), preShifts.getItems().size(),
         "The recently created shift wasn't added in the ShiftView");
-   }
+  }
 
   // Testing that you´re not able to create different invalid shifts:
-  @Test
-  public void testShiftInPast() {
+  @Test public void testShiftInPast() {
     clickOn("#members");
     type(KeyCode.ENTER);
     // The date will be set to yesterday to make sure that the shift is in the past.
@@ -119,12 +110,12 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
     date.setValue(yesterday);
     // Setting up valid times for the shifts
     clickOn("#fromField");
-    type(KeyCode.BACK_SPACE,5);
-    type(KeyCode.DELETE,5);
+    type(KeyCode.BACK_SPACE, 5);
+    type(KeyCode.DELETE, 5);
     write("08:00");
     clickOn("#toField");
-    type(KeyCode.BACK_SPACE,5);
-    type(KeyCode.DELETE,5);
+    type(KeyCode.BACK_SPACE, 5);
+    type(KeyCode.DELETE, 5);
     write("15:30");
     // Adding additional info for the shift
     clickOn("#infoArea");
@@ -134,13 +125,13 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
 
     // The shift should not have been created, and we should still be in UpdateShift.fxml with an error message.
     // Verifying that we are getting an errormessage in UpdateShift.fxml
-    assertNotEquals("", ((Label) lookup("#errorMessage").query()).getText(), "No errormessages are shown");
+    assertNotEquals("", ((Label) lookup("#errorMessage").query()).getText(),
+        "No errormessages are shown");
     //verifying that we are getting correct errormessage
     uiAssertions.assertLabel("errorMessage", "Starting time must be later than the current time");
   }
 
-  @Test
-  public void testInvalidTimeFormat(){
+  @Test public void testInvalidTimeFormat() {
     clickOn("#members");
     type(KeyCode.ENTER);
     //Setting the date for tomorrow(future)
@@ -148,12 +139,12 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
     date.setValue(tomorrow);
     // Setting up ivalid times for the shifts
     clickOn("#fromField");
-    type(KeyCode.BACK_SPACE,5);
-    type(KeyCode.DELETE,5);
+    type(KeyCode.BACK_SPACE, 5);
+    type(KeyCode.DELETE, 5);
     write("wrongInput");
     clickOn("#toField");
-    type(KeyCode.BACK_SPACE,5);
-    type(KeyCode.DELETE,5);
+    type(KeyCode.BACK_SPACE, 5);
+    type(KeyCode.DELETE, 5);
     write("123Wrong");
     // Adding additional info for the shift
     clickOn("#infoArea");
@@ -163,46 +154,48 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
 
     // The shift should not have been created, and we should still be in UpdateShift.fxml with an error message.
     // Verifying that we are getting an errormessage in UpdateShift.fxml
-    assertNotEquals("", ((Label) lookup("#errorMessage").query()).getText(), "No errormessages are shown");
+    assertNotEquals("", ((Label) lookup("#errorMessage").query()).getText(),
+        "No errormessages are shown");
     //verifying that we are getting correct errormessage
     uiAssertions.assertLabel("errorMessage", "Time period is not written in the correct format");
 
   }
 
-  @Test
-  public void testUpdateShift(){
+  @Test public void testUpdateShift() {
     UpdateShiftController shiftController = (UpdateShiftController) UPDATE_SHIFT_ID.getController();
     shiftController.setActiveJobShift(jobShift1);
-    Platform.runLater(() -> {shiftController.onSceneDisplayed();});
+    Platform.runLater(() -> {
+      shiftController.onSceneDisplayed();
+    });
     //choosing the user on top
     clickOn("#members");
     type(KeyCode.ENTER);
-    uiAssertions.assertDate("date", LocalDateTime.now().plusHours(5).format(App.EXPECTED_DATE_FORMAT));
-   //Setting the date for tomorrow(future)
+    uiAssertions
+        .assertDate("date", LocalDateTime.now().plusHours(5).format(App.EXPECTED_DATE_FORMAT));
+    //Setting the date for tomorrow(future)
     DatePicker date = lookup("#date").query();
     date.setValue(tomorrow);
     // Setting up ivalid times for the shifts
     clickOn("#fromField");
-    type(KeyCode.BACK_SPACE,10);
-    type(KeyCode.DELETE,10);
+    type(KeyCode.BACK_SPACE, 10);
+    type(KeyCode.DELETE, 10);
     write("10:00");
     uiAssertions.assertTextField("fromField", "10:00");
     clickOn("#toField");
-    type(KeyCode.BACK_SPACE,10);
-    type(KeyCode.DELETE,10);
+    type(KeyCode.BACK_SPACE, 10);
+    type(KeyCode.DELETE, 10);
     write("17:00");
-    uiAssertions.assertTextField("toField","17:00");
+    uiAssertions.assertTextField("toField", "17:00");
     clickOn("#infoArea");
-    type(KeyCode.BACK_SPACE,20);
-    type(KeyCode.DELETE,20);
+    type(KeyCode.BACK_SPACE, 20);
+    type(KeyCode.DELETE, 20);
     write("We are testing if update jobshift is working");
-    uiAssertions.assertTextArea("infoArea","We are testing if update jobshift is working");
+    uiAssertions.assertTextArea("infoArea", "We are testing if update jobshift is working");
     // Creating the shift
     clickOn("#createShiftButton");
   }
 
-  @Test
-  public void testUpdatedShiftViewCell(){
+  @Test public void testUpdatedShiftViewCell() {
     ListCell jobShiftListCell = uiAssertions.findListCell(0);
     jobShiftListCell.equals(jobShift1);
 

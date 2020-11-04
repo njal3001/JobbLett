@@ -1,68 +1,61 @@
 package jobblett.core;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import java.util.Iterator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UserListTest{
+import java.util.Iterator;
 
-private UserList userList;
-private User user1;
-private User user2;
+import static org.junit.jupiter.api.Assertions.*;
 
-@BeforeEach
-public void setUp(){
-  userList = new UserList();
-  user1 = new User("User1", HashedPassword.hashPassword("Test12345"), "Ole", "Dole");
-  user2 = new User("User2", HashedPassword.hashPassword("Test12345"), "Kristoff", "Arntsen");
-}
+public class UserListTest {
 
-@Test
-public void testGetUser(){
-  assertEquals(null, userList.get("User1"));
-  userList.add(user1);
-  assertEquals(user1, userList.get(user1.getUserName()));
-}
+  private UserList userList;
+  private User user1;
+  private User user2;
 
-@Test
-public void testAddUser_TwoUsersWithSameUsername(){
-  userList.add(user1);
-  try{
-    userList.add(user1);
-    fail("Exception should be thrown");
-  } catch(Exception e){
-    assertTrue(e instanceof IllegalArgumentException);
+  @BeforeEach public void setUp() {
+    userList = new UserList();
+    user1 = new User("User1", HashedPassword.hashPassword("Test12345"), "Ole", "Dole");
+    user2 = new User("User2", HashedPassword.hashPassword("Test12345"), "Kristoff", "Arntsen");
   }
-}
 
-@Test
-public void testLogin_CorrectUsernameAndPassword(){
-  userList.add(user1);
-  assertEquals(user1, userList.checkUserNameAndPassword(user1.getUserName(), HashedPassword.hashPassword("Test12345")));
-}
+  @Test public void testGetUser() {
+    assertEquals(null, userList.get("User1"));
+    userList.add(user1);
+    assertEquals(user1, userList.get(user1.getUserName()));
+  }
 
-@Test
-public void testLogin_WrongPassword(){
-  userList.add(user1);
-  assertEquals(null, userList.checkUserNameAndPassword(user1.getUserName(), HashedPassword.hashPassword("TotallyWrongPassword123")));
-}
+  @Test public void testAddUser_TwoUsersWithSameUsername() {
+    userList.add(user1);
+    try {
+      userList.add(user1);
+      fail("Exception should be thrown");
+    } catch (Exception e) {
+      assertTrue(e instanceof IllegalArgumentException);
+    }
+  }
 
-@Test
-public void testIterator(){
-  userList.add(user1);
-  userList.add(user2);
-  Iterator<User> it = userList.iterator();
-  assertTrue(it.hasNext());
-  assertEquals(user1, it.next());
-  assertTrue(it.hasNext());
-  assertEquals(user2, it.next());
-  assertFalse(it.hasNext());
-}
+  @Test public void testLogin_CorrectUsernameAndPassword() {
+    userList.add(user1);
+    assertEquals(user1,
+        userList.checkUserNameAndPassword(user1.getUserName(), HashedPassword.hashPassword("Test12345")));
+  }
+
+  @Test public void testLogin_WrongPassword() {
+    userList.add(user1);
+    assertEquals(null,
+        userList.checkUserNameAndPassword(user1.getUserName(), HashedPassword.hashPassword("TotallyWrongPassword123")));
+  }
+
+  @Test public void testIterator() {
+    userList.add(user1);
+    userList.add(user2);
+    Iterator<User> it = userList.iterator();
+    assertTrue(it.hasNext());
+    assertEquals(user1, it.next());
+    assertTrue(it.hasNext());
+    assertEquals(user2, it.next());
+    assertFalse(it.hasNext());
+  }
 
 }

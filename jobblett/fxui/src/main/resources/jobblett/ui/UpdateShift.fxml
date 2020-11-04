@@ -8,24 +8,29 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-
-<Pane prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.UpdateShiftController">
-    <Button fx:id="goBackButton" layoutX="35.0" layoutY="576.0" onAction="#goBack" styleClass="back" text="Back" />
-    <ListView fx:id="members" layoutX="118.0" layoutY="49.0" prefHeight="200.0" prefWidth="200.0" />
-    <DatePicker fx:id="date" layoutX="118.0" layoutY="264.0" prefHeight="27.0" prefWidth="200.0" />
-    <TextField fx:id="fromField" layoutX="122.0" layoutY="320.0" prefHeight="27.0" prefWidth="56.0" />
-    <TextField fx:id="toField" layoutX="198.0" layoutY="320.0" prefHeight="27.0" prefWidth="56.0" />
-    <TextArea fx:id="infoArea" layoutX="118.0" layoutY="389.0" prefHeight="133.0" prefWidth="200.0" />
-    <Button fx:id="createShiftButton" layoutX="235.0" layoutY="576.0" onAction="#createShift" text="Create shift" />
-    <Label layoutX="15.0" layoutY="49.0" prefHeight="43.0" prefWidth="99.0" style="-fx-alignment: baseline-right baseline-right;" styleClass="info-text" text="Choose user:">
+<Pane xmlns:fx="http://javafx.com/fxml/1" prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css"
+      xmlns="http://javafx.com/javafx/11.0.1" fx:controller="jobblett.ui.UpdateShiftController">
+    <Button fx:id="goBackButton" layoutX="35.0" layoutY="576.0" onAction="#goBack" styleClass="back" text="Back"/>
+    <ListView fx:id="members" layoutX="118.0" layoutY="49.0" prefHeight="200.0" prefWidth="200.0"/>
+    <DatePicker fx:id="date" layoutX="118.0" layoutY="264.0" prefHeight="27.0" prefWidth="200.0"/>
+    <TextField fx:id="fromField" layoutX="122.0" layoutY="320.0" prefHeight="27.0" prefWidth="56.0"/>
+    <TextField fx:id="toField" layoutX="198.0" layoutY="320.0" prefHeight="27.0" prefWidth="56.0"/>
+    <TextArea fx:id="infoArea" layoutX="118.0" layoutY="389.0" prefHeight="133.0" prefWidth="200.0"/>
+    <Button fx:id="createShiftButton" layoutX="235.0" layoutY="576.0" onAction="#createShift" text="Create shift"/>
+    <Label layoutX="15.0" layoutY="49.0" prefHeight="43.0" prefWidth="99.0"
+           style="-fx-alignment: baseline-right baseline-right;" styleClass="info-text" text="Choose user:">
         <font>
-            <Font size="13.0" />
+            <Font size="13.0"/>
         </font>
     </Label>
-    <Label layoutX="21.0" layoutY="389.0" prefHeight="20.0" prefWidth="87.0" style="-fx-alignment: baseline-right baseline-right;" styleClass="info-text" text="Info:" />
-    <Label fx:id="errorMessage" layoutX="46.0" layoutY="527.0" prefHeight="43.0" prefWidth="285.0" style="-fx-alignment: center;" styleClass="error_message" wrapText="true" />
-    <Label layoutX="17.0" layoutY="270.0" prefHeight="20.0" prefWidth="87.0" style="-fx-alignment: baseline-right baseline-right;" styleClass="info-text" text="Date:" />
-    <Label layoutX="16.0" layoutY="326.0" prefHeight="20.0" prefWidth="87.0" style="-fx-alignment: baseline-right baseline-right;" styleClass="info-text" text="Time:" />
-    <Label layoutX="186.0" layoutY="327.0" text="-" />
-    <Label layoutX="122.0" layoutY="364.0" styleClass="root" text="Example: 12:30 - 19:00" />
+    <Label layoutX="21.0" layoutY="389.0" prefHeight="20.0" prefWidth="87.0"
+           style="-fx-alignment: baseline-right baseline-right;" styleClass="info-text" text="Info:"/>
+    <Label fx:id="errorMessage" layoutX="46.0" layoutY="527.0" prefHeight="43.0" prefWidth="285.0"
+           style="-fx-alignment: center;" styleClass="error_message" wrapText="true"/>
+    <Label layoutX="17.0" layoutY="270.0" prefHeight="20.0" prefWidth="87.0"
+           style="-fx-alignment: baseline-right baseline-right;" styleClass="info-text" text="Date:"/>
+    <Label layoutX="16.0" layoutY="326.0" prefHeight="20.0" prefWidth="87.0"
+           style="-fx-alignment: baseline-right baseline-right;" styleClass="info-text" text="Time:"/>
+    <Label layoutX="186.0" layoutY="327.0" text="-"/>
+    <Label layoutX="122.0" layoutY="364.0" styleClass="root" text="Example: 12:30 - 19:00"/>
 </Pane>

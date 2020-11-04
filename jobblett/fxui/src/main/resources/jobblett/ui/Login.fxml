@@ -8,31 +8,37 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jobblett.ui.LoginController">
+<Pane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="640.0" prefWidth="360.0" stylesheets="@layout.css"
+      xmlns="http://javafx.com/javafx/11.0.1" fx:controller="jobblett.ui.LoginController">
     <children>
-      <ImageView fitHeight="108.0" fitWidth="352.0" layoutX="4.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@JobbLett.png" />
-         </image>
-      </ImageView>
+        <ImageView fitHeight="108.0" fitWidth="352.0" layoutX="4.0" layoutY="74.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@JobbLett.png"/>
+            </image>
+        </ImageView>
         <Label fx:id="username" layoutX="63.0" layoutY="263.0" text="Username:">
-         <styleClass>
-            <String fx:value="info-text" />
-            <String fx:value="root" />
-         </styleClass></Label>
+            <styleClass>
+                <String fx:value="info-text"/>
+                <String fx:value="root"/>
+            </styleClass>
+        </Label>
         <Label fx:id="password" layoutX="63.0" layoutY="304.0" text="Password:">
-         <styleClass>
-            <String fx:value="info-text" />
-            <String fx:value="root" />
-         </styleClass></Label>
-        <TextField fx:id="usernameField" layoutX="150.0" layoutY="262.0" onAction="#logInToUserHome" />
-        <PasswordField fx:id="passwordField" layoutX="150.0" layoutY="303.0" onAction="#logInToUserHome" />
-        <Button fx:id="login" layoutX="150.0" layoutY="348.0" onAction="#logInToUserHome" prefHeight="27.0" prefWidth="160.0" text="Login">
+            <styleClass>
+                <String fx:value="info-text"/>
+                <String fx:value="root"/>
+            </styleClass>
+        </Label>
+        <TextField fx:id="usernameField" layoutX="150.0" layoutY="262.0" onAction="#logInToUserHome"/>
+        <PasswordField fx:id="passwordField" layoutX="150.0" layoutY="303.0" onAction="#logInToUserHome"/>
+        <Button fx:id="login" layoutX="150.0" layoutY="348.0" onAction="#logInToUserHome" prefHeight="27.0"
+                prefWidth="160.0" text="Login">
         </Button>
-        <Button fx:id="createAccount" layoutX="150.0" layoutY="395.0" onAction="#goToCreateUser" prefHeight="27.0" prefWidth="160.0" text="Create account">
+        <Button fx:id="createAccount" layoutX="150.0" layoutY="395.0" onAction="#goToCreateUser" prefHeight="27.0"
+                prefWidth="160.0" text="Create account">
         </Button>
-        <Label styleClass="error_message" fx:id="errorMessage" layoutX="90.0" layoutY="519.0" />
+        <Label styleClass="error_message" fx:id="errorMessage" layoutX="90.0" layoutY="519.0"/>
     </children>
 
 </Pane>
