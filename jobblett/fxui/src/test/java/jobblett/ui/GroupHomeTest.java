@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import jobblett.core.Group;
 import jobblett.core.User;
 
+import static jobblett.ui.JobblettScenes.GROUP_HOME_ID;
+
 public class GroupHomeTest extends JobbLettTest{
 
   @Override
-  protected String giveID() {
-    return App.GROUP_HOME_ID;
+  protected JobblettScenes giveID() {
+    return GROUP_HOME_ID;
   }
 
   @Override
@@ -30,6 +32,12 @@ public class GroupHomeTest extends JobbLettTest{
 
   @Test
   public void testCorrectGroupId(){
-    uiAssertions.assertText("groupID", "GroupID: " + group1.getGroupID());
+    uiAssertions.assertLabel("groupID", "GroupID: " + group1.getGroupID());
+  }
+
+  //TODO To be implemented
+  @Test
+  public void testAdminVisibility(){
+
   }
 }

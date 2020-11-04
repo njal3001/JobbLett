@@ -2,8 +2,10 @@ package jobblett.core;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class JobShift{
+public class JobShift extends JobblettPropertyChangeSupporter {
 
   private User user;
   private LocalDateTime startingTime;
@@ -46,6 +48,7 @@ public class JobShift{
 
   public void setUser(User user) {
     this.user = user;
+    firePropertyChange("user",getUser());
   }
 
 
@@ -53,14 +56,17 @@ public class JobShift{
     if(startingTime.isBefore(LocalDateTime.now()))
       throw new IllegalArgumentException("Starting time must be later than the current time");
     this.startingTime = startingTime;
+    firePropertyChange("startingTime",getStartingTime());
   }
 
   public void setDuration(Duration duration) {
     this.duration = duration;
+    firePropertyChange("duration",getDuration());
   }
 
   public void setInfo(String info) {
     this.info = info;
+    firePropertyChange("info", getInfo());
   }
 
   @Override
@@ -89,5 +95,12 @@ public class JobShift{
   public int hashCode() {
     assert false : "hashCode not designed";
     return 42; // any arbitrary constant will do
+  }
+
+  public static void main(String[] args) {
+    String patternString = "([0-2])([0-9])(:)([0-5])([0-9])";
+    Pattern pattern = Pattern.compile(patternString);
+    Matcher matcher = pattern.matcher("12:00");
+    System.out.print(matcher.group(1));
   }
 }

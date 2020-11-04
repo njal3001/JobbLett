@@ -7,12 +7,9 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import jobblett.core.User;
 import jobblett.core.UserList;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class UserListDeserializer extends StdDeserializer<UserList> {
     protected UserListDeserializer() {
@@ -23,7 +20,7 @@ public class UserListDeserializer extends StdDeserializer<UserList> {
         ArrayNode arrayNode = (ArrayNode) node.get("users");
         UserList userList = new UserList();
         for (JsonNode userNode : arrayNode) {
-            userList.addUser(new UserDeserializer().deserialize(userNode));
+            userList.add(new UserDeserializer().deserialize(userNode));
         }
         return userList;
     }

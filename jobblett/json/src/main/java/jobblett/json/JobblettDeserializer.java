@@ -24,19 +24,6 @@ public class JobblettDeserializer<Type> {
      */
     public JobblettDeserializer(Class<Type> classType) {
         this.classType = classType;
-        File f = new File(System.getProperty("user.home") + "/.jobblett");
-        // noinspection ResultOfMethodCallIgnored
-        boolean mkdir = f.mkdir();
-        if (mkdir) useDefaultValues();
-        else {
-            try {
-                Path path = Paths.get(System.getProperty("user.home") + "/.jobblett", classType.getSimpleName()+".json");
-                reader = new FileReader(path.toFile(), StandardCharsets.UTF_8);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-                useDefaultValues();
-            }
-        }
 
 
         // create object mapper instance
@@ -78,6 +65,21 @@ public class JobblettDeserializer<Type> {
      * @return Main.class object
      */
     public Type deserialize() {
+
+        File f = new File(System.getProperty("user.home") + "/.jobblett");
+        // noinspection ResultOfMethodCallIgnored
+        boolean mkdir = f.mkdir();
+        if (mkdir) useDefaultValues();
+        else {
+            try {
+                Path path = Paths.get(System.getProperty("user.home") + "/.jobblett", classType.getSimpleName()+".json");
+                reader = new FileReader(path.toFile(), StandardCharsets.UTF_8);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                useDefaultValues();
+            }
+        }
+
         Type obj = null;
         try {
             // deserialize json string

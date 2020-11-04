@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import jobblett.core.Group;
 import jobblett.core.User;
 
+import static jobblett.ui.JobblettScenes.*;
+
 public class LoginControllerTest extends JobbLettTest {
 
   @Override
-  protected String giveID() {
-    return App.LOGIN_ID;
+  protected JobblettScenes giveID() {
+    return LOGIN_ID;
   }
 
   @Override
@@ -25,21 +27,21 @@ public class LoginControllerTest extends JobbLettTest {
   @Test
   public void testLogin_wrongPasswordAndUsername(){
     tryToLogin("WrongUsername", "WrongPassword12345");
-    uiAssertions.assertOnScene(App.LOGIN_ID);
-    uiAssertions.assertText("errorMessage", "Wrong username or password");
+    uiAssertions.assertOnScene(LOGIN_ID);
+    uiAssertions.assertLabel("errorMessage", "Wrong username or password");
   } 
 
   @Test
   public void testLogin_correctPasswordAndUsername(){
     tryToLogin(user1.getUserName(), "CorrectPassword12345");
-    uiAssertions.assertOnScene(App.USER_HOME_ID);
-    uiAssertions.assertText("userFullName", user1.getGivenName() + " " + user1.getFamilyName());
+    uiAssertions.assertOnScene(USER_HOME_ID);
+    uiAssertions.assertLabel("userFullName", user1.getGivenName() + " " + user1.getFamilyName());
   }
 
   @Test
   public void testGoToCreateAccount(){
     clickOn("#createAccount");
-    uiAssertions.assertOnScene(App.CREATE_USER_ID);
+    uiAssertions.assertOnScene(CREATE_USER_ID);
   }
 
   private void tryToLogin(String username, String password){

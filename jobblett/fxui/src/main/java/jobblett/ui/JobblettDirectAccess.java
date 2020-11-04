@@ -2,8 +2,9 @@ package jobblett.ui;
 
 import jobblett.core.*;
 import jobblett.json.JobblettDeserializer;
-import jobblett.json.JobblettLocalSerializer;
+import jobblett.json.JobblettSerializer;
 
+import java.beans.PropertyChangeEvent;
 import java.util.Collection;
 
 public class JobblettDirectAccess implements JobblettAccess{
@@ -12,24 +13,29 @@ public class JobblettDirectAccess implements JobblettAccess{
     private GroupList groupList;
 
     public JobblettDirectAccess() {
-        setUserList(new JobblettDeserializer<UserList>(UserList.class).deserialize());
-        setGroupList(new JobblettDeserializer<GroupList>(GroupList.class).deserialize());
+        setUserList(new JobblettDeserializer<>(UserList.class).deserialize());
+        setGroupList(new JobblettDeserializer<>(GroupList.class).deserialize());
+        userList.addListener(this);
+        groupList.addListener(this);
     }
 
-    @Override
-    public void save() {
-        new JobblettLocalSerializer(groupList).exportJSON();
-        new JobblettLocalSerializer(userList).exportJSON();
+    private void save() {
+        new JobblettSerializer().writeValueOnDefaultLocation(groupList);
+        new JobblettSerializer().writeValueOnDefaultLocation(userList);
     }
 
-    @Override
-    public void setUserList(UserList userList) {
+    private void setUserList(UserList userList) {
         this.userList = userList;
     }
 
+    private void setGroupList(GroupList oldGroupList) {
+        groupList = correctGroupList(oldGroupList,userList);;
+    }
+
     @Override
-    public void setGroupList(GroupList oldGroupList) {
-        groupList = correctGroupList(oldGroupList,userList);
+    public void setLists(UserList userList, GroupList groupList) {
+        setUserList(userList);
+        setGroupList(groupList);
     }
 
     @Override
@@ -38,22 +44,27 @@ public class JobblettDirectAccess implements JobblettAccess{
     }
 
     @Override
-    public void addUser(User newUser) {
-        userList.addUser(newUser);
+    public void add(User newUser) {
+        userList.add(newUser);
     }
 
     @Override
     public Group getGroup(int groupID){
-        return groupList.getGroup(groupID);
+        return groupList.get(groupID);
     }
 
     @Override
-    public User login(String userName, String password) {
-        return userList.login(userName,password);
+    public User login(String userName, HashedPassword password) {
+        return userList.checkUserNameAndPassword(userName,password);
     }
 
     @Override
     public Collection<Group> getGroups(User user) {
         return groupList.getGroups(user);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        save();
     }
 }

@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import jobblett.core.Group;
 import jobblett.core.User;
 
+import static jobblett.ui.JobblettScenes.*;
+
 public class CreateGroupControllerTest extends JobbLettTest {
 
   @Override
-  protected String giveID() { 
-    return App.CREATE_GROUP_ID;
+  protected JobblettScenes giveID() {
+    return CREATE_GROUP_ID;
   }
 
   @Override
@@ -28,19 +30,19 @@ public class CreateGroupControllerTest extends JobbLettTest {
   @Test
   public void testCreateGroup_validGroupName() {
     tryToCreateGroup("Group Name");
-    uiAssertions.assertOnScene(App.GROUP_HOME_ID);
-    uiAssertions.assertText("groupName", "Group Name");
-    int groupID = mainController.getActiveGroup().getGroupID();
+    uiAssertions.assertOnScene(GROUP_HOME_ID);
+    uiAssertions.assertLabel("groupName", "Group Name");
+    int groupID = SceneController.getActiveGroup().getGroupID();
     clickOn("#backToHome");
-    uiAssertions.assertOnScene(App.USER_HOME_ID);
-    uiAssertions.assertListViewHasItem("groups", mainController.access.getGroup(groupID));
+    uiAssertions.assertOnScene(USER_HOME_ID);
+    uiAssertions.assertListViewHasItem("groups", SceneController.getAccess().getGroup(groupID));
   }
 
   @Test
   public void testCreateGroup_invalidGroupName() {
     tryToCreateGroup("    ");
-    uiAssertions.assertOnScene(App.CREATE_GROUP_ID);
-    uiAssertions.assertText("errorMessage", "Group name must have at least 2 characters");
+    uiAssertions.assertOnScene(CREATE_GROUP_ID);
+    uiAssertions.assertLabel("errorMessage", "Group name must have at least 2 characters");
   }
 
   private void tryToCreateGroup(String groupName) {

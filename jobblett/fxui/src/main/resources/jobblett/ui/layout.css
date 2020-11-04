@@ -1,56 +1,164 @@
 
 /*Palette*/
 {
+  dark-grey-color: #555555;
   dark-primary-color: #0097A7;
+  even-darker-primary-color: #007797;
   default-primary-color: #00BCD4;
-  light-primary-color: #B8D8D8;
+  light-primary-color: #FFFFFF;
   text-primary-color: #FFFFFF;
-  accent-color: #F0F0FF;
-  primary-text-color: #212121;
+  accent-color: #00b372;
   secondary-text-color: #757575;
   divider-color: #BDBDBD;
   even-cell-background-color: #FFFFFF;
   odd-cell-background-color: #FAFAFF;
+  alert-red-color: #FF6060;
+  positive-green-color: #60D370;
 }
 
 .root {
-  -fx-background-color: dark-primary-color;
+  -fx-background-color: default-primary-color;
+  -fx-font-family: "Product Sans", Arial, sans-serif;
+  -fx-text-fill: text-primary-color;
+
 }
 
 .button{
-  -fx-font: 13px "Arial";
-  -fx-text-fill: primary-text-color;
+  -fx-font-size: 16;
+  -fx-font-family: 'Product Sans', Arial, sans-serif;
+  -fx-text-fill: text-primary-color;
   -fx-padding: 5;
+  -fx-border-radius: 4;
   -fx-background-color: accent-color;
+  -fx-effect:dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.1, 0, 2);
+  -fx-font-weight: bold;
 }
 
-.button:hover {
-    /*-fx-background-color: divider-color;*/
-    -fx-scale-y: 1.075;
 
+.info-text {
+  -fx-font-size: 16;
+  -fx-text-fill: text-primary-color;
 }
 
-.button:pressed {
+.header {
+  -fx-font-size: 31;
+  -fx-text-fill: text-primary-color;
+  -fx-alignment: center;
+}
+
+.small-header {
+  -fx-text-fill: text-primary-color;
+  -fx-font-size: 20;
+}
+
+.date-picker {
+  -fx-background-color:  dark-primary-color;
+  -fx-text-fill: text-primary-color;
+  -fx-background-radius: 5;
+}
+
+.date-picker .button {
+  -fx-background-color:  rgba(0,0,0,0);
+  -fx-effect:dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0);
+}
+
+.text-field {
+  -fx-background-color:  dark-primary-color;
+  -fx-text-fill: text-primary-color;
+  -fx-border-color: dark-grey-color;
+  -fx-border-width: 2;
+  -fx-border-radius: 5;
+  -fx-background-radius: 5;
+}
+
+.text-area {
+  -fx-border-radius: 5;
+  -fx-background-radius: 5;
+  -fx-background-color: #000000;
+}
+
+
+.list-view {
+  -fx-border-radius: 5;
+  -fx-background-radius: 5;
+
+  -fx-background-color:  dark-primary-color;
+  -fx-text-fill: text-primary-color;
+  -fx-border-color: dark-grey-color;
+  -fx-border-width: 2;
+  -fx-border-radius: 5;
+  -fx-background-radius: 5;
+  -fx-font-size: 16;
+}
+
+.list-cell {
+  -fx-background-color:  dark-primary-color;
+  -fx-text-fill: text-primary-color;
+  -fx-border-color: dark-grey-color;
+  -fx-border-width: 0;
+  -fx-background-radius: 5;
+}
+
+.check-box {
+  -fx-border-width: 0;
+}
+
+.check-box .box{
+  -fx-background-color:  default-primary-color;
+  -fx-border-width: 2;
+  -fx-border-color: text-primary-color;
+  -fx-border-radius: 10;
+  -fx-alignment: center;
+}
+
+.check-box:selected .box .mark{
+  -fx-background-color:  text-primary-color;
+  -fx-border-color: text-primary-color;
+}
+
+/*id usage conflicts with fx:id so use styleClass instead*/
+.delete {
+  -fx-background-color:  alert-red-color;
+}
+
+/*id usage conflicts with fx:id so use styleClass instead*/
+.add {
+  -fx-background-radius:  60;
+  -fx-text-alignment: center;
+  -fx-font-size: 23;
+  -fx-background-color: positive-green-color;
+}
+
+
+/*id usage conflicts with fx:id so use styleClass instead*/
+.back {
+  -fx-background-color:  dark-grey-color;
+}
+
+.error_message {
+  -fx-text-fill: text-primary-color;
+}
+
+
+/* .button:pressed {
     -fx-scale-y: 0.975;
     -fx-scale-x: 0.975;
-}
+} */
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color:light-primary-color;
-    -fx-text-fill: primary-Text-color;
+    -fx-background-color:accent-color;
 }
 
-.list-cell:even {
+/* .list-cell:even {
     -fx-background-color: even-cell-background-color;
-    -fx-text-fill: primary-text-color;
 }
 
 .list-cell:odd {
     -fx-background-color: odd-cell-background-color;
-    -fx-text-fill: primary-text-color;
-}
+} */
 
 .list-cell:filled:hover {
-    -fx-background-color: divider-color;
-    -fx-text-fill: primary-text-color;
+    -fx-background-color: even-darker-primary-color;
 }
+
+

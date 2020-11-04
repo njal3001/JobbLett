@@ -5,41 +5,38 @@ import java.time.LocalDateTime;
 import javafx.event.EventHandler;
 import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import jobblett.core.JobShift;
 
 public class JobShiftListCell extends ListCell<JobShift>{
 
   //Basic implementasjon av celle for job shift view i ShiftViewController, burde sikkert 
   //endre de to formaterings metodene i bunnen av klassen, men de fungerer
-  
+
   @Override
   public void updateItem(JobShift jobShift, boolean empty){
-    super.updateItem(jobShift, empty);
+    setGraphic(null);
     if(empty || jobShift == null) {
-      setGraphic(null);
       setText(null);
+      return;
     }
-    else{
-      final String shiftText = formatJobShift(jobShift);
+
+    //TODO: bør gjøres på en bedre måte... Nå legger den ny listener hver gang den oppdateres (den gamle slettes ikke)
+    boolean isNewItem = getItem()!=jobShift;
+    super.updateItem(jobShift, empty);
+
+    final String shiftText = formatJobShift(jobShift);
+    if (isNewItem) {
       setText(shiftText);
-
-      // When clicked on, the cell toggles between showing the job shift info or not
-      setOnMouseClicked(new EventHandler<MouseEvent>(){
-        private boolean isExpanded = false;
-        private final String infoText = "\nInfo:\n" + jobShift.getInfo();
-
-        @Override
-        public void handle(MouseEvent event) {
-          if(!isExpanded)
-            setText(shiftText + infoText);
-          else
-            setText(shiftText);
-            isExpanded = !isExpanded;
+      selectedProperty().addListener((o,old,newValue)->{
+        if (isSelected()) {
+          final String infoText = "\nInfo:\n" + jobShift.getInfo();
+          setText(shiftText + infoText);
+        } else {
+          setText(shiftText);
         }
       });
     }
+
   }
 
 
@@ -49,18 +46,11 @@ public class JobShiftListCell extends ListCell<JobShift>{
     String s = "";
     if (jobShift.getUser()!=null) s += jobShift.getUser().toString() + "\t";
     LocalDateTime startingDateTime = jobShift.getStartingTime();
-    s += startingDateTime.getYear() + "-" + formatNumber(startingDateTime.getMonthValue()) + "-" + 
-      formatNumber(startingDateTime.getDayOfMonth()) + "\t";
+    s += startingDateTime.format(App.EXPECTED_DATE_FORMAT) + "\t";
     LocalDateTime endingDateTime = jobShift.getEndingTime();
-    s += formatNumber(startingDateTime.getHour()) + ":" + formatNumber(startingDateTime.getMinute()) + " - " + 
-    formatNumber(endingDateTime.getHour()) + ":" + formatNumber(endingDateTime.getMinute());
-    return s;
-  }
-
-  private String formatNumber(int number){
-    String s = String.valueOf(number);
-    if(number < 10)
-      s = "0" + s;
+    s += startingDateTime.format(App.EXPECTED_TIME_FORMAT);
+    s += " - ";
+    s += endingDateTime.format(App.EXPECTED_TIME_FORMAT);
     return s;
   }
 }
