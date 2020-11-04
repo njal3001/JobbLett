@@ -1,7 +1,7 @@
 package jobblett.ui;
 
-import static jobblett.ui.JobblettScenes.SHIFT_VIEW_ID;
-import static jobblett.ui.JobblettScenes.USER_HOME_ID;
+import static jobblett.ui.JobblettScenes.SHIFT_VIEW;
+import static jobblett.ui.JobblettScenes.USER_HOME;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,9 +27,9 @@ public class GroupHomeController extends SceneController {
    */
   @FXML public void initialize() {
     members.setCellFactory(members -> new GroupMemberListCell());
-    //Sets the ListView uninteractable
+    //Sets the ListView uninteractable with the mouse and the keyboard
     members.setMouseTransparent(true);
-    //members.setFocusTraversable(false);
+    members.setFocusTraversable(false);
   }
 
   @Override public void styleIt() {
@@ -52,10 +52,10 @@ public class GroupHomeController extends SceneController {
   }
 
   @FXML public void backButton() {
-    switchScene(USER_HOME_ID);
+    switchScene(USER_HOME);
   }
 
   @FXML public void viewShifts() {
-    switchScene(SHIFT_VIEW_ID);
+    switchScene(SHIFT_VIEW);
   }
 }

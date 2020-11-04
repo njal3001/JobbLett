@@ -1,6 +1,6 @@
 package jobblett.ui;
 
-import static jobblett.ui.JobblettScenes.SHIFT_VIEW_ID;
+import static jobblett.ui.JobblettScenes.SHIFT_VIEW;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -99,7 +99,7 @@ public class UpdateShiftController extends SceneController {
     toField.textProperty().addListener(listener);
   }
 
-
+  //TODO: trenger kanskje ikke fet skrift for admin her?
   @Override public void onSceneDisplayed() {
 
     // Lists all members
@@ -136,7 +136,7 @@ public class UpdateShiftController extends SceneController {
 
   @FXML public void goBack() throws IOException {
     activeJobShift = null;
-    switchScene(SHIFT_VIEW_ID);
+    switchScene(SHIFT_VIEW);
   }
 
 

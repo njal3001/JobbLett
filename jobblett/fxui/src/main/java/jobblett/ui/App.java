@@ -1,6 +1,6 @@
 package jobblett.ui;
 
-import static jobblett.ui.JobblettScenes.LOGIN_ID;
+import static jobblett.ui.JobblettScenes.LOGIN;
 import static jobblett.ui.SceneController.switchScene;
 
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class App extends Application {
    * @param stage TODO
    * @throws IOException TODO
    */
-  public static void loadScenes(Stage stage) throws IOException {
+  public static void loadScenes(Stage stage) {
     for (JobblettScenes jobblettScenes : JobblettScenes.values()) {
       jobblettScenes.reset();
     }
@@ -53,14 +53,20 @@ public class App extends Application {
   }
 
   @Override public void start(Stage primaryStage) throws IOException {
+    commonStart(primaryStage);
+    switchScene(LOGIN);
+    primaryStage.show();
+  }
+
+  /**
+   * A common methods used in the startmethod for the app and the tests.
+   *
+   * @param primaryStage primaryStage from main start method
+   */
+  public static void commonStart(Stage primaryStage) {
     Font.loadFont(ButtonAnimationSkin.class.getResourceAsStream(App.FONT_FILE), 16);
     Font.loadFont(ButtonAnimationSkin.class.getResourceAsStream(App.BOLD_FONT_FILE), 16);
     primaryStage.setTitle("Jobblett");
-
-
     loadScenes(primaryStage);
-
-    switchScene(LOGIN_ID);
-    primaryStage.show();
   }
 }

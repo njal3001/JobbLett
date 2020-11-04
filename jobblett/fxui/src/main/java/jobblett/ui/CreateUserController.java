@@ -1,7 +1,7 @@
 package jobblett.ui;
 
-import static jobblett.ui.JobblettScenes.LOGIN_ID;
-import static jobblett.ui.JobblettScenes.USER_HOME_ID;
+import static jobblett.ui.JobblettScenes.LOGIN;
+import static jobblett.ui.JobblettScenes.USER_HOME;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -66,7 +66,7 @@ public class CreateUserController extends SceneController {
       if (errorMessageString.length() == 0) {
         getAccess().add(newUser);
         setActiveUser(newUser);
-        switchScene(USER_HOME_ID);
+        switchScene(USER_HOME);
       }
       ;
     } catch (IllegalArgumentException e) {
@@ -79,6 +79,6 @@ public class CreateUserController extends SceneController {
   }
 
   @FXML public void goToLogIn() {
-    switchScene(LOGIN_ID);
+    switchScene(LOGIN);
   }
 }

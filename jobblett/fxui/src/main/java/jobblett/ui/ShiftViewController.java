@@ -1,7 +1,7 @@
 package jobblett.ui;
 
-import static jobblett.ui.JobblettScenes.GROUP_HOME_ID;
-import static jobblett.ui.JobblettScenes.UPDATE_SHIFT_ID;
+import static jobblett.ui.JobblettScenes.GROUP_HOME;
+import static jobblett.ui.JobblettScenes.UPDATE_SHIFT;
 
 import java.util.List;
 import javafx.event.ActionEvent;
@@ -54,11 +54,11 @@ public class ShiftViewController extends SceneController {
   }
 
   @FXML public void backButton() {
-    switchScene(GROUP_HOME_ID);
+    switchScene(GROUP_HOME);
   }
 
   @FXML public void goToCreateShift() {
-    switchScene(UPDATE_SHIFT_ID);
+    switchScene(UPDATE_SHIFT);
   }
 
   /**
@@ -66,9 +66,9 @@ public class ShiftViewController extends SceneController {
    */
   @FXML public void goToEditShift() {
     JobShift selectedJobShift = shifts.getSelectionModel().getSelectedItem();
-    UpdateShiftController newController = (UpdateShiftController) UPDATE_SHIFT_ID.getController();
+    UpdateShiftController newController = (UpdateShiftController) UPDATE_SHIFT.getController();
     newController.setActiveJobShift(selectedJobShift);
-    switchScene(UPDATE_SHIFT_ID);
+    switchScene(UPDATE_SHIFT);
   }
 
   /**
