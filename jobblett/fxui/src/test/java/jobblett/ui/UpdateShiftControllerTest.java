@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,7 +26,7 @@ public class UpdateShiftControllerTest extends JobbLettTest {
 LocalDate tomorrow = LocalDate.now().plusDays(1);
 LocalDate yesterday = LocalDate.now().minusDays(1);
 
-
+////disse brukes ikke//////
 // tomorrow in string
 String dateInFuture = tomorrow.format(App.EXPECTED_DATE_FORMAT);
 //yesterday in string
@@ -82,7 +81,7 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
 
     clickOn("#newShiftButton");
     clickOn("#members");
-    //choosing the first memeber
+    //choosing the first member
     type(KeyCode.ENTER);
     //Setting the date for tomorrow(future)
     DatePicker date = lookup("#date").query();
@@ -171,7 +170,7 @@ String dateInPast = yesterday.format(App.EXPECTED_DATE_FORMAT);
   }
 
   @Test
-  public void updateShift(){
+  public void testUpdateShift(){
     UpdateShiftController shiftController = (UpdateShiftController) UPDATE_SHIFT_ID.getController();
     shiftController.setActiveJobShift(jobShift1);
     Platform.runLater(() -> {shiftController.onSceneDisplayed();});
