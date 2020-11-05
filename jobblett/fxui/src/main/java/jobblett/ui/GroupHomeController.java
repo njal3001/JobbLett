@@ -26,7 +26,7 @@ public class GroupHomeController extends SceneController {
    * TODO.
    */
   @FXML public void initialize() {
-    members.setCellFactory(members -> new GroupMemberListCell());
+    members.setCellFactory(members -> new GroupMemberListCell(getControllerMap()));
     //Sets the ListView uninteractable with the mouse and the keyboard
     members.setMouseTransparent(true);
     members.setFocusTraversable(false);

@@ -14,6 +14,10 @@ import javafx.scene.input.KeyCode;
 import jobblett.core.Group;
 import jobblett.core.JobShift;
 import jobblett.core.User;
+import org.testfx.util.WaitForAsyncUtils;
+
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class ShiftViewControllerTest extends JobbLettTest {
 
@@ -82,6 +86,7 @@ public class ShiftViewControllerTest extends JobbLettTest {
     // Creating the shift
     clickOn("#createShiftButton");
     // Now our new shift should be in the middle of the ListView.
+    shifts = lookup("#shifts").query();
     clickOn(shifts);
     assertEquals(4, shifts.getItems().size(), "There are not three shifts in the shiftView");
     type(KeyCode.ENTER);
@@ -89,8 +94,6 @@ public class ShiftViewControllerTest extends JobbLettTest {
     JobShift newShift = shifts.getSelectionModel().getSelectedItem();
     assertNotEquals(shiftAtBottom, newShift, "The shift that shall be an the bottom, is in the middle.");
     assertNotEquals(shiftAtTop, newShift, "The shift that shall be on the top, is in the middle.");
-
-
   }
 
   @Test

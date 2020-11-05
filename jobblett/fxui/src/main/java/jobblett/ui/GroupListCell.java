@@ -1,12 +1,17 @@
 package jobblett.ui;
 
 import static jobblett.ui.JobblettScenes.GROUP_HOME;
-import static jobblett.ui.SceneController.switchScene;
 
 import javafx.scene.control.ListCell;
 import jobblett.core.Group;
 
 public class GroupListCell extends ListCell<Group> {
+
+  ControllerMap controllerMap;
+
+  public GroupListCell(ControllerMap controllerMap) {
+    this.controllerMap = controllerMap;
+  }
 
 
   @Override public void updateItem(Group group, boolean empty) {
@@ -17,8 +22,8 @@ public class GroupListCell extends ListCell<Group> {
     } else {
       setText(group.getGroupName());
       setOnMouseClicked((event) -> {
-        SceneController.setActiveGroup(group);
-        switchScene(GROUP_HOME);
+        controllerMap.setActiveGroup(group);
+        controllerMap.switchScene(GROUP_HOME);
       });
 
     }

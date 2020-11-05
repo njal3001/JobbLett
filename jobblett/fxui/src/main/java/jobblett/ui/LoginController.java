@@ -37,12 +37,6 @@ public class LoginController extends SceneController {
     usernameField.setFont(font);*/
   }
 
-  @Override public void onSceneDisplayed() {
-    usernameField.setText("");
-    passwordField.setText("");
-    errorMessage.setText("");
-  }
-
   @FXML public void goToCreateUser() {
     switchScene(CREATE_USER);
   }

@@ -1,6 +1,5 @@
 package jobblett.ui;
 
-import static jobblett.ui.SceneController.switchScene;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +21,8 @@ public abstract class JobbLettTest extends ApplicationTest {
 
 
   protected SceneController controller;
+
+  private ControllerMap controllerMap;
 
   protected UIAssertions uiAssertions;
 
@@ -45,18 +46,18 @@ public abstract class JobbLettTest extends ApplicationTest {
 
   @Override
   public void start(final Stage primaryStage) throws Exception {
-    App.commonStart(primaryStage);
+    controllerMap = App.commonStart(primaryStage);
     setupData();
     getAccess().setLists(userList,groupList);
-    SceneController.setActiveUser(optionalActiveUser());
-    SceneController.setActiveGroup(optionalActiveGroup());
-    switchScene(giveId());
+    setActiveUser(optionalActiveUser());
+    setActiveGroup(optionalActiveGroup());
+    controllerMap.switchScene(giveId());
     primaryStage.show();
-    controller = giveId().getController();
+    controller = controllerMap.getController(giveId());
   }
 
   public JobblettAccess getAccess() {
-    return SceneController.getAccess();
+    return controllerMap.getAccess();
   }
 
   protected void setupData() {
@@ -79,9 +80,29 @@ public abstract class JobbLettTest extends ApplicationTest {
     group1.addJobShift(jobShift3, user1);
   }
 
+  protected ControllerMap getControllerMap() {
+    return controllerMap;
+  }
+
+  public User getActiveUser() {
+    return getControllerMap().getActiveUser();
+  }
+
+  public void setActiveUser(User activeUser) {
+    getControllerMap().setActiveUser(activeUser);
+  }
+
+  public Group getActiveGroup() {
+    return getControllerMap().getActiveGroup();
+  }
+
+  public void setActiveGroup(Group activeGroup) {
+    getControllerMap().setActiveGroup(activeGroup);
+  }
+
   @BeforeEach
   public void setUp(){
-    uiAssertions = new UIAssertions();
+    uiAssertions = new UIAssertions(getControllerMap());
   }
 
   @Test 
