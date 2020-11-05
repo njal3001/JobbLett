@@ -17,15 +17,15 @@ import java.nio.file.Paths;
  * Used to deserialize main.json to Main.class from the systems user-folder. Imports the data-file
  * from $USER_HOME/.jobblett/main.json
  */
-public class JobblettDeserializer<Type> {
+public class JobblettDeserializer<T> {
   ObjectMapper objectMapper;
   Reader reader;
-  Class<Type> classType;
+  Class<T> classType;
 
   /**
    * Initializes a JobblettDeserializer-instance and reads main.json.
    */
-  public JobblettDeserializer(Class<Type> classType) {
+  public JobblettDeserializer(Class<T> classType) {
     this.classType = classType;
     File f = new File(System.getProperty("user.home") + "/.jobblett");
     // noinspection ResultOfMethodCallIgnored
@@ -45,7 +45,6 @@ public class JobblettDeserializer<Type> {
       }
     }
 
-
     // create object mapper instance
     objectMapper = new ObjectMapper();
     objectMapper.registerModule(new JavaTimeModule());
@@ -63,6 +62,13 @@ public class JobblettDeserializer<Type> {
     }
   }
 
+  /**
+   * TODO.
+   *
+   * @param classType TODO
+   * @param <T> TODO
+   * @return object
+   */
   public static <T> T useDefaultValues(Class<T> classType) {
     URL url = JobblettDeserializer.class.getResource("default"
         + classType.getSimpleName()
@@ -86,8 +92,8 @@ public class JobblettDeserializer<Type> {
    *
    * @return Main.class object
    */
-  public Type deserialize() {
-    Type obj = null;
+  public T deserialize() {
+    T obj = null;
     try {
       // deserialize json string
       obj = objectMapper.readValue(reader, classType);
@@ -98,25 +104,24 @@ public class JobblettDeserializer<Type> {
   }
 
   /**
+   * TODO.
+   *
+   *@param value TODO
    *@return Main.class object
    */
-  public Type deserializeString(String value) {
-    Type obj = null;
+  public T deserializeString(String value) {
+    T obj = null;
     try {
       // deserialize json string
-      obj = (Type) objectMapper.readValue(value, classType);
+      obj = (T) objectMapper.readValue(value, classType);
     } catch (Exception ex) {
       ex.printStackTrace();
     }
     return obj;
   }
 
-  /*   *//**
-   * Updates an existing Main.class instance with data from main.json
-   *
-   * @param main the existing Main.class instance
-   *//*
-    public void updateMain(Main main) {
+
+  /*public void updateMain(Main main) {
         try {
             objectMapper.readerForUpdating(main).readValue(reader, Main.class);
         } catch (Exception e) {
