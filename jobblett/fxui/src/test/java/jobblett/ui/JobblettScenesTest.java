@@ -13,7 +13,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 public class JobblettScenesTest extends ApplicationTest {
 
-  @Override public void start(final Stage primaryStage) throws IOException {
+  /*@Override public void start(final Stage primaryStage) throws IOException {
     for (JobblettScenes jobblettScenes : JobblettScenes.values()) {
       jobblettScenes.reset();
     }
@@ -28,13 +28,14 @@ public class JobblettScenesTest extends ApplicationTest {
     } else {
       SceneController.setAccess(new JobblettDirectAccess());
     }
-  }
+  }*/
 
-  @Test public void testLoadedScenes() {
+  //TODO: Reimplementere denne
+  /*@Test public void testLoadedScenes() {
     assertNotNull(LOGIN.getScene());
     assertNotNull(LOGIN.getController());
     assertNotNull(CREATE_USER.getScene());
     assertNotNull(CREATE_USER.getController());
-  }
+  }*/
 
 }

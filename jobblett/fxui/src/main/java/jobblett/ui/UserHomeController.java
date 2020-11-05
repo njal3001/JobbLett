@@ -26,7 +26,7 @@ public class UserHomeController extends SceneController {
 
 
   @FXML public void initialize() {
-    groups.setCellFactory(groups -> new GroupListCell());
+    groups.setCellFactory(groups -> new GroupListCell(getControllerMap()));
   }
 
   @Override public void onSceneDisplayed() {

@@ -26,10 +26,10 @@ public class CreateGroupControllerTest extends JobbLettTest {
     tryToCreateGroup("Group Name");
     uiAssertions.assertOnScene(GROUP_HOME);
     uiAssertions.assertLabel("groupName", "Group Name");
-    int groupID = SceneController.getActiveGroup().getGroupId();
+    int groupID = getActiveGroup().getGroupId();
     clickOn("#backToHome");
     uiAssertions.assertOnScene(USER_HOME);
-    uiAssertions.assertListViewHasItem("groups", SceneController.getAccess().getGroup(groupID));
+    uiAssertions.assertListViewHasItem("groups", getAccess().getGroup(groupID));
   }
 
   @Test public void testCreateGroup_invalidGroupName() {

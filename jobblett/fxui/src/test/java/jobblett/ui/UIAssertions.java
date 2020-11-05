@@ -14,8 +14,16 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.testfx.api.FxRobot;
 
+import java.util.zip.CheckedOutputStream;
+
 // Helper class for assertions that are useful for multiple test classes
 public class UIAssertions extends FxRobot {
+
+  ControllerMap controllerMap;
+
+  public UIAssertions(ControllerMap controllerMap) {
+    this.controllerMap = controllerMap;
+  }
 
   public void assertLabel(String fxid, String expected) {
     Label text = lookup("#" + fxid).query();
@@ -61,7 +69,7 @@ public class UIAssertions extends FxRobot {
   }
 
   public void assertOnScene(JobblettScenes sceneID) {
-    assertEquals(sceneID.getScene(), SceneController.getStage().getScene());
+    assertEquals(controllerMap.getScene(sceneID), controllerMap.getStage().getScene());
   }
 
   // Assumes only one ListView in scene

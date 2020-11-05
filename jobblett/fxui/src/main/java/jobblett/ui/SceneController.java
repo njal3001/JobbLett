@@ -11,49 +11,46 @@ import jobblett.core.User;
 //super class for scene controllers
 public abstract class SceneController {
 
-  private static Stage stage;
-  private static User activeUser;
-  private static Group activeGroup;
-  private static JobblettAccess access;
+  private ControllerMap controllerMap;
 
-  public static Stage getStage() {
-    return stage;
+  public Stage getStage() {
+    return controllerMap.getStage();
   }
 
-  public static void setStage(Stage stage) {
-    SceneController.stage = stage;
+  public User getActiveUser() {
+    return getControllerMap().getActiveUser();
   }
 
-  public static User getActiveUser() {
-    return activeUser;
+  public void setActiveUser(User activeUser) {
+    getControllerMap().setActiveUser(activeUser);
   }
 
-  public static void setActiveUser(User activeUser) {
-    SceneController.activeUser = activeUser;
+  public Group getActiveGroup() {
+    return getControllerMap().getActiveGroup();
   }
 
-  public static Group getActiveGroup() {
-    return activeGroup;
+  public void setActiveGroup(Group activeGroup) {
+    getControllerMap().setActiveGroup(activeGroup);
   }
 
-  public static void setActiveGroup(Group activeGroup) {
-    SceneController.activeGroup = activeGroup;
+  protected JobblettAccess getAccess() {
+    return controllerMap.getAccess();
   }
 
-  protected static JobblettAccess getAccess() {
-    return access;
+  public void switchScene(final JobblettScenes jobblettScenes) {
+    getControllerMap().switchScene(jobblettScenes);
   }
 
-  public static void setAccess(JobblettAccess access) {
-    SceneController.access = access;
+  protected void setControllerMap(ControllerMap controllerMap) {
+    this.controllerMap = controllerMap;
   }
 
-  public static void switchScene(final JobblettScenes jobblettScenes) {
-    stage.setScene(jobblettScenes.getScene());
-    jobblettScenes.getController().onSceneDisplayed();
+  protected ControllerMap getControllerMap() {
+    return controllerMap;
   }
 
-  public abstract void onSceneDisplayed();
+  public void onSceneDisplayed() {
+  }
 
   public void styleIt() {
 

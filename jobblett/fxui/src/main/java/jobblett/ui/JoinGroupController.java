@@ -41,11 +41,6 @@ public class JoinGroupController extends SceneController {
     joinGroupButton.setSkin(new ButtonAnimationSkin(joinGroupButton));
   }
 
-  @Override public void onSceneDisplayed() {
-    groupIdField.setText("");
-    errorMessage.setText("");
-  }
-
   @FXML public void goToUserHome() {
     switchScene(USER_HOME);
   }

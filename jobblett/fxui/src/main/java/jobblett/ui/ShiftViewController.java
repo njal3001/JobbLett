@@ -66,7 +66,8 @@ public class ShiftViewController extends SceneController {
    */
   @FXML public void goToEditShift() {
     JobShift selectedJobShift = shifts.getSelectionModel().getSelectedItem();
-    UpdateShiftController newController = (UpdateShiftController) UPDATE_SHIFT.getController();
+    SceneController sceneController = getControllerMap().getController(UPDATE_SHIFT);
+    UpdateShiftController newController = (UpdateShiftController) sceneController;
     newController.setActiveJobShift(selectedJobShift);
     switchScene(UPDATE_SHIFT);
   }

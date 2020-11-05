@@ -80,22 +80,24 @@ public class UpdateShiftControllerTest extends JobbLettTest {
     date.setValue(tomorrow);
     // Setting up valid times for the shifts
     clickOn("#fromField");
-    type(KeyCode.BACK_SPACE, 5);
-    type(KeyCode.DELETE, 5);
+    type(KeyCode.BACK_SPACE, 3);
+    type(KeyCode.DELETE, 3);
     write("08:00");
     uiAssertions.assertTextField("fromField", "08:00");
     clickOn("#toField");
-    type(KeyCode.BACK_SPACE, 5);
-    type(KeyCode.DELETE, 5);
+    type(KeyCode.BACK_SPACE, 3);
+    type(KeyCode.DELETE, 3);
     write("15:30");
     uiAssertions.assertTextField("toField", "15:30");
     // Adding additional info for the shift
     clickOn("#infoArea");
-    write("We are testing valid createShift");
-    uiAssertions.assertTextArea("infoArea", "We are testing valid createShift");
+    //write("We are testing valid createShift");
+    write("test1");
+    uiAssertions.assertTextArea("infoArea", "test1");
     // Creating the shift
     clickOn("#createShiftButton");
 
+    preShifts = lookup("#shifts").query();
     // verifying that the shift is showing in the listview
     assertEquals((amountBefore + 1), preShifts.getItems().size(),
         "The recently created shift wasn't added in the ShiftView");
@@ -110,16 +112,17 @@ public class UpdateShiftControllerTest extends JobbLettTest {
     date.setValue(yesterday);
     // Setting up valid times for the shifts
     clickOn("#fromField");
-    type(KeyCode.BACK_SPACE, 5);
-    type(KeyCode.DELETE, 5);
+    type(KeyCode.BACK_SPACE, 3);
+    type(KeyCode.DELETE, 3);
     write("08:00");
     clickOn("#toField");
-    type(KeyCode.BACK_SPACE, 5);
-    type(KeyCode.DELETE, 5);
+    type(KeyCode.BACK_SPACE, 3);
+    type(KeyCode.DELETE, 3);
     write("15:30");
     // Adding additional info for the shift
     clickOn("#infoArea");
-    write("We are testing creating shift in the past");
+    //write("We are testing creating shift in the past");
+    write("test2");
     // Creating the shift
     clickOn("#createShiftButton");
 
@@ -139,16 +142,17 @@ public class UpdateShiftControllerTest extends JobbLettTest {
     date.setValue(tomorrow);
     // Setting up ivalid times for the shifts
     clickOn("#fromField");
-    type(KeyCode.BACK_SPACE, 5);
-    type(KeyCode.DELETE, 5);
-    write("wrongInput");
+    type(KeyCode.BACK_SPACE, 3);
+    type(KeyCode.DELETE, 3);
+    write("wrong");
     clickOn("#toField");
-    type(KeyCode.BACK_SPACE, 5);
-    type(KeyCode.DELETE, 5);
+    type(KeyCode.BACK_SPACE, 3);
+    type(KeyCode.DELETE, 3);
     write("123Wrong");
     // Adding additional info for the shift
     clickOn("#infoArea");
-    write("We are testing creating shift with invalid timeformat");
+    //write("We are testing creating shift with invalid timeformat");
+    write("test3");
     // Creating the shift
     clickOn("#createShiftButton");
 
@@ -162,7 +166,7 @@ public class UpdateShiftControllerTest extends JobbLettTest {
   }
 
   @Test public void testUpdateShift() {
-    UpdateShiftController shiftController = (UpdateShiftController) UPDATE_SHIFT.getController();
+    UpdateShiftController shiftController = (UpdateShiftController) getControllerMap().getController(UPDATE_SHIFT);
     shiftController.setActiveJobShift(jobShift1);
     Platform.runLater(() -> {
       shiftController.onSceneDisplayed();
@@ -176,20 +180,21 @@ public class UpdateShiftControllerTest extends JobbLettTest {
     date.setValue(tomorrow);
     // Setting up ivalid times for the shifts
     clickOn("#fromField");
-    type(KeyCode.BACK_SPACE, 10);
-    type(KeyCode.DELETE, 10);
+    type(KeyCode.BACK_SPACE, 3);
+    type(KeyCode.DELETE, 3);
     write("10:00");
     uiAssertions.assertTextField("fromField", "10:00");
     clickOn("#toField");
-    type(KeyCode.BACK_SPACE, 10);
-    type(KeyCode.DELETE, 10);
+    type(KeyCode.BACK_SPACE, 3);
+    type(KeyCode.DELETE, 3);
     write("17:00");
     uiAssertions.assertTextField("toField", "17:00");
     clickOn("#infoArea");
     type(KeyCode.BACK_SPACE, 20);
     type(KeyCode.DELETE, 20);
-    write("We are testing if update jobshift is working");
-    uiAssertions.assertTextArea("infoArea", "We are testing if update jobshift is working");
+    //write("We are testing if update jobshift is working");
+    write("test4");
+    uiAssertions.assertTextArea("infoArea", "test4");
     // Creating the shift
     clickOn("#createShiftButton");
 

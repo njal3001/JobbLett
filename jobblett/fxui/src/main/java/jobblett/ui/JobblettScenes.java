@@ -16,42 +16,14 @@ public enum JobblettScenes {
   UPDATE_SHIFT("UpdateShift.fxml");
 
   private final String filename;
-  private SceneController controller;
-  private Scene scene;
 
   JobblettScenes(String filename) {
     this.filename = filename;
-    reset();
-  }
-
-  /**
-   * TODO.
-   */
-  public void reset() {
-    FXMLLoader loader = new FXMLLoader(App.class.getResource(filename));
-    Parent parent = null;
-    try {
-      parent = loader.load();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    Scene scene = new Scene(parent);
-    SceneController sceneController = ((SceneController) loader.getController());
-    sceneController.styleIt();
-    this.controller = sceneController;
-    this.scene = scene;
   }
 
   public String getFilename() {
     return filename;
   }
 
-  public SceneController getController() {
-    return controller;
-  }
-
-  public Scene getScene() {
-    return scene;
-  }
 
 }

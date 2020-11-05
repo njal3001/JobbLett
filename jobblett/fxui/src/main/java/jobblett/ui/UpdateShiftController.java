@@ -103,9 +103,7 @@ public class UpdateShiftController extends SceneController {
   @Override public void onSceneDisplayed() {
 
     // Lists all members
-    members.setCellFactory(member -> {
-      return new GroupMemberListCell();
-    });
+    members.setCellFactory(member -> new GroupMemberListCell(getControllerMap()));
     members.getItems().clear();
     for (User user : getActiveGroup()) {
       members.getItems().add(user);
