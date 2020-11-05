@@ -18,28 +18,32 @@ import java.nio.file.Paths;
  * from $USER_HOME/.jobblett/main.json
  */
 public class JobblettDeserializer<Type> {
-    ObjectMapper objectMapper;
-    Reader reader;
-    Class<Type> classType;
+  ObjectMapper objectMapper;
+  Reader reader;
+  Class<Type> classType;
 
-    /**
-     * Initializes a JobblettDeserializer-instance and reads main.json.
-     */
-    public JobblettDeserializer(Class<Type> classType) {
-        this.classType = classType;
-        File f = new File(System.getProperty("user.home") + "/.jobblett");
-        // noinspection ResultOfMethodCallIgnored
-        boolean mkdir = f.mkdir();
-        if (mkdir) useDefaultValues();
-        else {
-            try {
-                Path path = Paths.get(System.getProperty("user.home") + "/.jobblett", classType.getSimpleName()+".json");
-                reader = new FileReader(path.toFile(), StandardCharsets.UTF_8);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-                useDefaultValues();
-            }
-        }
+  /**
+   * Initializes a JobblettDeserializer-instance and reads main.json.
+   */
+  public JobblettDeserializer(Class<Type> classType) {
+    this.classType = classType;
+    File f = new File(System.getProperty("user.home") + "/.jobblett");
+    // noinspection ResultOfMethodCallIgnored
+    boolean mkdir = f.mkdir();
+    if (mkdir) {
+      useDefaultValues();
+    } else {
+      try {
+        Path path = Paths.get(System.getProperty("user.home")
+            + "/.jobblett", classType.getSimpleName()
+            + ".json");
+        reader =
+            new FileReader(path.toFile(), StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        System.out.println(e.getMessage());
+        useDefaultValues();
+      }
+    }
 
 
     // create object mapper instance
@@ -50,68 +54,68 @@ public class JobblettDeserializer<Type> {
     objectMapper.registerModule(new JobblettCoreModule());
   }
 
-    private void useDefaultValues() {
-        URL url = getClass().getResource("default"+classType.getSimpleName()+".json");
-        try {
-            this.reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+  private void useDefaultValues() {
+    URL url = getClass().getResource("default" + classType.getSimpleName() + ".json");
+    try {
+      this.reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+  }
 
-    public static <T> T useDefaultValues(Class <T> classType) {
-        URL url = JobblettDeserializer.class.getResource("default"+classType.getSimpleName()+".json");
-        Reader reader;
-        T object = null;
-        try {
-            reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JobblettCoreModule());
-            object = objectMapper.readValue(reader, classType);
+  public static <T> T useDefaultValues(Class<T> classType) {
+    URL url = JobblettDeserializer.class.getResource("default"
+        + classType.getSimpleName()
+        + ".json");
+    Reader reader;
+    T object = null;
+    try {
+      reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
+      ObjectMapper objectMapper = new ObjectMapper();
+      objectMapper.registerModule(new JobblettCoreModule());
+      object = objectMapper.readValue(reader, classType);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return object;
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+    return object;
+  }
 
-    /**
-     * Imports main.json and returns a new Main.class instance with tha data.
-     *
-     * @return Main.class object
-     */
-    public Type deserialize() {
-        Type obj = null;
-        try {
-            // deserialize json string
-            obj =  objectMapper.readValue(reader, classType);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return obj;
+  /**
+   * Imports main.json and returns a new Main.class instance with tha data.
+   *
+   * @return Main.class object
+   */
+  public Type deserialize() {
+    Type obj = null;
+    try {
+      // deserialize json string
+      obj = objectMapper.readValue(reader, classType);
+    } catch (Exception ex) {
+      ex.printStackTrace();
     }
+    return obj;
+  }
 
-    /**
-     * Imports from a String
-     *
-     * @return Main.class object
-     */
-    public Type deserializeString(String value) {
-        Type obj = null;
-        try {
-            // deserialize json string
-            obj = (Type) objectMapper.readValue(value, classType);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return obj;
+  /**
+   *@return Main.class object
+   */
+  public Type deserializeString(String value) {
+    Type obj = null;
+    try {
+      // deserialize json string
+      obj = (Type) objectMapper.readValue(value, classType);
+    } catch (Exception ex) {
+      ex.printStackTrace();
     }
+    return obj;
+  }
 
-/*    *//**
-     * Updates an existing Main.class instance with data from main.json
-     *
-     * @param main the existing Main.class instance
-     *//*
+  /*   *//**
+   * Updates an existing Main.class instance with data from main.json
+   *
+   * @param main the existing Main.class instance
+   *//*
     public void updateMain(Main main) {
         try {
             objectMapper.readerForUpdating(main).readValue(reader, Main.class);
