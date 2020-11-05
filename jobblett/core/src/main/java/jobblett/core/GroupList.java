@@ -1,155 +1,81 @@
 package jobblett.core;
 
-
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 /**
  * Handles all of the groups in the "database".
  */
-public class GroupList implements Iterable<Group> {
-
-    private Collection<Group> groups = new ArrayList<>();
-
-    /**
-     * Generates a unique groupID with 4 digits which is available.
-     *
-     * @return the unique groupID
-     * @throws IllegalStateException if all IDs are already taken
-     */
-    private int generateGroupId() throws IllegalStateException {
-        Collection<Integer> alreadyUsed = getGroupIds();
-        if (alreadyUsed.size() >= 9000)
-            throw new IllegalStateException("All Ids are taken");
-        int groupID = 0;
-        while ((groupID == 0) || (alreadyUsed.contains(groupID))) {
-            groupID = ThreadLocalRandom.current().nextInt(1000, 10000);
-        }
-        return groupID;
+public class GroupList extends JobblettList<Integer, Group> {
+  /**
+   * Generates a unique groupID with 4 digits which is available.
+   *
+   * @return the unique groupID
+   * @throws IllegalStateException if all IDs are already taken
+   */
+  private int generateGroupId() throws IllegalStateException {
+    Collection<Integer> alreadyUsed = getGroupIds();
+    if (alreadyUsed.size() >= 9000) {
+      throw new IllegalStateException("All Ids are taken");
     }
-
-    /**
-     * Creates a new group with the given groupName and an unique ID.
-     * The group is automatically added to groupList.
-     *
-     * @param groupName the groupName of the new group
-     * @return the newly created group.
-     * @throws IllegalStateException if all IDs are already taken
-     */
-    public Group newGroup(String groupName) throws IllegalStateException{
-        int groupId = generateGroupId();
-        Group group = new Group(groupName,groupId);
-        addGroup(group);
-        return group;
+    int groupId = 0;
+    while ((groupId == 0) || (alreadyUsed.contains(groupId))) {
+      groupId = ThreadLocalRandom.current().nextInt(1000, 10000);
     }
+    return groupId;
+  }
 
-    /**
-     * Adds the group to the groupList.
-     *
-     * @param group the group to be added
-     * @throws IllegalArgumentException if groupID is already taken
-     */
-    public boolean addGroup(Group group) throws IllegalArgumentException{
-        if(getGroupIds().contains(group.getGroupID()))
-            throw new IllegalArgumentException("Group ID is already taken");
-        return groups.add(group);
-    }
+  /**
+   * Creates a new group with the given groupName and an unique ID.
+   * The group is automatically added to groupList.
+   *
+   * @param groupName the groupName of the new group
+   * @return the newly created group.
+   * @throws IllegalStateException if all IDs are already taken
+   */
+  public Group newGroup(String groupName) throws IllegalStateException {
+    int groupId = generateGroupId();
+    Group group = new Group(groupName, groupId);
+    add(group);
+    return group;
+  }
 
-    /**
-     * Removes the group from the groupList.
-     *
-     * @param group the group to be removed
-     * @return true if the group is contained and removed, else false
-     */
-    public boolean removeGroup(Group group) {
-        return groups.remove(group);
-    }
+  /**
+   * Gets the all groups where the specified user is a member.
+   * Returns empty collection if there are none.
+   *
+   * @param user the specified user
+   * @return a collection with groups
+   */
+  //LagTest
+  public Collection<Group> getGroups(User user) {
+    return filter(group -> group.getUser(user.getUserName()) == user);
+  }
 
-    /**
-     * Searches through the users with the same groupID and returns the first found.
-     *
-     * @param groupID the groupID to look for
-     * @return the group with same groupID and returns null if there is none.
-     */
-    public Group getGroup(int groupID) {
-        return groups.stream()
-                .filter(group -> group.getGroupID() == groupID)
-                .findFirst()
-                .orElse(null);
-    }
+  /**
+   * Gets a list of all groupIDs registered.
+   *
+   * @return list of groupIDs (String)
+   */
+  private Collection<Integer> getGroupIds() {
+    return stream().map(Group::getGroupId).collect(Collectors.toList());
+  }
 
-    /**
-     * Gets the all groups where the specified user is a member.
-     * Returns empty collection if there are none.
-     *
-     * @param user the specified user
-     * @return a collection with groups
-     */
-    //LagTest
-    public Collection<Group> getGroups(User user){
-        return groups.stream()
-                .filter(group -> group.getUser(user.getUserName())==user)
-                .collect(Collectors.toList());
-    }
+  @Override protected void firePropertyChange(
+      String propertyName,
+      Object oldValue,
+      Object newValue
+  ) {
+    super.firePropertyChange(propertyName, oldValue, newValue);
+  }
 
-    /**
-     * Gets the amount of groups registered.
-     *
-     * @return amount of groups registered
-     */
-    public int getGroupSize() {
-        return groups.size();
-    }
+  @Override protected Integer identifier(Group type) {
+    return type.getGroupId();
+  }
 
-    /**
-     * Gets a list of all groupIDs registered.
-     *
-     * @return list of groupIDs (String)
-     */
-    private Collection<Integer> getGroupIds(){
-        return groups.stream()
-                .map(Group::getGroupID)
-                .collect(Collectors.toList());
-    }
+  @Override protected void optionalAlreadyExists() {
+    throw new IllegalArgumentException("Group with same ID already exists");
+  }
 
-    @Override
-    public Iterator<Group> iterator() {
-        return groups.iterator();
-    }
-
-    public String toString(){
-        StringBuilder s = new StringBuilder();
-        for(Group group : groups)
-            s.append(group.toString()).append("\n");
-        return s.toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof GroupList) {
-            GroupList groupList = (GroupList) o;
-            /*for (Group thatGroup : groupList) {
-                if (getGroup(thatGroup.getGroupID())==null) return false;
-                Group thisGroup = getGroup(thatGroup.getGroupID());
-                if (!thisGroup.equals(thatGroup)) return false;
-            }
-            for (Group thisGroup : this) {
-                if (groupList.getGroup(thisGroup.getGroupID())==null) return false;
-                Group thatGroup = groupList.getGroup(thisGroup.getGroupID());
-                if (!thatGroup.equals(thisGroup)) return false;
-            }
-            return true;*/
-            return this.groups.equals(groupList.groups);
-        }
-        else return super.equals(o);
-    }
-
-    @Override
-    public int hashCode() {
-        assert false : "hashCode not designed";
-        return 42; // any arbitrary constant will do
-    }
 }

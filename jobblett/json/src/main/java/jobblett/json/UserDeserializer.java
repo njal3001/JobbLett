@@ -6,26 +6,35 @@ import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.node.IntNode;
-import jobblett.core.User;
-
 import java.io.IOException;
+import jobblett.core.HashedPassword;
+import jobblett.core.User;
 
 public class UserDeserializer extends JsonDeserializer<User> {
 
-    public User deserialize(JsonNode node) throws IOException, JsonProcessingException {
-        if (node.isNull()) return null;
-        String username = node.get("username").asText();
-        String password = node.get("password").asText();
-        String givenName = node.get("givenName").asText();
-        String familyName = node.get("familyName").asText();
-        return new User(username,password,givenName,familyName,true);
+  /**
+   * TODO.
+   *
+   * @param node TODO
+   * @return TODO
+   * @throws IOException TODO
+   * @throws JsonProcessingException TODO
+   */
+  public User deserialize(JsonNode node) throws IOException, JsonProcessingException {
+    if (node.isNull()) {
+      return null;
     }
+    String username = node.get("username").asText();
+    String password = node.get("password").asText();
+    String givenName = node.get("givenName").asText();
+    String familyName = node.get("familyName").asText();
+    return new User(username, HashedPassword.alreadyHashed(password), givenName, familyName);
+  }
 
-    @Override
-    public User deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
-        TreeNode treeNode = jsonParser.getCodec().readTree(jsonParser);
-        return deserialize((JsonNode) treeNode);
-    }
+  @Override
+  public User deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+      throws IOException, JsonProcessingException {
+    TreeNode treeNode = jsonParser.getCodec().readTree(jsonParser);
+    return deserialize((JsonNode) treeNode);
+  }
 }

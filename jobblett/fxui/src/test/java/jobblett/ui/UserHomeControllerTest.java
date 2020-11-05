@@ -1,47 +1,40 @@
 package jobblett.ui;
 
-import org.junit.jupiter.api.Test;
+import static jobblett.ui.JobblettScenes.CREATE_GROUP;
+import static jobblett.ui.JobblettScenes.GROUP_HOME;
+import static jobblett.ui.JobblettScenes.JOIN_GROUP;
+import static jobblett.ui.JobblettScenes.USER_HOME;
 
 import jobblett.core.Group;
 import jobblett.core.User;
+import org.junit.jupiter.api.Test;
 
 public class UserHomeControllerTest extends JobbLettTest {
 
-  @Override
-  protected String giveID() {
-    return App.USER_HOME_ID;
+  @Override protected JobblettScenes giveId() {
+    return USER_HOME;
   }
 
-  @Override
-  protected User giveActiveUser() {
+  @Override protected User optionalActiveUser() {
     return user1;
   }
 
-  @Override
-  protected Group giveActiveGroup() {
-    return null;
-  }
-
-  @Test
-  public void testGroupsView_initialGroup(){
+  @Test public void testGroupsView_initialGroup() {
     uiAssertions.assertListViewHasItem("groups", group1);
   }
 
-  @Test
-  public void testGoTo_GroupHome() {
+  @Test public void testGoTo_GroupHome() {
     clickOn(uiAssertions.findListCell(0));
-    uiAssertions.assertOnScene(App.GROUP_HOME_ID);
+    uiAssertions.assertOnScene(GROUP_HOME);
   }
 
-  @Test
-  public void testGoTo_JoinGroup() {
+  @Test public void testGoTo_JoinGroup() {
     clickOn("#joinGroupButton");
-    uiAssertions.assertOnScene(App.JOIN_GROUP_ID);
+    uiAssertions.assertOnScene(JOIN_GROUP);
   }
 
-  @Test
-  public void testGoTo_CreateGroup() {
+  @Test public void testGoTo_CreateGroup() {
     clickOn("#createGroupButton");
-    uiAssertions.assertOnScene(App.CREATE_GROUP_ID);
+    uiAssertions.assertOnScene(CREATE_GROUP);
   }
 }

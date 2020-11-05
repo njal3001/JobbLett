@@ -1,73 +1,99 @@
 package jobblett.ui;
 
+import static jobblett.ui.JobblettScenes.GROUP_HOME;
+import static jobblett.ui.JobblettScenes.UPDATE_SHIFT;
+
+import java.util.List;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.text.Text;
 import jobblett.core.JobShift;
+import jobblett.core.User;
+
 
 public class ShiftViewController extends SceneController {
 
-  @FXML
-  Text groupName;
+  @FXML Label groupName;
 
-  @FXML
-  ListView<JobShift> shifts;
+  @FXML ListView<JobShift> shifts;
 
-  @FXML
-  Button backToGroup;
+  @FXML Button backToGroup;
 
-  @FXML
-  Button newShiftButton;
+  @FXML Button newShiftButton;
 
-  @FXML
-  Button editShiftButton;
+  @FXML Button editShiftButton;
 
-  @FXML
-  Button deleteShiftButton;
+  @FXML Button deleteShiftButton;
 
-  @Override
-  public void onSceneDisplayed() {
+
+  @FXML CheckBox toggleUserFilterCheckBox;
+
+  @FXML public void initialize() {
+    shifts.setCellFactory(shifts -> new JobShiftListCell());
+    shifts.getSelectionModel().selectedItemProperty().addListener(listener -> updateButtons());
+  }
+
+  @Override public void onSceneDisplayed() {
     // Sets group name on top of the screen
-    groupName.setText(mainController.getActiveGroup().getGroupName());
-
-    shifts.setCellFactory(shifts -> {
-      JobShiftListCell listCell = new JobShiftListCell();
-      return listCell;
-    });
-
-    shifts.getSelectionModel().selectedItemProperty().addListener(listener -> {
-      updateButtons();
-    });
+    groupName.setText(getActiveGroup().getGroupName());
+    toggleUserFilterCheckBox.setSelected(false);
     updateView();
     updateButtons();
-    newShiftButton.setVisible(mainController.getActiveGroup().isAdmin(mainController.getActiveUser()));
+    setButtonVisibility();
   }
 
-  @FXML
-  public void backButton() {
-    mainController.setScene(App.GROUP_HOME_ID);
+  private void setButtonVisibility() {
+    List<Button> buttons = List.of(newShiftButton, editShiftButton, deleteShiftButton);
+    boolean visible = getActiveGroup().isAdmin(getActiveUser());
+    for (Button button : buttons) {
+      button.setVisible(visible);
+    }
   }
 
-  @FXML
-  public void goToCreateShift() {
-    mainController.setScene(App.UPDATE_SHIFT_ID);
+  @FXML public void backButton() {
+    switchScene(GROUP_HOME);
   }
 
-  @FXML
-  public void goToEditShift(){
+  @FXML public void goToCreateShift() {
+    switchScene(UPDATE_SHIFT);
+  }
+
+  /**
+   * TODO.
+   */
+  @FXML public void goToEditShift() {
     JobShift selectedJobShift = shifts.getSelectionModel().getSelectedItem();
-    UpdateShiftController newController = (UpdateShiftController) mainController.getSceneController(App.UPDATE_SHIFT_ID);
+    SceneController sceneController = getControllerMap().getController(UPDATE_SHIFT);
+    UpdateShiftController newController = (UpdateShiftController) sceneController;
     newController.setActiveJobShift(selectedJobShift);
-    mainController.setScene(App.UPDATE_SHIFT_ID);
+    switchScene(UPDATE_SHIFT);
   }
 
-  @FXML
-  public void handleDeleteShift(){
+  /**
+   * TODO.
+   */
+  @FXML public void handleDeleteShift() {
     int index = shifts.getSelectionModel().getSelectedIndex();
     JobShift selectedJobShift = shifts.getItems().get(index);
     if (selectedJobShift != null) {
-      mainController.getActiveGroup().getJobShifts().removeJobShift(selectedJobShift);
+      getActiveGroup().getJobShifts().remove(selectedJobShift);
+      updateView();
+    }
+  }
+
+  /**
+   * TODO.
+   *
+   * @param event TODO
+   */
+  @FXML public void toggleUserFilter(ActionEvent event) {
+    CheckBox checkBox = (CheckBox) event.getSource();
+    if (checkBox.isSelected()) {
+      updateView(getActiveUser());
+    } else {
       updateView();
     }
   }
@@ -75,14 +101,32 @@ public class ShiftViewController extends SceneController {
   // Burde kanskje bruke observable for å kalle på denne metoden
   // Lists all job shifts
   private void updateView() {
-    shifts.getItems().clear();
-    for (JobShift shift : mainController.getActiveGroup().getJobShifts())
-      shifts.getItems().add(shift);
+    //Endre metode navn kanskje?
+    updateView(getActiveGroup().getJobShifts().getJobShifts());
+  }
+
+  private void updateView(User user) {
+    updateView(getActiveGroup().getJobShifts().getJobShifts(user));
+  }
+
+  private void updateView(List<JobShift> shifts) {
+    this.shifts.getItems().clear();
+    for (JobShift shift : shifts) {
+      this.shifts.getItems().add(shift);
+    }
   }
 
   private void updateButtons() {
     boolean disable = shifts.getSelectionModel().getSelectedIndex() == -1;
     editShiftButton.setDisable(disable);
     deleteShiftButton.setDisable(disable);
+  }
+
+  @Override public void styleIt() {
+    super.styleIt();
+    newShiftButton.setSkin(new ButtonAnimationSkin(newShiftButton));
+    editShiftButton.setSkin(new ButtonAnimationSkin(editShiftButton));
+    deleteShiftButton.setSkin(new ButtonAnimationSkin(deleteShiftButton));
+    backToGroup.setSkin(new ButtonAnimationSkin(backToGroup));
   }
 }

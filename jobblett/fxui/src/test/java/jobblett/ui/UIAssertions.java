@@ -1,79 +1,99 @@
 package jobblett.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.text.TextAlignment;
-import jobblett.core.JobShift;
-import org.assertj.core.internal.bytebuddy.asm.Advice;
-import org.testfx.api.FxRobot;
-
 import javafx.scene.Node;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.text.Text;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import org.testfx.api.FxRobot;
 
-import java.time.LocalDateTime;
+import java.util.zip.CheckedOutputStream;
 
 // Helper class for assertions that are useful for multiple test classes
 public class UIAssertions extends FxRobot {
 
-  private MainController mainController;
+  ControllerMap controllerMap;
 
-  public UIAssertions(MainController mainController) {
-    this.mainController = mainController;
+  public UIAssertions(ControllerMap controllerMap) {
+    this.controllerMap = controllerMap;
   }
 
-  public void assertText(String fxid, String expected) {
-    Text text = lookup("#" + fxid).query();
-    assertEquals(expected, text.getText());
+  public void assertLabel(String fxid, String expected) {
+    Label text = lookup("#" + fxid).query();
+    assertEquals(expected, text.getText(),
+        "The Label: '" + fxid + "' didn't have the expected value: " + expected);
   }
 
   public void assertTextField(String fxid, String expected) {
-    TextField textField =  lookup("#" + fxid).query();
-    assertEquals(expected, textField.getText());
+    TextField textField = lookup("#" + fxid).query();
+    assertEquals(expected, textField.getText(),
+        "The TextField: '" + fxid + "' didn't have the expected value: " + expected);
   }
 
   public void assertTextArea(String fxid, String expected) {
-    TextArea textArea =  lookup("#" + fxid).query();
-    assertEquals(expected, textArea.getText());
+    TextArea textArea = lookup("#" + fxid).query();
+    assertEquals(expected, textArea.getText(),
+        "The TextArea: '" + fxid + "' didn't have the expected value: " + expected);
   }
 
   public void assertDate(String fxid, String expected) {
     DatePicker date = lookup("#" + fxid).query();
-    assertEquals(expected, date.getValue().format(App.EXPECTED_DATE_FORMAT));
+    assertEquals(expected, date.getValue().format(App.EXPECTED_DATE_FORMAT),
+        "The DateField: '" + fxid + "' didn't have the expected value or format: " + expected);
   }
 
-  public void asserListView(String fxid, String expected) {
+  /*//Fjenre? denne brukes ikke av noen??
+  public void asserListViewItemHasText(String fxid,Object item, String expected) {
     ListView listView = lookup("#" + fxid).query();
     assertEquals(expected, listView.toString());
-  }
+  }*/
 
 
   public void assertListViewHasItem(String fxid, Object expected) {
     ListView<Object> listView = lookup("#" + fxid).query();
-    assertTrue(listView.getItems().contains(expected));
+    assertTrue(listView.getItems().contains(expected),
+        "The ListView: '" + fxid + "' didn't have the expected object.");
   }
 
-  public void assertOnScene(String sceneID) {
-    assertEquals(mainController.getScene(sceneID), mainController.getStage().getScene());
+  public void assertListViewHasNotItem(String fxid, Object unexpected) {
+    ListView<Object> listView = lookup("#" + fxid).query();
+    assertFalse(listView.getItems().contains(unexpected),
+        "The ListView: '" + fxid + "' did have the unexpected object.");
+  }
+
+  public void assertOnScene(JobblettScenes sceneID) {
+    assertEquals(controllerMap.getScene(sceneID), controllerMap.getStage().getScene());
   }
 
   // Assumes only one ListView in scene
-  @SuppressWarnings("unchecked")
-  public ListCell<Object> findListCell(int index) {
+  @SuppressWarnings("unchecked") public ListCell<Object> findListCell(int index) {
     for (Node node : lookup(".list-cell").queryAll()) {
       if (node instanceof ListCell) {
         ListCell<Object> listCell = (ListCell<Object>) node;
-        if (!listCell.isEmpty() && index-- == 0)
+        if (!listCell.isEmpty() && index-- == 0) {
           return listCell;
+        }
       }
     }
     fail("ListCell was not found");
     return null;
+  }
+
+  public void assertListCellText(int index, String expectedString) {
+    ListCell<Object> selectedCell = findListCell(index);
+    String stringShownOnCell = selectedCell.getText();
+    assertEquals(expectedString, stringShownOnCell,
+        "The string shown in the cell is not the same as expected");
+  }
+
+  public void assertBoldText(ListCell<Object> listCell) {
+    assertEquals("Bold", listCell.getFont().getStyle());
   }
 }

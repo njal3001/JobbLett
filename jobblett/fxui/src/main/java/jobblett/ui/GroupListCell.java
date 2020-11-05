@@ -1,30 +1,31 @@
 package jobblett.ui;
 
+import static jobblett.ui.JobblettScenes.GROUP_HOME;
+
 import javafx.scene.control.ListCell;
 import jobblett.core.Group;
 
-public class GroupListCell extends ListCell<Group>{
+public class GroupListCell extends ListCell<Group> {
 
-  private MainController mainController;
+  ControllerMap controllerMap;
 
-  public GroupListCell(MainController mainController){
-    this.mainController = mainController;
+  public GroupListCell(ControllerMap controllerMap) {
+    this.controllerMap = controllerMap;
   }
-  
-  @Override
-  public void updateItem(Group group, boolean empty){
+
+
+  @Override public void updateItem(Group group, boolean empty) {
     super.updateItem(group, empty);
-    if(empty || group == null){
+    if (empty || group == null) {
       setGraphic(null);
       setText(null);
-    }
-    else{
+    } else {
       setText(group.getGroupName());
       setOnMouseClicked((event) -> {
-        mainController.setActiveGroup(group);
-        mainController.setScene(App.GROUP_HOME_ID);
+        controllerMap.setActiveGroup(group);
+        controllerMap.switchScene(GROUP_HOME);
       });
-    
+
     }
   }
 }

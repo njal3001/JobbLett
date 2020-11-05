@@ -1,61 +1,61 @@
 package jobblett.ui;
 
+import static jobblett.ui.JobblettScenes.SHIFT_VIEW;
+import static jobblett.ui.JobblettScenes.USER_HOME;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.text.Text;
 import jobblett.core.User;
 
-public class GroupHomeController extends SceneController{
+public class GroupHomeController extends SceneController {
 
-    @FXML
-    Text groupName;
+  @FXML Label groupName;
 
-    @FXML
-    ListView<User> members;
+  @FXML ListView<User> members;
 
-    @FXML
-    Text groupID;
+  @FXML Label groupId;
 
-    @FXML
-    Button backToHome;
-    
-    @FXML
-    Button goToShifts;
+  @FXML Button backToHome;
 
-    // Vi burde gjøre noe for å generalisere listView koden, nå skriver vi ca. samme kode hver gang vi skal vise noe med listView
-    // Må legge til en måte at man kan se hvem som er admin
+  @FXML Button goToShifts;
 
-    @Override
-    public void onSceneDisplayed() {
-        // Sets GroupName on top of the screen
-        groupName.setText(mainController.getActiveGroup().getGroupName());
 
-        // Shows GroupID
-        groupID.setText("GroupID: " + mainController.getActiveGroup().getGroupID());
+  /**
+   * TODO.
+   */
+  @FXML public void initialize() {
+    members.setCellFactory(members -> new GroupMemberListCell(getControllerMap()));
+    //Sets the ListView uninteractable with the mouse and the keyboard
+    members.setMouseTransparent(true);
+    members.setFocusTraversable(false);
+  }
 
-        members.setCellFactory(members -> {
-          GroupMemberListCell listCell = new GroupMemberListCell(mainController);
-          return listCell;
-        });
+  @Override public void styleIt() {
+    super.styleIt();
+    backToHome.setSkin(new ButtonAnimationSkin(backToHome));
+  }
 
-        members.getItems().clear();
-        // Lists all members
-        for (User user : mainController.getActiveGroup())
-            members.getItems().add(user);
-        
-        //Sets the ListView uninteractable
-        members.setMouseTransparent(true);
-        //members.setFocusTraversable(false);
+  @Override public void onSceneDisplayed() {
+    // Sets GroupName on top of the screen
+    groupName.setText(getActiveGroup().getGroupName());
+
+    // Shows GroupID
+    groupId.setText("GroupID: " + getActiveGroup().getGroupId());
+
+    members.getItems().clear();
+    // Lists all members
+    for (User user : getActiveGroup()) {
+      members.getItems().add(user);
     }
+  }
 
-    @FXML
-    public void backButton(){
-        mainController.setScene(App.USER_HOME_ID);
-    }
-    
-    @FXML
-    public void viewShifts(){
-        mainController.setScene(App.SHIFT_VIEW_ID);
-    }
+  @FXML public void backButton() {
+    switchScene(USER_HOME);
+  }
+
+  @FXML public void viewShifts() {
+    switchScene(SHIFT_VIEW);
+  }
 }

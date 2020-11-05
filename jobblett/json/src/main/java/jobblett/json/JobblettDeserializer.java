@@ -3,8 +3,11 @@ package jobblett.json;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -39,13 +42,13 @@ public class JobblettDeserializer<Type> {
         }
 
 
-        // create object mapper instance
-        objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+    // create object mapper instance
+    objectMapper = new ObjectMapper();
+    objectMapper.registerModule(new JavaTimeModule());
+    objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
 
-        objectMapper.registerModule(new JobblettCoreModule());
-    }
+    objectMapper.registerModule(new JobblettCoreModule());
+  }
 
     private void useDefaultValues() {
         URL url = getClass().getResource("default"+classType.getSimpleName()+".json");

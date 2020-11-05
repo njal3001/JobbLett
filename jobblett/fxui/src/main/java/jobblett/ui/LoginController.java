@@ -1,49 +1,58 @@
 package jobblett.ui;
 
+import static jobblett.ui.JobblettScenes.CREATE_USER;
+import static jobblett.ui.JobblettScenes.USER_HOME;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
+import jobblett.core.HashedPassword;
 import jobblett.core.User;
 
 public class LoginController extends SceneController {
 
-  @FXML
-  Button createAccount;
+  @FXML Button createAccount;
 
-  @FXML
-  Button login;
+  @FXML Button login;
 
-  @FXML
-  TextField usernameField;
+  @FXML TextField usernameField;
 
-  @FXML
-  Text errorMessage;
+  @FXML Label errorMessage;
 
-  @FXML
-  PasswordField passwordField;
+  @FXML Label username;
 
-  @Override
-  public void onSceneDisplayed() {
-    errorMessage.setText("");
+  @FXML Label password;
+
+  @FXML PasswordField passwordField;
+
+  @Override public void styleIt() {
+    super.styleIt();
+    login.setSkin(new ButtonAnimationSkin(login));
+    createAccount.setSkin(new ButtonAnimationSkin(createAccount));
+    /*errorMessage.setFont(font);
+    username.setFont(font);
+    password.setFont(font);
+    usernameField.setFont(font);*/
   }
 
-  @FXML
-  public void goToCreateUser(){
-    mainController.setScene(App.CREATE_USER_ID);
+  @FXML public void goToCreateUser() {
+    switchScene(CREATE_USER);
   }
 
-  @FXML
-  public void logInToUserHome(){
+  /**
+   * TODO.
+   */
+  @FXML public void logInToUserHome() {
     String userName = this.usernameField.getText();
     String password = this.passwordField.getText();
-    User user = getAccess().login(userName,password);
-    if (user == null)
+    User user = getAccess().login(userName, HashedPassword.hashPassword(password));
+    if (user == null) {
       errorMessage.setText("Wrong username or password");
-    else {
-      mainController.setActiveUser(user);
-      mainController.setScene(App.USER_HOME_ID);
+    } else {
+      setActiveUser(user);
+      switchScene(USER_HOME);
     }
   }
 }

@@ -1,11 +1,6 @@
 package jobblett.ui;
 
-import jobblett.core.Group;
-import jobblett.core.GroupList;
-import jobblett.core.User;
-import jobblett.core.UserList;
-import jobblett.json.JobblettDeserializer;
-
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,89 +9,96 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Collection;
+import jobblett.core.Group;
+import jobblett.core.GroupList;
+import jobblett.core.HashedPassword;
+import jobblett.core.JobblettList;
+import jobblett.core.User;
+import jobblett.core.UserList;
+import jobblett.json.JobblettDeserializer;
+import jobblett.json.JobblettSerializer;
 
-public class JobblettRemoteAccess implements JobblettAccess{
+public class JobblettRemoteAccess implements JobblettAccess {
 
-    private final URI endpointBaseUri;
+  public static final String JOBBLETT_SERVICE_PATH = "jobblett";
+  public static final String USER_LIST_SERVICE_PATH = "userlist";
+  public static final String GROUP_LIST_SERVICE_PATH = "grouplist";
 
-    private JobblettDeserializer<UserList> userListDeserializer = new JobblettDeserializer<>(UserList.class);
-    private JobblettDeserializer<GroupList> groupListDeserializer = new JobblettDeserializer<>(GroupList.class);
+  private final URI endpointBaseUri;
 
-    public JobblettRemoteAccess(URI endpointBaseUri) {
-        this.endpointBaseUri = endpointBaseUri;
+  public JobblettRemoteAccess(URI endpointBaseUri) {
+    this.endpointBaseUri = endpointBaseUri;
+  }
+
+  private String getBodyFromServer(String url) {
+    HttpRequest requestObject = null;
+    try {
+      requestObject = HttpRequest.newBuilder(endpointBaseUri.resolve(new URI(url)))
+          .header("Accept", "application/json").build();
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
     }
+    String responseObjectBody = null;
+    try {
+      HttpResponse<String> responseObject =
+          HttpClient.newBuilder().build().send(requestObject, HttpResponse.BodyHandlers.ofString());
+      responseObjectBody = responseObject.body();
 
-    private Collection<Object> getUpdatedLists() {
-        UserList userList = null;
-        GroupList groupList = null;
-        HttpRequest requestUserList = null;
-        HttpRequest requestGroupList = null;
-        try {
-            requestUserList = HttpRequest.newBuilder(endpointBaseUri.resolve(new URI("jobblett/userlist"))).header("Accept","application/json").build();
-            requestGroupList = HttpRequest.newBuilder(endpointBaseUri.resolve(new URI("jobblett/grouplist"))).header("Accept","application/json").build();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        try {
-            HttpResponse<String> responseUserList = HttpClient.newBuilder().build().send(requestUserList,HttpResponse.BodyHandlers.ofString());
-            HttpResponse<String> responseGroupList = HttpClient.newBuilder().build().send(requestGroupList,HttpResponse.BodyHandlers.ofString());
-            String responseBodyUserList = responseUserList.body();
-            String responseBodyGroupList = responseGroupList.body();
-
-            userList = userListDeserializer.deserializeString(responseBodyUserList);
-            GroupList oldGroupList = groupListDeserializer.deserializeString(responseBodyGroupList);
-            groupList = correctGroupList(oldGroupList,userList);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Collection<Object> result = new ArrayList<>();
-        result.add(userList);
-        result.add(groupList);
-        return result;
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
     }
+    return responseObjectBody;
+  }
 
-    //TODO
-    public Group newGroup(String groupName) {
-        return null;
-    }
+  private <T> T getFromServer(Class<T> t, String url) {
+    String responseObjectBody = getBodyFromServer(url);
+    T o = (T) new JobblettDeserializer<T>(t).deserializeString(responseObjectBody);
+    return o;
+  }
 
-    //TODO
-    public void addUser(User newUser) {
+  @Override public Group newGroup(String groupName) {
+    return getFromServer(Group.class,
+        JOBBLETT_SERVICE_PATH + "/" + GROUP_LIST_SERVICE_PATH + "/new/" + groupName);
+  }
 
-    }
+  @Override public void add(User user) {
+    String userString = new JobblettSerializer().writeValueAsString(user);
+    getBodyFromServer(JOBBLETT_SERVICE_PATH + "/" + USER_LIST_SERVICE_PATH + "/add/" + userString);
+  }
 
-    public Group getGroup(int groupID){
-        GroupList groupList = (GroupList) getUpdatedLists().iterator().next();
-        return groupList.getGroup(groupID);
-    }
+  @Override public Group getGroup(int groupId) {
+    return getFromServer(Group.class,
+        JOBBLETT_SERVICE_PATH + "/" + GROUP_LIST_SERVICE_PATH + "get/" + groupId);
+  }
 
-    //TODO
-    public User login(String userName, String password) {
-        return null;
-    }
+  @Override public User login(String userName, HashedPassword password) {
+    Collection<String> userNameAndPassword = new ArrayList<>();
+    userNameAndPassword.add(userName);
+    userNameAndPassword.add(password.toString());
+    String userNameAndPasswordString =
+        new JobblettSerializer().writeValueAsString(userNameAndPassword);
+    return getFromServer(User.class,
+        JOBBLETT_SERVICE_PATH + "/" + USER_LIST_SERVICE_PATH + "/login/"
+            + userNameAndPasswordString);
+  }
 
-    public Collection<Group> getGroups(User user) {
-        GroupList groupList = (GroupList) getUpdatedLists().iterator().next();
-        return groupList.getGroups(user);
-    }
+  @Override public Collection<Group> getGroups(User user) {
+    String userString = new JobblettSerializer().writeValueAsString(user);
+    return getFromServer(ArrayList.class, userString);
+  }
 
-    //TODO
-    public void save() {
+  @Override public void setLists(UserList userList, GroupList groupList) {
+    Collection<JobblettList> userListAndGroupList = new ArrayList<>();
+    userListAndGroupList.add(userList);
+    userListAndGroupList.add(groupList);
+    String userListAndGroupListString =
+        new JobblettSerializer().writeValueAsString(userListAndGroupList);
+    getBodyFromServer(JOBBLETT_SERVICE_PATH + "/setlists/" + userListAndGroupListString);
+  }
 
-    }
-
-    @Override
-    public void setUserList(UserList userList) {
-
-    }
-
-    @Override
-    public void setGroupList(GroupList groupList) {
-        
-    }
-
-
+  @Override public void propertyChange(PropertyChangeEvent evt) {
+    // TODO: Skriv hva som skal skje når ting endres uten metodene her
+  }
 }
