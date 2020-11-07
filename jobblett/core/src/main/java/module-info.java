@@ -1,5 +1,5 @@
 module jobblett.core {
-  requires guava;
+  requires com.google.common;
   requires java.desktop;
   requires javafx.base;
 

@@ -13,7 +13,7 @@
     </parent>
 
     <properties>
-        <slf4jVersion>1.7.25</slf4jVersion>
+        <slf4jVersion>1.7.9</slf4jVersion>
     </properties>
 
     <dependencies>
@@ -30,15 +30,6 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-        </dependency>
-        <!-- Test with TextFX -->
-        <dependency>
-            <groupId>org.testfx</groupId>
-            <artifactId>testfx-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.testfx</groupId>
-            <artifactId>testfx-junit5</artifactId>
         </dependency>
         <dependency>
             <groupId>gr2007.jobblett</groupId>

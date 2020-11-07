@@ -77,6 +77,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.0.0-M5</version>
                     <configuration>
+                        <!--suppress MavenModelInspection -->
                         <argLine>${argLine} --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED</argLine>
                     </configuration>
                 </plugin>
