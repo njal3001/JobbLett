@@ -1,5 +1,6 @@
 package jobblett.ui;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.net.URI;
@@ -54,7 +55,8 @@ public class JobblettRemoteAccess implements JobblettAccess {
 
   private <T> T getFromServer(Class<T> t, String url) {
     String responseObjectBody = getBodyFromServer(url);
-    T o = JobblettDeserializer.deserializeString(t, responseObjectBody);
+    T o = null;
+    o = JobblettDeserializer.deserialize(t, responseObjectBody);
     return o;
   }
 

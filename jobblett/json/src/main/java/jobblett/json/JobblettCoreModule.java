@@ -9,8 +9,9 @@ import jobblett.core.User;
 import jobblett.core.UserList;
 
 public class JobblettCoreModule extends SimpleModule {
+
   /**
-   * TODO.
+   * Initializes JobblettCoreModule by adding serializers to the superclass.
    */
   public JobblettCoreModule() {
     super();

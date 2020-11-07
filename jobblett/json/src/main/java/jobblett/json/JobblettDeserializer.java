@@ -2,6 +2,8 @@ package jobblett.json;
 
 import static jobblett.json.JobblettSerializer.JOBBLETT_DATA_DIRECTORY;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
@@ -38,6 +40,18 @@ public class JobblettDeserializer {
   }
 
   /**
+   * Deserializes Jobblett-objects from a jsonNode.
+   *
+   * @param classType class type of object to be deserialized
+   * @param <T> class type of the object to be returned (will be set automatically by classType)
+   * @return object deserialized object
+   */
+  public static <T> T deserialize(Class<T> classType, JsonNode node)
+      throws JsonProcessingException {
+    return getObjectMapper().readValue(node.toString(), classType);
+  }
+
+  /**
    * Deserializes Jobblett-objects from existing data.
    * Returns default values if data doesn't exist.
    *
@@ -71,13 +85,6 @@ public class JobblettDeserializer {
     return obj;
   }
 
-  private static ObjectMapper getObjectMapper() {
-    ObjectMapper objectMapper = new ObjectMapper();
-    objectMapper.registerModule(new JavaTimeModule());
-    objectMapper.registerModule(new JobblettCoreModule());
-    return objectMapper;
-  }
-
   /**
    * Deserializes Jobblett-objects from a string.
    *
@@ -86,13 +93,21 @@ public class JobblettDeserializer {
    * @param <T> class type of the object to be returned (will be set automatically by classType)
    * @return object deserialized object
    */
-  public static <T> T deserializeString(Class<T> classType, String value) {
+  public static <T> T deserialize(Class<T> classType, String value) {
     T obj = null;
     try {
       obj = getObjectMapper().readValue(value, classType);
-    } catch (Exception ex) {
-      ex.printStackTrace();
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
     }
     return obj;
   }
+
+  private static ObjectMapper getObjectMapper() {
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.registerModule(new JavaTimeModule());
+    objectMapper.registerModule(new JobblettCoreModule());
+    return objectMapper;
+  }
+
 }

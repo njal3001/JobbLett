@@ -18,7 +18,7 @@ public class JobblettSerializer {
   ObjectMapper objectMapper = new ObjectMapper();
 
   /**
-   * TODO.
+   * Initializing JobblettSerializer by registering necessary modules to the objectMapper.
    */
   public JobblettSerializer() {
     objectMapper.registerModule(new JavaTimeModule());

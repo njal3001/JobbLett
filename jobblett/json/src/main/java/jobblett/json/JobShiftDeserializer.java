@@ -13,26 +13,15 @@ import jobblett.core.User;
 
 public class JobShiftDeserializer extends JsonDeserializer<JobShift> {
 
-  /**
-   * TODO.
-   *
-   * @param node TODO
-   * @return TODO
-   * @throws IOException TODO
-   */
-  public JobShift deserialize(JsonNode node) throws IOException {
-    User user = new UserDeserializer().deserialize(node.get("user"));
+  @Override
+  public JobShift deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+      throws IOException {
+    JsonNode node = jsonParser.getCodec().readTree(jsonParser);
+    User user = JobblettDeserializer.deserialize(User.class, node.get("user"));
     LocalDateTime startingTime = LocalDateTime.parse(node.get("startingTime").asText());
     Duration duration = Duration.ofSeconds(node.get("duration").asLong());
     String info = node.get("info").asText();
     JobShift jobShift = new JobShift(user, startingTime, duration, info, true);
     return jobShift;
-  }
-
-  @Override
-  public JobShift deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-      throws IOException {
-    TreeNode node = jsonParser.getCodec().readTree(jsonParser);
-    return deserialize((JsonNode) node);
   }
 }
