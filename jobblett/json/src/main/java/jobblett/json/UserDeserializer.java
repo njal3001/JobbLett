@@ -12,15 +12,11 @@ import jobblett.core.User;
 
 public class UserDeserializer extends JsonDeserializer<User> {
 
-  /**
-   * TODO.
-   *
-   * @param node TODO
-   * @return TODO
-   * @throws IOException TODO
-   * @throws JsonProcessingException TODO
-   */
-  public User deserialize(JsonNode node) throws IOException, JsonProcessingException {
+  @Override
+  public User deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+      throws IOException, JsonProcessingException {
+    JsonNode node = jsonParser.getCodec().readTree(jsonParser);
+
     if (node.isNull()) {
       return null;
     }
@@ -29,12 +25,5 @@ public class UserDeserializer extends JsonDeserializer<User> {
     String givenName = node.get("givenName").asText();
     String familyName = node.get("familyName").asText();
     return new User(username, HashedPassword.alreadyHashed(password), givenName, familyName);
-  }
-
-  @Override
-  public User deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-      throws IOException, JsonProcessingException {
-    TreeNode treeNode = jsonParser.getCodec().readTree(jsonParser);
-    return deserialize((JsonNode) treeNode);
   }
 }

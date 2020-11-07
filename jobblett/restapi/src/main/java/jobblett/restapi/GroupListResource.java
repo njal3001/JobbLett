@@ -57,7 +57,7 @@ public class GroupListResource {
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/getFromUsers/{userString}")
   public Collection<Group> getGroups(@PathParam("userString") String userString) {
-    User user = JobblettDeserializer.deserializeString(User.class, userString);
+    User user = JobblettDeserializer.deserialize(User.class, userString);
     return groupList.getGroups(user);
   }
 

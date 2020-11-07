@@ -3,6 +3,7 @@ package jobblett.json;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -12,27 +13,20 @@ import jobblett.core.JobShift;
 import jobblett.core.JobShiftList;
 import jobblett.core.User;
 
-public class GroupDeserializer extends StdDeserializer<Group> {
+public class GroupDeserializer extends JsonDeserializer<Group> {
 
-  protected GroupDeserializer() {
-    super(Group.class);
-  }
+  @Override
+  public Group deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+      throws IOException {
+    JsonNode node = jsonParser.getCodec().readTree(jsonParser);
 
-  /**
-   * TODO.
-   *
-   * @param node TODO
-   * @return TODO
-   * @throws IOException TODO
-   */
-  public Group deserialize(JsonNode node) throws IOException {
     String groupName = node.get("groupName").asText();
     Integer groupId = node.get("groupId").asInt();
 
     ArrayNode usersArrayNode = (ArrayNode) node.get("groupMembers");
     Group group = new Group(groupName, groupId);
     for (JsonNode userNode : usersArrayNode) {
-      User user = new UserDeserializer().deserialize(userNode);
+      User user = JobblettDeserializer.deserialize(User.class, userNode);
       group.addUser(user);
     }
 
@@ -42,19 +36,12 @@ public class GroupDeserializer extends StdDeserializer<Group> {
       group.addAdmin(group.getUser(userName));
     }
 
-
-    JobShiftList jobShiftList = new JobShiftListDeserializer().deserialize(node.get("jobShifts"));
+    JsonNode jobShiftNode = node.get("jobShifts");
+    JobShiftList jobShiftList = JobblettDeserializer.deserialize(JobShiftList.class, jobShiftNode);
     for (JobShift jobShift : jobShiftList) {
       group.addJobShift(jobShift, group.getAdmins().iterator().next());
     }
 
     return group;
-  }
-
-  @Override
-  public Group deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-      throws IOException {
-    TreeNode treeNode = jsonParser.getCodec().readTree(jsonParser);
-    return deserialize((JsonNode) treeNode);
   }
 }
