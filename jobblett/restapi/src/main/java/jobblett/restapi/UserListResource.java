@@ -49,7 +49,7 @@ public class UserListResource {
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/add/{userString}")
   public boolean add(@PathParam("userString") String userString) {
-    User user = new JobblettDeserializer<User>(User.class).deserializeString(userString);
+    User user = JobblettDeserializer.deserializeString(User.class, userString);
     return userList.add(user);
   }
 

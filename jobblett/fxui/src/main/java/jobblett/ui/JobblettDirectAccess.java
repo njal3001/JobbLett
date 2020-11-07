@@ -19,8 +19,8 @@ public class JobblettDirectAccess implements JobblettAccess {
    * TODO.
    */
   public JobblettDirectAccess() {
-    setUserList(new JobblettDeserializer<>(UserList.class).deserialize());
-    setGroupList(new JobblettDeserializer<>(GroupList.class).deserialize());
+    setUserList(JobblettDeserializer.deserialize(UserList.class));
+    setGroupList(JobblettDeserializer.deserialize(GroupList.class));
     userList.addListener(this);
     groupList.addListener(this);
   }

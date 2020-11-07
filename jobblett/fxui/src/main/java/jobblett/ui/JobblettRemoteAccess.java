@@ -54,7 +54,7 @@ public class JobblettRemoteAccess implements JobblettAccess {
 
   private <T> T getFromServer(Class<T> t, String url) {
     String responseObjectBody = getBodyFromServer(url);
-    T o = (T) new JobblettDeserializer<T>(t).deserializeString(responseObjectBody);
+    T o = JobblettDeserializer.deserializeString(t, responseObjectBody);
     return o;
   }
 
