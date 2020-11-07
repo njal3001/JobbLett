@@ -5,64 +5,60 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import jobblett.core.Group;
-import jobblett.core.GroupList;
-import jobblett.core.HashedPassword;
-import jobblett.core.JobShift;
-import jobblett.core.User;
-import jobblett.core.UserList;
 
 /**
  * Used to serialize Main.class to main.json in the systems user-folder.
  * Saves the data-file in $USER_HOME/.jobblett/main.json
  */
-public class JobblettSerializer extends ObjectMapper {
+public class JobblettSerializer {
 
+  public static final String JOBBLETT_DATA_DIRECTORY =
+      System.getProperty("user.home") + "/.jobblett";
+
+  ObjectMapper objectMapper = new ObjectMapper();
 
   /**
    * TODO.
    */
   public JobblettSerializer() {
-    registerModule(new JavaTimeModule());
-    registerModule(new JobblettCoreModule());
-    configure(SerializationFeature.INDENT_OUTPUT, true);
+    objectMapper.registerModule(new JavaTimeModule());
+    objectMapper.registerModule(new JobblettCoreModule());
+    objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
   }
 
   /**
-   * Serializes the object.
+   * Serializes an object and saves it as a file in jobblett data directory.
+   * The filename will be the object's simple classname.
+   *
+   * @param object value to be serialized
    */
   public void writeValueOnDefaultLocation(Object object) {
-    String file = object.getClass().getSimpleName() + ".json";
-    String fileLocation = System.getProperty("user.home") + "/.jobblett/" + file;
+    File dir = new File(JOBBLETT_DATA_DIRECTORY);
+    boolean created = dir.mkdir(); // Only creates a directory if it doesn't already exist.
+    if (created) {
+      System.out.println("New directory was created at \"" + dir + "\".");
+    }
+    if (!dir.isDirectory()) {
+      System.out.println("Could not save. The path " + dir + " is not available.");
+    }
+    String fileName = object.getClass().getSimpleName() + ".json";
+    File file = new File(dir + "/" + fileName);
     try {
-      writeValue(new File(fileLocation), object);
-
+      objectMapper.writeValue(file, object);
     } catch (Exception ex) {
       ex.printStackTrace();
     }
   }
 
   /**
-   * Just for generating default json files by the developer.
+   * Returns an serialized object as a string.
    *
-   * @param object TODO
-   * @param file TODO
+   * @param value to be serialized
+   * @return serialized value
    */
-  private void writeValueOnDefaultLocation(Object object, String file) {
-    String fileLocation = System.getProperty("user.home") + "/.jobblett/" + file;
+  public String writeValueAsString(Object value) {
     try {
-      writeValue(new File(fileLocation), object);
-
-    } catch (Exception ex) {
-      ex.printStackTrace();
-    }
-  }
-
-  @Override public String writeValueAsString(Object value) {
-    try {
-      return super.writeValueAsString(value);
+      return objectMapper.writeValueAsString(value);
     } catch (JsonProcessingException e) {
       e.printStackTrace();
     }
