@@ -20,14 +20,30 @@ import java.nio.file.Paths;
 public class JobblettDeserializer<T> {
   ObjectMapper objectMapper;
   Reader reader;
-  Class<?> classType;
+  Class<T> classType;
 
   /**
    * Initializes a JobblettDeserializer-instance and reads main.json.
    */
   public JobblettDeserializer(Class<T> classType) {
     this.classType = classType;
-
+    File f = new File(System.getProperty("user.home") + "/.jobblett");
+    // noinspection ResultOfMethodCallIgnored
+    boolean mkdir = f.mkdir();
+    if (mkdir) {
+      useDefaultValues();
+    } else {
+      try {
+        Path path = Paths.get(System.getProperty("user.home")
+            + "/.jobblett", classType.getSimpleName()
+            + ".json");
+        reader =
+            new FileReader(path.toFile(), StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        System.out.println(e.getMessage());
+        useDefaultValues();
+      }
+    }
 
     // create object mapper instance
     objectMapper = new ObjectMapper();
@@ -47,32 +63,40 @@ public class JobblettDeserializer<T> {
   }
 
   /**
+   * TODO.
+   *
+   * @param classType TODO
+   * @param <T> TODO
+   * @return object
+   */
+  public static <T> T useDefaultValues(Class<T> classType) {
+    URL url = JobblettDeserializer.class.getResource("default"
+        + classType.getSimpleName()
+        + ".json");
+    Reader reader;
+    T object = null;
+    try {
+      reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
+      ObjectMapper objectMapper = new ObjectMapper();
+      objectMapper.registerModule(new JobblettCoreModule());
+      object = objectMapper.readValue(reader, classType);
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return object;
+  }
+
+  /**
    * Imports main.json and returns a new Main.class instance with tha data.
    *
    * @return Main.class object
    */
   public T deserialize() {
-
-    File f = new File(System.getProperty("user.home") + "/.jobblett");
-    // noinspection ResultOfMethodCallIgnored
-    boolean mkdir = f.mkdir();
-    if (mkdir) {
-      useDefaultValues();
-    } else {
-      try {
-        Path path = Paths.get(System.getProperty("user.home") + "/.jobblett",
-            classType.getSimpleName() + ".json");
-        reader = new FileReader(path.toFile(), StandardCharsets.UTF_8);
-      } catch (IOException e) {
-        System.out.println(e.getMessage());
-        useDefaultValues();
-      }
-    }
-
     T obj = null;
     try {
       // deserialize json string
-      obj = (T) objectMapper.readValue(reader, classType);
+      obj = objectMapper.readValue(reader, classType);
     } catch (Exception ex) {
       ex.printStackTrace();
     }
@@ -80,9 +104,10 @@ public class JobblettDeserializer<T> {
   }
 
   /**
-   * Imports from a String.
+   * TODO.
    *
-   * @return Main.class object
+   *@param value TODO
+   *@return Main.class object
    */
   public T deserializeString(String value) {
     T obj = null;
@@ -94,5 +119,21 @@ public class JobblettDeserializer<T> {
     }
     return obj;
   }
+
+
+  /*public void updateMain(Main main) {
+        try {
+            objectMapper.readerForUpdating(main).readValue(reader, Main.class);
+        } catch (Exception e) {
+            System.out.println("Existing data is not found or corrupted. Using default data.");
+            useDefaultValues();
+            try {
+                objectMapper.readerForUpdating(main).readValue(reader, Main.class);
+            } catch (IOException er) {
+                e.printStackTrace();
+                er.printStackTrace();
+            }
+        }
+    }*/
 
 }
