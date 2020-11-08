@@ -12,6 +12,10 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <properties>
+            <skipUiTests>false</skipUiTests>
+    </properties>
+
     <dependencies>
         <!-- JSON Jackson -->
         <dependency>
@@ -68,6 +72,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>${skipUiTests}</skipTests>
+                </configuration>
             </plugin>
             <!-- Running JavaFX code -->
             <plugin>
