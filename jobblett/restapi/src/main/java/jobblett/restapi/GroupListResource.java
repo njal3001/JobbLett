@@ -32,10 +32,10 @@ public class GroupListResource {
   }
 
   /**
-   * TODO.
+   * Delegates to the right GroupResource by using the GroupID.
    *
-   * @param groupIdString TODO
-   * @return TODO
+   * @param groupIdString GroupID as a string
+   * @return GroupResource instance
    */
   @Path("/get/{groupIdString}")
   public GroupResource getGroup(@PathParam("groupIdString") String groupIdString) {

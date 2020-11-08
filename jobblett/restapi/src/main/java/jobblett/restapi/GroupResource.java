@@ -18,30 +18,17 @@ public class GroupResource {
   }
 
   /**
-   * TODO.
+   * Returns all groupMembers as a list.
+   * Will be serialized when using with rest server.
    *
-   * @return TODO
+   * @return list of users
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Collection<User> getUsers() {
+  public Collection<User> getMembers() {
     Collection<User> users = new ArrayList<>();
     group.forEach(a -> users.add(a));
     return users;
-  }
-
-  /**
-   * TODO.
-   *
-   * @param userName TODO
-   * @return TODO
-   */
-  // Maybe unnecessary
-  @Path("/{userName}")
-  public UserResource getUser(@PathParam("userName") String userName) {
-    User user = group.getUser(userName);
-    JobblettService.LOG.debug("Sub-resource for Group " + group.getGroupName() + ": " + group);
-    return new UserResource(user);
   }
 
 }

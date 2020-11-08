@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import jobblett.core.GroupList;
 import jobblett.core.JobblettList;
 import jobblett.core.UserList;
+import jobblett.json.JobblettDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,22 +46,46 @@ public class JobblettService {
   }
 
   /**
-   * TODO.
+   * Replaces the existing userList with a new one.
+   * Used by tests only.
    *
-   * @param userListAndGroupListStrings TODO
-   * @return TODO
+   * @param userListString serialized UserList string
+   * @return true if the userList was replaced
    */
   @POST
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("/setlists/{userListAndGroupListStrings}")
-  public boolean login(@PathParam("userListAndGroupListStrings")
-      Collection<JobblettList> userListAndGroupListStrings) {
-    Iterator<JobblettList> iterator = userListAndGroupListStrings.iterator();
-    UserList userList = (UserList) iterator.next();
-    GroupList groupList = (GroupList) iterator.next();
-    this.userList = userList;
-    this.groupList = groupList;
-    return true;
+  @Path("/setUserList/{userListString}")
+  public boolean setUserList(@PathParam("userListString") String userListString) {
+    try {
+      UserList userList = JobblettDeserializer.deserialize(UserList.class, userListString);
+      this.userList = userList;
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+
+  }
+
+  /**
+   * Replaces the existing groupList with a new one.
+   * Used by tests only.
+   *
+   * @param groupListString serialized GroupList string
+   * @return true if the groupList was replaced
+   */
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/setGroupList/{groupListString}")
+  public boolean setGroupList(@PathParam("groupListString") String groupListString) {
+    try {
+      GroupList groupList = JobblettDeserializer.deserialize(GroupList.class, groupListString);
+      this.groupList = groupList;
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
   }
 
 }

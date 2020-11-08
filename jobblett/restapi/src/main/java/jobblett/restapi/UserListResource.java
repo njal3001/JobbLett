@@ -33,10 +33,10 @@ public class UserListResource {
   }
 
   /**
-   * TODO.
+   * Returns UserResource of a user with the same username (if one exist).
    *
-   * @param userName TODO
-   * @return TODO
+   * @param userName user's username
+   * @return UserResource
    */
   @Path("get/{userName}")
   public UserResource getUser(@PathParam("userName") String userName) {
@@ -54,10 +54,10 @@ public class UserListResource {
   }
 
   /**
-   * TODO.
+   * Returns a User-object with the same username and password.
    *
-   * @param userNameAndPassword TODO
-   * @return TODO
+   * @param userNameAndPassword username and password as a collection of strings
+   * @return logged in user
    */
   @POST
   @Produces(MediaType.APPLICATION_JSON)
