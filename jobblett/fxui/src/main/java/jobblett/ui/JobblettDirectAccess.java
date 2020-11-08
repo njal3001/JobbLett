@@ -36,7 +36,6 @@ public class JobblettDirectAccess implements JobblettAccess {
 
   private void setGroupList(GroupList oldGroupList) {
     groupList = correctGroupList(oldGroupList, userList);
-    ;
   }
 
   @Override public void setLists(UserList userList, GroupList groupList) {
