@@ -9,4 +9,4 @@ cache:
 
 install:
   script:
-    - mvn install -DskipUiTests
+    - mvn install -DskipTests
