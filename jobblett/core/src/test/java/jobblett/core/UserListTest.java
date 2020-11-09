@@ -15,8 +15,8 @@ public class UserListTest {
 
   @BeforeEach public void setUp() {
     userList = new UserList();
-    user1 = new User("User1", HashedPassword.hashPassword("Test12345"), "Ole", "Dole");
-    user2 = new User("User2", HashedPassword.hashPassword("Test12345"), "Kristoff", "Arntsen");
+    user1 = new User("User1", new HashedPassword("Test12345"), "Ole", "Dole");
+    user2 = new User("User2", new HashedPassword("Test12345"), "Kristoff", "Arntsen");
   }
 
   @Test public void testGetUser() {
@@ -38,13 +38,13 @@ public class UserListTest {
   @Test public void testLogin_CorrectUsernameAndPassword() {
     userList.add(user1);
     assertEquals(user1,
-        userList.checkUserNameAndPassword(user1.getUsername(), HashedPassword.hashPassword("Test12345")));
+        userList.checkUserNameAndPassword(user1.getUsername(), new HashedPassword("Test12345")));
   }
 
   @Test public void testLogin_WrongPassword() {
     userList.add(user1);
     assertEquals(null,
-        userList.checkUserNameAndPassword(user1.getUsername(), HashedPassword.hashPassword("TotallyWrongPassword123")));
+        userList.checkUserNameAndPassword(user1.getUsername(), new HashedPassword("TotallyWrongPassword123")));
   }
 
   @Test public void testIterator() {

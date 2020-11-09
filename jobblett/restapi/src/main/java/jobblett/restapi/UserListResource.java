@@ -66,6 +66,6 @@ public class UserListResource {
     Iterator<String> iterator = userNameAndPassword.iterator();
     String userName = iterator.next();
     String password = iterator.next();
-    return userList.checkUserNameAndPassword(userName, HashedPassword.hashPassword(password));
+    return userList.checkUserNameAndPassword(userName, new HashedPassword(password));
   }
 }

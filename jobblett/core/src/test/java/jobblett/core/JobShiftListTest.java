@@ -22,8 +22,8 @@ public class JobShiftListTest {
 
   @BeforeEach public void setUp() {
     jobShiftList = new JobShiftList();
-    user1 = new User("user", HashedPassword.hashPassword("Test12345"), "Ole", "Dole");
-    user2 = new User("user2", HashedPassword.hashPassword("Test12345"), "Ole", "Dole");
+    user1 = new User("user", new HashedPassword("Test12345"), "Ole", "Dole");
+    user2 = new User("user2", new HashedPassword("Test12345"), "Ole", "Dole");
     jobShift1 = new JobShift(user1, LocalDateTime.now().plusDays(2), Duration.ofHours(4), "info");
     jobShift2 = new JobShift(user2, LocalDateTime.now().plusDays(3), Duration.ofHours(4), "info");
     jobShift3 = new JobShift(user1, LocalDateTime.now().plusDays(1), Duration.ofHours(4), "info");

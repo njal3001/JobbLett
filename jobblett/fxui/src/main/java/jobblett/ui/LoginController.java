@@ -47,7 +47,7 @@ public class LoginController extends SceneController {
   @FXML public void logInToUserHome() {
     String userName = this.usernameField.getText();
     String password = this.passwordField.getText();
-    User user = getAccess().login(userName, HashedPassword.hashPassword(password));
+    User user = getAccess().login(userName, new HashedPassword(password));
     if (user == null) {
       errorMessage.setText("Wrong username or password");
     } else {

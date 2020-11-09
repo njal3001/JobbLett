@@ -26,7 +26,7 @@ import org.junit.jupiter.api.TestInstance;
 
   @BeforeAll public void setUp() {
     User olav =
-        new User("olav", HashedPassword.hashPassword("bestePassord123"), "Olav", "Nordmann");
+        new User("olav", new HashedPassword("bestePassord123"), "Olav", "Nordmann");
     jobShift = new JobShift(olav, LocalDateTime.parse("2021-10-10T17:10:53.798134"),
         Duration.ofSeconds(7200), "Cool info");
   }

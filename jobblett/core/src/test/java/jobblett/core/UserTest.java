@@ -27,7 +27,7 @@ public class UserTest {
 
   @Test public void testConstructor() {
     try {
-      User u1 = new User("njal3001", HashedPassword.hashPassword("Nils1254"), "Nils", "Enge");
+      User u1 = new User("njal3001", new HashedPassword("Nils1254"), "Nils", "Enge");
       assertEquals(u1.getUsername(), "njal3001");
       assertEquals(u1.getGivenName(), "Nils");
       assertEquals(u1.getFamilyName(), "Enge");
@@ -35,28 +35,28 @@ public class UserTest {
       fail("Exception should not be thrown for this input");
     }
     try {
-      User u2 = new User("", HashedPassword.hashPassword("Nils1254"), "Nils", "Enge");
+      User u2 = new User("", new HashedPassword("Nils1254"), "Nils", "Enge");
       fail("Exception should be thrown because of invalid username");
     } catch (Exception e) {
       assertTrue(e instanceof IllegalArgumentException);
     }
 
     try {
-      User u2 = new User("njal3001", HashedPassword.hashPassword(""), "Nils", "Enge");
+      User u2 = new User("njal3001", new HashedPassword(""), "Nils", "Enge");
       fail("Exception should be thrown because of invalid password");
     } catch (Exception e) {
       assertTrue(e instanceof IllegalArgumentException);
     }
 
     try {
-      User u2 = new User("njal3001", HashedPassword.hashPassword("Nils1254"), "", "Enge");
+      User u2 = new User("njal3001", new HashedPassword("Nils1254"), "", "Enge");
       fail("Exception should be thrown because of invalid given name");
     } catch (Exception e) {
       assertTrue(e instanceof IllegalArgumentException);
     }
 
     try {
-      User u2 = new User("njal3001", HashedPassword.hashPassword("Nils1254"), "Nils", "");
+      User u2 = new User("njal3001", new HashedPassword("Nils1254"), "Nils", "");
       fail("Exception should be thrown because of invalid family name");
     } catch (Exception e) {
       assertTrue(e instanceof IllegalArgumentException);
@@ -64,7 +64,7 @@ public class UserTest {
   }
 
   @Test public void testSetName() {
-    User u1 = new User("njal3001", HashedPassword.hashPassword("Nils1254"), "Nils", "Enge");
+    User u1 = new User("njal3001", new HashedPassword("Nils1254"), "Nils", "Enge");
     try {
       u1.setName("Kåre", "Heins");
       assertEquals(u1.getGivenName(), "Kåre");
@@ -83,7 +83,7 @@ public class UserTest {
   }
 
   @Test public void testToString() {
-    User u1 = new User("njal3001", HashedPassword.hashPassword("Nils1254"), "Nils", "Enge");
+    User u1 = new User("njal3001", new HashedPassword("Nils1254"), "Nils", "Enge");
     assertEquals("Nils Enge (@njal3001)", u1.toString());
   }
 
