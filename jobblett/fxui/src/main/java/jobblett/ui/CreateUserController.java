@@ -45,6 +45,10 @@ public class CreateUserController extends SceneController {
   public static final String nameCriteria = 
       "Name criteria:\nContains only letters.\nAt least 2 characters";
 
+
+  /**
+   * Sets listeners on every text field for showing corresponding criteria. 
+   */
   @FXML
   public void initialize() {
     List<String> criteria = 
@@ -64,6 +68,9 @@ public class CreateUserController extends SceneController {
     }
   }
 
+  /**
+   * Styles UI elements.
+   */
 
   @Override
   public void styleIt() {
@@ -71,6 +78,10 @@ public class CreateUserController extends SceneController {
     goBackButton.setSkin(new ButtonAnimationSkin(goBackButton));
     createAccountButton.setSkin(new ButtonAnimationSkin(createAccountButton));
   }
+
+  /**
+   * Creates a new User.
+   */
 
   @FXML
   public void createAccount() {
