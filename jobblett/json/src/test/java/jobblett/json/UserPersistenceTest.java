@@ -11,43 +11,16 @@ import jobblett.core.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class UserPersistenceTest {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class UserPersistenceTest extends AbstractPersistenceTest {
 
   User user =
       new User("Olavh123", HashedPassword.hashPassword("Heisann123456"), "Olav", "Hermansen");
 
-  public static void main(String[] args) {
-    UserPersistenceTest test = new UserPersistenceTest();
-    test.persistenceTest();
+  public UserPersistenceTest() {
+    super(User.class);
   }
 
-  @Test public void persistenceTest() {
-
-    // Serializing
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-    mapper.registerModule(new JobblettCoreModule());
-    String result = "";
-
-    try {
-      result = mapper.writeValueAsString(user);
-
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      fail(e);
-    }
-
-    // Deserializing
-    mapper = new ObjectMapper();
-    mapper.registerModule(new JobblettCoreModule());
-
-    try {
-      User newUser = mapper.readValue(result, User.class);
-      assertTrue(newUser.equals(user));
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      fail(e);
-    }
-
+  @Override public Object getObject() {
+    return user;
   }
 }

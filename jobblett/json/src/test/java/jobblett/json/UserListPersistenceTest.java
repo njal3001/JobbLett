@@ -12,15 +12,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class UserListPersistenceTest {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class UserListPersistenceTest extends AbstractPersistenceTest{
 
   private UserList userList = new UserList();
 
-  public static void main(String[] args) {
-    UserListPersistenceTest test = new UserListPersistenceTest();
-    test.setUp();
-    test.persistenceTest();
+  public UserListPersistenceTest() {
+    super(UserList.class);
   }
+
 
   @BeforeAll public void setUp() {
     User user1 =
@@ -32,34 +31,7 @@ import org.junit.jupiter.api.TestInstance;
     userList.add(user1, user2, user3);
   }
 
-  @Test public void persistenceTest() {
-
-    // Serializing
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-    mapper.registerModule(new JobblettCoreModule());
-    String result = "";
-
-    try {
-      result = mapper.writeValueAsString(userList);
-
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      fail(e);
-    }
-
-    // Deserializing
-    mapper = new ObjectMapper();
-    mapper.registerModule(new JobblettCoreModule());
-
-    try {
-      UserList newUserList = mapper.readValue(result, UserList.class);
-      System.out.println(newUserList);
-      System.out.println(userList);
-      assert (newUserList.equals(userList));
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      fail(e);
-    }
+  @Override public Object getObject() {
+    return userList;
   }
 }

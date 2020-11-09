@@ -16,14 +16,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class JobShiftListPersistenceTest {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class JobShiftListPersistenceTest extends AbstractPersistenceTest{
 
   JobShiftList jobShiftList = new JobShiftList();
 
-  public static void main(String[] args) {
-    JobShiftListPersistenceTest test = new JobShiftListPersistenceTest();
-    test.setUp();
-    test.persistenceTest();
+  public JobShiftListPersistenceTest() {
+    super(JobShiftList.class);
   }
 
   @BeforeAll public void setUp() {
@@ -40,33 +38,8 @@ import org.junit.jupiter.api.TestInstance;
     jobShiftList.add(jobShift2);
   }
 
-  @Test public void persistenceTest() {
-
-    // Serializing
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-    mapper.registerModule(new JobblettCoreModule());
-    String result = "";
-
-    try {
-      result = mapper.writeValueAsString(jobShiftList);
-
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      fail(e);
-    }
-
-    // Deserializing
-    mapper = new ObjectMapper();
-    mapper.registerModule(new JobblettCoreModule());
-
-    try {
-      JobShiftList newJobShiftList = mapper.readValue(result, JobShiftList.class);
-      assertTrue(newJobShiftList.equals(jobShiftList));
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      fail(e);
-    }
-
+  @Override public Object getObject() {
+    return jobShiftList;
   }
+
 }
