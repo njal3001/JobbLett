@@ -12,15 +12,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class UserListPersistenceTest {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class UserListPersistenceTest extends AbstractPersistenceTest{
 
   private UserList userList = new UserList();
 
-  public static void main(String[] args) {
-    UserListPersistenceTest test = new UserListPersistenceTest();
-    test.setUp();
-    test.persistenceTest();
+  public UserListPersistenceTest() {
+    super(UserList.class);
   }
+
 
   @BeforeAll public void setUp() {
     User user1 =
@@ -32,7 +31,11 @@ import org.junit.jupiter.api.TestInstance;
     userList.add(user1, user2, user3);
   }
 
-  @Test public void persistenceTest() {
+  @Override public Object getObject() {
+    return userList;
+  }
+
+  /*@Test public void persistenceTest() {
 
     // Serializing
     ObjectMapper mapper = new ObjectMapper();
@@ -62,4 +65,12 @@ import org.junit.jupiter.api.TestInstance;
       fail(e);
     }
   }
+
+  public static void main(String[] args) {
+    UserListPersistenceTest test = new UserListPersistenceTest();
+    test.setUp();
+    test.persistenceTest();
+  }
+
+   */
 }

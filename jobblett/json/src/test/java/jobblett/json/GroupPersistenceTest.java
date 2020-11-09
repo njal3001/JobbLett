@@ -15,15 +15,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class GroupPersistenceTest {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class GroupPersistenceTest extends AbstractPersistenceTest{
 
   Group group = new Group("TestGroup", ThreadLocalRandom.current().nextInt(1000, 10000));
 
-  public static void main(String[] args) {
-    GroupPersistenceTest test = new GroupPersistenceTest();
-    test.setUp();
-    test.persistenceTest();
+  public GroupPersistenceTest() {
+    super(Group.class);
   }
+
 
   @BeforeAll public void setUp() {
     User olav =
@@ -38,7 +37,11 @@ import org.junit.jupiter.api.TestInstance;
     group.addUser(nora);
   }
 
-  @Test public void persistenceTest() {
+  @Override public Object getObject() {
+    return group;
+  }
+
+  /*@Test public void persistenceTest() {
 
     // Serializing
     ObjectMapper mapper = new ObjectMapper();
@@ -66,4 +69,10 @@ import org.junit.jupiter.api.TestInstance;
     }
 
   }
+    public static void main(String[] args) {
+    GroupPersistenceTest test = new GroupPersistenceTest();
+    test.setUp();
+    test.persistenceTest();
+  }
+  */
 }
