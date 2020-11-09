@@ -18,7 +18,7 @@ public class GroupListDeserializer extends JsonDeserializer<GroupList> {
     ArrayNode arrayNode = (ArrayNode) node.get("groups");
     GroupList groupList = new GroupList();
     for (JsonNode groupNode : arrayNode) {
-      groupList.add(JobblettDeserializer.deserialize(Group.class, groupNode));
+      groupList.add(new JobblettPersistence().readValue(Group.class, groupNode));
     }
     return groupList;
   }

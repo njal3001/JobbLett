@@ -7,8 +7,7 @@ import jobblett.core.GroupList;
 import jobblett.core.HashedPassword;
 import jobblett.core.User;
 import jobblett.core.UserList;
-import jobblett.json.JobblettDeserializer;
-import jobblett.json.JobblettSerializer;
+import jobblett.json.JobblettPersistence;
 
 public class JobblettDirectAccess implements JobblettAccess {
 
@@ -19,15 +18,15 @@ public class JobblettDirectAccess implements JobblettAccess {
    * TODO.
    */
   public JobblettDirectAccess() {
-    setUserList(JobblettDeserializer.deserialize(UserList.class));
-    setGroupList(JobblettDeserializer.deserialize(GroupList.class));
+    setUserList(new JobblettPersistence().readValue(UserList.class));
+    setGroupList(new JobblettPersistence().readValue(GroupList.class));
     userList.addListener(this);
     groupList.addListener(this);
   }
 
   private void save() {
-    new JobblettSerializer().writeValueOnDefaultLocation(groupList);
-    new JobblettSerializer().writeValueOnDefaultLocation(userList);
+    new JobblettPersistence().writeValueOnDefaultLocation(groupList);
+    new JobblettPersistence().writeValueOnDefaultLocation(userList);
   }
 
   private void setUserList(UserList userList) {

@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 import jobblett.core.Group;
 import jobblett.core.GroupList;
 import jobblett.core.User;
-import jobblett.json.JobblettDeserializer;
+import jobblett.json.JobblettPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +57,7 @@ public class GroupListResource {
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/getFromUsers/{userString}")
   public Collection<Group> getGroups(@PathParam("userString") String userString) {
-    User user = JobblettDeserializer.deserialize(User.class, userString);
+    User user = new JobblettPersistence().readValue(User.class, userString);
     return groupList.getGroups(user);
   }
 

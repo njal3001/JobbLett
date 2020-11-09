@@ -1,6 +1,5 @@
 package jobblett.ui;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.net.URI;
@@ -16,8 +15,7 @@ import jobblett.core.HashedPassword;
 import jobblett.core.JobblettList;
 import jobblett.core.User;
 import jobblett.core.UserList;
-import jobblett.json.JobblettDeserializer;
-import jobblett.json.JobblettSerializer;
+import jobblett.json.JobblettPersistence;
 
 public class JobblettRemoteAccess implements JobblettAccess {
 
@@ -56,7 +54,7 @@ public class JobblettRemoteAccess implements JobblettAccess {
   private <T> T getFromServer(Class<T> t, String url) {
     String responseObjectBody = getBodyFromServer(url);
     T o = null;
-    o = JobblettDeserializer.deserialize(t, responseObjectBody);
+    o = new JobblettPersistence().readValue(t, responseObjectBody);
     return o;
   }
 
@@ -66,7 +64,7 @@ public class JobblettRemoteAccess implements JobblettAccess {
   }
 
   @Override public void add(User user) {
-    String userString = new JobblettSerializer().writeValueAsString(user);
+    String userString = new JobblettPersistence().writeValueAsString(user);
     getBodyFromServer(JOBBLETT_SERVICE_PATH + "/" + USER_LIST_SERVICE_PATH + "/add/" + userString);
   }
 
@@ -80,14 +78,14 @@ public class JobblettRemoteAccess implements JobblettAccess {
     userNameAndPassword.add(userName);
     userNameAndPassword.add(password.toString());
     String userNameAndPasswordString =
-        new JobblettSerializer().writeValueAsString(userNameAndPassword);
+        new JobblettPersistence().writeValueAsString(userNameAndPassword);
     return getFromServer(User.class,
         JOBBLETT_SERVICE_PATH + "/" + USER_LIST_SERVICE_PATH + "/login/"
             + userNameAndPasswordString);
   }
 
   @Override public Collection<Group> getGroups(User user) {
-    String userString = new JobblettSerializer().writeValueAsString(user);
+    String userString = new JobblettPersistence().writeValueAsString(user);
     return getFromServer(ArrayList.class, userString);
   }
 
@@ -96,7 +94,7 @@ public class JobblettRemoteAccess implements JobblettAccess {
     userListAndGroupList.add(userList);
     userListAndGroupList.add(groupList);
     String userListAndGroupListString =
-        new JobblettSerializer().writeValueAsString(userListAndGroupList);
+        new JobblettPersistence().writeValueAsString(userListAndGroupList);
     getBodyFromServer(JOBBLETT_SERVICE_PATH + "/setlists/" + userListAndGroupListString);
   }
 

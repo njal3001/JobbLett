@@ -1,11 +1,9 @@
 package jobblett.json;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.IOException;
 import jobblett.core.Group;
@@ -26,7 +24,7 @@ public class GroupDeserializer extends JsonDeserializer<Group> {
     ArrayNode usersArrayNode = (ArrayNode) node.get("groupMembers");
     Group group = new Group(groupName, groupId);
     for (JsonNode userNode : usersArrayNode) {
-      User user = JobblettDeserializer.deserialize(User.class, userNode);
+      User user = new JobblettPersistence().readValue(User.class, userNode);
       group.addUser(user);
     }
 
@@ -37,7 +35,8 @@ public class GroupDeserializer extends JsonDeserializer<Group> {
     }
 
     JsonNode jobShiftNode = node.get("jobShifts");
-    JobShiftList jobShiftList = JobblettDeserializer.deserialize(JobShiftList.class, jobShiftNode);
+    JobblettPersistence persistence = new JobblettPersistence();
+    JobShiftList jobShiftList = persistence.readValue(JobShiftList.class, jobShiftNode);
     for (JobShift jobShift : jobShiftList) {
       group.addJobShift(jobShift, group.getAdmins().iterator().next());
     }

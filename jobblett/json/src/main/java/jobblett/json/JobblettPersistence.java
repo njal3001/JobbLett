@@ -1,10 +1,9 @@
 package jobblett.json;
 
-import static jobblett.json.JobblettSerializer.JOBBLETT_DATA_DIRECTORY;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
 import java.io.IOException;
@@ -14,10 +13,27 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Used to deserialize main.json to Main.class from the systems user-folder. Imports the data-file
- * from $USER_HOME/.jobblett/main.json
+ * Used to serialize and deserialize Jobblett-objects.
  */
-public class JobblettDeserializer {
+public class JobblettPersistence {
+
+  public static final String JOBBLETT_DATA_DIRECTORY =
+      System.getProperty("user.home") + "/.jobblett";
+
+  private ObjectMapper objectMapper = new ObjectMapper();
+
+  /**
+   * Initializing JobblettSerializer by registering necessary modules to the objectMapper.
+   */
+  public JobblettPersistence() {
+    objectMapper.registerModule(new JavaTimeModule());
+    objectMapper.registerModule(new JobblettCoreModule());
+    objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+  }
+
+  private ObjectMapper getObjectMapper() {
+    return objectMapper;
+  }
 
   /**
    * Deserializes Jobblett-objects from default values.
@@ -27,12 +43,12 @@ public class JobblettDeserializer {
    * @param <T> class type of the object to be returned (will be set automatically by classType)
    * @return object deserialized object
    */
-  public static <T> T useDefaultValues(Class<T> classType) {
-    URL fileUrl = JobblettDeserializer.class.getResource("default"
+  public <T> T readDefault(Class<T> classType) {
+    URL fileUrl = JobblettPersistence.class.getResource("default"
         + classType.getSimpleName()
         + ".json");
     try {
-      return deserialize(classType, fileUrl);
+      return readValue(classType, fileUrl);
     } catch (IOException e) {
       e.printStackTrace();
       return null;
@@ -46,7 +62,7 @@ public class JobblettDeserializer {
    * @param <T> class type of the object to be returned (will be set automatically by classType)
    * @return object deserialized object
    */
-  public static <T> T deserialize(Class<T> classType, JsonNode node)
+  public <T> T readValue(Class<T> classType, JsonNode node)
       throws JsonProcessingException {
     return getObjectMapper().readValue(node.toString(), classType);
   }
@@ -59,26 +75,26 @@ public class JobblettDeserializer {
    * @param <T> class type of the object to be returned (will be set automatically by classType)
    * @return object deserialized object
    */
-  public static <T> T deserialize(Class<T> classType) {
+  public <T> T readValue(Class<T> classType) {
     File dir = new File(JOBBLETT_DATA_DIRECTORY);
     if (!dir.exists()) {
       System.out.println("Jobblett data folder does not exist. Starting clean with default data.");
-      return useDefaultValues(classType);
+      return readDefault(classType);
     }
     String fileName = classType.getSimpleName() + ".json";
     File file = new File(dir + "/" + fileName);
 
     try {
-      return deserialize(classType, file.toURI().toURL());
+      return readValue(classType, file.toURI().toURL());
     } catch (Exception e) {
       e.printStackTrace();
       System.out.println("Something went wrong while using existing data.");
       System.out.println("Using default values instead.");
-      return useDefaultValues(classType);
+      return readDefault(classType);
     }
   }
 
-  private static <T> T deserialize(Class<T> classType, URL fileUrl) throws IOException {
+  private <T> T readValue(Class<T> classType, URL fileUrl) throws IOException {
     T obj = null;
     Reader reader = new InputStreamReader(fileUrl.openStream(), StandardCharsets.UTF_8);
     obj = getObjectMapper().readValue(reader, classType);
@@ -93,7 +109,7 @@ public class JobblettDeserializer {
    * @param <T> class type of the object to be returned (will be set automatically by classType)
    * @return object deserialized object
    */
-  public static <T> T deserialize(Class<T> classType, String value) {
+  public <T> T readValue(Class<T> classType, String value) {
     T obj = null;
     try {
       obj = getObjectMapper().readValue(value, classType);
@@ -103,11 +119,43 @@ public class JobblettDeserializer {
     return obj;
   }
 
-  private static ObjectMapper getObjectMapper() {
-    ObjectMapper objectMapper = new ObjectMapper();
-    objectMapper.registerModule(new JavaTimeModule());
-    objectMapper.registerModule(new JobblettCoreModule());
-    return objectMapper;
+  /**
+   * Serializes an object and saves it as a file in jobblett data directory.
+   * The filename will be the object's simple classname.
+   *
+   * @param object value to be serialized
+   */
+  public void writeValueOnDefaultLocation(Object object) {
+    File dir = new File(JOBBLETT_DATA_DIRECTORY);
+    boolean created = dir.mkdir(); // Only creates a directory if it doesn't already exist.
+    if (created) {
+      System.out.println("New directory was created at \"" + dir + "\".");
+    }
+    if (!dir.isDirectory()) {
+      System.out.println("Could not save. The path " + dir + " is not available.");
+    }
+    String fileName = object.getClass().getSimpleName() + ".json";
+    File file = new File(dir + "/" + fileName);
+    try {
+      objectMapper.writeValue(file, object);
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+  }
+
+  /**
+   * Returns an serialized object as a string.
+   *
+   * @param value to be serialized
+   * @return serialized value
+   */
+  public String writeValueAsString(Object value) {
+    try {
+      return objectMapper.writeValueAsString(value);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
 }

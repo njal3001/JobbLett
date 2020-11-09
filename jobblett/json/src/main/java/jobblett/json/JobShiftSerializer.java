@@ -1,16 +1,13 @@
 package jobblett.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
 import jobblett.core.JobShift;
 
-public class JobShiftSerializer extends StdSerializer<JobShift> {
-
-  protected JobShiftSerializer() {
-    super(JobShift.class);
-  }
+public class JobShiftSerializer extends JsonSerializer<JobShift> {
 
   @Override public void serialize(JobShift o, JsonGenerator jsonGenerator,
       SerializerProvider serializerProvider) throws IOException {
