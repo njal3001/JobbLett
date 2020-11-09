@@ -3,8 +3,8 @@ package jobblett.core;
 public class UserList extends JobblettList<String, User> implements Iterable<User> {
 
   /**
-   * Lets the user log into their account.
-   * Checks whether the username and password matches an existing user, before logging in.
+   * Lets the user log into their account. Checks whether the username and password matches an
+   * existing user, before logging in.
    *
    * @param username username used to check
    * @param password password used to check
@@ -19,11 +19,13 @@ public class UserList extends JobblettList<String, User> implements Iterable<Use
     }
   }
 
-  @Override protected String identifier(User type) {
-    return type.getUserName();
+  @Override
+  protected String identifier(User type) {
+    return type.getUsername();
   }
 
-  @Override protected void optionalAlreadyExists() {
+  @Override
+  protected void optionalAlreadyExists() {
     throw new IllegalArgumentException("User with the same username already exists");
   }
 }

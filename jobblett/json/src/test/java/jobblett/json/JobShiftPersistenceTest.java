@@ -29,7 +29,7 @@ import org.junit.jupiter.api.TestInstance;
     User olav =
         new User("olav", HashedPassword.hashPassword("bestePassord123"), "Olav", "Nordmann");
     jobShift = new JobShift(olav, LocalDateTime.parse("2021-10-10T17:10:53.798134"),
-        Duration.ofSeconds(7200), "Cool info", true);
+        Duration.ofSeconds(7200), "Cool info");
   }
 
   @Test public void persistenceTest() {

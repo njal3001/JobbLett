@@ -2,8 +2,6 @@ package jobblett.core;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class JobShift extends JobblettPropertyChangeSupporter {
 
@@ -12,38 +10,19 @@ public class JobShift extends JobblettPropertyChangeSupporter {
   private Duration duration;
   private String info;
 
-  /*Fjerne override startTime og gjøre det sånn at
-  utdaterte shift ikke blir lagd av serializer istedet?*/
-
   /**
-   * TODO.
+   * Creates a JobShift with the given parameters.
    *
-   * @param user TODO
-   * @param startingTime TODO
-   * @param duration TODO
-   * @param info TODO
-   * @param overrideStartTime TODO
+   * @param user user that the shift is assigned to.
+   * @param startingTime starting time of the shift.
+   * @param duration duration of the shift.
+   * @param info info about the shift.
    */
-  public JobShift(
-      User user,
-      LocalDateTime startingTime,
-      Duration duration,
-      String info,
-      boolean overrideStartTime
-  ) {
+  public JobShift(User user, LocalDateTime startingTime, Duration duration, String info) {
     setUser(user);
+    setStartingTime(startingTime);
     setDuration(duration);
     setInfo(info);
-
-    if (overrideStartTime) {
-      this.startingTime = startingTime;
-    } else {
-      setStartingTime(startingTime);
-    }
-  }
-
-  public JobShift(User user, LocalDateTime startingTime, Duration duration, String info) {
-    this(user, startingTime, duration, info, false);
   }
 
   public User getUser() {
@@ -71,16 +50,12 @@ public class JobShift extends JobblettPropertyChangeSupporter {
     firePropertyChange("user", getUser());
   }
 
-
   /**
-   * TODO.
+   * Sets the starting time of the job shift.
    *
-   * @param startingTime TODO
+   * @param startingTime starting time for the job shift.
    */
   public void setStartingTime(LocalDateTime startingTime) {
-    if (startingTime.isBefore(LocalDateTime.now())) {
-      throw new IllegalArgumentException("Starting time must be later than the current time");
-    }
     this.startingTime = startingTime;
     firePropertyChange("startingTime", getStartingTime());
   }
@@ -95,20 +70,19 @@ public class JobShift extends JobblettPropertyChangeSupporter {
     firePropertyChange("info", getInfo());
   }
 
-  @Override public String toString() {
-    return "JobShift{"
-        + "user="
-        + user
-        + ", startingTime="
-        + startingTime
-        + ", duration="
-        + duration
-        + ", info='"
-        + info
-        + "'}";
+  public boolean isOutDated() {
+    return this.startingTime.isBefore(LocalDateTime.now());
   }
 
-  @Override public boolean equals(Object o) {
+  @Override
+  public String toString() {
+    return "JobShift{" + "user=" + user + ", startingTime=" 
+      + startingTime + ", duration=" 
+      + duration + ", info='" + info + "'}";
+  }
+
+  @Override
+  public boolean equals(Object o) {
     if (o instanceof JobShift) {
       JobShift jobShift = (JobShift) o;
       if (this.user != null) {
@@ -133,7 +107,8 @@ public class JobShift extends JobblettPropertyChangeSupporter {
     }
   }
 
-  @Override public int hashCode() {
+  @Override
+  public int hashCode() {
     assert false : "hashCode not designed";
     return 42; // any arbitrary constant will do
   }

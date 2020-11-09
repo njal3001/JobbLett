@@ -12,11 +12,10 @@ public class HashedPassword {
   }
 
   /**
-   * Validates the password before initializing it.
-   * Can be used to change password.
+   * Validates the password before initializing it. Can be used to change password.
    *
-   * @param password TODO
-   * @throws IllegalArgumentException TODO
+   * @param password password to be hashed.
+   * @throws IllegalArgumentException if password is not valid.
    */
   public static HashedPassword hashPassword(String password) throws IllegalArgumentException {
     if (validPassword(password)) {
@@ -31,14 +30,10 @@ public class HashedPassword {
   }
 
   /**
-   * Password criteria:
-   *  - At least digit.
-   *  - At least 1 lowercase letter.
-   *  - At least 1 uppercase letter.
-   *  - No whitespace.
-   *  - At least 8 characters.
+   * Password criteria: - At least digit. - At least 1 lowercase letter. - At least 1 uppercase
+   * letter. - No whitespace. - At least 8 characters.
    *
-   * @param password TODO
+   * @param password the password.
    * @return true if the criteria are fulfilled, else false
    */
   private static boolean validPassword(String password) {
@@ -50,7 +45,8 @@ public class HashedPassword {
     return Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
   }
 
-  @Override public boolean equals(Object o) {
+  @Override
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -61,11 +57,13 @@ public class HashedPassword {
     return password.equals(that.password);
   }
 
-  @Override public int hashCode() {
+  @Override
+  public int hashCode() {
     return Objects.hash(password);
   }
 
-  @Override public String toString() {
+  @Override
+  public String toString() {
     return password;
   }
 }

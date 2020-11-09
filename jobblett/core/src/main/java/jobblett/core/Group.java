@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * Represents a group in jobblett.
  */
-public class Group extends JobblettPropertyChangeSupporter
+public class Group extends JobblettPropertyChangeSupporter 
     implements Iterable<User>, PropertyChangeListener {
 
   private final int groupId;
@@ -31,18 +31,12 @@ public class Group extends JobblettPropertyChangeSupporter
     this.groupId = groupId;
   }
 
-  /*TODO: Kanskje endre på denne metoden, litt rart at den tar inn en User
-  Føles ikke riktig å gjøre det slik,
-  men tenker at vi må ha noe logikk som gjør at en vanlig user ikke kan lage job shift.
-  Men dette vil ikke bli brukt i kontrolleren
-   siden der fjerner vi bare knappen for å lage job shift hvis man ikke er admin
-  Burde finne en annen måte å gjøre det på kanskje*/
 
   /**
-   * TODO.
+   * The given user adds a JobShift to the group.
    *
-   * @param jobShift TODO
-   * @param user     TODO
+   * @param jobShift Jobshift to be added.
+   * @param user the user that is creating the JobShift, must be admin.
    */
   public void addJobShift(JobShift jobShift, User user) {
     if (!groupMembers.contains(jobShift.getUser())) {
@@ -56,8 +50,7 @@ public class Group extends JobblettPropertyChangeSupporter
 
 
   /**
-   * Adds a user to the group.
-   * An exception thrown if the user is already a part of the group.
+   * Adds a user to the group. An exception thrown if the user is already a part of the group.
    *
    * @param user the user to be added
    * @throws IllegalArgumentException if the user is already a groupMember
@@ -65,7 +58,7 @@ public class Group extends JobblettPropertyChangeSupporter
   public void addUser(User user) throws IllegalArgumentException {
     UserList oldUsers = new UserList();
     oldUsers.addAll(groupMembers);
-    //checkExistingUser(user);
+    // checkExistingUser(user);
     this.groupMembers.add(user);
     firePropertyChange("groupMembers", oldUsers, groupMembers);
   }
@@ -79,10 +72,10 @@ public class Group extends JobblettPropertyChangeSupporter
   }
 
   /**
-   * TODO.
+   * Sets the user to admin.
    *
-   * @param user TODO
-   * @return TODO
+   * @param user the user that is set to admin.
+   * @return If user was set to admin or not.
    */
   public boolean addAdmin(User user) {
     if (!groupMembers.contains(user)) {
@@ -99,10 +92,10 @@ public class Group extends JobblettPropertyChangeSupporter
   }
 
   /**
-   * TODO.
+   * Removes admin status from the user.
    *
-   * @param user TODO
-   * @return TODO
+   * @param user User that loses admin status.
+   * @return If admin status was removed or not.
    */
   public boolean removeAdmin(User user) {
     UserList oldAdmins = new UserList();
@@ -143,18 +136,18 @@ public class Group extends JobblettPropertyChangeSupporter
   }
 
   /*
-    * Checks if user is already a member of the group.
-    *
-    * @param user the user that should be checked
-    * @throws IllegalArgumentException throws exception if the user already exist.
-  */
-  /*private void checkExistingUser(User user) throws IllegalArgumentException {
-        if (this.groupMembers.contains(user)) {
-          //Vet ikke om jeg skal ha det sånn, passer bedre for UIen,
-          //men er mer passende generelt å skrive "User is already a member of the group"
-            throw new IllegalArgumentException("You are already a member of the group");
-        }
-  }*/
+   * Checks if user is already a member of the group.
+   *
+   * @param user the user that should be checked
+   * 
+   * @throws IllegalArgumentException throws exception if the user already exist.
+   */
+  /*
+   * private void checkExistingUser(User user) throws IllegalArgumentException { if
+   * (this.groupMembers.contains(user)) { //Vet ikke om jeg skal ha det sånn, passer bedre for UIen,
+   * //men er mer passende generelt å skrive "User is already a member of the group" throw new
+   * IllegalArgumentException("You are already a member of the group"); } }
+   */
 
   /**
    * Checks if the group name is more than 1 character.
@@ -178,8 +171,7 @@ public class Group extends JobblettPropertyChangeSupporter
   }
 
   /**
-   * Gets the groupName.
-   * The name is NOT unique. Use groupID for that purpose.
+   * Gets the groupName. The name is NOT unique. Use groupID for that purpose.
    *
    * @return the groupName
    */
@@ -200,8 +192,7 @@ public class Group extends JobblettPropertyChangeSupporter
   }
 
   /**
-   * Gets the groupID.
-   * This is unique identifier for the group.
+   * Gets the groupID. This is unique identifier for the group.
    *
    * @return the groupID
    */
@@ -209,12 +200,12 @@ public class Group extends JobblettPropertyChangeSupporter
     return groupId;
   }
 
-  //TODO: Burde kanskje hete getJobShiftList istedet
-  public JobShiftList getJobShifts() {
+  public JobShiftList getJobShiftList() {
     return jobShifts;
   }
 
-  @Override public String toString() {
+  @Override
+  public String toString() {
     StringBuilder members = new StringBuilder();
     for (User user : this) {
       members.append(user.toString()).append(", ");
@@ -226,28 +217,30 @@ public class Group extends JobblettPropertyChangeSupporter
   }
 
 
-  @Override public Iterator<User> iterator() {
+  @Override
+  public Iterator<User> iterator() {
     return groupMembers.iterator();
   }
 
-  @Override public boolean equals(Object o) {
+  @Override
+  public boolean equals(Object o) {
     if (o instanceof Group) {
       Group group = (Group) o;
 
       for (User thatUser : group) {
-        if (getUser(thatUser.getUserName()) == null) {
+        if (getUser(thatUser.getUsername()) == null) {
           return false;
         }
-        User thisUser = getUser(thatUser.getUserName());
+        User thisUser = getUser(thatUser.getUsername());
         if (!thisUser.equals(thatUser)) {
           return false;
         }
       }
       for (User thisUser : this) {
-        if (group.getUser(thisUser.getUserName()) == null) {
+        if (group.getUser(thisUser.getUsername()) == null) {
           return false;
         }
-        User thatUser = group.getUser(thisUser.getUserName());
+        User thatUser = group.getUser(thisUser.getUsername());
         if (!thatUser.equals(thisUser)) {
           return false;
         }
@@ -258,12 +251,14 @@ public class Group extends JobblettPropertyChangeSupporter
     }
   }
 
-  @Override public int hashCode() {
+  @Override
+  public int hashCode() {
     assert false : "hashCode not designed";
     return 42; // any arbitrary constant will do
   }
 
-  @Override public void propertyChange(PropertyChangeEvent evt) {
+  @Override
+  public void propertyChange(PropertyChangeEvent evt) {
     String propertyName = evt.getPropertyName();
     firePropertyChange(propertyName, evt.getOldValue(), evt.getNewValue());
   }

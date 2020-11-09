@@ -33,9 +33,9 @@ import org.junit.jupiter.api.TestInstance;
         new User("nora", HashedPassword.hashPassword("bestePassord123"), "Nora", "Bekkestad");
 
     JobShift jobShift1 = new JobShift(olav, LocalDateTime.parse("2021-10-10T17:10:53.798134"),
-        Duration.ofSeconds(7200), "Cool info", true);
+        Duration.ofSeconds(7200), "Cool info");
     JobShift jobShift2 =
-        new JobShift(nora, LocalDateTime.now(), Duration.ofSeconds(7200), "Cool test info", true);
+        new JobShift(nora, LocalDateTime.now(), Duration.ofSeconds(7200), "Cool test info");
     jobShiftList.add(jobShift1);
     jobShiftList.add(jobShift2);
   }

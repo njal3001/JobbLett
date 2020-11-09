@@ -20,7 +20,7 @@ public class JobShiftDeserializer extends JsonDeserializer<JobShift> {
     LocalDateTime startingTime = LocalDateTime.parse(node.get("startingTime").asText());
     Duration duration = Duration.ofSeconds(node.get("duration").asLong());
     String info = node.get("info").asText();
-    JobShift jobShift = new JobShift(user, startingTime, duration, info, true);
+    JobShift jobShift = new JobShift(user, startingTime, duration, info);
     return jobShift;
   }
 }

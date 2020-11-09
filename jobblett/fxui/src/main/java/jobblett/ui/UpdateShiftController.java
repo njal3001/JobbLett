@@ -147,16 +147,17 @@ public class UpdateShiftController extends SceneController {
       String info = infoArea.getText();
       LocalDateTime startingTime = getStartingTime(date.getValue(), fromField.getText());
       Duration duration = getDuration(fromField.getText(), toField.getText());
-      if (activeJobShift == null) {
-        // New JobShift
-        activeJobShift = new JobShift(user, startingTime, duration, info);
-        getActiveGroup().addJobShift(activeJobShift, getActiveUser());
-      } else {
-        // Updating existing JobShift
-        activeJobShift.setUser(user);
-        activeJobShift.setStartingTime(startingTime);
-        activeJobShift.setDuration(duration);
-        activeJobShift.setInfo(info);
+      JobShift newShift = new JobShift(user, startingTime, duration, info);
+      
+      if (newShift.isOutDated()) {
+        throw new IllegalArgumentException("Starting time must be later than the current time");
+      }
+      //TODO: Litt rart at vi har en direkte addJobShift metode, 
+      //men at får å fjerne et job skift så må man først
+      //bruke getJobShiftList.
+      getActiveGroup().addJobShift(newShift, getActiveUser());
+      if (activeJobShift != null) {
+        getActiveGroup().getJobShiftList().remove(activeJobShift);
       }
       goBack();
     } catch (Exception e) {

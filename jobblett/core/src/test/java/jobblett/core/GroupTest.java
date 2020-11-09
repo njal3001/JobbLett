@@ -112,7 +112,7 @@ public class GroupTest {
       group.addUser(user1);
       group.addAdmin(user1);
       group.addJobShift(jobshift1, user1);
-      assertTrue(group.getJobShifts().contains(jobshift1));
+      assertTrue(group.getJobShiftList().contains(jobshift1));
     }
 
     @Test
@@ -137,6 +137,5 @@ public class GroupTest {
         assertTrue(e instanceof IllegalArgumentException);
       }
     }
-    //TODO: Skal vi ha property changed tester på alle klassene som bruker det?
 }
 

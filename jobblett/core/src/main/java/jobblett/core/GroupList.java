@@ -27,8 +27,8 @@ public class GroupList extends JobblettList<Integer, Group> {
   }
 
   /**
-   * Creates a new group with the given groupName and an unique ID.
-   * The group is automatically added to groupList.
+   * Creates a new group with the given groupName and an unique ID. The group is automatically added
+   * to groupList.
    *
    * @param groupName the groupName of the new group
    * @return the newly created group.
@@ -42,15 +42,15 @@ public class GroupList extends JobblettList<Integer, Group> {
   }
 
   /**
-   * Gets the all groups where the specified user is a member.
-   * Returns empty collection if there are none.
+   * Gets the all groups where the specified user is a member. Returns empty collection if there are
+   * none.
    *
    * @param user the specified user
    * @return a collection with groups
    */
-  //LagTest
+  // LagTest
   public Collection<Group> getGroups(User user) {
-    return filter(group -> group.getUser(user.getUserName()) == user);
+    return filter(group -> group.getUser(user.getUsername()) == user);
   }
 
   /**
@@ -62,19 +62,18 @@ public class GroupList extends JobblettList<Integer, Group> {
     return stream().map(Group::getGroupId).collect(Collectors.toList());
   }
 
-  @Override protected void firePropertyChange(
-      String propertyName,
-      Object oldValue,
-      Object newValue
-  ) {
+  @Override
+  protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
     super.firePropertyChange(propertyName, oldValue, newValue);
   }
 
-  @Override protected Integer identifier(Group type) {
+  @Override
+  protected Integer identifier(Group type) {
     return type.getGroupId();
   }
 
-  @Override protected void optionalAlreadyExists() {
+  @Override
+  protected void optionalAlreadyExists() {
     throw new IllegalArgumentException("Group with same ID already exists");
   }
 

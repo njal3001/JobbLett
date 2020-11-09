@@ -13,42 +13,27 @@ public class User extends JobblettPropertyChangeSupporter {
   private String familyName;
 
   /**
-   * Checks if the parameters are valid before creating instance a User. Allows
-   * JSON to create empty Users.
+   * Checks if the parameters are valid before creating User.
    *
-   * @param username TODO
-   * @param password TODO
-   * @param givenName TODO
-   * @param familyName TODO
+   * @param username username. 
+   * @param password password.
+   * @param givenName given name.
+   * @param familyName family name.
    */
-  //Sikkert en bedre måte å lage feilmelding...
   public User(String username, HashedPassword password, String givenName, String familyName) {
-    String errorMessage = "";
     if (!validUsername(username)) {
-      errorMessage += "Not a valid username\n";
+      throw new IllegalArgumentException("Not a valid username");
     }
     this.username = username;
-    if (password == null) {
-      throw new NullPointerException();
-    }
     setPassword(password);
-    try {
-      setName(givenName, familyName);
-    } catch (IllegalArgumentException e) {
-      errorMessage += e.getMessage();
-    }
-    if (errorMessage.length() != 0) {
-      throw new IllegalArgumentException(errorMessage);
-    }
+    setName(givenName, familyName);
   }
 
   /**
-   * Name criteria:
-   *  - Contains only letters.
-   *  - At least 2 characters.
+   * Name criteria: - Contains only letters. - At least 2 characters.
    *
-   * @param name TODO
-   * @return true if the criteria are fulfilled, else false TODO
+   * @param name name to be validated.
+   * @return true if the criteria are fulfilled, else false.
    */
   public static boolean validName(String name) {
     String pattern = "[a-zA-ZæøåÆØÅ]{2,}";
@@ -60,12 +45,10 @@ public class User extends JobblettPropertyChangeSupporter {
   // At least 2 characters
 
   /**
-   * Username criteria:
-   *  - No whitespace.
-   *  - At least 2 characters.
+   * Username criteria: - No whitespace. - At least 2 characters.
    *
-   * @param username TODO
-   * @return true if the criteria are fulfilled, else false
+   * @param username username to be validated.
+   * @return true if the criteria are fulfilled, else false.
    */
   public static boolean validUsername(String username) {
     String pattern = "[^\\s]{2,}";
@@ -73,21 +56,24 @@ public class User extends JobblettPropertyChangeSupporter {
   }
 
   /**
-   * Validates the password before initializing it. Can be used to change password.
+   * Sets the password.
    *
-   * @param password TODO
-   * @throws IllegalArgumentException TODO
+   * @param password password to be set.
+   * @throws IllegalArgumentException if password is null.
    */
   public void setPassword(HashedPassword password) {
+    if (password == null) {
+      throw new IllegalArgumentException("Password can´t be null.");
+    }
     this.password = password;
   }
 
   /**
    * Validates the name before initializing it.
    *
-   * @param givenName TODO
-   * @param familyName TODO
-   * @throws IllegalArgumentException TODO
+   * @param givenName  the given name to be set.
+   * @param familyName the family name to be set.
+   * @throws IllegalArgumentException if name is not valid.
    */
   public void setName(String givenName, String familyName) throws IllegalArgumentException {
     if (validName(givenName) && validName(familyName)) {
@@ -103,8 +89,8 @@ public class User extends JobblettPropertyChangeSupporter {
   /**
    * Formats the first letter to uppercase, and the rest to lowercase.
    *
-   * @param name TODO
-   * @return TODO
+   * @param name name to be formatted.
+   * @return the formatted name.
    */
   private String formatName(String name) {
     return String.valueOf(name.charAt(0)).toUpperCase() + name.substring(1).toLowerCase();
@@ -113,34 +99,35 @@ public class User extends JobblettPropertyChangeSupporter {
   /**
    * Gets the username. The unique ID for each user.
    *
-   * @return TODO
+   * @return the username.
    */
-  public String getUserName() {
+  public String getUsername() {
     return this.username;
   }
 
   /**
-   * Gets the given name of an user. This is not unique. Use username to get
-   * unique identifier for a user.
+   * Gets the given name of an user. This is not unique. Use username to get unique identifier for a
+   * user.
    *
-   * @return TODO
+   * @return the given name.
    */
   public String getGivenName() {
     return this.givenName;
   }
 
   /**
-   * Gets the family name of an user. This is not unique. Use username to get
-   * unique identifier for a user.
+   * Gets the family name of an user. This is not unique. 
+   * Use username to get unique identifier for a
+   * user.
    *
-   * @return TODO
+   * @return the family name.
    */
   public String getFamilyName() {
     return this.familyName;
   }
 
   /**
-   * Only used by JSON Serializer.
+   * Gets the hashed password.
    *
    * @return hashedPassword
    */
@@ -148,11 +135,13 @@ public class User extends JobblettPropertyChangeSupporter {
     return password;
   }
 
-  @Override public String toString() {
+  @Override
+  public String toString() {
     return givenName + " " + familyName + " (@" + username + ")";
   }
 
-  @Override public boolean equals(Object o) {
+  @Override
+  public boolean equals(Object o) {
     if (o == null) {
       return false;
     }
@@ -176,7 +165,8 @@ public class User extends JobblettPropertyChangeSupporter {
     }
   }
 
-  @Override public int hashCode() {
+  @Override
+  public int hashCode() {
     assert false : "hashCode not designed";
     return 42; // any arbitrary constant will do
   }
