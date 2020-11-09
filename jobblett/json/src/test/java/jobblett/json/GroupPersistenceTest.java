@@ -40,39 +40,4 @@ import org.junit.jupiter.api.TestInstance;
   @Override public Object getObject() {
     return group;
   }
-
-  /*@Test public void persistenceTest() {
-
-    // Serializing
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-    mapper.registerModule(new JobblettCoreModule());
-    String result = "";
-
-    try {
-      result = mapper.writeValueAsString(group);
-
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      fail(e);
-    }
-
-    // Deserializing
-    mapper = new ObjectMapper();
-    mapper.registerModule(new JobblettCoreModule());
-    try {
-      Group newGroup = mapper.readValue(result, Group.class);
-      assertEquals(group, newGroup);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      fail(e);
-    }
-
-  }
-    public static void main(String[] args) {
-    GroupPersistenceTest test = new GroupPersistenceTest();
-    test.setUp();
-    test.persistenceTest();
-  }
-  */
 }

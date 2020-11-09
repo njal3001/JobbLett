@@ -45,39 +45,4 @@ import org.junit.jupiter.api.TestInstance;
     return groupList;
   }
 
-  /*public static void main(String[] args) {
-    GroupListPersistenceTest test = new GroupListPersistenceTest();
-    test.setUp();
-    test.persistenceTest();
-  }
-*/
-  /*@Test public void persistenceTest() {
-
-    // Serializing
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-    mapper.registerModule(new JobblettCoreModule());
-    String result = "";
-
-    try {
-      result = mapper.writeValueAsString(groupList);
-
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      fail(e);
-    }
-
-    // Deserializing
-    mapper = new ObjectMapper();
-    mapper.registerModule(new JobblettCoreModule());
-
-    try {
-      GroupList newGroupList = mapper.readValue(result, GroupList.class);
-      assertTrue(newGroupList.equals(groupList));
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      fail(e);
-    }
-
-  }*/
 }

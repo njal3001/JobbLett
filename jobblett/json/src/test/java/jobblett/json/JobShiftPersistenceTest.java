@@ -34,43 +34,4 @@ import org.junit.jupiter.api.TestInstance;
   @Override public Object getObject() {
     return jobShift;
   }
-
-  /*@Test public void persistenceTest() {
-
-    // Serializing
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-    mapper.registerModule(new JobblettCoreModule());
-    String result = "";
-
-    try {
-      result = mapper.writeValueAsString(jobShift);
-
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      fail(e);
-    }
-
-    // Deserializing
-    mapper = new ObjectMapper();
-    mapper.registerModule(new JobblettCoreModule());
-
-    try {
-      JobShift newGroup = mapper.readValue(result, JobShift.class);
-      assertTrue(newGroup.equals(jobShift));
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      fail(e);
-    }
-
-  }
-
-  public static void main(String[] args) {
-    JobShiftPersistenceTest test = new JobShiftPersistenceTest();
-    test.setUp();
-    test.persistenceTest();
-  }
-
-
-   */
 }

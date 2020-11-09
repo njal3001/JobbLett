@@ -34,43 +34,4 @@ import org.junit.jupiter.api.TestInstance;
   @Override public Object getObject() {
     return userList;
   }
-
-  /*@Test public void persistenceTest() {
-
-    // Serializing
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-    mapper.registerModule(new JobblettCoreModule());
-    String result = "";
-
-    try {
-      result = mapper.writeValueAsString(userList);
-
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      fail(e);
-    }
-
-    // Deserializing
-    mapper = new ObjectMapper();
-    mapper.registerModule(new JobblettCoreModule());
-
-    try {
-      UserList newUserList = mapper.readValue(result, UserList.class);
-      System.out.println(newUserList);
-      System.out.println(userList);
-      assert (newUserList.equals(userList));
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      fail(e);
-    }
-  }
-
-  public static void main(String[] args) {
-    UserListPersistenceTest test = new UserListPersistenceTest();
-    test.setUp();
-    test.persistenceTest();
-  }
-
-   */
 }
