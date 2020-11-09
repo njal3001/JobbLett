@@ -15,8 +15,8 @@ public class CreateUserControllerTest extends JobbLettTest {
   }
 
 
-  @Test public void testErrorMessage_EmptyAfterInitalization() {
-    uiAssertions.assertLabel("errorMessage", "");
+  @Test public void testErrorMessage_usernameCriteriaOnInitalization() {
+    uiAssertions.assertLabel("errorMessage", CreateUserController.usernameCriteria);
   }
 
   @Test public void testGoToLogin() {
@@ -24,11 +24,12 @@ public class CreateUserControllerTest extends JobbLettTest {
     uiAssertions.assertOnScene(LOGIN);
   }
 
+  //TODO: Nå testes ikke hver feilmelding
   @Test public void testCreateUser_invalidUserData() {
     tryToCreateUser("", "", "", "");
     uiAssertions.assertOnScene(CREATE_USER);
     uiAssertions.assertLabel("errorMessage",
-        "Not a valid password\nNot a valid username\nNot a valid name");
+        "Not a valid password");
   }
 
   @Test public void testCreateUser_validUserData() {
@@ -45,10 +46,10 @@ public class CreateUserControllerTest extends JobbLettTest {
 
   private void tryToCreateUser(String username, String password, String givenName,
       String familyName) {
-    clickOn("#username").write(username);
-    clickOn("#password").write(password);
-    clickOn("#givenName").write(givenName);
-    clickOn("#familyName").write(familyName);
+    clickOn("#usernameField").write(username);
+    clickOn("#passwordField").write(password);
+    clickOn("#givenNameField").write(givenName);
+    clickOn("#familyNameField").write(familyName);
     clickOn("#createAccountButton");
   }
 }

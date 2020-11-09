@@ -20,25 +20,13 @@ public class User extends JobblettPropertyChangeSupporter {
    * @param givenName given name.
    * @param familyName family name.
    */
-  // Sikkert en bedre måte å lage feilmelding...
   public User(String username, HashedPassword password, String givenName, String familyName) {
-    String errorMessage = "";
     if (!validUsername(username)) {
-      errorMessage += "Not a valid username\n";
+      throw new IllegalArgumentException("Not a valid username");
     }
     this.username = username;
-    if (password == null) {
-      throw new NullPointerException();
-    }
     setPassword(password);
-    try {
-      setName(givenName, familyName);
-    } catch (IllegalArgumentException e) {
-      errorMessage += e.getMessage();
-    }
-    if (errorMessage.length() != 0) {
-      throw new IllegalArgumentException(errorMessage);
-    }
+    setName(givenName, familyName);
   }
 
   /**

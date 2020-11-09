@@ -3,6 +3,7 @@ package jobblett.ui;
 import static jobblett.ui.JobblettScenes.LOGIN;
 import static jobblett.ui.JobblettScenes.USER_HOME;
 
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,19 +14,55 @@ import jobblett.core.User;
 
 public class CreateUserController extends SceneController {
 
-  @FXML Button createAccountButton;
+  @FXML
+  Button createAccountButton;
 
-  @FXML TextField username;
+  @FXML
+  TextField usernameField;
 
-  @FXML PasswordField password;
+  @FXML
+  PasswordField passwordField;
 
-  @FXML TextField givenName;
+  @FXML
+  TextField givenNameField;
 
-  @FXML TextField familyName;
+  @FXML
+  TextField familyNameField;
 
-  @FXML Label errorMessage;
+  @FXML
+  Label errorMessage;
 
-  @FXML Button goBackButton;
+  @FXML
+  Button goBackButton;
+
+  public static final String usernameCriteria = 
+      "Username criteria:\nNo whitespace\nAt least 2 characters";
+
+  public static final String passwordCriteria =
+      "Password criteria:\nAt least one digit\n At least one lowercase letter\n"
+      + "At least one uppercase letter.\nNo whitespace.\nAt least 8 characters";
+
+  public static final String nameCriteria = 
+      "Name criteria:\nContains only letters.\nAt least 2 characters";
+
+  @FXML
+  public void initialize() {
+    List<String> criteria = 
+        List.of(usernameCriteria, passwordCriteria, nameCriteria, nameCriteria);
+    List<TextField> textFields = 
+        List.of(usernameField, passwordField, givenNameField, familyNameField);
+
+    for (int i = 0; i < criteria.size(); i++) {
+      final int k = i;
+      textFields.get(i).focusedProperty().addListener((observable, oldValue, newValue) -> {
+        if (newValue) {
+          errorMessage.setText(criteria.get(Integer.valueOf(k)));
+        } else {
+          errorMessage.setText("");
+        }
+      });
+    }
+  }
 
 
   @Override
@@ -35,42 +72,26 @@ public class CreateUserController extends SceneController {
     createAccountButton.setSkin(new ButtonAnimationSkin(createAccountButton));
   }
 
-  /**
-   * TODO.
-   */
-  @FXML public void createAccount() {
-    String username = this.username.getText();
-    String passwordString = this.password.getText();
-    String givenName = this.givenName.getText();
-    String familyName = this.familyName.getText();
+  @FXML
+  public void createAccount() {
+    String username = this.usernameField.getText();
+    String passwordString = this.passwordField.getText();
+    String givenName = this.givenNameField.getText();
+    String familyName = this.familyNameField.getText();
 
-    String errorMessageString = "";
-
-    // Bør vel være en bedre måte å gjøre dette på...
-    HashedPassword password = HashedPassword.hashPassword("defaultPassword123");
     try {
-      password = HashedPassword.hashPassword(passwordString);
-    } catch (IllegalArgumentException e) {
-      errorMessageString += e.getMessage();
-    }
-    try {
+      HashedPassword password = HashedPassword.hashPassword(passwordString);
       User newUser = new User(username, password, givenName, familyName);
-      if (errorMessageString.length() == 0) {
-        getAccess().add(newUser);
-        setActiveUser(newUser);
-        switchScene(USER_HOME);
-      }
-      ;
+      getAccess().add(newUser);
+      setActiveUser(newUser);
+      switchScene(USER_HOME);
     } catch (IllegalArgumentException e) {
-      if (errorMessageString.length() != 0) {
-        errorMessageString += "\n";
-      }
-      errorMessageString += e.getMessage();
+      errorMessage.setText(e.getMessage());
     }
-    errorMessage.setText(errorMessageString);
   }
 
-  @FXML public void goToLogIn() {
+  @FXML
+  public void goToLogIn() {
     switchScene(LOGIN);
   }
 }

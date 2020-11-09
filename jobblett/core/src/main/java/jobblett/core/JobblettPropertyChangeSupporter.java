@@ -3,6 +3,8 @@ package jobblett.core;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+//TODO: Er litt rart at vi har en klasse som heter noe med
+//med jobblett i core modulen.
 public abstract class JobblettPropertyChangeSupporter {
   protected PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 

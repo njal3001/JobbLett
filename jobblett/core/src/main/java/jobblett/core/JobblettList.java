@@ -14,6 +14,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
+//TODO: Er litt rart at vi har en klasse som heter noe med jobblett
+// i core modulen.
 /**
  * SuperClass for all List-classes in Jobblett. Type "k" is the class-type used for in the
  * identification. Type "T" is the class-type which is stored in the list.
