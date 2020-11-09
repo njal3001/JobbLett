@@ -20,7 +20,7 @@ public class UserSerializer extends StdSerializer<User> {
       return;
     }
     jsonGenerator.writeStartObject();
-    jsonGenerator.writeStringField("username", o.getUserName());
+    jsonGenerator.writeStringField("username", o.getUsername());
     jsonGenerator.writeStringField("password", o.getPassword().toString());
     jsonGenerator.writeStringField("givenName", o.getGivenName());
     jsonGenerator.writeStringField("familyName", o.getFamilyName());

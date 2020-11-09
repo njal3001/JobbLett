@@ -22,7 +22,7 @@ public class UserListTest {
   @Test public void testGetUser() {
     assertEquals(null, userList.get("User1"));
     userList.add(user1);
-    assertEquals(user1, userList.get(user1.getUserName()));
+    assertEquals(user1, userList.get(user1.getUsername()));
   }
 
   @Test public void testAddUser_TwoUsersWithSameUsername() {
@@ -38,13 +38,13 @@ public class UserListTest {
   @Test public void testLogin_CorrectUsernameAndPassword() {
     userList.add(user1);
     assertEquals(user1,
-        userList.checkUserNameAndPassword(user1.getUserName(), HashedPassword.hashPassword("Test12345")));
+        userList.checkUserNameAndPassword(user1.getUsername(), HashedPassword.hashPassword("Test12345")));
   }
 
   @Test public void testLogin_WrongPassword() {
     userList.add(user1);
     assertEquals(null,
-        userList.checkUserNameAndPassword(user1.getUserName(), HashedPassword.hashPassword("TotallyWrongPassword123")));
+        userList.checkUserNameAndPassword(user1.getUsername(), HashedPassword.hashPassword("TotallyWrongPassword123")));
   }
 
   @Test public void testIterator() {

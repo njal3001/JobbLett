@@ -26,7 +26,7 @@ public class GroupSerializer extends StdSerializer<Group> {
     jsonGenerator.writeObjectField("groupMembers", groupMembers);
 
     jsonGenerator.writeNumberField("groupId", o.getGroupId());
-    jsonGenerator.writeObjectField("jobShifts", o.getJobShifts());
+    jsonGenerator.writeObjectField("jobShifts", o.getJobShiftList());
     jsonGenerator.writeObjectField("admins", o.getAdmins());
 
     jsonGenerator.writeEndObject();

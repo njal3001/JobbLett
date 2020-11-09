@@ -21,7 +21,7 @@ public class LoginControllerTest extends JobbLettTest {
   }
 
   @Test public void testLogin_correctPasswordAndUsername() {
-    tryToLogin(user1.getUserName(), "CorrectPassword12345");
+    tryToLogin(user1.getUsername(), "CorrectPassword12345");
     uiAssertions.assertOnScene(USER_HOME);
     uiAssertions.assertLabel("userFullName", user1.getGivenName() + " " + user1.getFamilyName());
   }

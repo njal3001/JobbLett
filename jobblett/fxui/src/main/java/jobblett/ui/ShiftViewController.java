@@ -79,7 +79,7 @@ public class ShiftViewController extends SceneController {
     int index = shifts.getSelectionModel().getSelectedIndex();
     JobShift selectedJobShift = shifts.getItems().get(index);
     if (selectedJobShift != null) {
-      getActiveGroup().getJobShifts().remove(selectedJobShift);
+      getActiveGroup().getJobShiftList().remove(selectedJobShift);
       updateView();
     }
   }
@@ -102,11 +102,11 @@ public class ShiftViewController extends SceneController {
   // Lists all job shifts
   private void updateView() {
     //Endre metode navn kanskje?
-    updateView(getActiveGroup().getJobShifts().getJobShifts());
+    updateView(getActiveGroup().getJobShiftList().getJobShifts());
   }
 
   private void updateView(User user) {
-    updateView(getActiveGroup().getJobShifts().getJobShifts(user));
+    updateView(getActiveGroup().getJobShiftList().getJobShifts(user));
   }
 
   private void updateView(List<JobShift> shifts) {

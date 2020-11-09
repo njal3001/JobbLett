@@ -37,7 +37,7 @@ public interface JobblettAccess extends PropertyChangeListener {
       // Remove duplicate users and replace with original users
       Collection<User> duplicateUsers = new ArrayList<>();
       for (User user : group) {
-        if (userList.get(user.getUserName()) != null) {
+        if (userList.get(user.getUsername()) != null) {
           duplicateUsers.add(user);
         } else {
           System.out.println(
@@ -46,14 +46,14 @@ public interface JobblettAccess extends PropertyChangeListener {
         }
       }
       for (User user : duplicateUsers) {
-        User originalUser = userList.get(user.getUserName());
+        User originalUser = userList.get(user.getUsername());
         group.removeUser(user);
         group.addUser(originalUser);
       }
 
       Collection<User> duplicateAdmins = new ArrayList<>();
       for (User user : group.getAdmins()) {
-        if (userList.get(user.getUserName()) != null) {
+        if (userList.get(user.getUsername()) != null) {
           duplicateAdmins.add(user);
         } else {
           System.out.println(
@@ -62,19 +62,19 @@ public interface JobblettAccess extends PropertyChangeListener {
         }
       }
       for (User user : duplicateAdmins) {
-        User originalUser = userList.get(user.getUserName());
+        User originalUser = userList.get(user.getUsername());
         group.removeAdmin(user);
         group.addAdmin(originalUser);
       }
 
 
       // Remove duplicate users in JobShifts
-      for (JobShift shift : group.getJobShifts()) {
+      for (JobShift shift : group.getJobShiftList()) {
         User user = shift.getUser();
         if (user == null) {
           break;
         }
-        User originalUser = userList.get(user.getUserName());
+        User originalUser = userList.get(user.getUsername());
         if (originalUser != null) {
           shift.setUser(originalUser);
         } else {

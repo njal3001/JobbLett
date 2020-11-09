@@ -15,9 +15,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * SuperClass for all List-classes in Jobblett.
- * Type "k" is the class-type used for in the identification.
- * Type "T" is the class-type which is stored in the list.
+ * SuperClass for all List-classes in Jobblett. Type "k" is the class-type used for in the
+ * identification. Type "T" is the class-type which is stored in the list.
  */
 public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
     implements Iterable<T>, PropertyChangeListener {
@@ -29,10 +28,10 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
   }
 
   /**
-   * TODO.
+   * Adds objects to the list.
    *
-   * @param objects TODO
-   * @return TODO
+   * @param objects objects to be added to the list
+   * @return if the objects were added or not
    */
   public boolean add(T... objects) {
     for (T o : objects) {
@@ -52,10 +51,10 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
   }
 
   /**
-   * TODO.
+   * Adds everything in the Iterable to the list.
    *
-   * @param jobblettList TODO
-   * @return TODO
+   * @param jobblettList contains all objects to be added to this list.
+   * @return if the objects were added or not.
    */
   public boolean addAll(Iterable<T> jobblettList) {
     Collection<T> helperList = new ArrayList<>();
@@ -64,19 +63,19 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
   }
 
   /**
-   * TODO.
+   * Checks if list is empty.
    *
-   * @return TODO
+   * @return if list is empty or not.
    */
   public boolean isEmpty() {
     return list.isEmpty();
   }
 
   /**
-   * TODO.
+   * Removes the object from the list.
    *
-   * @param o TODO
-   * @return TODO
+   * @param o object to be removed from list.
+   * @return if the object was removed or not.
    */
   public boolean remove(T o) {
     boolean removed = list.remove(o);
@@ -108,15 +107,18 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
     return list.indexOf(t);
   }
 
-  @Override public Iterator<T> iterator() {
+  @Override
+  public Iterator<T> iterator() {
     return list.iterator();
   }
 
-  @Override public String toString() {
+  @Override
+  public String toString() {
     return simpleTypeName() + "List=" + list;
   }
 
-  @Override public boolean equals(Object o) {
+  @Override
+  public boolean equals(Object o) {
     if (o instanceof JobblettList) {
       JobblettList newList = (JobblettList) o;
       return list.equals(newList.list);
@@ -125,17 +127,16 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
     }
   }
 
-  @Override public int hashCode() {
+  @Override
+  public int hashCode() {
     assert false : "hashCode not designed";
     return 42; // any arbitrary constant will do
   }
 
-  @Override public void propertyChange(PropertyChangeEvent evt) {
+  @Override
+  public void propertyChange(PropertyChangeEvent evt) {
     T source = (T) evt.getSource();
-    String propertyName = ""
-        + simpleTypeName()
-        + "{" + identifier(source)
-        + "}: "
+    String propertyName = "" + simpleTypeName() + "{" + identifier(source) + "}: " 
         + evt.getPropertyName();
     firePropertyChange(propertyName, evt.getOldValue(), evt.getNewValue());
   }

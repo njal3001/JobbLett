@@ -28,7 +28,7 @@ public class UserTest {
   @Test public void testConstructor() {
     try {
       User u1 = new User("njal3001", HashedPassword.hashPassword("Nils1254"), "Nils", "Enge");
-      assertEquals(u1.getUserName(), "njal3001");
+      assertEquals(u1.getUsername(), "njal3001");
       assertEquals(u1.getGivenName(), "Nils");
       assertEquals(u1.getFamilyName(), "Enge");
     } catch (Exception e) {
