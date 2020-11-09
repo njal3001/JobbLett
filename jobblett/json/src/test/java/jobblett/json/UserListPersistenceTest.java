@@ -23,10 +23,10 @@ import org.junit.jupiter.api.TestInstance;
 
   @BeforeAll public void setUp() {
     User user1 =
-        new User("Ola1424", HashedPassword.hashPassword("Godmorgen1234"), "Ola", "Nordmann");
+        new User("Ola1424", new HashedPassword("Godmorgen1234"), "Ola", "Nordmann");
     User user2 =
-        new User("Per2434", HashedPassword.hashPassword("Godkveld1234"), "Per", "Gudmunsen");
-    User user3 = new User("Herman3434", HashedPassword.hashPassword("Godettermiddag1234"), "Herman",
+        new User("Per2434", new HashedPassword("Godkveld1234"), "Per", "Gudmunsen");
+    User user3 = new User("Herman3434", new HashedPassword("Godettermiddag1234"), "Herman",
         "Hermansen");
     userList.add(user1, user2, user3);
   }

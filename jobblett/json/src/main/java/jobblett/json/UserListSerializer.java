@@ -15,8 +15,8 @@ public class UserListSerializer extends JsonSerializer<UserList> {
       SerializerProvider serializerProvider) throws IOException {
     jsonGenerator.writeStartObject();
 
-    ArrayList<User> users = new ArrayList();
-    o.forEach(user -> users.add(user));
+    ArrayList<User> users = new ArrayList<>();
+    o.forEach(users::add);
     jsonGenerator.writeObjectField("users", users);
 
     jsonGenerator.writeEndObject();

@@ -19,8 +19,8 @@ public class GroupTest {
     @BeforeEach
     public void setUp(){
         group = new Group("test", 1);
-        user1 = new User("test1", HashedPassword.hashPassword("Passord123"), "Kari", "Testermann");
-        user2 = new User("test2", HashedPassword.hashPassword("Passord123"), "Kari", "Testermann");
+        user1 = new User("test1", new HashedPassword("Passord123"), "Kari", "Testermann");
+        user2 = new User("test2", new HashedPassword("Passord123"), "Kari", "Testermann");
         jobshift1 = new JobShift(user1, LocalDateTime.now().plusHours(5), Duration.ofHours(5), "Info");
     }
 	

@@ -91,7 +91,7 @@ public class CreateUserController extends SceneController {
     String familyName = this.familyNameField.getText();
 
     try {
-      HashedPassword password = HashedPassword.hashPassword(passwordString);
+      HashedPassword password = new HashedPassword(passwordString);
       User newUser = new User(username, password, givenName, familyName);
       getAccess().add(newUser);
       setActiveUser(newUser);

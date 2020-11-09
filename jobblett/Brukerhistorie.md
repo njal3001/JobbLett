@@ -2,7 +2,7 @@
 Her har vi alle brukerhistorier som danner utgangspunktet for hvordan vil skal utvikle appen. Det gir oss et konkret
 bilde av hva vi skal utvikle.
 
-<h3>Opprette gruppe for teamet mitt (us-1)<h3>
+<h3>Opprette gruppe for teamet mitt (us-1)</h3>
 
 Som arbeidsgiver ønsker jeg å opprette en gruppe for mitt team slik at jeg får oversikt over mine arbeidstakere. 
 
@@ -19,7 +19,7 @@ bruke en gruppekode som de får fra arbeidsgiveren.
 *  Opprette en gruppe 
 *  Bli med i en gruppe
 
-<h3> Tildele skift til arbeidstaker (us-2)<h3>
+<h3> Tildele skift til arbeidstaker (us-2)</h3>
 
 Som arbeidsgiver ønsker jeg å tildele skift til mine arbeidstakere slik at teamet får en oversikt over hvem som jobber når.
 
