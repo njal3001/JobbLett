@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import jobblett.core.HashedPassword;
 import jobblett.core.User;
 import jobblett.core.UserList;
-import jobblett.json.JobblettDeserializer;
+import jobblett.json.JobblettPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +49,7 @@ public class UserListResource {
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/add/{userString}")
   public boolean add(@PathParam("userString") String userString) {
-    User user = JobblettDeserializer.deserialize(User.class, userString);
+    User user = new JobblettPersistence().readValue(User.class, userString);
     return userList.add(user);
   }
 

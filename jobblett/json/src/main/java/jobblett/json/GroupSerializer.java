@@ -1,6 +1,7 @@
 package jobblett.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
@@ -8,12 +9,7 @@ import java.util.ArrayList;
 import jobblett.core.Group;
 import jobblett.core.User;
 
-public class GroupSerializer extends StdSerializer<Group> {
-
-  protected GroupSerializer() {
-    super(Group.class);
-  }
-
+public class GroupSerializer extends JsonSerializer<Group> {
   @Override
   public void serialize(Group o, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
       throws IOException {

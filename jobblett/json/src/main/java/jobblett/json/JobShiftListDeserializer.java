@@ -17,7 +17,7 @@ public class JobShiftListDeserializer extends JsonDeserializer<JobShiftList> {
     ArrayNode arrayNode = (ArrayNode) node.get("jobShifts");
     JobShiftList jobShiftList = new JobShiftList();
     for (JsonNode jobShiftNode : arrayNode) {
-      jobShiftList.add(JobblettDeserializer.deserialize(JobShift.class, jobShiftNode));
+      jobShiftList.add(new JobblettPersistence().readValue(JobShift.class, jobShiftNode));
     }
     return jobShiftList;
   }

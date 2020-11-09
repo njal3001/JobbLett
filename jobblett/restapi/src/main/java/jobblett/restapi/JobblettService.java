@@ -3,8 +3,6 @@ package jobblett.restapi;
 import static jobblett.restapi.GroupListResource.GROUP_LIST_SERVICE_PATH;
 import static jobblett.restapi.UserListResource.USER_LIST_SERVICE_PATH;
 
-import java.util.Collection;
-import java.util.Iterator;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,9 +11,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import jobblett.core.GroupList;
-import jobblett.core.JobblettList;
 import jobblett.core.UserList;
-import jobblett.json.JobblettDeserializer;
+import jobblett.json.JobblettPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +54,7 @@ public class JobblettService {
   @Path("/setUserList/{userListString}")
   public boolean setUserList(@PathParam("userListString") String userListString) {
     try {
-      UserList userList = JobblettDeserializer.deserialize(UserList.class, userListString);
+      UserList userList = new JobblettPersistence().readValue(UserList.class, userListString);
       this.userList = userList;
       return true;
     } catch (Exception e) {
@@ -79,7 +76,7 @@ public class JobblettService {
   @Path("/setGroupList/{groupListString}")
   public boolean setGroupList(@PathParam("groupListString") String groupListString) {
     try {
-      GroupList groupList = JobblettDeserializer.deserialize(GroupList.class, groupListString);
+      GroupList groupList = new JobblettPersistence().readValue(GroupList.class, groupListString);
       this.groupList = groupList;
       return true;
     } catch (Exception e) {

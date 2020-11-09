@@ -2,7 +2,7 @@ package jobblett.restserver;
 
 import jobblett.core.GroupList;
 import jobblett.core.UserList;
-import jobblett.json.JobblettDeserializer;
+import jobblett.json.JobblettPersistence;
 import jobblett.restapi.JobblettService;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.jackson.JacksonFeature;
@@ -40,11 +40,11 @@ public class JobblettConfig extends ResourceConfig {
   }
 
   private static UserList createDefaultUserList() {
-    return JobblettDeserializer.useDefaultValues(UserList.class);
+    return new JobblettPersistence().readDefault(UserList.class);
 
   }
 
   private static GroupList createDefaultGroupList() {
-    return JobblettDeserializer.useDefaultValues(GroupList.class);
+    return new JobblettPersistence().readDefault(GroupList.class);
   }
 }
