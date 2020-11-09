@@ -15,15 +15,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class JobShiftPersistenceTest {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class JobShiftPersistenceTest extends AbstractPersistenceTest {
 
   JobShift jobShift;
 
-  public static void main(String[] args) {
-    JobShiftPersistenceTest test = new JobShiftPersistenceTest();
-    test.setUp();
-    test.persistenceTest();
+  public JobShiftPersistenceTest() {
+    super(JobShift.class);
   }
+
 
   @BeforeAll public void setUp() {
     User olav =
@@ -32,7 +31,11 @@ import org.junit.jupiter.api.TestInstance;
         Duration.ofSeconds(7200), "Cool info", true);
   }
 
-  @Test public void persistenceTest() {
+  @Override public Object getObject() {
+    return jobShift;
+  }
+
+  /*@Test public void persistenceTest() {
 
     // Serializing
     ObjectMapper mapper = new ObjectMapper();
@@ -61,4 +64,13 @@ import org.junit.jupiter.api.TestInstance;
     }
 
   }
+
+  public static void main(String[] args) {
+    JobShiftPersistenceTest test = new JobShiftPersistenceTest();
+    test.setUp();
+    test.persistenceTest();
+  }
+
+
+   */
 }

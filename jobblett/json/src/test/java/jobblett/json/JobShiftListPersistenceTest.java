@@ -16,14 +16,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class JobShiftListPersistenceTest {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class JobShiftListPersistenceTest extends AbstractPersistenceTest{
 
   JobShiftList jobShiftList = new JobShiftList();
 
-  public static void main(String[] args) {
-    JobShiftListPersistenceTest test = new JobShiftListPersistenceTest();
-    test.setUp();
-    test.persistenceTest();
+  public JobShiftListPersistenceTest() {
+    super(JobShiftList.class);
   }
 
   @BeforeAll public void setUp() {
@@ -40,7 +38,11 @@ import org.junit.jupiter.api.TestInstance;
     jobShiftList.add(jobShift2);
   }
 
-  @Test public void persistenceTest() {
+  @Override public Object getObject() {
+    return jobShiftList;
+  }
+
+  /*@Test public void persistenceTest() {
 
     // Serializing
     ObjectMapper mapper = new ObjectMapper();
@@ -69,4 +71,13 @@ import org.junit.jupiter.api.TestInstance;
     }
 
   }
+
+  public static void main(String[] args) {
+    JobShiftListPersistenceTest test = new JobShiftListPersistenceTest();
+    test.setUp();
+    test.persistenceTest();
+  }
+
+   */
+
 }

@@ -11,17 +11,21 @@ import jobblett.core.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class UserPersistenceTest {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class UserPersistenceTest extends AbstractPersistenceTest {
 
   User user =
       new User("Olavh123", HashedPassword.hashPassword("Heisann123456"), "Olav", "Hermansen");
 
-  public static void main(String[] args) {
-    UserPersistenceTest test = new UserPersistenceTest();
-    test.persistenceTest();
+  public UserPersistenceTest() {
+    super(User.class);
   }
 
-  @Test public void persistenceTest() {
+  @Override public Object getObject() {
+    return user;
+  }
+
+
+  /*@Test public void persistenceTest() {
 
     // Serializing
     ObjectMapper mapper = new ObjectMapper();
@@ -50,4 +54,11 @@ import org.junit.jupiter.api.TestInstance;
     }
 
   }
+
+  public static void main(String[] args) {
+    UserPersistenceTest test = new UserPersistenceTest();
+    test.persistenceTest();
+  }
+
+  */
 }
