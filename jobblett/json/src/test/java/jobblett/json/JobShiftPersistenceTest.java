@@ -12,10 +12,11 @@ import jobblett.core.HashedPassword;
 import jobblett.core.JobShift;
 import jobblett.core.User;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class JobShiftPersistenceTest extends AbstractPersistenceTest {
+public class JobShiftPersistenceTest extends AbstractPersistenceTest<JobShift> {
 
   JobShift jobShift;
 
@@ -24,14 +25,14 @@ import org.junit.jupiter.api.TestInstance;
   }
 
 
-  @BeforeAll public void setUp() {
+  @BeforeEach public void setUp() {
     User olav =
         new User("olav", new HashedPassword("bestePassord123"), "Olav", "Nordmann");
     jobShift = new JobShift(olav, LocalDateTime.parse("2021-10-10T17:10:53.798134"),
         Duration.ofSeconds(7200), "Cool info");
   }
 
-  @Override public Object getObject() {
+  @Override public JobShift getObject() {
     return jobShift;
   }
 }

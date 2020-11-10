@@ -11,11 +11,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import jobblett.core.Group;
 import jobblett.core.HashedPassword;
 import jobblett.core.User;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.BeforeEach;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class GroupPersistenceTest extends AbstractPersistenceTest{
+public class GroupPersistenceTest extends AbstractPersistenceTest<Group> {
 
   Group group = new Group("TestGroup", ThreadLocalRandom.current().nextInt(1000, 10000));
 
@@ -24,7 +22,7 @@ import org.junit.jupiter.api.TestInstance;
   }
 
 
-  @BeforeAll public void setUp() {
+  @BeforeEach public void setUp() {
     User olav =
         new User("olav", new HashedPassword("bestePassord123"), "Olav", "Nordmann");
     User nora =
@@ -37,7 +35,7 @@ import org.junit.jupiter.api.TestInstance;
     group.addUser(nora);
   }
 
-  @Override public Object getObject() {
+  @Override public Group getObject() {
     return group;
   }
 }

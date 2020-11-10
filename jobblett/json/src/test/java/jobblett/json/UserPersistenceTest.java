@@ -11,7 +11,7 @@ import jobblett.core.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class UserPersistenceTest extends AbstractPersistenceTest {
+public class UserPersistenceTest extends AbstractPersistenceTest<User> {
 
   User user =
       new User("Olavh123", new HashedPassword("Heisann123456"), "Olav", "Hermansen");
@@ -20,7 +20,7 @@ import org.junit.jupiter.api.TestInstance;
     super(User.class);
   }
 
-  @Override public Object getObject() {
+  @Override public User getObject() {
     return user;
   }
 }

@@ -47,6 +47,9 @@ public class JobblettPersistence {
     URL fileUrl = JobblettPersistence.class.getResource("default"
         + classType.getSimpleName()
         + ".json");
+    if (fileUrl == null) {
+      return null;
+    }
     try {
       return readValue(classType, fileUrl);
     } catch (IOException e) {
@@ -62,7 +65,7 @@ public class JobblettPersistence {
    * @param <T> class type of the object to be returned (will be set automatically by classType)
    * @return object deserialized object
    */
-  public <T> T readValue(Class<T> classType, JsonNode node)
+  protected <T> T readValue(Class<T> classType, JsonNode node)
       throws JsonProcessingException {
     return getObjectMapper().readValue(node.toString(), classType);
   }
@@ -131,8 +134,8 @@ public class JobblettPersistence {
     if (created) {
       System.out.println("New directory was created at \"" + dir + "\".");
     }
-    //TODO: vurder å endre "created" her
-    if (!dir.isDirectory() || !created) {
+    //just in case there is a file(and not a folder) with the same name
+    if (!dir.isDirectory()) {
       System.out.println("Could not save. The path " + dir + " is not available.");
     }
     String fileName = object.getClass().getSimpleName() + ".json";
@@ -145,7 +148,7 @@ public class JobblettPersistence {
   }
 
   /**
-   * Returns an serialized object as a string.
+   * Serializes an object an returns it as a string.
    *
    * @param value to be serialized
    * @return serialized value

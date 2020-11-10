@@ -13,10 +13,10 @@ import jobblett.core.JobShift;
 import jobblett.core.JobShiftList;
 import jobblett.core.User;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class JobShiftListPersistenceTest extends AbstractPersistenceTest{
+public class JobShiftListPersistenceTest extends AbstractPersistenceTest<JobShiftList>{
 
   JobShiftList jobShiftList = new JobShiftList();
 
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.TestInstance;
     super(JobShiftList.class);
   }
 
-  @BeforeAll public void setUp() {
+  @BeforeEach public void setUp() {
     User olav =
         new User("olav", new HashedPassword("bestePassord123"), "Olav", "Nordmann");
     User nora =
@@ -38,7 +38,7 @@ import org.junit.jupiter.api.TestInstance;
     jobShiftList.add(jobShift2);
   }
 
-  @Override public Object getObject() {
+  @Override public JobShiftList getObject() {
     return jobShiftList;
   }
 
