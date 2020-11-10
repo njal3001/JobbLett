@@ -131,7 +131,8 @@ public class JobblettPersistence {
     if (created) {
       System.out.println("New directory was created at \"" + dir + "\".");
     }
-    if (!dir.isDirectory()) {
+    //TODO: vurder å endre "created" her
+    if (!dir.isDirectory() || !created) {
       System.out.println("Could not save. The path " + dir + " is not available.");
     }
     String fileName = object.getClass().getSimpleName() + ".json";
