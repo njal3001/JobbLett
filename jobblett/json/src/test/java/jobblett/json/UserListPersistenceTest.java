@@ -9,10 +9,11 @@ import jobblett.core.HashedPassword;
 import jobblett.core.User;
 import jobblett.core.UserList;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class UserListPersistenceTest extends AbstractPersistenceTest{
+public class UserListPersistenceTest extends AbstractPersistenceTest<UserList>{
 
   private UserList userList = new UserList();
 
@@ -21,7 +22,7 @@ import org.junit.jupiter.api.TestInstance;
   }
 
 
-  @BeforeAll public void setUp() {
+  @BeforeEach public void setUp() {
     User user1 =
         new User("Ola1424", new HashedPassword("Godmorgen1234"), "Ola", "Nordmann");
     User user2 =
@@ -31,7 +32,7 @@ import org.junit.jupiter.api.TestInstance;
     userList.add(user1, user2, user3);
   }
 
-  @Override public Object getObject() {
+  @Override public UserList getObject() {
     return userList;
   }
 }

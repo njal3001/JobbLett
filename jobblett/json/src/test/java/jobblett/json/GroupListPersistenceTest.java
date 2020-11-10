@@ -11,10 +11,11 @@ import jobblett.core.GroupList;
 import jobblett.core.HashedPassword;
 import jobblett.core.User;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) public class GroupListPersistenceTest extends AbstractPersistenceTest{
+public class GroupListPersistenceTest extends AbstractPersistenceTest<GroupList>{
 
   GroupList groupList = new GroupList();
 
@@ -23,7 +24,7 @@ import org.junit.jupiter.api.TestInstance;
   }
 
 
-  @BeforeAll public void setUp() {
+  @BeforeEach public void setUp() {
     User olav =
         new User("olav", new HashedPassword("bestePassord123"), "Olav", "Nordmann");
     User nora =
@@ -41,7 +42,7 @@ import org.junit.jupiter.api.TestInstance;
     group2.addUser(david);
   }
 
-  @Override public Object getObject() {
+  @Override public GroupList getObject() {
     return groupList;
   }
 
