@@ -15,8 +15,6 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
-  public static final boolean REST_API_ON = false;
-
   public static final DateTimeFormatter EXPECTED_TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
   public static final DateTimeFormatter EXPECTED_DATE_FORMAT =
       DateTimeFormatter.ofPattern("YYYY-MM-dd");
@@ -24,11 +22,18 @@ public class App extends Application {
   public static final String FONT_FILE = "Product-Sans-Regular.ttf";
   public static final String BOLD_FONT_FILE = "Product-Sans-Bold.ttf";
 
+  private final boolean restApiOn;
+
+  public App(boolean restApiOn) {
+    this.restApiOn = restApiOn;
+  }
+
   public static void main(final String[] args) {
     launch(args);
   }
 
-  @Override public void start(Stage primaryStage) throws IOException {
+  @Override
+  public void start(Stage primaryStage) throws IOException {
     ControllerMap controllerMap = commonStart(primaryStage);
     controllerMap.switchScene(LOGIN);
     primaryStage.show();
@@ -39,15 +44,14 @@ public class App extends Application {
    *
    * @param primaryStage primaryStage from main start method
    */
-  public static ControllerMap commonStart(Stage primaryStage) {
+  public ControllerMap commonStart(Stage primaryStage) {
     Font.loadFont(ButtonAnimationSkin.class.getResourceAsStream(App.FONT_FILE), 16);
     Font.loadFont(ButtonAnimationSkin.class.getResourceAsStream(App.BOLD_FONT_FILE), 16);
     primaryStage.setTitle("Jobblett");
-    JobblettAccess access;
-    if (App.REST_API_ON) {
+    JobblettAccess access = null;
+    if (restApiOn) {
       try {
-        // Has to be updated to the right URI
-        access = new JobblettRemoteAccess(new URI(""));
+        access = new JobblettRemoteAccess(new URI("http://localhost:8999/jobblett/"));
       } catch (URISyntaxException e) {
         e.printStackTrace();
       }

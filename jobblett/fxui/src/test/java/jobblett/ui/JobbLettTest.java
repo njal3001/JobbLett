@@ -46,7 +46,9 @@ public abstract class JobbLettTest extends ApplicationTest {
 
   @Override
   public void start(final Stage primaryStage) throws Exception {
-    controllerMap = App.commonStart(primaryStage);
+    //Litt rart?
+    App app = new App(false);
+    controllerMap = app.commonStart(primaryStage);
     setupData();
     getAccess().setLists(userList,groupList);
     setActiveUser(optionalActiveUser());
