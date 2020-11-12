@@ -47,12 +47,15 @@ public class LoginController extends SceneController {
   @FXML public void logInToUserHome() {
     String userName = this.usernameField.getText();
     String password = this.passwordField.getText();
-    User user = getAccess().login(userName, new HashedPassword(password));
-    if (user == null) {
-      errorMessage.setText("Wrong username or password");
-    } else {
+    try {
+      User user = getAccess().login(userName, new HashedPassword(password));
+      if (user == null) {
+        throw new IllegalArgumentException();
+      }
       setActiveUser(user);
       switchScene(USER_HOME);
+    } catch (IllegalArgumentException e) {
+      errorMessage.setText("Wrong username or password");
     }
   }
 }

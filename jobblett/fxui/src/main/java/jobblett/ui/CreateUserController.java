@@ -40,10 +40,10 @@ public class CreateUserController extends SceneController {
 
   public static final String passwordCriteria =
       "Password criteria:\nAt least one digit\n At least one lowercase letter\n"
-      + "At least one uppercase letter.\nNo whitespace.\nAt least 8 characters";
+      + "At least one uppercase letter\nNo whitespace.\nAt least 8 characters";
 
   public static final String nameCriteria = 
-      "Name criteria:\nContains only letters.\nAt least 2 characters";
+      "Name criteria:\nContains only letters\nAt least 2 characters";
 
 
   /**
