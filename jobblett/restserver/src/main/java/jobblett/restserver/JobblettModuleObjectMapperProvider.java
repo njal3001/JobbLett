@@ -1,6 +1,7 @@
 package jobblett.restserver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -16,6 +17,10 @@ import jobblett.json.JobblettCoreModule;
 public class JobblettModuleObjectMapperProvider implements ContextResolver<ObjectMapper> {
   private final ObjectMapper objectMapper =
       new ObjectMapper().registerModule(new JobblettCoreModule());
+
+  public JobblettModuleObjectMapperProvider() {
+    objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+  }
 
   @Override public ObjectMapper getContext(Class<?> classname) {
     return objectMapper;

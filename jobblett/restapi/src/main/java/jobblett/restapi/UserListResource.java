@@ -2,8 +2,10 @@ package jobblett.restapi;
 
 import java.util.Collection;
 import java.util.Iterator;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -45,21 +47,20 @@ public class UserListResource {
     return new UserResource(user);
   }
 
-  @POST
+  @PUT
+  @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("/add/{userString}")
-  public boolean add(@PathParam("userString") String userString) {
-    User user = new JobblettPersistence().readValue(User.class, userString);
+  public boolean add(User user) {
     return userList.add(user);
   }
 
-  /**
+  /*
    * Returns a User-object with the same username and password.
    *
    * @param userNameAndPassword username and password as a collection of strings
    * @return logged in user
    */
-  @POST
+  /*@GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/login/{userNameAndPassword}")
   public User login(@PathParam("userNameAndPassword") Collection<String> userNameAndPassword) {
@@ -67,5 +68,5 @@ public class UserListResource {
     String userName = iterator.next();
     String password = iterator.next();
     return userList.checkUserNameAndPassword(userName, new HashedPassword(password));
-  }
+  }*/
 }

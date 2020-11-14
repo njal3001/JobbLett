@@ -46,14 +46,14 @@ public class GroupListResource {
     return new GroupResource(group);
   }
 
-  @POST
+  @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/new/{groupName}")
   public Group newGroup(@PathParam("groupName") String groupName) {
     return groupList.newGroup(groupName);
   }
 
-  @POST
+  @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/getFromUsers/{userString}")
   public Collection<Group> getGroups(@PathParam("userString") String userString) {
