@@ -1,6 +1,6 @@
 package jobblett.core;
 
-public class UserList extends JobblettList<String, User> implements Iterable<User> {
+public class UserList extends JobblettList<String, User> {
 
   /**
    * Lets the user log into their account. Checks whether the username and password matches an

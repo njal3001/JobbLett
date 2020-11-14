@@ -139,35 +139,4 @@ public class User extends JobblettPropertyChangeSupporter {
   public String toString() {
     return givenName + " " + familyName + " (@" + username + ")";
   }
-
-  @Override
-  public boolean equals(Object o) {
-    if (o == null) {
-      return false;
-    }
-    if (o instanceof User) {
-      User user = (User) o;
-      if (!this.username.equals(user.username)) {
-        return false;
-      }
-      if (!this.password.equals(user.password)) {
-        return false;
-      }
-      if (!this.givenName.equals(user.givenName)) {
-        return false;
-      }
-      if (!this.familyName.equals(user.familyName)) {
-        return false;
-      }
-      return true;
-    } else {
-      return super.equals(o);
-    }
-  }
-
-  @Override
-  public int hashCode() {
-    assert false : "hashCode not designed";
-    return 42; // any arbitrary constant will do
-  }
 }

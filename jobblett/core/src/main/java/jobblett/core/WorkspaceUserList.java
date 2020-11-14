@@ -23,5 +23,4 @@ public class WorkspaceUserList extends UserList {
       }
     }
   }
-  
 }

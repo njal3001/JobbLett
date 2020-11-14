@@ -20,5 +20,6 @@ public class WorkspaceGroup extends Group {
     if (!workspace.getUserList().contains(user)) {
       throw new IllegalArgumentException("User must be added to the user list first");
     }
+    super.addUser(user);
   }
 }

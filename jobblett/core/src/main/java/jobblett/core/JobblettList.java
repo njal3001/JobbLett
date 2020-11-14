@@ -30,6 +30,7 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
     return stream().filter(a -> identifier(a).equals(k)).findAny().orElse(null);
   }
 
+  //TODO: Denne metoden passer ikke med WorkspaceGroupList
   /**
    * Adds objects to the list.
    *
@@ -46,7 +47,8 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
       }
     }
     boolean result = list.addAll(Arrays.asList(objects));
-    firePropertyChange(simpleTypeName() + "List", list);
+    //TODO
+    //firePropertyChange(simpleTypeName() + "List", list);
     if (optionalComparator() != null) {
       Collections.sort(list, optionalComparator());
     }
@@ -90,6 +92,8 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
     return removed;
   }
 
+  //Trenger vi alle disse metodene?
+
   public boolean contains(T o) {
     return list.contains(o);
   }
@@ -120,6 +124,7 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
     return simpleTypeName() + "List=" + list;
   }
 
+  //TODO: fjernes?
   @Override
   public boolean equals(Object o) {
     if (o instanceof JobblettList) {

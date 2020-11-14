@@ -14,7 +14,6 @@ public class Workspace {
     groupList = new WorkspaceGroupList(this);
   }
 
-
   public WorkspaceUserList getUserList() {
     return userList;
   }

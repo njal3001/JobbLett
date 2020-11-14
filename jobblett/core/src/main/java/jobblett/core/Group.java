@@ -60,7 +60,8 @@ public class Group extends JobblettPropertyChangeSupporter
     oldUsers.addAll(groupMembers);
     // checkExistingUser(user);
     this.groupMembers.add(user);
-    firePropertyChange("groupMembers", oldUsers, groupMembers);
+    //TODO:
+    //firePropertyChange("groupMembers", oldUsers, groupMembers);
   }
 
   public boolean isAdmin(User user) {
@@ -86,7 +87,7 @@ public class Group extends JobblettPropertyChangeSupporter
 
     boolean result = admins.add(user);
 
-    firePropertyChange("admins", oldAdmins, admins);
+    //firePropertyChange("admins", oldAdmins, admins);
 
     return result;
   }
@@ -102,8 +103,8 @@ public class Group extends JobblettPropertyChangeSupporter
     oldAdmins.addAll(admins);
 
     boolean result = admins.remove(user);
-
-    firePropertyChange("admins", oldAdmins, admins);
+    //TODO:
+    //firePropertyChange("admins", oldAdmins, admins);
 
     return result;
   }
@@ -119,8 +120,8 @@ public class Group extends JobblettPropertyChangeSupporter
     oldUsers.addAll(groupMembers);
 
     boolean result = this.groupMembers.remove(user);
-
-    firePropertyChange("groupMembers", oldUsers, groupMembers);
+    //TODO: Gir error for WorkspaceGroup
+    //firePropertyChange("groupMembers", oldUsers, groupMembers);
 
     return result;
   }
@@ -201,7 +202,8 @@ public class Group extends JobblettPropertyChangeSupporter
   }
 
 
-  //TODO: Dette er dårlig innkapsling
+  //TODO: Dette er dårlig innkapsling,
+  //burde fjernes
   public JobShiftList getJobShiftList() {
     return jobShifts;
   }
@@ -218,45 +220,9 @@ public class Group extends JobblettPropertyChangeSupporter
     return this.groupName + ": " + members;
   }
 
-
   @Override
   public Iterator<User> iterator() {
     return groupMembers.iterator();
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (o instanceof Group) {
-      Group group = (Group) o;
-
-      for (User thatUser : group) {
-        if (getUser(thatUser.getUsername()) == null) {
-          return false;
-        }
-        User thisUser = getUser(thatUser.getUsername());
-        if (!thisUser.equals(thatUser)) {
-          return false;
-        }
-      }
-      for (User thisUser : this) {
-        if (group.getUser(thisUser.getUsername()) == null) {
-          return false;
-        }
-        User thatUser = group.getUser(thisUser.getUsername());
-        if (!thatUser.equals(thisUser)) {
-          return false;
-        }
-      }
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  @Override
-  public int hashCode() {
-    assert false : "hashCode not designed";
-    return 42; // any arbitrary constant will do
   }
 
   @Override
