@@ -200,6 +200,8 @@ public class Group extends JobblettPropertyChangeSupporter
     return groupId;
   }
 
+
+  //TODO: Dette er dårlig innkapsling
   public JobShiftList getJobShiftList() {
     return jobShifts;
   }
