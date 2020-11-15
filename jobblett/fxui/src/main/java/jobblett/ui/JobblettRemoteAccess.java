@@ -70,8 +70,7 @@ public class JobblettRemoteAccess implements JobblettAccess {
 
   private <T> T getFromServer(Class<T> t, String url) {
     String responseObjectBody = getBodyFromServer(url);
-    T o = null;
-    o = new JobblettPersistence().readValue(t, responseObjectBody);
+    T o = new JobblettPersistence().readValue(t, responseObjectBody);
     return o;
   }
 
@@ -93,8 +92,7 @@ public class JobblettRemoteAccess implements JobblettAccess {
   }
 
   @Override public User login(String userName, String passwordString) {
-    HashedPassword password = new HashedPassword(passwordString);
-    String body = new JobblettPersistence().writeValueAsString(password);
+    String body = passwordString;
     User user = postFromServer(User.class,
         USER_LIST_SERVICE_PATH + "/login/"
             + userName, body);
