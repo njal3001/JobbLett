@@ -2,6 +2,9 @@ package jobblett.core;
 
 public class UserList extends JobblettList<String, User> {
 
+
+  //TODO: Er denne metoden nødvendig, kan jo sjekket ved å bruke
+  //userList.get(username).getPassword().matches(password)?
   /**
    * Lets the user log into their account. Checks whether the username and password matches an
    * existing user, before logging in.
@@ -9,10 +12,11 @@ public class UserList extends JobblettList<String, User> {
    * @param username username used to check
    * @param password password used to check
    * @return the user if logged in, else null
+   *
    */
-  public User checkUserNameAndPassword(String username, HashedPassword password) {
+  public User checkUserNameAndPassword(String username, String password) {
     User user = get(username);
-    if (user == null || !user.getPassword().equals(password)) {
+    if (user == null || !user.getPassword().matches(password)) {
       return null;
     } else {
       return user;

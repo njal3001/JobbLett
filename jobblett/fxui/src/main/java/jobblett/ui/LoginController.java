@@ -48,7 +48,7 @@ public class LoginController extends SceneController {
     String userName = this.usernameField.getText();
     String password = this.passwordField.getText();
     try {
-      User user = getAccess().login(userName, new HashedPassword(password));
+      User user = getAccess().login(userName, password);
       if (user == null) {
         throw new IllegalArgumentException();
       }
