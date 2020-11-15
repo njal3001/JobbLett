@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import jobblett.core.Group;
 import jobblett.core.GroupList;
 import jobblett.core.HashedPassword;
+import jobblett.core.JobShift;
 import jobblett.core.JobblettList;
 import jobblett.core.User;
 import jobblett.core.UserList;
@@ -35,21 +36,15 @@ public class JobblettRemoteAccess implements JobblettAccess {
     try {
       requestObject = HttpRequest.newBuilder(endpointBaseUri.resolve(new URI(url)))
           .header("Accept", "application/json").build();
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
-    String responseObjectBody = null;
-    try {
       HttpResponse<String> responseObject =
           HttpClient.newBuilder().build().send(requestObject, HttpResponse.BodyHandlers.ofString());
-      responseObjectBody = responseObject.body();
+      String responseObjectBody = responseObject.body();
 
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (InterruptedException e) {
+    return responseObjectBody;
+    } catch (URISyntaxException | IOException | InterruptedException e) {
       e.printStackTrace();
     }
-    return responseObjectBody;
+    return null;
   }
 
   private <T> T postFromServer(Class<T> t, String urlString, String body) {
@@ -81,7 +76,9 @@ public class JobblettRemoteAccess implements JobblettAccess {
   }
 
   @Override public Group newGroup(String groupName) {
-    return getFromServer(Group.class, GROUP_LIST_SERVICE_PATH + "/new/" + groupName);
+    Group group = getFromServer(Group.class, GROUP_LIST_SERVICE_PATH + "/new/" + groupName);
+    addListenerGroup(group);
+    return group;
   }
 
   @Override public void add(User user) {
@@ -90,22 +87,28 @@ public class JobblettRemoteAccess implements JobblettAccess {
   }
 
   @Override public Group getGroup(int groupId) {
-    return getFromServer(Group.class, GROUP_LIST_SERVICE_PATH + "/get/" + groupId);
+    Group group = getFromServer(Group.class, GROUP_LIST_SERVICE_PATH + "/get/" + groupId);
+    addListenerGroup(group);
+    return group;
   }
 
   @Override public User login(String userName, HashedPassword password) {
     System.out.println("trying");
     String body = new JobblettPersistence().writeValueAsString(password);
-    return postFromServer(User.class,
+    User user = postFromServer(User.class,
         USER_LIST_SERVICE_PATH + "/login/"
             + userName, body);
+    user.addListener(this);
+    return user;
   }
 
   @Override public Collection<Group> getGroups(User user) {
     String userString = new JobblettPersistence().writeValueAsString(user);
-    return postFromServer(GroupList.class, GROUP_LIST_SERVICE_PATH + "/getFromUsers/", userString)
+    Collection<Group> groups = postFromServer(GroupList.class, GROUP_LIST_SERVICE_PATH + "/getFromUsers/", userString)
         .stream()
         .collect(Collectors.toList());
+    groups.forEach(this::addListenerGroup);
+    return groups;
   }
 
   @Override public void setLists(UserList userList, GroupList groupList) {
@@ -117,7 +120,19 @@ public class JobblettRemoteAccess implements JobblettAccess {
     getBodyFromServer(JOBBLETT_SERVICE_PATH + "/setlists/" + userListAndGroupListString);
   }
 
+  private void addListenerGroup(Group group) {
+    group.addListener(this);
+    group.forEach(user -> user.addListener(this));
+    group.getJobShiftList().forEach(shift -> shift.addListener(this));
+  }
+
   @Override public void propertyChange(PropertyChangeEvent evt) {
-    // TODO: Skriv hva som skal skje når ting endres uten metodene her
+    if (evt.getSource() instanceof Group) {
+      System.out.println("The group "+evt.getSource()+" was modified.");
+    } else if (evt.getSource() instanceof User) {
+      System.out.println("The user "+evt.getSource()+" was modified.");
+    } else if (evt.getSource() instanceof JobShift) {
+      System.out.println("The jobshift "+evt.getSource()+" was modified.");
+    }
   }
 }

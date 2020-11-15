@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * Represents a group in jobblett.
  */
 public class Group extends JobblettPropertyChangeSupporter 
-    implements Iterable<User>, PropertyChangeListener {
+    implements Iterable<User> {
 
   private final int groupId;
   private String groupName;
@@ -26,7 +26,6 @@ public class Group extends JobblettPropertyChangeSupporter
    * @param groupId   the groupID
    */
   public Group(String groupName, int groupId) {
-    jobShifts.addListener(this);
     setGroupName(groupName);
     this.groupId = groupId;
   }
@@ -255,11 +254,5 @@ public class Group extends JobblettPropertyChangeSupporter
   public int hashCode() {
     assert false : "hashCode not designed";
     return 42; // any arbitrary constant will do
-  }
-
-  @Override
-  public void propertyChange(PropertyChangeEvent evt) {
-    String propertyName = evt.getPropertyName();
-    firePropertyChange(propertyName, evt.getOldValue(), evt.getNewValue());
   }
 }

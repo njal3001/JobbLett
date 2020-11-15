@@ -22,7 +22,7 @@ import java.util.stream.Stream;
  * identification. Type "T" is the class-type which is stored in the list.
  */
 public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
-    implements Iterable<T>, PropertyChangeListener {
+    implements Iterable<T> {
 
   private List<T> list = new ArrayList<>();
 
@@ -40,9 +40,6 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
     for (T o : objects) {
       if (get(identifier(o)) != null) {
         optionalAlreadyExists();
-      }
-      if (o instanceof JobblettPropertyChangeSupporter) {
-        ((JobblettPropertyChangeSupporter) o).addListener(this);
       }
     }
     boolean result = list.addAll(Arrays.asList(objects));
@@ -81,13 +78,7 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
    * @return if the object was removed or not.
    */
   public boolean remove(T o) {
-    boolean removed = list.remove(o);
-    if (removed) {
-      if (o instanceof JobblettPropertyChangeSupporter) {
-        ((JobblettPropertyChangeSupporter) o).removeListener(this);
-      }
-    }
-    return removed;
+    return list.remove(o);
   }
 
   public boolean contains(T o) {
@@ -134,14 +125,6 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
   public int hashCode() {
     assert false : "hashCode not designed";
     return 42; // any arbitrary constant will do
-  }
-
-  @Override
-  public void propertyChange(PropertyChangeEvent evt) {
-    T source = (T) evt.getSource();
-    String propertyName = "" + simpleTypeName() + "{" + identifier(source) + "}: " 
-        + evt.getPropertyName();
-    firePropertyChange(propertyName, evt.getOldValue(), evt.getNewValue());
   }
 
   protected String simpleTypeName() {
