@@ -16,5 +16,4 @@ public class WorkspaceGroupListTest {
     Group group = workspace.getGroupList().newGroup("Test");
     assertTrue(group instanceof WorkspaceGroup);
   }
-  
 }

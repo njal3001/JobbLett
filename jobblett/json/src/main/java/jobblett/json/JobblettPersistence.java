@@ -47,6 +47,7 @@ public class JobblettPersistence {
     URL fileUrl = JobblettPersistence.class.getResource("default"
         + classType.getSimpleName()
         + ".json");
+    System.out.println(fileUrl);
     if (fileUrl == null) {
       return null;
     }
