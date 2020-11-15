@@ -9,6 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 import jobblett.core.Group;
 import jobblett.core.GroupList;
 import jobblett.core.HashedPassword;
@@ -51,6 +52,27 @@ public class JobblettRemoteAccess implements JobblettAccess {
     return responseObjectBody;
   }
 
+  private <T> T postFromServer(Class<T> t, String urlString, String body) {
+    HttpRequest requestObject = null;
+    try {
+      requestObject = HttpRequest.newBuilder(endpointBaseUri.resolve(new URI(urlString)))
+          .header("Accept", "application/json")
+          .header("Content-Type", "application/json")
+          .POST(HttpRequest.BodyPublishers.ofString(body))
+          .build();
+      HttpResponse<String> responseObject =
+          HttpClient.newBuilder().build().send(requestObject, HttpResponse.BodyHandlers.ofString());
+      String responseObjectBody = responseObject.body();
+      System.out.println(responseObjectBody);
+      T object = new JobblettPersistence().readValue(t, responseObjectBody);
+      return object;
+
+    } catch (IOException | InterruptedException | URISyntaxException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
   private <T> T getFromServer(Class<T> t, String url) {
     String responseObjectBody = getBodyFromServer(url);
     T o = null;
@@ -59,34 +81,31 @@ public class JobblettRemoteAccess implements JobblettAccess {
   }
 
   @Override public Group newGroup(String groupName) {
-    return getFromServer(Group.class,
-        JOBBLETT_SERVICE_PATH + "/" + GROUP_LIST_SERVICE_PATH + "/new/" + groupName);
+    return getFromServer(Group.class, GROUP_LIST_SERVICE_PATH + "/new/" + groupName);
   }
 
   @Override public void add(User user) {
     String userString = new JobblettPersistence().writeValueAsString(user);
-    getBodyFromServer(JOBBLETT_SERVICE_PATH + "/" + USER_LIST_SERVICE_PATH + "/add/" + userString);
+    getBodyFromServer(USER_LIST_SERVICE_PATH + "/add/" + userString);
   }
 
   @Override public Group getGroup(int groupId) {
-    return getFromServer(Group.class,
-        JOBBLETT_SERVICE_PATH + "/" + GROUP_LIST_SERVICE_PATH + "get/" + groupId);
+    return getFromServer(Group.class, GROUP_LIST_SERVICE_PATH + "/get/" + groupId);
   }
 
   @Override public User login(String userName, HashedPassword password) {
-    Collection<String> userNameAndPassword = new ArrayList<>();
-    userNameAndPassword.add(userName);
-    userNameAndPassword.add(password.toString());
-    String userNameAndPasswordString =
-        new JobblettPersistence().writeValueAsString(userNameAndPassword);
-    return getFromServer(User.class,
-        JOBBLETT_SERVICE_PATH + "/" + USER_LIST_SERVICE_PATH + "/login/"
-            + userNameAndPasswordString);
+    System.out.println("trying");
+    String body = new JobblettPersistence().writeValueAsString(password);
+    return postFromServer(User.class,
+        USER_LIST_SERVICE_PATH + "/login/"
+            + userName, body);
   }
 
   @Override public Collection<Group> getGroups(User user) {
     String userString = new JobblettPersistence().writeValueAsString(user);
-    return getFromServer(ArrayList.class, userString);
+    return postFromServer(GroupList.class, GROUP_LIST_SERVICE_PATH + "/getFromUsers/", userString)
+        .stream()
+        .collect(Collectors.toList());
   }
 
   @Override public void setLists(UserList userList, GroupList groupList) {

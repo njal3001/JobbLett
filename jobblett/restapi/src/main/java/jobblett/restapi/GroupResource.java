@@ -8,9 +8,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import jobblett.core.Group;
 import jobblett.core.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class GroupResource {
+public class GroupResource extends RestApiClass {
   private Group group;
+  protected static final Logger LOG = LoggerFactory.getLogger(GroupResource.class);
 
   public GroupResource(Group group) {
     this.group = group;
@@ -39,7 +42,12 @@ public class GroupResource {
   public Collection<User> getMembers() {
     Collection<User> users = new ArrayList<>();
     group.forEach(a -> users.add(a));
+    debug("Returns users in the group: " + group.getGroupName() + "(" + group.getGroupId() + ")");
     return users;
+  }
+
+  @Override protected Logger logger() {
+    return LOG;
   }
 
 }
