@@ -1,7 +1,6 @@
 package jobblett.core;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class WorkspaceGroupList extends GroupList {
 
@@ -26,17 +25,21 @@ public class WorkspaceGroupList extends GroupList {
     ArrayList<WorkspaceGroup> workspaceGroups = new ArrayList<>();
     for (Group group : groups) {
       WorkspaceGroup workspaceGroup;
-      if (!(group instanceof WorkspaceGroup) || ((WorkspaceGroup) group).getWorkspace() != this.workspace) {
+      if (!(group instanceof WorkspaceGroup) 
+          || ((WorkspaceGroup) group).getWorkspace() != this.workspace) {
         workspaceGroup = new WorkspaceGroup(group.getGroupName(), group.getGroupId(), workspace);
         for (User user : group) {
           workspaceGroup.addUser(user.getUsername());
         }
-      }
-      else {
+      } else {
         workspaceGroup = (WorkspaceGroup) group;
       }
       workspaceGroups.add(workspaceGroup);
     }
     return super.add(workspaceGroups.toArray(new WorkspaceGroup[workspaceGroups.size()]));
+  }
+
+  public Workspace getWorkspace() {
+    return workspace;
   }
 }

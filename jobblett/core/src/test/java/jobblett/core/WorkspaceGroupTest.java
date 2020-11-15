@@ -36,4 +36,11 @@ public class WorkspaceGroupTest {
     System.out.println(group.getGroupSize());
     assertEquals(user, group.getUser(user.getUsername()));
   }
+
+  @Test
+  public void testAddUser_username() {
+    workspace.getUserList().add(user);
+    group.addUser(user.getUsername());
+    assertEquals(user, group.getUser(user.getUsername()));
+  }
 }

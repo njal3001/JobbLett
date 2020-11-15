@@ -23,4 +23,8 @@ public class WorkspaceUserList extends UserList {
       }
     }
   }
+
+  public Workspace getWorkspace() {
+    return workspace;
+  }
 }

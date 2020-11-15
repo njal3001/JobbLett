@@ -23,12 +23,11 @@ public class WorkspaceGroup extends Group {
     super.addUser(user);
   }
 
-  //TODO: test og javadoc
+  //TODO: javadoc
   public void addUser(String username) {
     addUser(workspace.getUserList().get(username));
   }
 
-  //TODO: BURDE være i de andre klassene også
   public Workspace getWorkspace() {
     return workspace;
   }
