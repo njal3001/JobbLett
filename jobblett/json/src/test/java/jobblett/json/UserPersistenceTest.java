@@ -13,7 +13,7 @@ import org.junit.jupiter.api.TestInstance;
 
 public class UserPersistenceTest extends AbstractPersistenceTest<User> {
 
-  User user =
+  private User user =
       new User("Olavh123", new HashedPassword("Heisann123456"), "Olav", "Hermansen");
 
   public UserPersistenceTest() {
