@@ -6,13 +6,17 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import jobblett.core.HashedPassword;
 
-public class HashedPasswordSerializer extends JsonSerializer<HashedPassword> {
+public class HashedPasswordSerializer extends JsonSerializer<HashedPassword>  {
 
   @Override
-  public void serialize(HashedPassword password, JsonGenerator jsonGenerator, 
-      SerializerProvider serializerProvider) throws IOException {
+  public void serialize(
+      HashedPassword password,
+      JsonGenerator jsonGenerator,
+      SerializerProvider serializerProvider
+  )
+      throws IOException {
     jsonGenerator.writeStartObject();
-    jsonGenerator.writeStringField("password", password.toString());
+    jsonGenerator.writeStringField("hashedPassword", password.toString());
     jsonGenerator.writeEndObject();
   }
 }

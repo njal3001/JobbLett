@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * Represents a group in jobblett.
  */
 public class Group extends JobblettPropertyChangeSupporter 
-    implements Iterable<User>, PropertyChangeListener {
+    implements Iterable<User> {
 
   private final int groupId;
   private String groupName;
@@ -26,7 +26,6 @@ public class Group extends JobblettPropertyChangeSupporter
    * @param groupId   the groupID
    */
   public Group(String groupName, int groupId) {
-    jobShifts.addListener(this);
     setGroupName(groupName);
     this.groupId = groupId;
   }
@@ -60,8 +59,7 @@ public class Group extends JobblettPropertyChangeSupporter
     oldUsers.addAll(groupMembers);
     // checkExistingUser(user);
     this.groupMembers.add(user);
-    //TODO:
-    //firePropertyChange("groupMembers", oldUsers, groupMembers);
+    firePropertyChange("groupMembers", oldUsers, groupMembers);
   }
 
   public boolean isAdmin(User user) {
@@ -87,7 +85,7 @@ public class Group extends JobblettPropertyChangeSupporter
 
     boolean result = admins.add(user);
 
-    //firePropertyChange("admins", oldAdmins, admins);
+    firePropertyChange("admins", oldAdmins, admins);
 
     return result;
   }
@@ -103,8 +101,8 @@ public class Group extends JobblettPropertyChangeSupporter
     oldAdmins.addAll(admins);
 
     boolean result = admins.remove(user);
-    //TODO:
-    //firePropertyChange("admins", oldAdmins, admins);
+
+    firePropertyChange("admins", oldAdmins, admins);
 
     return result;
   }
@@ -120,8 +118,8 @@ public class Group extends JobblettPropertyChangeSupporter
     oldUsers.addAll(groupMembers);
 
     boolean result = this.groupMembers.remove(user);
-    //TODO: Gir error for WorkspaceGroup
-    //firePropertyChange("groupMembers", oldUsers, groupMembers);
+
+    firePropertyChange("groupMembers", oldUsers, groupMembers);
 
     return result;
   }
@@ -223,11 +221,5 @@ public class Group extends JobblettPropertyChangeSupporter
   @Override
   public Iterator<User> iterator() {
     return groupMembers.iterator();
-  }
-
-  @Override
-  public void propertyChange(PropertyChangeEvent evt) {
-    String propertyName = evt.getPropertyName();
-    firePropertyChange(propertyName, evt.getOldValue(), evt.getNewValue());
   }
 }

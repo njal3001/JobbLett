@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import jobblett.core.GroupList;
+import jobblett.core.User;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -37,9 +38,6 @@ public abstract class AbstractPersistenceTest<T> {
     }
 
     // Deserializing
-    mapper = new ObjectMapper();
-    mapper.registerModule(new JobblettCoreModule());
-
     try {
       T newObject = mapper.readValue(result, tClass);
       assertTrue(isEquals(newObject, getObject()));

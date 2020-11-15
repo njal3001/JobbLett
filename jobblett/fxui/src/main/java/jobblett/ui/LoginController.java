@@ -55,6 +55,7 @@ public class LoginController extends SceneController {
       setActiveUser(user);
       switchScene(USER_HOME);
     } catch (IllegalArgumentException e) {
+      System.out.println(e.getMessage());
       errorMessage.setText("Wrong username or password");
     }
   }

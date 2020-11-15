@@ -18,7 +18,7 @@ public class UserSerializer extends JsonSerializer<User> {
     }
     jsonGenerator.writeStartObject();
     jsonGenerator.writeStringField("username", o.getUsername());
-    jsonGenerator.writeObjectField("hashedPassword", o.getPassword());
+    jsonGenerator.writeObjectField("password", o.getPassword());
     jsonGenerator.writeStringField("givenName", o.getGivenName());
     jsonGenerator.writeStringField("familyName", o.getFamilyName());
     jsonGenerator.writeEndObject();

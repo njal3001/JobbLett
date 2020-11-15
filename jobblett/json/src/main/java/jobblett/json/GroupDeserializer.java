@@ -38,6 +38,9 @@ public class GroupDeserializer extends JsonDeserializer<Group> {
     JobblettPersistence persistence = new JobblettPersistence();
     JobShiftList jobShiftList = persistence.readValue(JobShiftList.class, jobShiftNode);
     for (JobShift jobShift : jobShiftList) {
+      User duplicateUser = jobShift.getUser();
+      User realUser = group.getUser(duplicateUser.getUsername());
+      jobShift.setUser(realUser);
       group.addJobShift(jobShift, group.getAdmins().iterator().next());
     }
 

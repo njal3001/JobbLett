@@ -11,16 +11,14 @@ import jobblett.core.HashedPassword;
 public class HashedPasswordDeserializer extends JsonDeserializer<HashedPassword> {
 
   @Override
-  public HashedPassword deserialize(JsonParser jsonParser, 
-      DeserializationContext deserializationContext) 
+  public HashedPassword deserialize(
+      JsonParser jsonParser,
+      DeserializationContext deserializationContext
+  )
       throws IOException, JsonProcessingException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
 
-    if (node.isNull()) {
-      return null;
-    }
-
-    String password = node.get("password").asText();
-    return HashedPassword.alreadyHashed(password);
+    String hashedPassword = node.get("hashedPassword").asText();
+    return HashedPassword.alreadyHashed(hashedPassword);
   }
 }

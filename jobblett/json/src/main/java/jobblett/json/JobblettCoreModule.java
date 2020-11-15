@@ -16,6 +16,7 @@ public class JobblettCoreModule extends SimpleModule {
    * Initializes JobblettCoreModule by adding serializers to the superclass.
    */
   public JobblettCoreModule() {
+    super();
 
     super.addSerializer(Group.class, new GroupSerializer());
     super.addSerializer(GroupList.class, new GroupListSerializer());
