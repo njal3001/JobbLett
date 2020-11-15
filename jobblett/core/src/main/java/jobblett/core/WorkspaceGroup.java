@@ -25,9 +25,9 @@ public class WorkspaceGroup extends Group {
 
   /**
    * Finds the user with the given username in the 
-   * user list and adds it to the group
-   * 
-   * @param usename Username of the user to be added
+   * user list and adds it to the group.
+   *
+   * @param username Username of the user to be added
    */
   public void addUser(String username) {
     addUser(workspace.getUserList().get(username));

@@ -12,8 +12,8 @@ public class WorkspaceGroupList extends GroupList {
 
   /**
    * Creates a new WorkspaceGroup with the given name
-   * and a random group ID
-   * 
+   * and a random group ID.
+   *
    * @param groupName name of the new group
    * @return the group that was created
    *
@@ -32,7 +32,7 @@ public class WorkspaceGroupList extends GroupList {
    * If the group is not an instance of WorkspaceGroup
    * or does not have the same Workspace, its contents
    * are copied into a new WorkspaceGroup. 
-   * 
+   *
    * @param groups Groups to be added
    */
   @Override

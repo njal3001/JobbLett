@@ -21,7 +21,8 @@ public class UserDeserializer extends JsonDeserializer<User> {
       return null;
     }
     String username = node.get("username").asText();
-    HashedPassword password = new JobblettPersistence().readValue(HashedPassword.class, node.get("hashedPassword"));
+    HashedPassword password = new JobblettPersistence()
+        .readValue(HashedPassword.class, node.get("hashedPassword"));
     String givenName = node.get("givenName").asText();
     String familyName = node.get("familyName").asText();
     return new User(username, password, givenName, familyName);
