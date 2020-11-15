@@ -1,7 +1,7 @@
 package jobblett.json;
 
 import static org.junit.jupiter.api.Assertions.fail;
-
+import java.util.Iterator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -34,5 +34,24 @@ public class UserListPersistenceTest extends AbstractPersistenceTest<UserList>{
 
   @Override public UserList getObject() {
     return userList;
+  }
+
+
+  @Override
+  public boolean isEquals(UserList o1, UserList o2) {
+    if (o1.size() != o2.size()) {
+      return false;
+    }
+
+    Iterator<User> iter1 = o1.iterator();
+    Iterator<User> iter2 = o2.iterator();
+    UserPersistenceTest userPersistenceTest = new UserPersistenceTest();
+    
+    while (iter1.hasNext()) {
+      if(!userPersistenceTest.isEquals(iter1.next(), iter2.next())) {
+        return false;
+      }
+    }
+    return true;
   }
 }

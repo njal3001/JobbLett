@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import jobblett.core.HashedPassword;
 import jobblett.core.JobShift;
 import jobblett.core.JobShiftList;
@@ -40,6 +41,24 @@ public class JobShiftListPersistenceTest extends AbstractPersistenceTest<JobShif
 
   @Override public JobShiftList getObject() {
     return jobShiftList;
+  }
+
+  @Override
+  public boolean isEquals(JobShiftList o1, JobShiftList o2) {
+    if (o1.size() != o2.size()) {
+      return false;
+    }
+
+    Iterator<JobShift> iter1 = o1.iterator();
+    Iterator<JobShift> iter2 = o2.iterator();
+    JobShiftPersistenceTest jobShiftPersistenceTest = new JobShiftPersistenceTest();
+    
+    while (iter1.hasNext()) {
+      if(!jobShiftPersistenceTest.isEquals(iter1.next(), iter2.next())) {
+        return false;
+      }
+    }
+    return true;
   }
 
 }

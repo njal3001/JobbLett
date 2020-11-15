@@ -3,10 +3,12 @@ package jobblett.json;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import jobblett.core.Group;
 import jobblett.core.GroupList;
+import jobblett.core.HashedPassword;
 import jobblett.core.JobShift;
 import jobblett.core.JobShiftList;
 import jobblett.core.User;
 import jobblett.core.UserList;
+import jobblett.core.Workspace;
 
 public class JobblettCoreModule extends SimpleModule {
 
@@ -22,6 +24,8 @@ public class JobblettCoreModule extends SimpleModule {
     super.addSerializer(JobShiftList.class, new JobShiftListSerializer());
     super.addSerializer(UserList.class, new UserListSerializer());
     super.addSerializer(User.class, new UserSerializer());
+    super.addSerializer(HashedPassword.class, new HashedPasswordSerializer());
+    super.addSerializer(Workspace.class, new WorkspaceSerializer());
 
     super.addDeserializer(Group.class, new GroupDeserializer());
     super.addDeserializer(GroupList.class, new GroupListDeserializer());
@@ -29,6 +33,7 @@ public class JobblettCoreModule extends SimpleModule {
     super.addDeserializer(JobShiftList.class, new JobShiftListDeserializer());
     super.addDeserializer(User.class, new UserDeserializer());
     super.addDeserializer(UserList.class, new UserListDeserializer());
-
+    super.addDeserializer(HashedPassword.class, new HashedPasswordDeserializer());
+    super.addDeserializer(Workspace.class, new WorkspaceDeserializer());
   }
 }

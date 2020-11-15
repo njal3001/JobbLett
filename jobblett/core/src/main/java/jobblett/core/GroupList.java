@@ -14,7 +14,7 @@ public class GroupList extends JobblettList<Integer, Group> {
    * @return the unique groupID
    * @throws IllegalStateException if all IDs are already taken
    */
-  private int generateGroupId() throws IllegalStateException {
+  protected int generateGroupId() throws IllegalStateException {
     Collection<Integer> alreadyUsed = getGroupIds();
     if (alreadyUsed.size() >= 9000) {
       throw new IllegalStateException("All Ids are taken");

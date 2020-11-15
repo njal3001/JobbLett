@@ -2,7 +2,7 @@ package jobblett.json;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
-
+import java.util.Iterator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-public class GroupListPersistenceTest extends AbstractPersistenceTest<GroupList>{
+public class GroupListPersistenceTest extends AbstractPersistenceTest<GroupList> {
 
   GroupList groupList = new GroupList();
 
@@ -24,13 +24,11 @@ public class GroupListPersistenceTest extends AbstractPersistenceTest<GroupList>
   }
 
 
-  @BeforeEach public void setUp() {
-    User olav =
-        new User("olav", new HashedPassword("bestePassord123"), "Olav", "Nordmann");
-    User nora =
-        new User("nora", new HashedPassword("bestePassord123"), "Nora", "Bekkestad");
-    User petter =
-        new User("petter", new HashedPassword("bestePassord123"), "Petter", "Petterson");
+  @BeforeEach
+  public void setUp() {
+    User olav = new User("olav", new HashedPassword("bestePassord123"), "Olav", "Nordmann");
+    User nora = new User("nora", new HashedPassword("bestePassord123"), "Nora", "Bekkestad");
+    User petter = new User("petter", new HashedPassword("bestePassord123"), "Petter", "Petterson");
     User david = new User("david", new HashedPassword("bestePassord123"), "David", "Berg");
 
     Group group1 = groupList.newGroup("TestGroup1");
@@ -42,8 +40,27 @@ public class GroupListPersistenceTest extends AbstractPersistenceTest<GroupList>
     group2.addUser(david);
   }
 
-  @Override public GroupList getObject() {
+  @Override
+  public GroupList getObject() {
     return groupList;
   }
 
+
+  @Override
+  public boolean isEquals(GroupList o1, GroupList o2) {
+    if(o1.size() != o2.size()) {
+      return false;
+    }
+
+    Iterator<Group> iter1 = o1.iterator();
+    Iterator<Group> iter2 = o2.iterator();
+    GroupPersistenceTest groupPersistenceTest = new GroupPersistenceTest();
+
+    while (iter1.hasNext()) {
+      if (!groupPersistenceTest.isEquals(iter1.next(), iter2.next())) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

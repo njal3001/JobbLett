@@ -37,7 +37,6 @@ public class JobShiftListCell extends ListCell<JobShift> {
   }
 
 
-  //Kan eventuelt bruke toString i core klassen, men da vil ikke toStringen bruke info attributten
   //String representation of the job shift, which is used by the cell
   private String formatJobShift(JobShift jobShift) {
     String s = "";

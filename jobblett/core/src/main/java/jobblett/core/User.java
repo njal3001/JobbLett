@@ -170,4 +170,5 @@ public class User extends JobblettPropertyChangeSupporter {
     assert false : "hashCode not designed";
     return 42; // any arbitrary constant will do
   }
+
 }

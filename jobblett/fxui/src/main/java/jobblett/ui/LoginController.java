@@ -48,13 +48,14 @@ public class LoginController extends SceneController {
     String userName = this.usernameField.getText();
     String password = this.passwordField.getText();
     try {
-      User user = getAccess().login(userName, new HashedPassword(password));
+      User user = getAccess().login(userName, password);
       if (user == null) {
         throw new IllegalArgumentException();
       }
       setActiveUser(user);
       switchScene(USER_HOME);
     } catch (IllegalArgumentException e) {
+      System.out.println(e.getMessage());
       errorMessage.setText("Wrong username or password");
     }
   }

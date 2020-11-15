@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * Represents a group in jobblett.
  */
 public class Group extends JobblettPropertyChangeSupporter 
-    implements Iterable<User>, PropertyChangeListener {
+    implements Iterable<User> {
 
   private final int groupId;
   private String groupName;
@@ -26,7 +26,6 @@ public class Group extends JobblettPropertyChangeSupporter
    * @param groupId   the groupID
    */
   public Group(String groupName, int groupId) {
-    jobShifts.addListener(this);
     setGroupName(groupName);
     this.groupId = groupId;
   }
@@ -200,6 +199,9 @@ public class Group extends JobblettPropertyChangeSupporter
     return groupId;
   }
 
+
+  //TODO: Dette er dårlig innkapsling,
+  //burde fjernes
   public JobShiftList getJobShiftList() {
     return jobShifts;
   }
@@ -216,50 +218,8 @@ public class Group extends JobblettPropertyChangeSupporter
     return this.groupName + ": " + members;
   }
 
-
   @Override
   public Iterator<User> iterator() {
     return groupMembers.iterator();
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (o instanceof Group) {
-      Group group = (Group) o;
-
-      for (User thatUser : group) {
-        if (getUser(thatUser.getUsername()) == null) {
-          return false;
-        }
-        User thisUser = getUser(thatUser.getUsername());
-        if (!thisUser.equals(thatUser)) {
-          return false;
-        }
-      }
-      for (User thisUser : this) {
-        if (group.getUser(thisUser.getUsername()) == null) {
-          return false;
-        }
-        User thatUser = group.getUser(thisUser.getUsername());
-        if (!thatUser.equals(thisUser)) {
-          return false;
-        }
-      }
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  @Override
-  public int hashCode() {
-    assert false : "hashCode not designed";
-    return 42; // any arbitrary constant will do
-  }
-
-  @Override
-  public void propertyChange(PropertyChangeEvent evt) {
-    String propertyName = evt.getPropertyName();
-    firePropertyChange(propertyName, evt.getOldValue(), evt.getNewValue());
   }
 }

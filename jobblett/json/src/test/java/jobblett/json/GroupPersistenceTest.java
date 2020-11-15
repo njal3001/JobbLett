@@ -27,6 +27,7 @@ public class GroupPersistenceTest extends AbstractPersistenceTest<Group> {
         new User("olav", new HashedPassword("bestePassord123"), "Olav", "Nordmann");
     User nora =
         new User("nora", new HashedPassword("bestePassord123"), "Nora", "Bekkestad");
+    //TODO: IKKE BRUKT?
     User petter =
         new User("petter", new HashedPassword("bestePassord123"), "Petter", "Petterson");
     User david = new User("david", new HashedPassword("bestePassord123"), "David", "Berg");
@@ -38,4 +39,18 @@ public class GroupPersistenceTest extends AbstractPersistenceTest<Group> {
   @Override public Group getObject() {
     return group;
   }
-}
+
+
+  @Override
+  public boolean isEquals(Group o1, Group o2) {
+    if (o1.getGroupSize() != o2.getGroupSize()) {
+      return false;
+    }
+     for (User user : o1) {
+        if (o2.getUser(user.getUsername()) == null) {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
