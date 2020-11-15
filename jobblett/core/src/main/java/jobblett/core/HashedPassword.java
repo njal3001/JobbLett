@@ -52,21 +52,8 @@ public class HashedPassword {
     return Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    HashedPassword that = (HashedPassword) o;
-    return password.equals(that.password);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(password);
+  public boolean matches(String password) {
+    return this.password.equals(hash(password));
   }
 
   @Override

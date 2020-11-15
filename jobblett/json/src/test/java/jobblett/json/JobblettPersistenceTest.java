@@ -24,6 +24,10 @@ import jobblett.core.UserList;
 public class JobblettPersistenceTest {
 
   JobblettPersistence jobblettPersistence;
+  UserPersistenceTest userPersistenceTest;
+  UserListPersistenceTest userListPersistenceTest;
+  GroupPersistenceTest groupPersistenceTest;
+
   User user1, user2;
   String user2InString;
   UserList userList;
@@ -33,12 +37,16 @@ public class JobblettPersistenceTest {
   @BeforeEach
   public void setup() {
     jobblettPersistence = new JobblettPersistence();
+    userPersistenceTest = new UserPersistenceTest();
+    userListPersistenceTest = new UserListPersistenceTest();
+    groupPersistenceTest = new GroupPersistenceTest();
 
     user1 = new User("karl123", new HashedPassword("testPassword123"), "Karl", "Testersen");
     user2 = new User("siri123", new HashedPassword("bestPassword123"), "Siri", "Testersen");
-    user2InString = "{" + "\n" + "  \"username\" : \"siri123\"," + "\n" + "  \"password\" : \""
-        + new HashedPassword("bestPassword123").toString() + "\"," + "\n" + "  \"givenName\" : \"Siri\"," + "\n"
-        + "  \"familyName\" : \"Testersen\"" + "\n" + "}";
+    user2InString = "{" + "\n" + "  \"username\" : \"siri123\"," + "\n" + "  \"hashedPassword\" : " + 
+        "{" + "\n" + "    \"password\" : \"" + new HashedPassword("bestPassword123").toString() + 
+        "\"" + "\n  },\n" + "  \"givenName\" : \"Siri\"," + "\n" + "  \"familyName\" : \"Testersen\"" + 
+        "\n" + "}";
     userList = new UserList();
     userList.add(user1);
     userList.add(user2);
@@ -75,14 +83,11 @@ public class JobblettPersistenceTest {
     String expected =
         "Could not save. The path " + JobblettPersistence.JOBBLETT_DATA_DIRECTORY + " is not available.\n";
     assertConsolPrintOut(runable, expected);
-
-
   }
 
   @Test
   public void testWriteValueAsString() {
     assertEquals(user2InString, jobblettPersistence.writeValueAsString(user2));
-
   }
 
   @Test
@@ -91,10 +96,11 @@ public class JobblettPersistenceTest {
     deleteLocalSaves();
     User userInDefaulUserList = new User("olav", new HashedPassword("bestePassord123"), "Olav", "Nordmann");
     // this readValue(ClassType) will use readDefault because there are no savefolders.
-    assertTrue(jobblettPersistence.readValue(userList.getClass()).contains(userInDefaulUserList),
+    UserList defaultUserList = jobblettPersistence.readValue(userList.getClass());
+    assertTrue(userPersistenceTest.isEquals(userInDefaulUserList, defaultUserList.get("olav")),
         "The app didn't use the defaul values.");
 
-    // testing that we gett null when we try to read default values for a class without defaulvalues in
+    // testing that we get null when we try to read default values for a class without default values in
     // the resources folder
     assertNull(jobblettPersistence.readDefault(Group.class));
 
@@ -105,7 +111,8 @@ public class JobblettPersistenceTest {
     deleteLocalSaves();
     // Creating the the file and saving our data.
     jobblettPersistence.writeValueOnDefaultLocation(groupList);
-    assertTrue(jobblettPersistence.readValue(groupList.getClass()).contains(group),
+    GroupList defaultGroupList = jobblettPersistence.readValue(groupList.getClass());
+    assertTrue(groupPersistenceTest.isEquals(group, defaultGroupList.get(group.getGroupId())),
         "The app didn't use the locally saved datas.");
 
     // Changing saved userlist to our corrupted userlist.
@@ -114,15 +121,14 @@ public class JobblettPersistenceTest {
     File outputFile = new File(JobblettPersistence.JOBBLETT_DATA_DIRECTORY + "/UserList.json");
     Files.copy(sourceFile.toPath(), outputFile.toPath());
     UserList expected = new JobblettPersistence().readDefault(UserList.class);
-    // This should read the defaulvalues because of our corrupted jsonfile
+    // This should read the default values because of our corrupted jsonfile
     UserList actual = new JobblettPersistence().readValue(UserList.class);
-    assertEquals(expected, actual);
-
+    assertTrue(userListPersistenceTest.isEquals(expected, actual));
   }
 
   @Test
   public void testReadValuesFromString() {
-    assertEquals(user2, jobblettPersistence.readValue(user2.getClass(), user2InString),
+    assertTrue(userPersistenceTest.isEquals(user2, jobblettPersistence.readValue(user2.getClass(), user2InString)),
         "The string: " + user2InString + "wasn't read deserialized to User2");
   }
 

@@ -25,14 +25,34 @@ public class JobShiftPersistenceTest extends AbstractPersistenceTest<JobShift> {
   }
 
 
-  @BeforeEach public void setUp() {
-    User olav =
-        new User("olav", new HashedPassword("bestePassord123"), "Olav", "Nordmann");
-    jobShift = new JobShift(olav, LocalDateTime.parse("2021-10-10T17:10:53.798134"),
-        Duration.ofSeconds(7200), "Cool info");
+  @BeforeEach
+  public void setUp() {
+    User olav = new User("olav", new HashedPassword("bestePassord123"), "Olav", "Nordmann");
+    jobShift =
+        new JobShift(olav, LocalDateTime.parse("2021-10-10T17:10:53.798134"), Duration.ofSeconds(7200), "Cool info");
   }
 
-  @Override public JobShift getObject() {
+  @Override
+  public JobShift getObject() {
     return jobShift;
+  }
+
+
+  @Override
+  public boolean isEquals(JobShift o1, JobShift o2) {
+    UserPersistenceTest userPersistenceTest = new UserPersistenceTest();
+    if(!userPersistenceTest.isEquals(o1.getUser(), o2.getUser())) {
+      return false;
+    }
+    if (!o1.getStartingTime().equals(o2.getStartingTime())) {
+      return false;
+    }
+    if (!o1.getDuration().equals(o2.getDuration())) {
+      return false;
+    }
+    if (!o1.getInfo().equals(o2.getInfo())) {
+      return false;
+    }
+    return true;
   }
 }

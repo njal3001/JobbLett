@@ -18,6 +18,7 @@ public abstract class AbstractPersistenceTest<T> {
 
   public abstract T getObject();
 
+  public abstract boolean isEquals(T o1, T o2);
 
   @Test public void persistenceTest() {
 
@@ -41,11 +42,11 @@ public abstract class AbstractPersistenceTest<T> {
 
     try {
       T newObject = mapper.readValue(result, tClass);
-      assertTrue(newObject.equals(getObject()));
+      assertTrue(isEquals(newObject, getObject()));
     } catch (JsonProcessingException e) {
       e.printStackTrace();
       fail(e);
     }
-
   }
+
 }
