@@ -10,6 +10,9 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>war</packaging>
     <artifactId>integrationtests</artifactId>
+    <properties>
+        <jetty.port>8999</jetty.port>
+    </properties>
 
 
     <dependencies>
@@ -50,7 +53,6 @@
             <groupId>org.testfx</groupId>
             <artifactId>testfx-junit5</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
@@ -132,7 +134,7 @@
                         <configuration>
                             <!-- System.getProperty("todo.port") gir riktig port -->
                             <systemPropertyVariables>
-                                <todo.port>${jetty.port}</todo.port>
+                                <jobblett.port>${jetty.port}</jobblett.port>
                             </systemPropertyVariables>
                         </configuration>
                     </execution>
