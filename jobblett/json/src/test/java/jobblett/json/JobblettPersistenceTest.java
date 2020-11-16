@@ -44,8 +44,8 @@ public class JobblettPersistenceTest {
 
     user1 = new User("karl123", new HashedPassword("testPassword123"), "Karl", "Testersen");
     user2 = new User("siri123", new HashedPassword("bestPassword123"), "Siri", "Testersen");
-    user2InString = "{" + "\n" + "  \"username\" : \"siri123\"," + "\n" + "  \"hashedPassword\" : " +
-        "{" + "\n" + "    \"password\" : \"" + new HashedPassword("bestPassword123").toString() +
+    user2InString = "{" + "\n" + "  \"username\" : \"siri123\"," + "\n" + "  \"password\" : " +
+        "{" + "\n" + "    \"hashedPassword\" : \"" + new HashedPassword("bestPassword123").toString() +
         "\"" + "\n  },\n" + "  \"givenName\" : \"Siri\"," + "\n" + "  \"familyName\" : \"Testersen\"" +
         "\n" + "}";
     userList = new UserList();
@@ -93,11 +93,10 @@ public class JobblettPersistenceTest {
     }
   }
 
-/*  @Test
+  @Test
   public void testWriteValueAsString() {
     assertEquals(user2InString, jobblettPersistence.writeValueAsString(user2));
-
-  }*/
+  }
 
   @Test
   public void testReadDefaultValue() {
@@ -141,12 +140,11 @@ public class JobblettPersistenceTest {
     }
   }
 
-  //TODO
-  /*@Test
+  @Test
   public void testReadValuesFromString() {
     assertTrue(userPersistenceTest.isEquals(user2, jobblettPersistence.readValue(user2.getClass(), user2InString)),
         "The string: " + user2InString + "wasn't read deserialized to User2");
-  }*/
+  }
 
   // function to test that we get expected message printed out to console
   private void assertConsolPrintOut(Runnable runnable, String expected) {
