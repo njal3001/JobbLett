@@ -80,13 +80,13 @@ public class UpdateShiftControllerTest extends JobbLettTest {
     date.setValue(tomorrow);
     // Setting up valid times for the shifts
     clickOn("#fromField");
-    type(KeyCode.BACK_SPACE, 3);
-    type(KeyCode.DELETE, 3);
+    type(KeyCode.BACK_SPACE, 5);
+    type(KeyCode.DELETE, 5);
     write("08:00");
     uiAssertions.assertTextField("fromField", "08:00");
     clickOn("#toField");
-    type(KeyCode.BACK_SPACE, 3);
-    type(KeyCode.DELETE, 3);
+    type(KeyCode.BACK_SPACE, 5);
+    type(KeyCode.DELETE, 5);
     write("15:30");
     uiAssertions.assertTextField("toField", "15:30");
     // Adding additional info for the shift
@@ -112,12 +112,12 @@ public class UpdateShiftControllerTest extends JobbLettTest {
     date.setValue(yesterday);
     // Setting up valid times for the shifts
     clickOn("#fromField");
-    type(KeyCode.BACK_SPACE, 3);
-    type(KeyCode.DELETE, 3);
+    type(KeyCode.BACK_SPACE, 5);
+    type(KeyCode.DELETE, 5);
     write("08:00");
     clickOn("#toField");
-    type(KeyCode.BACK_SPACE, 3);
-    type(KeyCode.DELETE, 3);
+    type(KeyCode.BACK_SPACE, 5);
+    type(KeyCode.DELETE, 5);
     write("15:30");
     // Adding additional info for the shift
     clickOn("#infoArea");
@@ -142,12 +142,12 @@ public class UpdateShiftControllerTest extends JobbLettTest {
     date.setValue(tomorrow);
     // Setting up ivalid times for the shifts
     clickOn("#fromField");
-    type(KeyCode.BACK_SPACE, 3);
-    type(KeyCode.DELETE, 3);
+    type(KeyCode.BACK_SPACE, 5);
+    type(KeyCode.DELETE, 5);
     write("wrong");
     clickOn("#toField");
-    type(KeyCode.BACK_SPACE, 3);
-    type(KeyCode.DELETE, 3);
+    type(KeyCode.BACK_SPACE, 5);
+    type(KeyCode.DELETE, 5);
     write("123Wrong");
     // Adding additional info for the shift
     clickOn("#infoArea");
@@ -180,13 +180,13 @@ public class UpdateShiftControllerTest extends JobbLettTest {
     date.setValue(tomorrow);
     // Setting up ivalid times for the shifts
     clickOn("#fromField");
-    type(KeyCode.BACK_SPACE, 3);
-    type(KeyCode.DELETE, 3);
+    type(KeyCode.BACK_SPACE, 5);
+    type(KeyCode.DELETE, 5);
     write("10:00");
     uiAssertions.assertTextField("fromField", "10:00");
     clickOn("#toField");
-    type(KeyCode.BACK_SPACE, 3);
-    type(KeyCode.DELETE, 3);
+    type(KeyCode.BACK_SPACE, 5);
+    type(KeyCode.DELETE, 5);
     write("17:00");
     uiAssertions.assertTextField("toField", "17:00");
     clickOn("#infoArea");
