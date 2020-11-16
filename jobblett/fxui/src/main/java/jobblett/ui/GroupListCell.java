@@ -3,11 +3,10 @@ package jobblett.ui;
 import static jobblett.ui.JobblettScenes.GROUP_HOME;
 
 import javafx.scene.control.ListCell;
-import jobblett.core.Group;
 
 public class GroupListCell extends ListCell<Integer> {
 
-  ControllerMap controllerMap;
+  private ControllerMap controllerMap;
 
   public GroupListCell(ControllerMap controllerMap) {
     this.controllerMap = controllerMap;

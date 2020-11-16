@@ -20,17 +20,22 @@ public class UserListResource extends RestApiClass {
   public static final String USER_LIST_SERVICE_PATH = "userlist";
   protected static final Logger LOG = LoggerFactory.getLogger(UserListResource.class);
 
-  private Workspace workspace;
+  private UserList userList;
 
-  public UserListResource(Workspace workspace) {
-    this.workspace = workspace;
+  public UserListResource(UserList userList) {
+    this.userList = userList;
   }
 
+  private void checkUsername(String username) {
+    if (userList.get(username) == null) {
+      throw new IllegalArgumentException("No user with username: " + username);
+    }
+  }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public UserList getJobblettService() {
-    return workspace.getUserList();
+    return userList;
   }
 
   /**
@@ -39,10 +44,11 @@ public class UserListResource extends RestApiClass {
    * @param userName user's username
    * @return UserResource
    */
-  @Path("/get/{userName}")
-  public UserResource getUser(@PathParam("userName") String userName) {
-    User user = workspace.getUserList().get(userName);
-    LOG.debug("Sub-resource for User " + userName + ": " + user);
+  @Path("/get/{username}")
+  public UserResource getUser(@PathParam("username") String username) {
+    checkUsername(username);
+    User user = userList.get(username);
+    LOG.debug("Sub-resource for User " + username + ": " + user);
     return new UserResource(user);
   }
 
@@ -54,36 +60,12 @@ public class UserListResource extends RestApiClass {
   @PUT
   @Path("/add")
   @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
   public void add(User user) {
-    try {
-      workspace.getUserList().add(user);
-      debug(user + " added into the UserList");
-    } catch (Exception e) {
-      debug(e.getMessage());
-      debug("Something went wrong while adding the user: " + user);
-    }
+    userList.add(user);
   }
 
   @Override protected Logger logger() {
     return LOG;
   }
 
-  /**
-   * Returns a User-object with the same username and password.
-   *
-   * @param userName the userName
-   * @param hashedPassword the hashedPassword
-   * @return logged in user
-   */
-  @POST
-  @Produces(MediaType.APPLICATION_JSON)
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Path("/login/{userName}")
-  public User login(@PathParam("userName") String userName, String hashedPassword) {
-    User user = workspace.getUserList()
-        .checkUserNameAndPassword(userName, HashedPassword.alreadyHashed(hashedPassword));
-    debug("Logging in as " + user);
-    return user;
-  }
 }

@@ -9,6 +9,8 @@ import java.time.format.DateTimeFormatter;
 import javafx.application.Application;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import jobblett.core.Workspace;
+import jobblett.json.JobblettPersistence;
 
 //Code is inspired by: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
 
@@ -56,9 +58,10 @@ public class App extends Application {
       } catch (URISyntaxException e) {
         e.printStackTrace();
       }
-    } else {
-      //TODO: Burde lese fra fil ellerno her..
-      access = new DirectWorkspaceAccess(new Workspace());
+    }
+    else {
+      //TODO: Vet ikke om dette funker...
+      access = new DirectWorkspaceAccess(new JobblettPersistence().readValue(Workspace.class));
     }
     ControllerMap controllerMap = new ControllerMap(primaryStage, access);
     return controllerMap;

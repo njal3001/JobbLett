@@ -14,8 +14,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.testfx.api.FxRobot;
 
-import java.util.zip.CheckedOutputStream;
-
 // Helper class for assertions that are useful for multiple test classes
 public class UIAssertions extends FxRobot {
 
@@ -48,13 +46,6 @@ public class UIAssertions extends FxRobot {
     assertEquals(expected, date.getValue().format(App.EXPECTED_DATE_FORMAT),
         "The DateField: '" + fxid + "' didn't have the expected value or format: " + expected);
   }
-
-  /*//Fjenre? denne brukes ikke av noen??
-  public void asserListViewItemHasText(String fxid,Object item, String expected) {
-    ListView listView = lookup("#" + fxid).query();
-    assertEquals(expected, listView.toString());
-  }*/
-
 
   public void assertListViewHasItem(String fxid, Object expected) {
     ListView<Object> listView = lookup("#" + fxid).query();

@@ -59,6 +59,9 @@ public class DirectWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public boolean correctPassword(String username, String password) {
+    if (!hasUser(username)) {
+      return false;
+    }
     return getUser(username).getPassword().matches(new HashedPassword(password));
   }
 

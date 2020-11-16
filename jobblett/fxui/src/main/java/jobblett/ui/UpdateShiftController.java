@@ -102,7 +102,6 @@ public class UpdateShiftController extends SceneController {
   // TODO: trenger kanskje ikke fet skrift for admin her?
   @Override
   public void onSceneDisplayed() {
-
     // Lists all members
     members.setCellFactory(member -> new UserListCell(getControllerMap()));
     members.getItems().clear();
@@ -138,7 +137,6 @@ public class UpdateShiftController extends SceneController {
     activeJobShiftIndex = null;
     switchScene(SHIFT_VIEW);
   }
-
 
   /**
    * TODO.
@@ -195,7 +193,7 @@ public class UpdateShiftController extends SceneController {
     createShiftButton.setSkin(new ButtonAnimationSkin(createShiftButton));
   }
 
-  protected void setActiveJobShiftIndex(int activeJobShiftIndex) {
+  protected void setActiveJobShiftIndex(Integer activeJobShiftIndex) {
     this.activeJobShiftIndex = activeJobShiftIndex;
   }
 }

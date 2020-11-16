@@ -3,8 +3,6 @@ package jobblett.ui;
 import static jobblett.ui.JobblettScenes.GROUP_HOME;
 import static jobblett.ui.JobblettScenes.UPDATE_SHIFT;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,8 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import jobblett.core.JobShift;
-import jobblett.core.User;
 
 
 public class ShiftViewController extends SceneController {
@@ -22,7 +18,7 @@ public class ShiftViewController extends SceneController {
 
   // TODO: hvilket shift er definert ut i fra indeks, vet ikke
   // om dette vil funke
-  @FXML ListView<Integer> shiftsInfo;
+  @FXML ListView<Integer> shifts;
 
   @FXML Button backToGroup;
 
@@ -36,8 +32,8 @@ public class ShiftViewController extends SceneController {
   @FXML CheckBox toggleUserFilterCheckBox;
 
   @FXML public void initialize() {
-    shiftsInfo.setCellFactory(shifts -> new JobShiftListCell(getControllerMap()));
-    shiftsInfo.getSelectionModel().selectedItemProperty().addListener(listener -> updateButtons());
+    shifts.setCellFactory(shifts -> new JobShiftListCell(getControllerMap()));
+    shifts.getSelectionModel().selectedItemProperty().addListener(listener -> updateButtons());
   }
 
   @Override public void onSceneDisplayed() {
@@ -81,18 +77,20 @@ public class ShiftViewController extends SceneController {
    * TODO.
    */
   @FXML public void goToEditShift() {
-    int selectedJobShiftIndex = shiftsInfo.getSelectionModel().getSelectedIndex();
+    int selectedJobShiftIndex = shifts.getSelectionModel().getSelectedIndex();
+    switchScene(UPDATE_SHIFT);
     SceneController sceneController = getControllerMap().getController(UPDATE_SHIFT);
     UpdateShiftController newController = (UpdateShiftController) sceneController;
-    newController.setActiveJobShiftIndex(selectedJobShiftIndex);
-    switchScene(UPDATE_SHIFT);
+    newController.setActiveJobShiftIndex(Integer.valueOf(selectedJobShiftIndex));
+    //TODO: quick fix...
+    newController.onSceneDisplayed();
   }
 
   /**
    * TODO.
    */
   @FXML public void handleDeleteShift() {
-    int index = shiftsInfo.getSelectionModel().getSelectedIndex();
+    int index = shifts.getSelectionModel().getSelectedIndex();
     if (index != - 1) {
       getAccess().deleteJobShift(getActiveGroupId(), index);
       updateView();
@@ -115,22 +113,22 @@ public class ShiftViewController extends SceneController {
 
   // Lists all job shifts
   private void updateView() {
-    shiftsInfo.getItems().clear();
+    shifts.getItems().clear();
     for (int i = 0; i < getAccess().getJobShiftsSize(getActiveGroupId()); i++) {
-        shiftsInfo.getItems().add(i);
+        shifts.getItems().add(i);
     }
   }
 
   private void updateView(String username) {
     List<Integer> shiftIndexes = getAccess().getJobShiftIndexes(getActiveGroupId(), username);
-    shiftsInfo.getItems().clear();
+    shifts.getItems().clear();
     for (int shiftIndex : shiftIndexes) {
-        shiftsInfo.getItems().add(shiftIndex);
+        shifts.getItems().add(shiftIndex);
     }
   }
 
   private void updateButtons() {
-    boolean disable = shiftsInfo.getSelectionModel().getSelectedIndex() == -1;
+    boolean disable = shifts.getSelectionModel().getSelectedIndex() == -1;
     editShiftButton.setDisable(disable);
     deleteShiftButton.setDisable(disable);
   }

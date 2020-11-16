@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import jobblett.core.User;
 
 public class GroupHomeController extends SceneController {
 
@@ -15,7 +14,7 @@ public class GroupHomeController extends SceneController {
 
   @FXML Label groupName;
 
-  @FXML ListView<String> membersInfo;
+  @FXML ListView<String> members;
 
   @FXML Label groupId;
 
@@ -28,10 +27,10 @@ public class GroupHomeController extends SceneController {
    * TODO.
    */
   @FXML public void initialize() {
-    membersInfo.setCellFactory(members -> new GroupMemberListCell(getControllerMap()));
+    members.setCellFactory(members -> new UserListCell(getControllerMap()));
     //Sets the ListView uninteractable with the mouse and the keyboard
-    membersInfo.setMouseTransparent(true);
-    membersInfo.setFocusTraversable(false);
+    members.setMouseTransparent(true);
+    members.setFocusTraversable(false);
   }
 
   @Override public void styleIt() {
@@ -46,10 +45,10 @@ public class GroupHomeController extends SceneController {
     // Shows GroupID
     groupId.setText("GroupID: " + getActiveGroupId());
 
-    membersInfo.getItems().clear();
+    members.getItems().clear();
     // Lists all members
     for (String username : getAccess().getGroupUsernames(getActiveGroupId())) {
-      membersInfo.getItems().add(username);
+      members.getItems().add(username);
     }
   }
 

@@ -6,8 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import jobblett.core.Group;
-import jobblett.core.User;
 
 
 public class ControllerMap {
@@ -80,6 +78,7 @@ public class ControllerMap {
     try {
       parent = loader.load();
     } catch (IOException e) {
+      System.out.println("TESTTT");
       e.printStackTrace();
     }
     Scene scene = new Scene(parent);

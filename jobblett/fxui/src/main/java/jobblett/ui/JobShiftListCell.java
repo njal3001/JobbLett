@@ -12,32 +12,18 @@ public class JobShiftListCell extends ListCell<Integer> {
   }
 
   @Override public void updateItem(Integer jobShiftIndex, boolean empty) {
+    super.updateItem(jobShiftIndex, empty);
     setGraphic(null);
-    if (empty || jobShiftIndex == null) {
+    if (empty || jobShiftIndex == null ) {
       setText(null);
       return;
     }
     WorkspaceAccess access = controllerMap.getAccess();
     int activeGroupId = controllerMap.getActiveGroupId();
 
-    /*TODO: bør gjøres på en bedre måte...
-      Nå legger den ny listener hver gang den oppdateres (den gamle slettes ikke)*/
-    boolean isNewItem = getItem() != jobShiftIndex;
-    super.updateItem(jobShiftIndex, empty);
-
     final String shiftText = formatJobShift(jobShiftIndex);
-    if (isNewItem) {
-      setText(shiftText);
-      selectedProperty().addListener((o, old, newValue) -> {
-        if (isSelected()) {
-          final String infoText = "\nInfo:\n" + access.getJobShiftInfo(activeGroupId, jobShiftIndex);
-          setText(shiftText + infoText);
-        } else {
-          setText(shiftText);
-        }
-      });
-    }
-
+    final String infoText = "\nInfo:\n" + access.getJobShiftInfo(activeGroupId, jobShiftIndex);
+    setText(shiftText + infoText);
   }
 
   //String representation of the job shift, which is used by the cell
