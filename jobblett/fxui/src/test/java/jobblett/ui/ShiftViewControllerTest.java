@@ -3,19 +3,22 @@ package jobblett.ui;
 import static jobblett.ui.JobblettScenes.SHIFT_VIEW;
 import static jobblett.ui.JobblettScenes.GROUP_HOME;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import jobblett.core.Group;
 import jobblett.core.JobShift;
 import jobblett.core.User;
 import org.testfx.util.WaitForAsyncUtils;
-
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -36,7 +39,17 @@ public class ShiftViewControllerTest extends JobbLettTest {
     return group1;
   }
 
-  // vurder å lage en for å sjekke om info dukker opp når man klikker på dem, og ikk før det
+  @Test
+  public void testJobShift_info() {
+    //info shall not be visibible, before the shift is clicked on
+    //jobshift2 is on the top
+    ListCell<Object> listCellOnTop = uiAssertions.findListCell(0);
+    String jobShift2InfoText= jobShift2.getInfo();
+    assertFalse(listCellOnTop.getText().contains(jobShift2InfoText));
+    clickOn(listCellOnTop);
+    assertTrue(listCellOnTop.getText().contains(jobShift2InfoText));
+  }
+
   @Test
   public void testJobShiftsView_correctText() {
     ListView<JobShift> shifts = lookup("#shifts").query();
@@ -53,6 +66,21 @@ public class ShiftViewControllerTest extends JobbLettTest {
     String expectedSting =
         user + "\t" + startingDate + "\t" + startingTime + " - " + endingTime + "\nInfo:\n" + infoText;
     uiAssertions.assertListCellText(shifts.getSelectionModel().getSelectedIndex(), expectedSting);
+  }
+
+  @Test
+  public void testJobShiftView_notShowingPastShifts(){
+    //verifying that a shift in future that we add is showing in tha listView
+    JobShift jobShiftInFuture = new JobShift(user1, LocalDateTime.now().plusHours(5), Duration.ofHours(5), "Shift in future");
+    JobShift jobShiftInPast = new JobShift(user1, LocalDateTime.now().minusHours(6), Duration.ofHours(5), "Shift in past");
+    group1.addJobShift(jobShiftInFuture, user1);
+    group1.addJobShift(jobShiftInPast, user1);
+    //let the listView update by going back and the return to shiftview
+    clickOn("#backToGroup");
+    clickOn("#goToShifts");
+    uiAssertions.assertListViewHasItem("shifts", jobShiftInFuture);
+    uiAssertions.assertListViewHasNotItem("shifts", jobShiftInPast);
+    //TODO: test for sjekke over natta
   }
 
   @Test
