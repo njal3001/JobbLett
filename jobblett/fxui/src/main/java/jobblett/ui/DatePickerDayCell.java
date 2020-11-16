@@ -5,7 +5,14 @@ import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.util.Callback;
 
+/**
+ * CellFactory for the datePicker used in UpdateShiftController.
+ */
 public class DatePickerDayCell implements Callback<DatePicker, DateCell> {
+  /**
+   * Disables past dates.
+   * @param param TODO //må være med i opprinnelige metode
+   */
   @Override public DateCell call(DatePicker param) {
     return new DateCell() {
       @Override public void updateItem(LocalDate date, boolean empty) {

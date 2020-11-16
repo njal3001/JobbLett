@@ -16,20 +16,19 @@ public class CreateGroupController extends SceneController {
   @FXML Label errorMessage;
   @FXML Button goBackButton;
 
+  @Override
   public void styleIt() {
     createGroupButton.setSkin(new ButtonAnimationSkin(createGroupButton));
     goBackButton.setSkin(new ButtonAnimationSkin(goBackButton));
   }
 
-  /**
-   * TODO.
-   */
+  
   @FXML public void goToUserHome() {
     switchScene(USER_HOME);
   }
 
   /**
-   * TODO.
+   * Setting up a new group with the active user as admin.
    */
   @FXML public void createGroup() {
     String groupName = groupNameField.getText();

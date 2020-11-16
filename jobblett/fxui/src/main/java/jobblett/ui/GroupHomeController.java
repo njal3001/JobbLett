@@ -23,11 +23,11 @@ public class GroupHomeController extends SceneController {
 
 
   /**
-   * TODO.
+   * Setting up the format for the listView of the members.
+   * Makes the listView uninteractabl with the mouse and the keyboard.
    */
   @FXML public void initialize() {
     members.setCellFactory(members -> new GroupMemberListCell(getControllerMap()));
-    //Sets the ListView uninteractable with the mouse and the keyboard
     members.setMouseTransparent(true);
     members.setFocusTraversable(false);
   }
@@ -36,7 +36,7 @@ public class GroupHomeController extends SceneController {
     super.styleIt();
     backToHome.setSkin(new ButtonAnimationSkin(backToHome));
   }
-
+  //TODO kan vi ikke bare bruke intialize??
   @Override public void onSceneDisplayed() {
     // Sets GroupName on top of the screen
     groupName.setText(getActiveGroup().getGroupName());

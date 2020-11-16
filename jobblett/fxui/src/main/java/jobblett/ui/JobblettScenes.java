@@ -5,6 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+/**
+ * An enum for switching scene easier.
+ * TODO
+ */
 public enum JobblettScenes {
   LOGIN("Login.fxml"),
   CREATE_USER("CreateUser.fxml"), 

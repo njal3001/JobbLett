@@ -4,6 +4,10 @@ import java.time.LocalDateTime;
 import javafx.scene.control.ListCell;
 import jobblett.core.JobShift;
 
+
+/**
+ * CellFactory for the listView showing the shifts ShiftViewController.
+ */
 public class JobShiftListCell extends ListCell<JobShift> {
 
   //Basic implementasjon av celle for job shift view i ShiftViewController, burde sikkert 
@@ -37,7 +41,12 @@ public class JobShiftListCell extends ListCell<JobShift> {
   }
 
 
-  //String representation of the job shift, which is used by the cell
+  
+  /**
+   * String representation of the jobShift, which is used by the cell.
+   * @param jobShift the jobShift that we want string representation of.
+   * @return the string representation
+   */
   private String formatJobShift(JobShift jobShift) {
     String s = "";
     if (jobShift.getUser() != null) {

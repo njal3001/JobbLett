@@ -29,6 +29,7 @@ public class UserHomeController extends SceneController {
     groups.setCellFactory(groups -> new GroupListCell(getControllerMap()));
   }
 
+  //TODO bytte til initialize??
   @Override public void onSceneDisplayed() {
     // Sets full name on top of the screen
     User activeUser = getActiveUser();

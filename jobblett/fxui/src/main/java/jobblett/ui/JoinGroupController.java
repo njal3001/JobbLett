@@ -17,7 +17,7 @@ public class JoinGroupController extends SceneController {
   @FXML Button goBackButton;
 
   /**
-   * TODO.
+   * Sets a listener to prevent non-integers in the groupIdField
    */
   @FXML public void initialize() {
     // Sets a listener to prevent non-integers on groupID
@@ -46,6 +46,7 @@ public class JoinGroupController extends SceneController {
   }
 
   /**
+   * Sets the activeUser as a member of the written group 
    * TODO.
    */
   @FXML public void joinGroup() {

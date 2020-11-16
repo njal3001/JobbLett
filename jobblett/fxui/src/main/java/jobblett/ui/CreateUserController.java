@@ -68,9 +68,6 @@ public class CreateUserController extends SceneController {
     }
   }
 
-  /**
-   * Styles UI elements.
-   */
 
   @Override
   public void styleIt() {
@@ -82,7 +79,6 @@ public class CreateUserController extends SceneController {
   /**
    * Creates a new User.
    */
-
   @FXML
   public void createAccount() {
     String username = this.usernameField.getText();

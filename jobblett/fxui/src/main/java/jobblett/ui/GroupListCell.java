@@ -5,6 +5,9 @@ import static jobblett.ui.JobblettScenes.GROUP_HOME;
 import javafx.scene.control.ListCell;
 import jobblett.core.Group;
 
+/**
+ * CellFactory for the listView showing your groups in UserHomeController.
+ */
 public class GroupListCell extends ListCell<Group> {
 
   ControllerMap controllerMap;
@@ -13,7 +16,7 @@ public class GroupListCell extends ListCell<Group> {
     this.controllerMap = controllerMap;
   }
 
-
+//TODO
   @Override public void updateItem(Group group, boolean empty) {
     super.updateItem(group, empty);
     if (empty || group == null) {

@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import jobblett.core.HashedPassword;
 import jobblett.core.User;
 
 public class LoginController extends SceneController {
@@ -26,7 +25,7 @@ public class LoginController extends SceneController {
   @FXML Label password;
 
   @FXML PasswordField passwordField;
-
+  //TODO finn ut av om vi skal ha font for inputs
   @Override public void styleIt() {
     super.styleIt();
     login.setSkin(new ButtonAnimationSkin(login));
@@ -42,7 +41,7 @@ public class LoginController extends SceneController {
   }
 
   /**
-   * TODO.
+   * If the the username and password belongs to an user, the user will be logged in as active user.
    */
   @FXML public void logInToUserHome() {
     String userName = this.usernameField.getText();

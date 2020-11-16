@@ -4,6 +4,10 @@ import javafx.scene.control.ListCell;
 import javafx.scene.text.Font;
 import jobblett.core.User;
 
+/**
+ * CellFactory for the listView showing all the members in GroupHomeController.
+ * //TODO
+ */
 public class GroupMemberListCell extends ListCell<User> {
   ControllerMap controllerMap;
 

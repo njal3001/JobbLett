@@ -21,7 +21,7 @@ public class ControllerMap {
   private JobblettAccess access;
 
   /**
-   * Creates a instance of ControllerMap.
+   * Creates an instance of ControllerMap.
    *
    * @param stage the stage used to load fxml-files and scenes
    * @param access used to give access for the controllers
@@ -73,7 +73,10 @@ public class ControllerMap {
   private void setController(JobblettScenes jobblettScenes, SceneController controller) {
     controllerMap.put(jobblettScenes, controller);
   }
-
+  /**
+   * TODO  
+   * @param jobblettScenes
+   */
   private void reset(JobblettScenes jobblettScenes) {
     FXMLLoader loader = new FXMLLoader(App.class.getResource(jobblettScenes.getFilename()));
     Parent parent = null;

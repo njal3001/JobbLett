@@ -32,11 +32,16 @@ public class ShiftViewController extends SceneController {
 
   @FXML CheckBox toggleUserFilterCheckBox;
 
+  /**
+   * Setts the format for the datePicker.
+   * 
+   */
   @FXML public void initialize() {
     shifts.setCellFactory(shifts -> new JobShiftListCell());
     shifts.getSelectionModel().selectedItemProperty().addListener(listener -> updateButtons());
   }
 
+  //TODO
   @Override public void onSceneDisplayed() {
     // Sets group name on top of the screen
     groupName.setText(getActiveGroup().getGroupName());
@@ -45,7 +50,9 @@ public class ShiftViewController extends SceneController {
     updateButtons();
     setButtonVisibility();
   }
-
+  /**
+   * If the activeUser is admin of the activeGroup, the buttons to manage shift will be set visible.
+   */
   private void setButtonVisibility() {
     List<Button> buttons = List.of(newShiftButton, editShiftButton, deleteShiftButton);
     boolean visible = getActiveGroup().isAdmin(getActiveUser());
@@ -74,7 +81,7 @@ public class ShiftViewController extends SceneController {
   }
 
   /**
-   * TODO.
+   * Deletes the selected shift and updates the shiftView.
    */
   @FXML public void handleDeleteShift() {
     int index = shifts.getSelectionModel().getSelectedIndex();
@@ -86,9 +93,8 @@ public class ShiftViewController extends SceneController {
   }
 
   /**
-   * TODO.
-   *
-   * @param event TODO
+   * Updates the shiftView to only show the active user's shifts or all of the shifts.
+   * @param event TODO event fired when the tooglebox is interacted with
    */
   @FXML public void toggleUserFilter(ActionEvent event) {
     CheckBox checkBox = (CheckBox) event.getSource();
@@ -98,7 +104,7 @@ public class ShiftViewController extends SceneController {
       updateView();
     }
   }
-
+//TODO
   // Burde kanskje bruke observable for å kalle på denne metoden
   // Lists all job shifts
   private void updateView() {
@@ -106,10 +112,18 @@ public class ShiftViewController extends SceneController {
     updateView(getActiveGroup().getJobShiftList().getJobShifts());
   }
 
+  /**
+   * making the shiftView to only show the activeUser's shifts.
+   */
   private void updateView(User user) {
     updateView(getActiveGroup().getJobShiftList().getJobShifts(user));
   }
 
+  /**
+   * Method for showing all of the present shifts in the Group.
+   * The past shifts will not be shown.
+   * @param shifts a List containing jobShifts
+   */
   private void updateView(List<JobShift> shifts) {
     this.shifts.getItems().clear();
     for (JobShift shift : shifts) {
@@ -119,6 +133,10 @@ public class ShiftViewController extends SceneController {
     }
   }
 
+  //TODO
+  /**
+   * Disables the ..
+   */
   private void updateButtons() {
     boolean disable = shifts.getSelectionModel().getSelectedIndex() == -1;
     editShiftButton.setDisable(disable);
