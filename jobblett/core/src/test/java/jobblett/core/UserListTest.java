@@ -39,13 +39,13 @@ public class UserListTest {
   @Test public void testLogin_CorrectUsernameAndPassword() {
     userList.add(user1);
     assertEquals(user1,
-        userList.checkUserNameAndPassword(user1.getUsername(), "Test12345"));
+        userList.checkUserNameAndPassword(user1.getUsername(), new HashedPassword("Test12345")));
   }
 
   @Test public void testLogin_WrongPassword() {
     userList.add(user1);
     assertEquals(null,
-        userList.checkUserNameAndPassword(user1.getUsername(), "TotallyWrongPassword123"));
+        userList.checkUserNameAndPassword(user1.getUsername(), new HashedPassword("TotallyWrongPassword123")));
   }
 
   @Test public void testIterator() {

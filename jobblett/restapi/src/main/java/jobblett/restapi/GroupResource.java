@@ -41,7 +41,7 @@ public class GroupResource extends RestApiClass {
   @Produces(MediaType.APPLICATION_JSON)
   public Collection<User> getMembers() {
     Collection<User> users = new ArrayList<>();
-    group.forEach(a -> users.add(a));
+    group.forEach(users::add);
     debug("Returns users in the group: " + group.getGroupName() + "(" + group.getGroupId() + ")");
     return users;
   }

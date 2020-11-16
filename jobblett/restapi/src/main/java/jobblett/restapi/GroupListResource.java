@@ -2,6 +2,7 @@ package jobblett.restapi;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,6 +15,7 @@ import jobblett.core.GroupList;
 import jobblett.core.JobShift;
 import jobblett.core.User;
 import jobblett.core.UserList;
+import jobblett.core.Workspace;
 import jobblett.json.JobblettPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,25 +25,17 @@ public class GroupListResource extends RestApiClass {
   public static final String GROUP_LIST_SERVICE_PATH = "grouplist";
   protected static final Logger LOG = LoggerFactory.getLogger(GroupListResource.class);
 
-  private JobblettService jobblettService;
-
-  private UserList tmpGetUserList() {
-    return jobblettService.userList;
-  }
-
-  private GroupList tmpGetGroupList() {
-    return jobblettService.groupList;
-  }
+  private Workspace workspace;
 
 
-  public GroupListResource(JobblettService jobblettService) {
-    this.jobblettService = jobblettService;
+  public GroupListResource(Workspace workspace) {
+    this.workspace = workspace;
   }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public GroupList getGroupList() {
-    return tmpGetGroupList();
+    return workspace.getGroupList();
   }
 
   /**
@@ -53,7 +47,7 @@ public class GroupListResource extends RestApiClass {
   @Path("/get/{groupIdString}")
   public GroupResource getGroup(@PathParam("groupIdString") String groupIdString) {
     int groupId = Integer.parseInt(groupIdString);
-    Group group = tmpGetGroupList().get(groupId);
+    Group group = workspace.getGroupList().get(groupId);
     debug("Sub-resource for Group " + group.getGroupName() + ": " + group);
     return new GroupResource(group);
   }
@@ -68,7 +62,7 @@ public class GroupListResource extends RestApiClass {
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/new/{groupName}")
   public Group newGroup(@PathParam("groupName") String groupName) {
-    Group group = tmpGetGroupList().newGroup(groupName);
+    Group group = workspace.getGroupList().newGroup(groupName);
     debug("New group: " + group);
     return group;
   }
@@ -85,13 +79,39 @@ public class GroupListResource extends RestApiClass {
   @Path("/getFromUsers/")
   public GroupList getGroups(User user) {
     // TODO: find a equal object instead of only using the username
-    correctGroupList(tmpGetGroupList(), tmpGetUserList());
+    //correctGroupList(workspace.getGroupList(), workspace.getUserList());
 
     debug("Returns every group " + user + "is a member of.");
-    user = tmpGetUserList().get(user.getUsername());
+    user = workspace.getUserList().get(user.getUsername());
     GroupList groupList = new GroupList();
-    groupList.addAll(tmpGetGroupList().getGroups(user));
+    groupList.addAll(workspace.getGroupList().getGroups(user));
     return groupList;
+  }
+
+  /**
+   * Replaces a group with the same groupId with the specified group.
+   *
+   * @param group specified group
+   * @return if contained
+   */
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("/replaceGroup/")
+  public boolean replaceGroup(Group group) {
+    Collection<Integer> groupIds = workspace.getGroupList()
+        .stream()
+        .map(Group::getGroupId)
+        .collect(Collectors.toList());
+    if (!groupIds.contains(group.getGroupId())) {
+      debug("Could not replace with group: " + group);
+      return false;
+    }
+    Group toBeRemoved = workspace.getGroupList().get(group.getGroupId());
+    workspace.getGroupList().remove(toBeRemoved);
+    workspace.getGroupList().add(group);
+    debug("Replaced to: " + group);
+    return true;
   }
 
   @Override protected Logger logger() {

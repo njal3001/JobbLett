@@ -2,6 +2,7 @@ package jobblett.restserver;
 
 import jobblett.core.GroupList;
 import jobblett.core.UserList;
+import jobblett.core.Workspace;
 import jobblett.json.JobblettPersistence;
 import jobblett.restapi.JobblettService;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -9,42 +10,30 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public class JobblettConfig extends ResourceConfig {
-  private UserList userList;
-  private GroupList groupList;
+  private Workspace workspace;
 
-  private JobblettConfig(UserList userList, GroupList groupList) {
-    setUserList(userList);
-    setGroupList(groupList);
+  private JobblettConfig(Workspace workspace) {
+    setWorkspace(workspace);
     register(JobblettService.class);
     register(JobblettModuleObjectMapperProvider.class);
     register(JacksonFeature.class);
     register(new AbstractBinder() {
       @Override protected void configure() {
-        bind(JobblettConfig.this.userList);
-        bind(JobblettConfig.this.groupList);
+        bind(JobblettConfig.this.workspace);
       }
     });
 
   }
 
   public JobblettConfig() {
-    this(createDefaultUserList(), createDefaultGroupList());
+    this(createDefaultWorkspace());
   }
 
-  public void setUserList(UserList userList) {
-    this.userList = userList;
+  public void setWorkspace(Workspace workspace) {
+    this.workspace = workspace;
   }
 
-  public void setGroupList(GroupList groupList) {
-    this.groupList = groupList;
-  }
-
-  private static UserList createDefaultUserList() {
-    return new JobblettPersistence().readDefault(UserList.class);
-
-  }
-
-  private static GroupList createDefaultGroupList() {
-    return new JobblettPersistence().readDefault(GroupList.class);
+  private static Workspace createDefaultWorkspace() {
+    return new JobblettPersistence().readDefault(Workspace.class);
   }
 }

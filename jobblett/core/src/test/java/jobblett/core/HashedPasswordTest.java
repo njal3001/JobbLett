@@ -8,8 +8,10 @@ public class HashedPasswordTest {
 
   @Test public void testEquals() {
     HashedPassword password = new HashedPassword("Nils1254");
-    assertTrue(password.matches("Nils1254"));
-    assertFalse(password.matches("nilS1254"));
+    HashedPassword rightPassword = new HashedPassword("Nils1254");
+    HashedPassword wrongPassword = new HashedPassword("nilS1254");
+    assertTrue(password.matches(rightPassword));
+    assertFalse(password.matches(wrongPassword));
   }
 
   @Test public void testSetPassword() {

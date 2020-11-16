@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import jobblett.core.GroupList;
 import jobblett.core.UserList;
+import jobblett.core.Workspace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,50 +25,49 @@ public class JobblettService extends RestApiClass {
 
 
   //TODO: should be private fields
-  @Inject protected GroupList groupList;
-  @Inject protected UserList userList;
+  @Inject Workspace workspace;
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public GroupList getGroupList() {
-    return groupList;
+    return workspace.getGroupList();
   }
 
   @Path("/" + GROUP_LIST_SERVICE_PATH)
   public GroupListResource getGroupListResource() {
     debug("Sub-resource for GroupList");
-    return new GroupListResource(this);
+    return new GroupListResource(workspace);
   }
 
   @Path("/" + USER_LIST_SERVICE_PATH)
   public UserListResource getUserListResource() {
     debug("Sub-resource for UserList");
-    return new UserListResource(this);
+    return new UserListResource(workspace);
   }
 
-  /**
+  /*
    * Replaces the existing userList with a new one.
    * Used by tests only.
    *
    * @param userList serialized UserList
    */
-  @PUT
+  /*@PUT
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/setUserList")
   public void setUserList(UserList userList) {
     // TODO
-    this.userList = userList;
+    workspace = userList;
     debug(userList + " replaced existing userList");
-  }
+  }*/
 
-  /**
+  /*
    * Replaces the existing groupList with a new one.
    * Used by tests only.
    *
    * @param groupList serialized GroupList string
    */
-  @PUT
+  /*@PUT
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/setGroupList")
@@ -75,7 +75,7 @@ public class JobblettService extends RestApiClass {
     // TODO
     this.groupList = groupList;
     debug(groupList + " replaced existing groupList");
-  }
+  }*/
 
   @Override protected Logger logger() {
     return LOG;

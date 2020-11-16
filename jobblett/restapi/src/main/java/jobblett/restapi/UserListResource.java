@@ -8,8 +8,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import jobblett.core.HashedPassword;
 import jobblett.core.User;
 import jobblett.core.UserList;
+import jobblett.core.Workspace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,21 +20,17 @@ public class UserListResource extends RestApiClass {
   public static final String USER_LIST_SERVICE_PATH = "userlist";
   protected static final Logger LOG = LoggerFactory.getLogger(UserListResource.class);
 
-  private JobblettService jobblettService;
+  private Workspace workspace;
 
-  private UserList tmpGetUserList() {
-    return jobblettService.userList;
-  }
-
-  public UserListResource(JobblettService userList) {
-    this.jobblettService = userList;
+  public UserListResource(Workspace workspace) {
+    this.workspace = workspace;
   }
 
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public UserList getJobblettService() {
-    return tmpGetUserList();
+    return workspace.getUserList();
   }
 
   /**
@@ -43,7 +41,7 @@ public class UserListResource extends RestApiClass {
    */
   @Path("/get/{userName}")
   public UserResource getUser(@PathParam("userName") String userName) {
-    User user = tmpGetUserList().get(userName);
+    User user = workspace.getUserList().get(userName);
     LOG.debug("Sub-resource for User " + userName + ": " + user);
     return new UserResource(user);
   }
@@ -59,7 +57,7 @@ public class UserListResource extends RestApiClass {
   @Produces(MediaType.APPLICATION_JSON)
   public void add(User user) {
     try {
-      tmpGetUserList().add(user);
+      workspace.getUserList().add(user);
       debug(user + " added into the UserList");
     } catch (Exception e) {
       debug(e.getMessage());
@@ -83,7 +81,8 @@ public class UserListResource extends RestApiClass {
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/login/{userName}")
   public User login(@PathParam("userName") String userName, String hashedPassword) {
-    User user = tmpGetUserList().checkUserNameAndPassword(userName, hashedPassword);
+    User user = workspace.getUserList()
+        .checkUserNameAndPassword(userName, HashedPassword.alreadyHashed(hashedPassword));
     debug("Logging in as " + user);
     return user;
   }

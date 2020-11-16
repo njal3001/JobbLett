@@ -21,4 +21,5 @@ public class Workspace {
   public WorkspaceGroupList getGroupList() {
     return groupList;
   }
+
 }

@@ -45,6 +45,15 @@ public class WorkspaceGroupList extends GroupList {
         workspaceGroup = new WorkspaceGroup(group.getGroupName(), group.getGroupId(), workspace);
         for (User user : group) {
           workspaceGroup.addUser(user.getUsername());
+          if (group.isAdmin(user)) {
+            workspaceGroup.addAdmin(workspaceGroup.getUser(user.getUsername()));
+          }
+        }
+        for (JobShift jobShift : group.getJobShiftList()) {
+          String jobShiftUserName = jobShift.getUser().getUsername();
+          User realUser = workspaceGroup.getUser(jobShiftUserName);
+          jobShift.setUser(realUser);
+          workspaceGroup.addJobShift(jobShift, workspaceGroup.getAdmins().iterator().next());
         }
       } else {
         workspaceGroup = (WorkspaceGroup) group;

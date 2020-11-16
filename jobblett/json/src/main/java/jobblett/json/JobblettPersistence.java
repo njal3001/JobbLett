@@ -11,6 +11,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import jobblett.core.Workspace;
+import jobblett.core.WorkspaceGroupList;
+import jobblett.core.WorkspaceUserList;
 
 /**
  * Used to serialize and deserialize Jobblett-objects.
@@ -47,7 +50,6 @@ public class JobblettPersistence {
     URL fileUrl = JobblettPersistence.class.getResource("default"
         + classType.getSimpleName()
         + ".json");
-    System.out.println(fileUrl);
     if (fileUrl == null) {
       return null;
     }

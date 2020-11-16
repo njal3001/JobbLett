@@ -31,7 +31,7 @@ public class JobblettRemoteAccess implements JobblettAccess {
     this.endpointBaseUri = endpointBaseUri;
   }
 
-  private String getBodyFromServer(String url) {
+  private String getBody(String url) {
     HttpRequest requestObject = null;
     try {
       requestObject = HttpRequest.newBuilder(endpointBaseUri.resolve(new URI(url)))
@@ -47,10 +47,10 @@ public class JobblettRemoteAccess implements JobblettAccess {
     return null;
   }
 
-  private <T> T postFromServer(Class<T> t, String urlString, String body) {
-    HttpRequest requestObject = null;
+  private <T> T post(Class<T> t, String urlString, String body) {
     try {
-      requestObject = HttpRequest.newBuilder(endpointBaseUri.resolve(new URI(urlString)))
+      HttpRequest requestObject =
+          HttpRequest.newBuilder(endpointBaseUri.resolve(new URI(urlString)))
           .header("Accept", "application/json")
           .header("Content-Type", "application/json")
           .POST(HttpRequest.BodyPublishers.ofString(body))
@@ -58,7 +58,6 @@ public class JobblettRemoteAccess implements JobblettAccess {
       HttpResponse<String> responseObject =
           HttpClient.newBuilder().build().send(requestObject, HttpResponse.BodyHandlers.ofString());
       String responseObjectBody = responseObject.body();
-      System.out.println(responseObjectBody);
       T object = new JobblettPersistence().readValue(t, responseObjectBody);
       return object;
 
@@ -68,32 +67,47 @@ public class JobblettRemoteAccess implements JobblettAccess {
     return null;
   }
 
-  private <T> T getFromServer(Class<T> t, String url) {
-    String responseObjectBody = getBodyFromServer(url);
+  private void put(String urlString, String body) {
+    try {
+      HttpRequest requestObject =
+          HttpRequest.newBuilder(endpointBaseUri.resolve(new URI(urlString)))
+          .header("Accept", "application/json")
+          .header("Content-Type", "application/json")
+          .PUT(HttpRequest.BodyPublishers.ofString(body))
+          .build();
+      HttpClient.newBuilder().build().send(requestObject, HttpResponse.BodyHandlers.ofString());
+
+    } catch (IOException | InterruptedException | URISyntaxException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private <T> T get(Class<T> t, String url) {
+    String responseObjectBody = getBody(url);
     T o = new JobblettPersistence().readValue(t, responseObjectBody);
     return o;
   }
 
   @Override public Group newGroup(String groupName) {
-    Group group = getFromServer(Group.class, GROUP_LIST_SERVICE_PATH + "/new/" + groupName);
+    Group group = get(Group.class, GROUP_LIST_SERVICE_PATH + "/new/" + groupName);
     addListenerGroup(group);
     return group;
   }
 
   @Override public void add(User user) {
     String userString = new JobblettPersistence().writeValueAsString(user);
-    getBodyFromServer(USER_LIST_SERVICE_PATH + "/add/" + userString);
+    put(USER_LIST_SERVICE_PATH + "/add", userString);
   }
 
   @Override public Group getGroup(int groupId) {
-    Group group = getFromServer(Group.class, GROUP_LIST_SERVICE_PATH + "/get/" + groupId);
+    Group group = get(Group.class, GROUP_LIST_SERVICE_PATH + "/get/" + groupId);
     addListenerGroup(group);
     return group;
   }
 
   @Override public User login(String userName, String passwordString) {
-    String body = passwordString;
-    User user = postFromServer(User.class,
+    String body = new HashedPassword(passwordString).toString();
+    User user = post(User.class,
         USER_LIST_SERVICE_PATH + "/login/"
             + userName, body);
     user.addListener(this);
@@ -103,7 +117,7 @@ public class JobblettRemoteAccess implements JobblettAccess {
   @Override public Collection<Group> getGroups(User user) {
     String userString = new JobblettPersistence().writeValueAsString(user);
     Collection<Group> groups =
-        postFromServer(GroupList.class, GROUP_LIST_SERVICE_PATH + "/getFromUsers/", userString)
+        post(GroupList.class, GROUP_LIST_SERVICE_PATH + "/getFromUsers/", userString)
         .stream()
         .collect(Collectors.toList());
     groups.forEach(this::addListenerGroup);
@@ -116,7 +130,7 @@ public class JobblettRemoteAccess implements JobblettAccess {
     userListAndGroupList.add(groupList);
     String userListAndGroupListString =
         new JobblettPersistence().writeValueAsString(userListAndGroupList);
-    getBodyFromServer(JOBBLETT_SERVICE_PATH + "/setlists/" + userListAndGroupListString);
+    getBody(JOBBLETT_SERVICE_PATH + "/setlists/" + userListAndGroupListString);
   }
 
   private void addListenerGroup(Group group) {
@@ -127,11 +141,30 @@ public class JobblettRemoteAccess implements JobblettAccess {
 
   @Override public void propertyChange(PropertyChangeEvent evt) {
     if (evt.getSource() instanceof Group) {
-      System.out.println("The group " + evt.getSource() + " was modified.");
+      Group group = (Group) evt.getSource();
+      System.out.println("The group " + group + " was modified.");
+      post(Boolean.class, GROUP_LIST_SERVICE_PATH + "/replaceGroup",
+          new JobblettPersistence().writeValueAsString(group));
     } else if (evt.getSource() instanceof User) {
       System.out.println("The user " + evt.getSource() + " was modified.");
     } else if (evt.getSource() instanceof JobShift) {
-      System.out.println("The jobshift " + evt.getSource() + " was modified.");
+      JobShift jobShift = (JobShift) evt.getSource();
+      System.out.println("The jobshift " + jobShift + " was modified.");
+      // TODO: kreves id for å gjenkjenne Jobshift
+      /*GroupList groupList = getFromServer(GroupList.class, GROUP_LIST_SERVICE_PATH);
+      Group jobShiftGroup = null;
+      for (Group group : groupList) {
+        for (JobShift jobShift1 : group.getJobShiftList()) {
+          if (jobShift.equals(jobShift1)) {
+            jobShiftGroup = group;
+            break;
+          }
+        }
+        if (jobShiftGroup != null) {
+          break;
+        }
+      }
+      */
     }
   }
 }

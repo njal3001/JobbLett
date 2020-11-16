@@ -52,8 +52,8 @@ public class HashedPassword {
     return Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
   }
 
-  public boolean matches(String password) {
-    return this.password.equals(hash(password));
+  public boolean matches(HashedPassword password) {
+    return this.password.equals(password.toString());
   }
 
   @Override

@@ -14,7 +14,7 @@ public class UserList extends JobblettList<String, User> {
    * @return the user if logged in, else null
    *
    */
-  public User checkUserNameAndPassword(String username, String password) {
+  public User checkUserNameAndPassword(String username, HashedPassword password) {
     User user = get(username);
     if (user == null || !user.getPassword().matches(password)) {
       return null;

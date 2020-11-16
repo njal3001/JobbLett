@@ -55,7 +55,7 @@ public class JobblettDirectAccess implements JobblettAccess {
   }
 
   @Override public User login(String userName, String password) {
-    return userList.checkUserNameAndPassword(userName, password);
+    return userList.checkUserNameAndPassword(userName, new HashedPassword(password));
   }
 
   @Override public Collection<Group> getGroups(User user) {
