@@ -3,6 +3,7 @@ package jobblett.ui;
 import static jobblett.ui.JobblettScenes.GROUP_HOME;
 import static jobblett.ui.JobblettScenes.UPDATE_SHIFT;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -112,7 +113,9 @@ public class ShiftViewController extends SceneController {
   private void updateView(List<JobShift> shifts) {
     this.shifts.getItems().clear();
     for (JobShift shift : shifts) {
-      this.shifts.getItems().add(shift);
+      if (shift.getEndingTime().isAfter(LocalDateTime.now())) {
+        this.shifts.getItems().add(shift);
+      }
     }
   }
 
