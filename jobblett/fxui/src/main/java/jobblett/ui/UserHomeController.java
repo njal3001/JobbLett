@@ -13,7 +13,7 @@ import jobblett.core.User;
 
 public class UserHomeController extends SceneController {
 
-  @FXML ListView<Group> groups;
+  @FXML ListView<Integer> groupNames;
 
   @FXML Label userFullName;
 
@@ -23,27 +23,22 @@ public class UserHomeController extends SceneController {
 
   @FXML Button joinGroupButton;
 
-
-
   @FXML public void initialize() {
-    groups.setCellFactory(groups -> new GroupListCell(getControllerMap()));
+    groupNames.setCellFactory(groups -> new GroupListCell(getControllerMap()));
   }
 
   @Override public void onSceneDisplayed() {
     // Sets full name on top of the screen
-    User activeUser = getActiveUser();
-    String givenName = activeUser.getGivenName();
-    String familyName = activeUser.getFamilyName();
-    userFullName.setText(givenName + " " + familyName);
-    groups.getItems().clear();
+    userFullName.setText(getAccess().getUserFullName(getActiveUsername()));
+    groupNames.getItems().clear();
     // Lists all groups
-    for (Group group : getAccess().getGroups(getActiveUser())) {
-      groups.getItems().add(group);
+    for (int groupId : getAccess().getAllGroupIds(getActiveUsername())) {
+      groupNames.getItems().add(groupId);
     }
   }
 
   @FXML public void logOut() {
-    setActiveUser(null);
+    setActiveUsername(null);
     switchScene(LOGIN);
   }
 

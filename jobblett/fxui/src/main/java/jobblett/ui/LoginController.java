@@ -31,6 +31,7 @@ public class LoginController extends SceneController {
     super.styleIt();
     login.setSkin(new ButtonAnimationSkin(login));
     createAccount.setSkin(new ButtonAnimationSkin(createAccount));
+    //TODO: fjernes?
     /*errorMessage.setFont(font);
     username.setFont(font);
     password.setFont(font);
@@ -41,21 +42,14 @@ public class LoginController extends SceneController {
     switchScene(CREATE_USER);
   }
 
-  /**
-   * TODO.
-   */
   @FXML public void logInToUserHome() {
-    String userName = this.usernameField.getText();
+    String username = this.usernameField.getText();
     String password = this.passwordField.getText();
-    try {
-      User user = getAccess().login(userName, password);
-      if (user == null) {
-        throw new IllegalArgumentException();
-      }
-      setActiveUser(user);
+    if(getAccess().correctPassword(username, password)){
+      getControllerMap().setActiveUsername(username);
       switchScene(USER_HOME);
-    } catch (IllegalArgumentException e) {
-      System.out.println(e.getMessage());
+    }
+    else {
       errorMessage.setText("Wrong username or password");
     }
   }

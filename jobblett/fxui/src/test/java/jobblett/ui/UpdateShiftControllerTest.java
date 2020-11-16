@@ -48,6 +48,7 @@ public class UpdateShiftControllerTest extends JobbLettTest {
     uiAssertions.assertOnScene(SHIFT_VIEW);
   }
 
+  //TODO: fjernes?
 /*
   // Denne metoden burde gjøres litt mer dekkende, altså at riktige feilmeldinger kommer opp i forhold til
   // hva som var feil med inputen
@@ -167,7 +168,7 @@ public class UpdateShiftControllerTest extends JobbLettTest {
 
   @Test public void testUpdateShift() {
     UpdateShiftController shiftController = (UpdateShiftController) getControllerMap().getController(UPDATE_SHIFT);
-    shiftController.setActiveJobShift(jobShift1);
+    shiftController.setActiveJobShiftIndex(1);
     Platform.runLater(() -> {
       shiftController.onSceneDisplayed();
     });

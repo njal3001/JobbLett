@@ -11,9 +11,11 @@ import jobblett.core.User;
 
 public class GroupHomeController extends SceneController {
 
+  //TODO: burde oppdatere navn
+
   @FXML Label groupName;
 
-  @FXML ListView<User> members;
+  @FXML ListView<String> membersInfo;
 
   @FXML Label groupId;
 
@@ -26,10 +28,10 @@ public class GroupHomeController extends SceneController {
    * TODO.
    */
   @FXML public void initialize() {
-    members.setCellFactory(members -> new GroupMemberListCell(getControllerMap()));
+    membersInfo.setCellFactory(members -> new GroupMemberListCell(getControllerMap()));
     //Sets the ListView uninteractable with the mouse and the keyboard
-    members.setMouseTransparent(true);
-    members.setFocusTraversable(false);
+    membersInfo.setMouseTransparent(true);
+    membersInfo.setFocusTraversable(false);
   }
 
   @Override public void styleIt() {
@@ -39,15 +41,15 @@ public class GroupHomeController extends SceneController {
 
   @Override public void onSceneDisplayed() {
     // Sets GroupName on top of the screen
-    groupName.setText(getActiveGroup().getGroupName());
+    groupName.setText(getAccess().getGroupName(getActiveGroupId()));
 
     // Shows GroupID
-    groupId.setText("GroupID: " + getActiveGroup().getGroupId());
+    groupId.setText("GroupID: " + getActiveGroupId());
 
-    members.getItems().clear();
+    membersInfo.getItems().clear();
     // Lists all members
-    for (User user : getActiveGroup()) {
-      members.getItems().add(user);
+    for (String username : getAccess().getGroupUsernames(getActiveGroupId())) {
+      membersInfo.getItems().add(username);
     }
   }
 

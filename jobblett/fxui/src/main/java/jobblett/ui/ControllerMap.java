@@ -15,10 +15,10 @@ public class ControllerMap {
   private HashMap<JobblettScenes, SceneController> controllerMap = new HashMap<>();
 
   // Common fields
-  private User activeUser;
-  private Group activeGroup;
+  private String activeUsername;
+  private int activeGroupId;
   private Stage stage;
-  private JobblettAccess access;
+  private WorkspaceAccess access;
 
   /**
    * Creates a instance of ControllerMap.
@@ -26,7 +26,7 @@ public class ControllerMap {
    * @param stage the stage used to load fxml-files and scenes
    * @param access used to give access for the controllers
    */
-  public ControllerMap(Stage stage, JobblettAccess access) {
+  public ControllerMap(Stage stage, WorkspaceAccess access) {
     this.stage = stage;
     this.access = access;
     for (JobblettScenes jobblettScenes : JobblettScenes.values()) {
@@ -38,24 +38,24 @@ public class ControllerMap {
     return stage;
   }
 
-  public JobblettAccess getAccess() {
+  public WorkspaceAccess getAccess() {
     return access;
   }
 
-  public User getActiveUser() {
-    return activeUser;
+  public String getActiveUsername() {
+    return activeUsername;
   }
 
-  public void setActiveUser(User activeUser) {
-    this.activeUser = activeUser;
+  public void setActiveUsername(String activeUsername) {
+    this.activeUsername = activeUsername;
   }
 
-  public Group getActiveGroup() {
-    return activeGroup;
+  public int getActiveGroupId() {
+    return activeGroupId;
   }
 
-  public void setActiveGroup(Group activeGroup) {
-    this.activeGroup = activeGroup;
+  public void setActiveGroupId(int activeGroupId) {
+    this.activeGroupId = activeGroupId;
   }
 
   public Scene getScene(JobblettScenes jobblettScenes) {

@@ -19,7 +19,7 @@ import jobblett.core.User;
 import jobblett.core.UserList;
 import jobblett.json.JobblettPersistence;
 
-public class JobblettRemoteAccess implements JobblettAccess {
+public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   public static final String JOBBLETT_SERVICE_PATH = "jobblett";
   public static final String USER_LIST_SERVICE_PATH = "userlist";
@@ -27,7 +27,7 @@ public class JobblettRemoteAccess implements JobblettAccess {
 
   private final URI endpointBaseUri;
 
-  public JobblettRemoteAccess(URI endpointBaseUri) {
+  public RemoteWorkspaceAccess(URI endpointBaseUri) {
     this.endpointBaseUri = endpointBaseUri;
   }
 

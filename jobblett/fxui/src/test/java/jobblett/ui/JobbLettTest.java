@@ -40,31 +40,35 @@ public abstract class JobbLettTest extends ApplicationTest {
     return null;
   }
 
- 
+  private Workspace workspace;
   private UserList userList;
   private GroupList groupList;
 
   @Override
   public void start(final Stage primaryStage) throws Exception {
-    //Litt rart?
-    App app = new App(false);
-    controllerMap = app.commonStart(primaryStage);
+    workspace = new Workspace();
+    controllerMap = new ControllerMap(primaryStage,
+         new DirectWorkspaceAccess(workspace));
+
     setupData();
-    getAccess().setLists(userList,groupList);
-    setActiveUser(optionalActiveUser());
-    setActiveGroup(optionalActiveGroup());
+    if(optionalActiveUser() != null) {
+      controllerMap.setActiveUsername(optionalActiveUser().getUsername());
+    }
+    if(optionalActiveGroup() != null) {
+      controllerMap.setActiveGroupId(optionalActiveGroup().getGroupId());
+    }
     controllerMap.switchScene(giveId());
     primaryStage.show();
     controller = controllerMap.getController(giveId());
   }
 
-  public JobblettAccess getAccess() {
+  public WorkspaceAccess getAccess() {
     return controllerMap.getAccess();
   }
 
   protected void setupData() {
-    userList = new UserList();
-    groupList = new GroupList();
+    userList = workspace.getUserList();
+    groupList = workspace.getGroupList();
     user1 = new User("CorrectUsername", new HashedPassword("CorrectPassword12345"), "Ole", "Dole");
     user2 = new User("CorrectUsername2", new HashedPassword("CorrectPassword12345"), "Hans", "Henrik");
     userList.add(user1);
@@ -84,22 +88,6 @@ public abstract class JobbLettTest extends ApplicationTest {
 
   protected ControllerMap getControllerMap() {
     return controllerMap;
-  }
-
-  public User getActiveUser() {
-    return getControllerMap().getActiveUser();
-  }
-
-  public void setActiveUser(User activeUser) {
-    getControllerMap().setActiveUser(activeUser);
-  }
-
-  public Group getActiveGroup() {
-    return getControllerMap().getActiveGroup();
-  }
-
-  public void setActiveGroup(Group activeGroup) {
-    getControllerMap().setActiveGroup(activeGroup);
   }
 
   @BeforeEach

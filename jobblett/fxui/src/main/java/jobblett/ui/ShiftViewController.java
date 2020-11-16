@@ -4,6 +4,7 @@ import static jobblett.ui.JobblettScenes.GROUP_HOME;
 import static jobblett.ui.JobblettScenes.UPDATE_SHIFT;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +20,9 @@ public class ShiftViewController extends SceneController {
 
   @FXML Label groupName;
 
-  @FXML ListView<JobShift> shifts;
+  // TODO: hvilket shift er definert ut i fra indeks, vet ikke
+  // om dette vil funke
+  @FXML ListView<Integer> shiftsInfo;
 
   @FXML Button backToGroup;
 
@@ -33,22 +36,34 @@ public class ShiftViewController extends SceneController {
   @FXML CheckBox toggleUserFilterCheckBox;
 
   @FXML public void initialize() {
-    shifts.setCellFactory(shifts -> new JobShiftListCell());
-    shifts.getSelectionModel().selectedItemProperty().addListener(listener -> updateButtons());
+    shiftsInfo.setCellFactory(shifts -> new JobShiftListCell(getControllerMap()));
+    shiftsInfo.getSelectionModel().selectedItemProperty().addListener(listener -> updateButtons());
   }
 
   @Override public void onSceneDisplayed() {
     // Sets group name on top of the screen
-    groupName.setText(getActiveGroup().getGroupName());
+    groupName.setText(getAccess().getGroupName(getActiveGroupId()));
     toggleUserFilterCheckBox.setSelected(false);
     updateView();
     updateButtons();
     setButtonVisibility();
+
+    //Deletes outdated shifts:
+
+    //Litt vanskelig å itere gjennom listen, mens man sletter elementer...
+    int index = 0;
+    for (int i = 0; i < getAccess().getJobShiftsSize(getActiveGroupId()); i++) {
+      if(getAccess().jobShiftIsOutdated(getActiveGroupId(), index)) {
+        getAccess().deleteJobShift(getActiveGroupId(), index);
+        index--;
+      }
+      index++;
+    }
   }
 
   private void setButtonVisibility() {
     List<Button> buttons = List.of(newShiftButton, editShiftButton, deleteShiftButton);
-    boolean visible = getActiveGroup().isAdmin(getActiveUser());
+    boolean visible = getAccess().isGroupAdmin(getActiveGroupId(), getActiveUsername());
     for (Button button : buttons) {
       button.setVisible(visible);
     }
@@ -66,10 +81,10 @@ public class ShiftViewController extends SceneController {
    * TODO.
    */
   @FXML public void goToEditShift() {
-    JobShift selectedJobShift = shifts.getSelectionModel().getSelectedItem();
+    int selectedJobShiftIndex = shiftsInfo.getSelectionModel().getSelectedIndex();
     SceneController sceneController = getControllerMap().getController(UPDATE_SHIFT);
     UpdateShiftController newController = (UpdateShiftController) sceneController;
-    newController.setActiveJobShift(selectedJobShift);
+    newController.setActiveJobShiftIndex(selectedJobShiftIndex);
     switchScene(UPDATE_SHIFT);
   }
 
@@ -77,10 +92,9 @@ public class ShiftViewController extends SceneController {
    * TODO.
    */
   @FXML public void handleDeleteShift() {
-    int index = shifts.getSelectionModel().getSelectedIndex();
-    JobShift selectedJobShift = shifts.getItems().get(index);
-    if (selectedJobShift != null) {
-      getActiveGroup().getJobShiftList().remove(selectedJobShift);
+    int index = shiftsInfo.getSelectionModel().getSelectedIndex();
+    if (index != - 1) {
+      getAccess().deleteJobShift(getActiveGroupId(), index);
       updateView();
     }
   }
@@ -93,34 +107,30 @@ public class ShiftViewController extends SceneController {
   @FXML public void toggleUserFilter(ActionEvent event) {
     CheckBox checkBox = (CheckBox) event.getSource();
     if (checkBox.isSelected()) {
-      updateView(getActiveUser());
+      updateView(getActiveUsername());
     } else {
       updateView();
     }
   }
 
-  // Burde kanskje bruke observable for å kalle på denne metoden
   // Lists all job shifts
   private void updateView() {
-    //Endre metode navn kanskje?
-    updateView(getActiveGroup().getJobShiftList().getJobShifts());
+    shiftsInfo.getItems().clear();
+    for (int i = 0; i < getAccess().getJobShiftsSize(getActiveGroupId()); i++) {
+        shiftsInfo.getItems().add(i);
+    }
   }
 
-  private void updateView(User user) {
-    updateView(getActiveGroup().getJobShiftList().getJobShifts(user));
-  }
-
-  private void updateView(List<JobShift> shifts) {
-    this.shifts.getItems().clear();
-    for (JobShift shift : shifts) {
-      if (shift.getEndingTime().isAfter(LocalDateTime.now())) {
-        this.shifts.getItems().add(shift);
-      }
+  private void updateView(String username) {
+    List<Integer> shiftIndexes = getAccess().getJobShiftIndexes(getActiveGroupId(), username);
+    shiftsInfo.getItems().clear();
+    for (int shiftIndex : shiftIndexes) {
+        shiftsInfo.getItems().add(shiftIndex);
     }
   }
 
   private void updateButtons() {
-    boolean disable = shifts.getSelectionModel().getSelectedIndex() == -1;
+    boolean disable = shiftsInfo.getSelectionModel().getSelectedIndex() == -1;
     editShiftButton.setDisable(disable);
     deleteShiftButton.setDisable(disable);
   }
