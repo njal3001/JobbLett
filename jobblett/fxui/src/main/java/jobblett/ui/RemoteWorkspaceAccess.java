@@ -170,6 +170,9 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   @Override
   public void addGroupAdmin(int groupId, String username) {
     // TODO Auto-generated method stub
+    Group group = getGroup(groupId);
+    group.addAdmin(group.getUser(username));
+
 
   }
 
@@ -182,7 +185,6 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   public void updateJobShift(int groupId, int index, String username, LocalDateTime startingTime, Duration duration,
       String info) {
     // TODO Auto-generated method stub
-
 
 
   }
