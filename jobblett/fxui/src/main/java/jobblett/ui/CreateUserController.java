@@ -90,7 +90,7 @@ public class CreateUserController extends SceneController {
     String givenName = this.givenNameField.getText();
     String familyName = this.familyNameField.getText();
 
-    try{
+    try {
       getAccess().addUser(username, password, givenName, familyName);
       setActiveUsername(username);
       switchScene(USER_HOME);

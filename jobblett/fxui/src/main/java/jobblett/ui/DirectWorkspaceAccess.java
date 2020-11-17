@@ -48,8 +48,8 @@ public class DirectWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public void addUser(String username, String password, String givenName, String familyName) {
-      User newUser = new User(username, new HashedPassword(password), givenName, familyName);
-      workspace.getUserList().add(newUser);
+    User newUser = new User(username, new HashedPassword(password), givenName, familyName);
+    workspace.getUserList().add(newUser);
   }
 
   @Override
@@ -88,7 +88,7 @@ public class DirectWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public boolean hasGroup(int groupId) {
-     return workspace.getGroupList().get(groupId) != null;
+    return workspace.getGroupList().get(groupId) != null;
   }
 
   @Override
@@ -99,15 +99,15 @@ public class DirectWorkspaceAccess implements WorkspaceAccess {
   @Override
   public Collection<Integer> getAllGroupIds(String username) {
     Collection<Integer> allIds = new ArrayList<>();
-    workspace.getGroupList().getGroups(getUser(username)).
-        stream().forEach((group) -> allIds.add(group.getGroupId()));
+    workspace.getGroupList().getGroups(getUser(username))
+        .stream().forEach((group) -> allIds.add(group.getGroupId()));
     return allIds;
   }
 
   @Override
   public Collection<String> getGroupUsernames(int groupId) {
     Collection<String> allUsernames = new ArrayList<>();
-        getGroup(groupId).forEach((user) -> allUsernames.add(user.getUsername()));
+    getGroup(groupId).forEach((user) -> allUsernames.add(user.getUsername()));
     return allUsernames;
   }
 
@@ -138,8 +138,8 @@ public class DirectWorkspaceAccess implements WorkspaceAccess {
   }
 
   @Override
-  public void updateJobShift(int groupId, int index, String username, LocalDateTime startingTime, Duration duration,
-      String info) {
+  public void updateJobShift(int groupId, int index, String username, 
+      LocalDateTime startingTime, Duration duration, String info) {
     JobShift jobShift = getJobShift(groupId, index);
     jobShift.setUser(getUser(username));
     jobShift.setStartingTime(startingTime);
@@ -154,8 +154,8 @@ public class DirectWorkspaceAccess implements WorkspaceAccess {
   }
 
   @Override
-  public void addJobShift(String username, int groupId, String jobShiftUsername, LocalDateTime startingTime
-      , Duration duration, String info) {
+  public void addJobShift(String username, int groupId, String jobShiftUsername, 
+      LocalDateTime startingTime, Duration duration, String info) {
     JobShift jobShift = new JobShift(getUser(jobShiftUsername), startingTime, duration, info);
     getGroup(groupId).addJobShift(jobShift, getUser(username));
   }
@@ -168,8 +168,8 @@ public class DirectWorkspaceAccess implements WorkspaceAccess {
   @Override
   public List<Integer> getJobShiftIndexes(int groupId, String username) {
     List<Integer> indexes = new ArrayList<>();
-    List<JobShift> jobShifts = getGroup(groupId).getJobShiftList().
-        getJobShifts(getUser(username));
+    List<JobShift> jobShifts = getGroup(groupId).getJobShiftList()
+        .getJobShifts(getUser(username));
     jobShifts.stream().forEach((jobShift) -> indexes.add(jobShifts.indexOf(jobShift)));
     return indexes;
   }

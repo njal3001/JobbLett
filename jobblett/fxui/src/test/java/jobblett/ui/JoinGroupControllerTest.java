@@ -27,7 +27,7 @@ public class JoinGroupControllerTest extends JobbLettTest {
     uiAssertions.assertLabel("groupName", group2.getGroupName());
     clickOn("#backToHome");
     uiAssertions.assertOnScene(USER_HOME);
-    uiAssertions.assertListViewHasItem("groups", group2);
+    uiAssertions.assertListViewHasItem("groups", group2.getGroupId());
   }
 
   @Test public void testJoinGroup_invalidGroupId() {

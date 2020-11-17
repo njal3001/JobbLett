@@ -28,7 +28,8 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     HttpRequest requestObject = null;
     try {
       requestObject =
-          HttpRequest.newBuilder(endpointBaseUri.resolve(new URI(url))).header("Accept", "application/json").build();
+          HttpRequest.newBuilder(endpointBaseUri.resolve(new URI(url)))
+              .header("Accept", "application/json").build();
       HttpResponse<String> responseObject =
           HttpClient.newBuilder().build().send(requestObject, HttpResponse.BodyHandlers.ofString());
       String responseObjectBody = responseObject.body();
@@ -43,8 +44,10 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   private <T> T post(Class<T> t, String urlString, String body) {
     try {
       HttpRequest requestObject =
-          HttpRequest.newBuilder(endpointBaseUri.resolve(new URI(urlString))).header("Accept", "application/json")
-              .header("Content-Type", "application/json").POST(HttpRequest.BodyPublishers.ofString(body)).build();
+          HttpRequest.newBuilder(endpointBaseUri.resolve(new URI(urlString)))
+              .header("Accept", "application/json")
+              .header("Content-Type", "application/json")
+              .POST(HttpRequest.BodyPublishers.ofString(body)).build();
       HttpResponse<String> responseObject =
           HttpClient.newBuilder().build().send(requestObject, HttpResponse.BodyHandlers.ofString());
       String responseObjectBody = responseObject.body();
@@ -60,8 +63,10 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   private void put(String urlString, String body) {
     try {
       HttpRequest requestObject =
-          HttpRequest.newBuilder(endpointBaseUri.resolve(new URI(urlString))).header("Accept", "application/json")
-              .header("Content-Type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(body)).build();
+          HttpRequest.newBuilder(endpointBaseUri.resolve(new URI(urlString)))
+              .header("Accept", "application/json")
+              .header("Content-Type", "application/json")
+              .PUT(HttpRequest.BodyPublishers.ofString(body)).build();
       HttpClient.newBuilder().build().send(requestObject, HttpResponse.BodyHandlers.ofString());
 
     } catch (IOException | InterruptedException | URISyntaxException e) {
@@ -161,8 +166,8 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   }
 
   @Override
-  public void updateJobShift(int groupId, int index, String username, LocalDateTime startingTime, Duration duration,
-      String info) {
+  public void updateJobShift(int groupId, int index, String username, 
+      LocalDateTime startingTime, Duration duration, String info) {
     // TODO Auto-generated method stub
 
   }
@@ -174,7 +179,8 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   }
 
   @Override
-  public void addJobShift(String username, int groupId, String jobShiftUsername, LocalDateTime startingTime,
+  public void addJobShift(String username, int groupId, 
+      String jobShiftUsername, LocalDateTime startingTime,
       Duration duration, String info) {
     // TODO Auto-generated method stub
 

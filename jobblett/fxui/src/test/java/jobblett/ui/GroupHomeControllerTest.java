@@ -32,8 +32,8 @@ public class GroupHomeControllerTest extends JobbLettTest {
 
   @Test
   public void testMembersShowingInView() {
-    uiAssertions.assertListViewHasItem("members", user1);
-    uiAssertions.assertListViewHasItem("members", user2);
+    uiAssertions.assertListViewHasItem("members", user1.getUsername());
+    uiAssertions.assertListViewHasItem("members", user2.getUsername());
   }
 
   @Test
@@ -47,7 +47,7 @@ public class GroupHomeControllerTest extends JobbLettTest {
     Collection<User> admins = group1.getAdmins();
     assertNotEquals(0, admins.size(), "Every group should have admin. This group has no ones");
     // checking that all of the members are shown in the listView
-    admins.forEach(admin -> uiAssertions.assertListViewHasItem("members", admin));
+    admins.forEach(admin -> uiAssertions.assertListViewHasItem("members", admin.getUsername()));
     // all of the admins shall be on the top of the listview
     for (int i = 0; i < admins.size(); i++) {
       uiAssertions.assertBoldText(uiAssertions.findListCell(i));

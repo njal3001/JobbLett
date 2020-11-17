@@ -33,11 +33,15 @@ public class CreateGroupController extends SceneController {
    */
   @FXML public void createGroup() {
     String groupName = groupNameField.getText();
-    int groupId = getAccess().newGroup(groupName);
-    getAccess().addGroupUser(groupId, getActiveUsername());
-    // The first member to join the group becomes admin
-    getAccess().addGroupAdmin(groupId, getActiveUsername());
-    setActiveGroupId(groupId);
-    switchScene(GROUP_HOME);
+    try {
+      int groupId = getAccess().newGroup(groupName);
+      getAccess().addGroupUser(groupId, getActiveUsername());
+      // The first member to join the group becomes admin
+      getAccess().addGroupAdmin(groupId, getActiveUsername());
+      setActiveGroupId(groupId);
+      switchScene(GROUP_HOME);
+    } catch (Exception e) {
+      errorMessage.setText(e.getMessage());
+    }
   }
 }

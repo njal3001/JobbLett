@@ -20,7 +20,7 @@ public class UserHomeControllerTest extends JobbLettTest {
   }
 
   @Test public void testGroupsView_initialGroup() {
-    uiAssertions.assertListViewHasItem("groups", group1);
+    uiAssertions.assertListViewHasItem("groups", group1.getGroupId());
   }
 
   @Test public void testGoTo_GroupHome() {

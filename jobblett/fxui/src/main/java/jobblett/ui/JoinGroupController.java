@@ -61,17 +61,13 @@ public class JoinGroupController extends SceneController {
       errorMessage.setText("No group has the given ID");
       return;
     }
-    if (getAccess().hasGroupUser(groupId, getActiveUsername())) {
-      errorMessage.setText("You are already a member of this group");
-      return;
-    }
     try {
       getAccess().addGroupUser(groupId, getActiveUsername());
       setActiveGroupId(groupId);
       switchScene(GROUP_HOME);
+    } catch (Exception e) {
+      errorMessage.setText(e.getMessage());
     }
-    catch (Exception e) {
-      errorMessage.setText("Something went wrong");
-    }
+
   }
 }

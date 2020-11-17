@@ -14,7 +14,7 @@ public class JobShiftListCell extends ListCell<Integer> {
   @Override public void updateItem(Integer jobShiftIndex, boolean empty) {
     super.updateItem(jobShiftIndex, empty);
     setGraphic(null);
-    if (empty || jobShiftIndex == null ) {
+    if (empty || jobShiftIndex == null) {
       setText(null);
       return;
     }

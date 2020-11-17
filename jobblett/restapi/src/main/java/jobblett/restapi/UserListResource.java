@@ -41,7 +41,7 @@ public class UserListResource extends RestApiClass {
   /**
    * Returns UserResource of a user with the same username (if one exist).
    *
-   * @param userName user's username
+   * @param username user's username
    * @return UserResource
    */
   @Path("/get/{username}")
