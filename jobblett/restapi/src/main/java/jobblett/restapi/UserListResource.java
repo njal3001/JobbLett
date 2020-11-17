@@ -47,7 +47,7 @@ public class UserListResource extends RestApiClass {
    */
   @GET
   @Path("/get/{userName}")
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON) // TODO trengs denne? sjekk dette på alle
   public UserResource getUser(@PathParam("userName") String userName) {
     checkUsername(userName);
     User user = userList.get(userName);
@@ -62,11 +62,11 @@ public class UserListResource extends RestApiClass {
    * @return boolean
    */
   @GET
-  @Path("/contains/{userName}")
+  @Path("/exist/{userName}")
   @Produces(MediaType.APPLICATION_JSON)
-  public boolean hasUser(@PathParam("userName") String userName) {
+  public boolean exist(@PathParam("userName") String userName) {
     boolean exist = (userList.get(userName) != null);
-    LOG.debug("Returns if the user " + userName + ": " + exist);
+    LOG.debug("Returns if the user " + userName + "exist: " + exist);
     return exist;
   }
 

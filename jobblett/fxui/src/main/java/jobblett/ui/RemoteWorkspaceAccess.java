@@ -8,9 +8,13 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import jobblett.core.Group;
+import jobblett.core.GroupList;
 import jobblett.core.HashedPassword;
 import jobblett.core.User;
 import jobblett.json.JobblettPersistence;
@@ -18,8 +22,9 @@ import jobblett.json.JobblettPersistence;
 public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   public static final String JOBBLETT_SERVICE_PATH = "jobblett";
-  public static final String USER_LIST_SERVICE_PATH = "userlist";
-  public static final String GROUP_LIST_SERVICE_PATH = "grouplist";
+  public static final String USER_LIST_RESOURCE_PATH = "userlist";
+  public static final String GROUP_LIST_RESOURCE_PATH = "grouplist";
+  public static final String JOB_SHIFT_LIST_RESOURCE_PATH = "shifts";
 
   private final URI endpointBaseUri;
 
@@ -83,73 +88,82 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   public void addUser(String username, String password, String givenName, String familyName) {
     User user = new User(username,new HashedPassword(password), givenName, familyName);
     String serializedUser = new JobblettPersistence().writeValueAsString(user);
-    put(USER_LIST_SERVICE_PATH + "/add", serializedUser);
+    put(USER_LIST_RESOURCE_PATH + "/add", serializedUser);
   }
 
   @Override
   public boolean hasUser(String username) {
-    //get();
-    return false;
+    return get(Boolean.class, USER_LIST_RESOURCE_PATH + "/exist/"+username);
+  }
+
+  private User getUser(String userName) {
+    return get(User.class, userName);
   }
 
   @Override
-  public boolean correctPassword(String username, String password) {
-    // TODO Auto-generated method stub
-    return false;
+  public boolean correctPassword(String username, String passwordString) {
+    HashedPassword password = HashedPassword.alreadyHashed(passwordString);
+    return getUser(username).getPassword().matches(password);
   }
 
   @Override
-  public String getUserFullName(String username) {
-    // TODO Auto-generated method stub
-    return null;
+  public String getUserFullName(String userName) {
+    User user = getUser(userName);
+    return user.getGivenName()+" "+user.getFamilyName();
   }
 
   @Override
-  public String getUserToString(String username) {
-    // TODO Auto-generated method stub
-    return null;
+  public String getUserToString(String userName) {
+    return getUser(userName).toString();
   }
 
   @Override
   public int newGroup(String groupName) {
-    // TODO Auto-generated method stub
-    return 0;
+    Group group =  get(Group.class, GROUP_LIST_RESOURCE_PATH +"/new/"+groupName);
+    return group.getGroupId();
   }
 
   @Override
   public boolean hasGroup(int groupId) {
-    // TODO Auto-generated method stub
-    return false;
+    return get(Boolean.class, GROUP_LIST_RESOURCE_PATH +"/exist/" + groupId);
+  }
+
+  private Group getGroup(int groupId) {
+    return get(Group.class, GROUP_LIST_RESOURCE_PATH +"/get/" + groupId);
   }
 
   @Override
   public String getGroupName(int groupId) {
-    // TODO Auto-generated method stub
-    return null;
+    return getGroup(groupId).getGroupName();
   }
 
   @Override
   public Collection<Integer> getAllGroupIds(String username) {
-    // TODO Auto-generated method stub
-    return null;
+    GroupList groupList = get(GroupList.class, GROUP_LIST_RESOURCE_PATH);
+    return groupList.stream()
+        .map(Group::getGroupId)
+        .collect(Collectors.toList());
   }
 
   @Override
   public Collection<String> getGroupUsernames(int groupId) {
-    // TODO Auto-generated method stub
-    return null;
+    Group group = getGroup(groupId);
+    Collection<String> userNames = new ArrayList<>();
+    group.forEach(user -> userNames.add(user.getUsername()));
+    return userNames;
   }
 
   @Override
-  public void addGroupUser(int groupId, String username) {
-    // TODO Auto-generated method stub
-
+  public void addGroupUser(int groupId, String userName) {
+    User user = getUser(userName);
+    String serializedUser = new JobblettPersistence().writeValueAsString(user);
+    put(GROUP_LIST_RESOURCE_PATH +"/get/"+groupId+"/add", serializedUser);
   }
 
   @Override
   public boolean hasGroupUser(int groupId, String username) {
-    // TODO Auto-generated method stub
-    return false;
+    Group group = getGroup(groupId);
+    return group.getUser(username)!=null;
   }
 
   @Override
@@ -160,8 +174,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public boolean isGroupAdmin(int groupId, String username) {
-    // TODO Auto-generated method stub
-    return false;
+    return get(Boolean.class, GROUP_LIST_RESOURCE_PATH +"/get/"+groupId+"/isAdmin/"+username);
   }
 
   @Override

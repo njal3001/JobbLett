@@ -54,6 +54,20 @@ public class GroupListResource extends RestApiClass {
   }
 
   /**
+   * Delegates to the right GroupResource by using the GroupID.
+   *
+   * @param groupIdString GroupID as a string
+   * @return GroupResource instance
+   */
+  @Path("/exist/{groupIdString}")
+  public boolean exist(@PathParam("groupIdString") String groupIdString) {
+    int groupId = Integer.parseInt(groupIdString);
+    boolean exist = groupList.get(groupId) != null;
+    debug("Returns if the group " + groupIdString + "exist: " + exist);
+    return exist;
+  }
+
+  /**
    * Creates a new Group with the specified groupName.
    *
    * @param groupName the specified groupName
@@ -100,6 +114,7 @@ public class GroupListResource extends RestApiClass {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/replaceGroup/")
+  // TODO Maybe unnecessary
   public boolean replaceGroup(Group group) {
     Collection<Integer> groupIds = groupList
         .stream()
