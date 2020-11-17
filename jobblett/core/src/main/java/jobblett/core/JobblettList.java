@@ -133,11 +133,13 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
   }
 
   protected String simpleTypeName() {
-    ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
+    /*ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
     String fullTypeName = parameterizedType.getActualTypeArguments()[1].getTypeName();
     String[] splitTypeName = fullTypeName.split("\\.");
     String simpleTypeName = splitTypeName[splitTypeName.length - 1];
-    return simpleTypeName;
+    return simpleTypeName;*/
+    // TODO
+    return "Instance of JobblettList";
   }
 
   protected abstract K identifier(T t);

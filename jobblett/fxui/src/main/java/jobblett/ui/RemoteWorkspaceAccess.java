@@ -10,6 +10,9 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+
+import jobblett.core.HashedPassword;
+import jobblett.core.User;
 import jobblett.json.JobblettPersistence;
 
 public class RemoteWorkspaceAccess implements WorkspaceAccess {
@@ -78,13 +81,14 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public void addUser(String username, String password, String givenName, String familyName) {
-    // TODO Auto-generated method stub
-
+    User user = new User(username,new HashedPassword(password), givenName, familyName);
+    String serializedUser = new JobblettPersistence().writeValueAsString(user);
+    put(USER_LIST_SERVICE_PATH + "/add", serializedUser);
   }
 
   @Override
   public boolean hasUser(String username) {
-    // TODO Auto-generated method stub
+    //get();
     return false;
   }
 
