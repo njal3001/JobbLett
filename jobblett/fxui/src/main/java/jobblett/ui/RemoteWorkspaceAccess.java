@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import jobblett.core.Group;
 import jobblett.core.GroupList;
 import jobblett.core.HashedPassword;
+import jobblett.core.JobShift;
 import jobblett.core.User;
 import jobblett.json.JobblettPersistence;
 
@@ -211,33 +212,35 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     return null;
   }
 
+  private JobShift getJobShift(int groupId, int index) {
+    return get(
+        JobShift.class,
+        GROUP_LIST_RESOURCE_PATH+"/get/"+groupId+"/"+JOB_SHIFT_LIST_RESOURCE_PATH+"/get/"+index
+    );
+
+  }
   @Override
   public String getJobShiftUsername(int groupId, int index) {
-    // TODO Auto-generated method stub
-    return null;
+    return getJobShift(groupId, index).getUser().getUsername();
   }
 
   @Override
   public LocalDateTime getJobShiftStartingTime(int groupId, int index) {
-    // TODO Auto-generated method stub
-    return null;
+    return getJobShift(groupId, index).getStartingTime();
   }
 
   @Override
   public LocalDateTime getJobShiftEndingTime(int groupId, int index) {
-    // TODO Auto-generated method stub
-    return null;
+    return getJobShift(groupId, index).getStartingTime();
   }
 
   @Override
   public String getJobShiftInfo(int groupId, int index) {
-    // TODO Auto-generated method stub
-    return null;
+    return getJobShift(groupId, index).getInfo();
   }
 
   @Override
   public boolean jobShiftIsOutdated(int groupId, int index) {
-    // TODO Auto-generated method stub
-    return false;
+    return getJobShift(groupId, index).isOutDated();
   }
 }
