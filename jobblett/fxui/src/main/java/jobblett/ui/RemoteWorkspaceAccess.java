@@ -185,6 +185,8 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   public void updateJobShift(int groupId, int index, String username, LocalDateTime startingTime, Duration duration,
       String info) {
     // TODO Auto-generated method stub
+    //JobShift jobShift = new JobShift(getUser(username),startingTime, duration, info);
+    //put(GROUP_LIST_RESOURCE_PATH+"/get/"+groupId+JOB_SHIFT_LIST_RESOURCE_PATH+"/get/"+index+"/update"+jobShift,);
 
 
   }
