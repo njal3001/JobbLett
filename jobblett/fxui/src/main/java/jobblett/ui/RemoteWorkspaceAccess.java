@@ -182,6 +182,8 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
       String info) {
     // TODO Auto-generated method stub
 
+
+
   }
 
   @Override
@@ -200,7 +202,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   @Override
   public int getJobShiftsSize(int groupId) {
     // TODO Auto-generated method stub
-    return 0;
+    return getGroup(groupId).getJobShiftList().size();
   }
 
   @Override
