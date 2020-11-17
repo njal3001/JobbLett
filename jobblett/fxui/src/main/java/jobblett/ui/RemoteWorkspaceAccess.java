@@ -191,8 +191,9 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   @Override
   public void deleteJobShift(int groupId, int index) {
     // TODO Auto-generated method stub
-
-
+    JobShift jobShift = getJobShift(groupId, index);
+    String serilizedJobshift = new JobblettPersistence().writeValueAsString(jobShift);
+    put(GROUP_LIST_RESOURCE_PATH+"/get/"+groupId+JOB_SHIFT_LIST_RESOURCE_PATH+"/remove/"+String.valueOf(index), serilizedJobshift);
 
   }
 
