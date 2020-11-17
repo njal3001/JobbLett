@@ -56,6 +56,18 @@ public class GroupResource extends RestApiClass {
     return group.isAdmin(user);
   }
 
+  @GET
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("/addAdmin/{userName}")
+  public boolean addAdmin(@PathParam("userName") String userName) {
+    User user = group.getUser(userName);
+    if (user == null) {
+      return false;
+    }
+    debug("If admin is added: "+ userName);
+    return group.addAdmin(user);
+  }
+
   /**
    * Returns JobShiftResource.
    *

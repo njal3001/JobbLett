@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 
 public class GroupListResource extends RestApiClass {
-  public static final String GROUP_LIST_SERVICE_PATH = "grouplist";
+  public static final String GROUP_LIST_RESCORCE_PATH = "grouplist";
   protected static final Logger LOG = LoggerFactory.getLogger(GroupListResource.class);
 
   private GroupList groupList;
