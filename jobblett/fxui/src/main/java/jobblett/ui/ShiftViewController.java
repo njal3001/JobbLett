@@ -49,7 +49,7 @@ public class ShiftViewController extends SceneController {
     //Litt vanskelig å itere gjennom listen, mens man sletter elementer...
     int index = 0;
     for (int i = 0; i < getAccess().getJobShiftsSize(getActiveGroupId()); i++) {
-      if(getAccess().jobShiftIsOutdated(getActiveGroupId(), index)) {
+      if (getAccess().jobShiftIsOutdated(getActiveGroupId(), index)) {
         getAccess().deleteJobShift(getActiveGroupId(), index);
         index--;
       }
@@ -115,7 +115,7 @@ public class ShiftViewController extends SceneController {
   private void updateView() {
     shifts.getItems().clear();
     for (int i = 0; i < getAccess().getJobShiftsSize(getActiveGroupId()); i++) {
-        shifts.getItems().add(i);
+      shifts.getItems().add(i);
     }
   }
 
@@ -123,7 +123,7 @@ public class ShiftViewController extends SceneController {
     List<Integer> shiftIndexes = getAccess().getJobShiftIndexes(getActiveGroupId(), username);
     shifts.getItems().clear();
     for (int shiftIndex : shiftIndexes) {
-        shifts.getItems().add(shiftIndex);
+      shifts.getItems().add(shiftIndex);
     }
   }
 

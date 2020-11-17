@@ -69,8 +69,7 @@ public class JoinGroupController extends SceneController {
       getAccess().addGroupUser(groupId, getActiveUsername());
       setActiveGroupId(groupId);
       switchScene(GROUP_HOME);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       errorMessage.setText("Something went wrong");
     }
   }

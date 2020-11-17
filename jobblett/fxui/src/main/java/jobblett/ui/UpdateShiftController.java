@@ -120,10 +120,12 @@ public class UpdateShiftController extends SceneController {
     } else {
       // Update existing JobShift
       members.getSelectionModel().select(activeJobShiftIndex);
-      LocalDateTime startingTime = getAccess().getJobShiftStartingTime(getActiveGroupId(), activeJobShiftIndex);
+      LocalDateTime startingTime = getAccess()
+          .getJobShiftStartingTime(getActiveGroupId(), activeJobShiftIndex);
       String fromTime = startingTime.format(App.EXPECTED_TIME_FORMAT);
-      String toTime =
-          getAccess().getJobShiftEndingTime(getActiveGroupId(), activeJobShiftIndex).format(App.EXPECTED_TIME_FORMAT);
+      String toTime = getAccess()
+          .getJobShiftEndingTime(getActiveGroupId(), activeJobShiftIndex)
+          .format(App.EXPECTED_TIME_FORMAT);
       date.setValue(startingTime.toLocalDate());
       fromField.setText(fromTime);
       toField.setText(toTime);
@@ -160,7 +162,14 @@ public class UpdateShiftController extends SceneController {
         getAccess().deleteJobShift(getActiveGroupId(), activeJobShiftIndex);
       }
       //TODO: kan være at den slette shift uten at et nytt et faktisk blir lagt til..
-      getAccess().addJobShift(getActiveUsername(), getActiveGroupId(), username, startingTime, duration, info);
+      getAccess().addJobShift(
+          getActiveUsername(),
+          getActiveGroupId(),
+          username,
+          startingTime,
+          duration,
+          info
+      );
       goBack();
     } catch (Exception e) {
       errorMessage.setText(e.getMessage());

@@ -50,6 +50,9 @@ public class LoginController extends SceneController {
     switchScene(CREATE_USER);
   }
 
+  /**
+   * Logging the user in.
+   */
   @FXML
   public void logInToUserHome() {
     String username = this.usernameField.getText();

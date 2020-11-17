@@ -1,9 +1,9 @@
 package jobblett.ui;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
-import java.time.Duration;
 
 public interface WorkspaceAccess {
 
@@ -37,11 +37,13 @@ public interface WorkspaceAccess {
 
   boolean isGroupAdmin(int groupId, String username);
 
-  void updateJobShift(int groupId, int index, String username, LocalDateTime startingTime, Duration duration, String info);
+  void updateJobShift(int groupId, int index, String username,
+      LocalDateTime startingTime, Duration duration, String info);
 
   void deleteJobShift(int groupId, int index);
 
-  void addJobShift(String username, int groupId, String jobShiftUsername, LocalDateTime startingTime, Duration duration, String info);
+  void addJobShift(String username, int groupId, String jobShiftUsername,
+      LocalDateTime startingTime, Duration duration, String info);
 
   int getJobShiftsSize(int groupId);
 

@@ -1,5 +1,7 @@
 package jobblett.restapi;
 
+import static jobblett.restapi.JobShiftListResource.JOB_SHIFT_LIST_RESOURCE_PATH;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.ws.rs.Consumes;
@@ -16,7 +18,6 @@ import jobblett.core.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static jobblett.restapi.JobShiftListResource.JOB_SHIFT_LIST_RESOURCE_PATH;
 
 public class GroupResource extends RestApiClass {
   private Group group;
@@ -45,6 +46,12 @@ public class GroupResource extends RestApiClass {
     group.addUser(user);
   }
 
+  /**
+   * Checks if user with the username is admin.
+   *
+   * @param userName users's username
+   * @return if admin or not
+   */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/isAdmin/{userName}")
@@ -56,6 +63,12 @@ public class GroupResource extends RestApiClass {
     return group.isAdmin(user);
   }
 
+  /**
+   * Adds user with the username as admin.
+   *
+   * @param userName user's username
+   * @return admin added or not
+   */
   @GET
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/addAdmin/{userName}")
@@ -64,7 +77,7 @@ public class GroupResource extends RestApiClass {
     if (user == null) {
       return false;
     }
-    debug("If admin is added: "+ userName);
+    debug("If admin is added: " + userName);
     return group.addAdmin(user);
   }
 

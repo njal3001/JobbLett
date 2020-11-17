@@ -58,8 +58,7 @@ public class App extends Application {
       } catch (URISyntaxException e) {
         e.printStackTrace();
       }
-    }
-    else {
+    } else {
       //TODO: Vet ikke om dette funker...
       access = new DirectWorkspaceAccess(new JobblettPersistence().readValue(Workspace.class));
     }

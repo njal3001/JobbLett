@@ -82,6 +82,7 @@ public class GroupListResource extends RestApiClass {
     debug("New group: " + group);
     return group;
   }
+
   /**
    * Returns a list of groups which has the specified User as a group member.
    *
