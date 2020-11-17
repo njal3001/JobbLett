@@ -190,17 +190,19 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public void deleteJobShift(int groupId, int index) {
-    // TODO Auto-generated method stub
     JobShift jobShift = getJobShift(groupId, index);
     String serilizedJobshift = new JobblettPersistence().writeValueAsString(jobShift);
-    put(GROUP_LIST_RESOURCE_PATH+"/get/"+groupId+JOB_SHIFT_LIST_RESOURCE_PATH+"/remove/"+String.valueOf(index), serilizedJobshift);
+    put(GROUP_LIST_RESOURCE_PATH+"/get/"+groupId+JOB_SHIFT_LIST_RESOURCE_PATH+"/remove/"+index, serilizedJobshift);
 
   }
 
   @Override
   public void addJobShift(String username, int groupId, String jobShiftUsername, LocalDateTime startingTime,
       Duration duration, String info) {
-    // TODO Auto-generated method stub
+
+    JobShift jobShift = new JobShift(getUser(jobShiftUsername), startingTime, duration, info);
+    String serializedJobshift = new JobblettPersistence().writeValueAsString(jobShift);
+    put(GROUP_LIST_RESOURCE_PATH+"/get/"+groupId+JOB_SHIFT_LIST_RESOURCE_PATH+"/add", serializedJobshift);
 
   }
 
@@ -211,8 +213,8 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public List<Integer> getJobShiftIndexes(int groupId, String username) {
-    // TODO Auto-generated method stub
     return null;
+
   }
 
   private JobShift getJobShift(int groupId, int index) {

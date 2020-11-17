@@ -101,7 +101,7 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
     return list.size();
   }
 
-  protected int indexOf(T t) {
+  public int indexOf(T t) {
     return list.indexOf(t);
   }
 
