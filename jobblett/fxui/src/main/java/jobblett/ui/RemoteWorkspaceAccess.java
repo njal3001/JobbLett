@@ -170,9 +170,8 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public void addGroupAdmin(int groupId, String username) {
-    // TODO Auto-generated method stub
-
-
+    String serializedUser = new JobblettPersistence().writeValueAsString(getUser(username));
+    get(User.class,GROUP_LIST_RESOURCE_PATH+"/get/"+groupId+"/addAdmin/"+username);
 
   }
 
@@ -184,16 +183,16 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   @Override
   public void updateJobShift(int groupId, int index, String username, LocalDateTime startingTime, Duration duration,
       String info) {
-    // TODO Auto-generated method stub
-    //JobShift jobShift = new JobShift(getUser(username),startingTime, duration, info);
-    //put(GROUP_LIST_RESOURCE_PATH+"/get/"+groupId+JOB_SHIFT_LIST_RESOURCE_PATH+"/get/"+index+"/update"+jobShift,);
-
-
+    JobShift jobShift = new JobShift(getUser(username), startingTime, duration, info);
+    String serializedJobshift = new JobblettPersistence().writeValueAsString(jobShift);
+    put(GROUP_LIST_RESOURCE_PATH+"/get/"+groupId+JOB_SHIFT_LIST_RESOURCE_PATH+"/get/"+index+"/update", serializedJobshift);
   }
 
   @Override
   public void deleteJobShift(int groupId, int index) {
     // TODO Auto-generated method stub
+
+
 
   }
 
@@ -206,7 +205,6 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public int getJobShiftsSize(int groupId) {
-    // TODO Auto-generated method stub
     return get(JobShiftList.class, GROUP_LIST_RESOURCE_PATH+"/get/"+groupId+JOB_SHIFT_LIST_RESOURCE_PATH).size();
   }
 

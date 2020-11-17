@@ -56,6 +56,18 @@ public class GroupResource extends RestApiClass {
     return group.isAdmin(user);
   }
 
+  @GET
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("/addAdmin/{userName}")
+  public boolean addAdmin(@PathParam("userName") String userName) {
+    User user = group.getUser(userName);
+    if (user == null) {
+      return false;
+    }
+    debug("If admin is added: "+ userName);
+    return group.addAdmin(user);
+  }
+
   /**
    * Returns JobShiftResource.
    *
@@ -65,7 +77,7 @@ public class GroupResource extends RestApiClass {
   @Path("/" + JOB_SHIFT_LIST_RESOURCE_PATH)
   @Produces(MediaType.APPLICATION_JSON)
   public JobShiftListResource getUser() {
-    LOG.debug("Sub-resource for JobShiftList in Group: " + group);
+    debug("Sub-resource for JobShiftList in Group: " + group);
     return new JobShiftListResource(group.getJobShiftList());
   }
 
