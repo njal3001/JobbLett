@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 
 public class UserListResource extends RestApiClass {
-  public static final String USER_LIST_SERVICE_PATH = "userlist";
+  public static final String USER_LIST_RESCORCE_PATH = "userlist";
   protected static final Logger LOG = LoggerFactory.getLogger(UserListResource.class);
 
   private UserList userList;

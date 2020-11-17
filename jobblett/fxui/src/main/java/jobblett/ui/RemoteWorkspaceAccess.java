@@ -18,6 +18,7 @@ import jobblett.core.GroupList;
 import jobblett.core.HashedPassword;
 import jobblett.core.JobShift;
 import jobblett.core.User;
+import jobblett.core.*;
 import jobblett.json.JobblettPersistence;
 
 public class RemoteWorkspaceAccess implements WorkspaceAccess {
@@ -170,8 +171,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   @Override
   public void addGroupAdmin(int groupId, String username) {
     // TODO Auto-generated method stub
-    Group group = getGroup(groupId);
-    group.addAdmin(group.getUser(username));
+
 
 
   }
@@ -205,7 +205,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   @Override
   public int getJobShiftsSize(int groupId) {
     // TODO Auto-generated method stub
-    return getGroup(groupId).getJobShiftList().size();
+    return get(JobShiftList.class, GROUP_LIST_RESOURCE_PATH+"/get/"+groupId+JOB_SHIFT_LIST_RESOURCE_PATH).size();
   }
 
   @Override
