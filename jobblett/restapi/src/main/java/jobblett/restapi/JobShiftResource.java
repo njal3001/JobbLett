@@ -1,7 +1,9 @@
 package jobblett.restapi;
 
+import jobblett.core.Group;
 import jobblett.core.JobShift;
 import jobblett.core.JobShiftList;
+import jobblett.core.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,9 +19,11 @@ public class JobShiftResource extends RestApiClass {
   protected static final Logger LOG = LoggerFactory.getLogger(JobShiftResource.class);
 
   private final JobShift jobShift;
+  private final Group group;
 
-  public JobShiftResource(JobShift jobShift) {
+  public JobShiftResource(JobShift jobShift, Group group) {
     this.jobShift = jobShift;
+    this.group = group;
   }
 
   /**
@@ -38,7 +42,8 @@ public class JobShiftResource extends RestApiClass {
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/update")
   public void Update(JobShift jobShift) {
-    this.jobShift.setUser(jobShift.getUser());
+    User user = group.getUser(jobShift.getUser().getUsername());
+    this.jobShift.setUser(user);
     this.jobShift.setDuration(jobShift.getDuration());
     this.jobShift.setInfo(jobShift.getInfo());
     this.jobShift.setStartingTime(jobShift.getStartingTime());

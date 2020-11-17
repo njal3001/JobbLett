@@ -66,7 +66,7 @@ public class GroupResource extends RestApiClass {
   @Produces(MediaType.APPLICATION_JSON)
   public JobShiftListResource getUser() {
     LOG.debug("Sub-resource for JobShiftList in Group: " + group);
-    return new JobShiftListResource(group.getJobShiftList());
+    return new JobShiftListResource(group);
   }
 
   @Override protected Logger logger() {

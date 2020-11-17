@@ -1,5 +1,7 @@
 package jobblett.restapi;
 
+import jobblett.core.Group;
+import jobblett.core.GroupList;
 import jobblett.core.JobShift;
 import jobblett.core.JobShiftList;
 import org.slf4j.Logger;
@@ -18,10 +20,12 @@ public class JobShiftListResource extends RestApiClass {
   protected static final Logger LOG = LoggerFactory.getLogger(JobShiftListResource.class);
   public static final String JOB_SHIFT_LIST_RESOURCE_PATH = "shifts";
 
+  private final Group group;
   private final JobShiftList jobShiftList;
 
-  public JobShiftListResource(JobShiftList jobShiftList) {
-    this.jobShiftList = jobShiftList;
+  public JobShiftListResource(Group group) {
+    this.group = group;
+    this.jobShiftList = group.getJobShiftList();
   }
 
   /**
@@ -49,7 +53,7 @@ public class JobShiftListResource extends RestApiClass {
     int index = Integer.parseInt(indexString);
     JobShift jobShift = jobShiftList.get(index);
     LOG.debug("Returns jobShift: " + jobShift);
-    return new JobShiftResource(jobShift);
+    return new JobShiftResource(jobShift, group);
   }
 
   /**
