@@ -34,6 +34,7 @@ public class GroupResource extends RestApiClass {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Group getGroup() {
+    debug("Returns the group: " + group.toString());
     return group;
   }
 

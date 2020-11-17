@@ -29,6 +29,7 @@ public class GroupListResource extends RestApiClass {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public GroupList getGroupList() {
+    debug("Returns the GroupList");
     return groupList;
   }
 
