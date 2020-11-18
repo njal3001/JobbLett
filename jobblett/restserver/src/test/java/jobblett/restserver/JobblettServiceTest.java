@@ -63,9 +63,15 @@ public class JobblettServiceTest extends JerseyTest{
     super.tearDown();
   }
 
+  private void assertUser(User user, String username, String givenName, String familyName){
+    assertEquals(user.getUsername(), username);
+    assertEquals(user.getGivenName(), givenName);
+    assertEquals(user.getFamilyName(), familyName);
+  }
+
   @Test
   public void UserListTest(){
-    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH)
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH + "/userlist")
         .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
         .get();
     assertEquals(200, getResponse.getStatus());
@@ -81,22 +87,10 @@ public class JobblettServiceTest extends JerseyTest{
       assertTrue(iterator.hasNext());
       User user4 = iterator.next();
 
-      assertEquals("olav", user1.getUsername());
-      assertEquals("Olav", user1.getGivenName());
-      assertEquals("Nordmann", user1.getFamilyName());
-
-      assertEquals("nora", user2.getUsername());
-      assertEquals("Nora", user2.getGivenName());
-      assertEquals("Bekkestad", user2.getFamilyName());
-
-      assertEquals("petter", user3.getUsername());
-      assertEquals("Petter", user3.getGivenName());
-      assertEquals("Petterson", user3.getFamilyName());
-
-      assertEquals("david", user4.getUsername());
-      assertEquals("David", user4.getGivenName());
-      assertEquals("Berg", user4.getFamilyName());
-
+      assertUser(user1, "olav", "Olav", "Nordmann");
+      assertUser(user2, "nora", "Nora", "Bekkestad");
+      assertUser(user3, "petter", "Petter", "Petterson");
+      assertUser(user4, "david", "David", "Berg");
 
     } catch (JsonProcessingException e){
       fail(e.getMessage());
@@ -105,9 +99,10 @@ public class JobblettServiceTest extends JerseyTest{
 
   @Test
   public void GroupListTest(){
-    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH)
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH + "/grouplist")
         .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
         .get();
+    assertEquals(200, getResponse.getStatus());
     try{
       GroupList groupList = objectMapper.readValue(getResponse.readEntity(String.class),GroupList.class);
       Iterator<Group> iterator = groupList.iterator();
@@ -120,6 +115,8 @@ public class JobblettServiceTest extends JerseyTest{
 
     }
   }
+
+
 
 
 }
