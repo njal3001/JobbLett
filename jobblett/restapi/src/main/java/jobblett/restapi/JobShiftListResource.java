@@ -45,7 +45,6 @@ public class JobShiftListResource extends RestApiClass {
    * @param indexString jobShift's index as a string
    * @return JobShiftResource
    */
-  @GET
   @Path("/get/{indexString}")
   @Produces(MediaType.APPLICATION_JSON)
   public JobShiftResource getJobShifts(@PathParam("indexString") String indexString) {
@@ -65,13 +64,15 @@ public class JobShiftListResource extends RestApiClass {
   @Path("/remove/{indexString}")
   @Produces(MediaType.APPLICATION_JSON)
   public boolean removeJobShifts(@PathParam("indexString") String indexString) {
+    boolean removed = false;
     int index = Integer.parseInt(indexString);
     JobShift jobShift = jobShiftList.get(index);
     if (jobShift == null) {
+      debug("Removed jobShift: " + removed);
       return false;
     }
-    boolean removed = jobShiftList.remove(jobShift);
-    LOG.debug("Removed jobShift: " + removed);
+    removed = jobShiftList.remove(jobShift);
+    debug("Removed jobShift: " + removed);
     return removed;
   }
 

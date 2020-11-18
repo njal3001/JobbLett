@@ -40,9 +40,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
               .header("Accept", "application/json").build();
       HttpResponse<String> responseObject =
           HttpClient.newBuilder().build().send(requestObject, HttpResponse.BodyHandlers.ofString());
-      String responseObjectBody = responseObject.body();
-
-      return responseObjectBody;
+      return responseObject.body();
     } catch (URISyntaxException | IOException | InterruptedException e) {
       e.printStackTrace();
     }
@@ -100,12 +98,12 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   }
 
   private User getUser(String userName) {
-    return get(User.class, userName);
+    return get(User.class, USER_LIST_RESOURCE_PATH + "/get/" + userName);
   }
 
   @Override
   public boolean correctPassword(String username, String passwordString) {
-    HashedPassword password = HashedPassword.alreadyHashed(passwordString);
+    HashedPassword password = new HashedPassword(passwordString);
     return getUser(username).getPassword().matches(password);
   }
 
@@ -144,6 +142,16 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   public Collection<Integer> getAllGroupIds(String username) {
     GroupList groupList = get(GroupList.class, GROUP_LIST_RESOURCE_PATH);
     return groupList.stream()
+        .filter(group -> {
+          boolean containsUser = false;
+          for (User user : group) {
+            if (user.getUsername().equals(username)) {
+              containsUser = true;
+              break;
+            }
+          }
+          return containsUser;
+        })
         .map(Group::getGroupId)
         .collect(Collectors.toList());
   }
@@ -157,7 +165,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   }
 
   @Override
-  public void addGroupUser(int groupId, String userName) {
+  public void addGroupMember(int groupId, String userName) {
     User user = getUser(userName);
     String serializedUser = new JobblettPersistence().writeValueAsString(user);
     put(GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/add", serializedUser);
@@ -172,8 +180,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   @Override
   public void addGroupAdmin(int groupId, String username) {
     String serializedUser = new JobblettPersistence().writeValueAsString(getUser(username));
-    get(User.class, GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/addAdmin/" + username);
-
+    get(Boolean.class, GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/addAdmin/" + username);
   }
 
   @Override
@@ -183,6 +190,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   }
 
   @Override
+  //TODO: DENNE BRUKES IKKE??
   public void updateJobShift(
       int groupId,
       int index,
@@ -193,7 +201,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   ) {
     JobShift jobShift = new JobShift(getUser(username), startingTime, duration, info);
     String serializedJobshift = new JobblettPersistence().writeValueAsString(jobShift);
-    put(GROUP_LIST_RESOURCE_PATH + "/get/" + groupId
+    put(GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/"
         + JOB_SHIFT_LIST_RESOURCE_PATH + "/get/" + index + "/update", serializedJobshift);
   }
 
@@ -201,8 +209,8 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   public void deleteJobShift(int groupId, int index) {
     JobShift jobShift = getJobShift(groupId, index);
     String serilizedJobshift = new JobblettPersistence().writeValueAsString(jobShift);
-    put(GROUP_LIST_RESOURCE_PATH + "/get/" + groupId
-        + JOB_SHIFT_LIST_RESOURCE_PATH + "/remove/" + index, serilizedJobshift);
+    get(Boolean.class, GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/"
+        + JOB_SHIFT_LIST_RESOURCE_PATH + "/remove/" + index);
   }
 
   @Override
@@ -217,24 +225,29 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
     JobShift jobShift = new JobShift(getUser(jobShiftUsername), startingTime, duration, info);
     String serializedJobshift = new JobblettPersistence().writeValueAsString(jobShift);
-    put(GROUP_LIST_RESOURCE_PATH + "/get/" + groupId
+    put(GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/"
         + JOB_SHIFT_LIST_RESOURCE_PATH + "/add", serializedJobshift);
 
   }
 
   @Override
   public int getJobShiftsSize(int groupId) {
+    System.out.println(get(JobShiftList.class,
+        GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/" + JOB_SHIFT_LIST_RESOURCE_PATH));
     return get(JobShiftList.class,
-        GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + JOB_SHIFT_LIST_RESOURCE_PATH).size();
+        GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/" + JOB_SHIFT_LIST_RESOURCE_PATH).size();
   }
 
   @Override
   public List<Integer> getJobShiftIndexes(int groupId, String username) {
     Group group = getGroup(groupId);
+    System.out.println(group);
     User user = group.getUser(username);
+    System.out.println(user);
     JobShiftList jobShiftList = group.getJobShiftList();
-    return jobShiftList.getJobShifts(user)
+    return jobShiftList
         .stream()
+        .filter(shift -> shift.getUser().getUsername().equals(user.getUsername()))
         .map(jobShiftList::indexOf)
         .collect(Collectors.toList());
   }

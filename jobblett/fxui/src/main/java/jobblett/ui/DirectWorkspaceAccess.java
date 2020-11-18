@@ -101,7 +101,7 @@ public class DirectWorkspaceAccess implements WorkspaceAccess {
     return allUsernames;
   }
 
-  @Override public void addGroupUser(int groupId, String username) {
+  @Override public void addGroupMember(int groupId, String username) {
     getGroup(groupId).addUser(getUser(username));
   }
 

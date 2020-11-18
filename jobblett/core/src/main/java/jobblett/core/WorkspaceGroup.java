@@ -17,7 +17,8 @@ public class WorkspaceGroup extends Group {
   */
   @Override
   public void addUser(User user) {
-    if (!workspace.getUserList().contains(user)) {
+    user = workspace.getUserList().get(user.getUsername());
+    if (user == null) {
       throw new IllegalArgumentException("User must be added to the user list first");
     }
     super.addUser(user);

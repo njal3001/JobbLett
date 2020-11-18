@@ -60,6 +60,7 @@ public class GroupListResource extends RestApiClass {
    * @param groupIdString GroupID as a string
    * @return GroupResource instance
    */
+  @GET
   @Path("/exist/{groupIdString}")
   public boolean exist(@PathParam("groupIdString") String groupIdString) {
     int groupId = Integer.parseInt(groupIdString);

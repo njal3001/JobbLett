@@ -86,7 +86,6 @@ public class GroupResource extends RestApiClass {
    *
    * @return JobShiftResource
    */
-  @GET
   @Path("/" + JOB_SHIFT_LIST_RESOURCE_PATH)
   @Produces(MediaType.APPLICATION_JSON)
   public JobShiftListResource getUser() {

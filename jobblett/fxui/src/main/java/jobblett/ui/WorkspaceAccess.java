@@ -29,7 +29,7 @@ public interface WorkspaceAccess {
 
   Collection<String> getGroupUsernames(int groupId);
 
-  void addGroupUser(int groupId, String username);
+  void addGroupMember(int groupId, String username);
 
   boolean hasGroupUser(int groupId, String username);
 
