@@ -1,7 +1,6 @@
 package jobblett.restserver;
 
-import jobblett.core.GroupList;
-import jobblett.core.UserList;
+
 import jobblett.core.Workspace;
 import jobblett.json.JobblettPersistence;
 import jobblett.restapi.WorkspaceService;

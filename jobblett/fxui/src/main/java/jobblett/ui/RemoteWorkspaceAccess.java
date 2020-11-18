@@ -102,7 +102,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public boolean hasUser(String username) {
-    return get(Boolean.class, USER_LIST_RESOURCE_PATH + "/exist/" + username);
+    return post(Boolean.class, USER_LIST_RESOURCE_PATH + "/exist", username);
   }
 
   private User getUser(String username) {

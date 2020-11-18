@@ -1,12 +1,14 @@
 package jobblett.restapi;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import jobblett.core.HashedPassword;
 import jobblett.core.User;
@@ -61,13 +63,13 @@ public class UserListResource extends RestApiClass {
    * @param username user's username
    * @return boolean
    */
-  @GET
-  @Path("/exist/{username}")
+  @POST
+  @Path("/exist")
+  @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public boolean exist(@PathParam("username") String username) {
-    System.out.println("TEST");
-    boolean exist = username != null && (userList.get(username) != null);
-    LOG.debug("Returns if the user " + username + "exist: " + exist);
+  public boolean exist(String userName) {
+    boolean exist = (userList.get(userName) != null);
+    LOG.debug("Returns if the user " + userName + "exist: " + exist);
     return exist;
   }
 
