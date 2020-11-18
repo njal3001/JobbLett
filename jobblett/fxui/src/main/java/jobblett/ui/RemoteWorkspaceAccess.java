@@ -68,7 +68,8 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   private void put(String urlString, String body) {
     try {
-      HttpRequest requestObject = HttpRequest.newBuilder(endpointBaseUri.resolve(new URI(urlString)))
+      HttpRequest requestObject =
+          HttpRequest.newBuilder(endpointBaseUri.resolve(new URI(urlString)))
               .header("Accept", "application/json")
               .header("Content-Type", "application/json")
               .PUT(HttpRequest.BodyPublishers.ofString(body)).build();
@@ -180,7 +181,6 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public void addGroupAdmin(int groupId, String username) {
-    String serializedUser = new JobblettPersistence().writeValueAsString(getUser(username));
     get(Boolean.class, GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/addAdmin/" + username);
   }
 
@@ -202,8 +202,6 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public void deleteJobShift(int groupId, int index) {
-    JobShift jobShift = getJobShift(groupId, index);
-    String serilizedJobshift = new JobblettPersistence().writeValueAsString(jobShift);
     get(Boolean.class, GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/"
         + JOB_SHIFT_LIST_RESOURCE_PATH + "/remove/" + index);
   }
