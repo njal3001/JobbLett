@@ -111,6 +111,7 @@ public class JobblettServiceTest extends JerseyTest{
       assertEquals("Gruppe7",group.getGroupName());
       assertEquals(6803, group.getGroupId());
 
+
     } catch (JsonProcessingException e){
 
     }
