@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 
 public class GroupListResource extends RestApiClass {
-  public static final String GROUP_LIST_SERVICE_PATH = "grouplist";
+  public static final String GROUP_LIST_RESCORCE_PATH = "grouplist";
   protected static final Logger LOG = LoggerFactory.getLogger(GroupListResource.class);
 
   private GroupList groupList;
@@ -29,6 +29,7 @@ public class GroupListResource extends RestApiClass {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public GroupList getGroupList() {
+    debug("Returns the GroupList");
     return groupList;
   }
 
@@ -51,6 +52,21 @@ public class GroupListResource extends RestApiClass {
     Group group = groupList.get(groupId);
     debug("Sub-resource for Group " + group.getGroupName() + ": " + group);
     return new GroupResource(group);
+  }
+
+  /**
+   * Delegates to the right GroupResource by using the GroupID.
+   *
+   * @param groupIdString GroupID as a string
+   * @return GroupResource instance
+   */
+  @GET
+  @Path("/exist/{groupIdString}")
+  public boolean exist(@PathParam("groupIdString") String groupIdString) {
+    int groupId = Integer.parseInt(groupIdString);
+    boolean exist = groupList.get(groupId) != null;
+    debug("Returns if the group " + groupIdString + "exist: " + exist);
+    return exist;
   }
 
   /**
@@ -100,6 +116,7 @@ public class GroupListResource extends RestApiClass {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/replaceGroup/")
+  // TODO Maybe unnecessary
   public boolean replaceGroup(Group group) {
     Collection<Integer> groupIds = groupList
         .stream()

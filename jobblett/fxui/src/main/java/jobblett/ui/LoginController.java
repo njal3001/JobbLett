@@ -51,7 +51,7 @@ public class LoginController extends SceneController {
   }
 
   /**
-   * TODO: javadoc....
+   * Logging the user in.
    */
   @FXML
   public void logInToUserHome() {

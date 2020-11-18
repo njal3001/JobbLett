@@ -62,7 +62,7 @@ public class JoinGroupController extends SceneController {
       return;
     }
     try {
-      getAccess().addGroupUser(groupId, getActiveUsername());
+      getAccess().addGroupMember(groupId, getActiveUsername());
       setActiveGroupId(groupId);
       switchScene(GROUP_HOME);
     } catch (Exception e) {

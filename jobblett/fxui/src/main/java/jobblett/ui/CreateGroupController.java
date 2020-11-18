@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import jobblett.core.Group;
 
 public class CreateGroupController extends SceneController {
 
@@ -35,7 +34,7 @@ public class CreateGroupController extends SceneController {
     String groupName = groupNameField.getText();
     try {
       int groupId = getAccess().newGroup(groupName);
-      getAccess().addGroupUser(groupId, getActiveUsername());
+      getAccess().addGroupMember(groupId, getActiveUsername());
       // The first member to join the group becomes admin
       getAccess().addGroupAdmin(groupId, getActiveUsername());
       setActiveGroupId(groupId);

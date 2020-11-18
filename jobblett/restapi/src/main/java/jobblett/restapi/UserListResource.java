@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 
 public class UserListResource extends RestApiClass {
-  public static final String USER_LIST_SERVICE_PATH = "userlist";
+  public static final String USER_LIST_RESCORCE_PATH = "userlist";
   protected static final Logger LOG = LoggerFactory.getLogger(UserListResource.class);
 
   private UserList userList;
@@ -35,6 +35,7 @@ public class UserListResource extends RestApiClass {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public UserList getJobblettService() {
+    debug("Returns UserList.");
     return userList;
   }
 
@@ -44,13 +45,31 @@ public class UserListResource extends RestApiClass {
    * @param username user's username
    * @return UserResource
    */
-  @Path("/get/{username}")
-  public UserResource getUser(@PathParam("username") String username) {
-    checkUsername(username);
-    User user = userList.get(username);
-    LOG.debug("Sub-resource for User " + username + ": " + user);
+  @GET
+  @Path("/get/{userName}")
+  @Produces(MediaType.APPLICATION_JSON) // TODO trengs denne? sjekk dette på alle
+  public UserResource getUser(@PathParam("userName") String userName) {
+    checkUsername(userName);
+    User user = userList.get(userName);
+    LOG.debug("Sub-resource for User " + userName + ": " + user);
     return new UserResource(user);
   }
+
+  /**
+   * Returns if a user with the same username exist.
+   *
+   * @param userName user's username
+   * @return boolean
+   */
+  @GET
+  @Path("/exist/{userName}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public boolean exist(@PathParam("userName") String userName) {
+    boolean exist = (userList.get(userName) != null);
+    LOG.debug("Returns if the user " + userName + "exist: " + exist);
+    return exist;
+  }
+
 
   /**
    * Adds the specified user into the userList.
