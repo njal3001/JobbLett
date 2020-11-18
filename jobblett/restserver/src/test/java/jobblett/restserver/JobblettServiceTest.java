@@ -2,6 +2,8 @@ package jobblett.restserver;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jobblett.core.Group;
+import jobblett.core.GroupList;
 import jobblett.core.User;
 import jobblett.core.UserList;
 import jobblett.restapi.WorkspaceService;
@@ -20,8 +22,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Iterator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class JobblettServiceTest extends JerseyTest{
@@ -67,7 +68,7 @@ public class JobblettServiceTest extends JerseyTest{
     Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH)
         .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
         .get();
-    //assertEquals(200, getResponse.getStatus());
+    assertEquals(200, getResponse.getStatus());
     try{
       UserList userList = objectMapper.readValue(getResponse.readEntity(String.class), UserList.class);
       Iterator<User> iterator = userList.iterator();
@@ -98,6 +99,25 @@ public class JobblettServiceTest extends JerseyTest{
 
 
     } catch (JsonProcessingException e){
+      fail(e.getMessage());
+    }
+  }
+
+  @Test
+  public void GroupListTest(){
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH)
+        .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
+        .get();
+    try{
+      GroupList groupList = objectMapper.readValue(getResponse.readEntity(String.class),GroupList.class);
+      Iterator<Group> iterator = groupList.iterator();
+      assertTrue(iterator.hasNext());
+      Group group = iterator.next();
+      assertEquals("Gruppe7",group.getGroupName());
+      assertEquals(6803, group.getGroupId());
+
+    } catch (JsonProcessingException e){
+
     }
   }
 
