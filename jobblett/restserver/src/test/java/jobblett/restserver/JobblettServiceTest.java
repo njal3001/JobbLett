@@ -10,6 +10,7 @@ import org.glassfish.jersey.test.spi.TestContainerException;
 import org.glassfish.jersey.test.spi.TestContainerFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 
 public class JobblettServiceTest extends JerseyTest{
@@ -48,6 +49,11 @@ public class JobblettServiceTest extends JerseyTest{
   @AfterEach
   public void tearDown() throws Exception{
     super.tearDown();
+  }
+
+  @Test
+  public void jobbletttest(){
+
   }
 
 
