@@ -58,15 +58,16 @@ public class UserListResource extends RestApiClass {
   /**
    * Returns if a user with the same username exist.
    *
-   * @param userName user's username
+   * @param username user's username
    * @return boolean
    */
   @GET
-  @Path("/exist/{userName}")
+  @Path("/exist/{username}")
   @Produces(MediaType.APPLICATION_JSON)
-  public boolean exist(@PathParam("userName") String userName) {
-    boolean exist = (userList.get(userName) != null);
-    LOG.debug("Returns if the user " + userName + "exist: " + exist);
+  public boolean exist(@PathParam("username") String username) {
+    System.out.println("TEST");
+    boolean exist = username != null && (userList.get(username) != null);
+    LOG.debug("Returns if the user " + username + "exist: " + exist);
     return exist;
   }
 

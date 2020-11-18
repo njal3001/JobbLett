@@ -86,6 +86,12 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     return o;
   }
 
+  private void checkUsername(String username) {
+    if (!hasUser(username)) {
+      throw new IllegalArgumentException("No user with the username: " + username);
+    }
+  }
+
 
   @Override
   public void addUser(String username, String password, String givenName, String familyName) {
@@ -99,12 +105,16 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     return get(Boolean.class, USER_LIST_RESOURCE_PATH + "/exist/" + username);
   }
 
-  private User getUser(String userName) {
-    return get(User.class, USER_LIST_RESOURCE_PATH + "/get/" + userName);
+  private User getUser(String username) {
+    checkUsername(username);
+    return get(User.class, USER_LIST_RESOURCE_PATH + "/get/" + username);
   }
 
   @Override
   public boolean correctPassword(String username, String passwordString) {
+    if (!hasUser(username)) {
+      return false;
+    }
     HashedPassword password = new HashedPassword(passwordString);
     return getUser(username).getPassword().matches(password);
   }
@@ -120,6 +130,12 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     return getUser(userName).toString();
   }
 
+  private void checkGroupId(int groupId) {
+    if (!hasGroup(groupId)) {
+      throw new IllegalArgumentException("No group with the ID: " + groupId);
+    }
+  }
+
   @Override
   public int newGroup(String groupName) {
     Group group =  get(Group.class, GROUP_LIST_RESOURCE_PATH + "/new/" + groupName);
@@ -132,6 +148,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   }
 
   private Group getGroup(int groupId) {
+    checkGroupId(groupId);
     return get(Group.class, GROUP_LIST_RESOURCE_PATH + "/get/" + groupId);
   }
 

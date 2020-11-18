@@ -72,7 +72,7 @@
                         <artifactId>javafx-maven-plugin</artifactId>
                         <version>0.0.4</version>
                         <configuration>                    
-                            <mainClass>todolist.ui.RemoteApp</mainClass>
+                            <mainClass>jobblett.ui.RemoteApp</mainClass>
                         </configuration>
                     </plugin>
                 </plugins>

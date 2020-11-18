@@ -34,7 +34,6 @@ public class DirectWorkspaceAccess implements WorkspaceAccess {
     return workspace.getUserList().get(username);
   }
 
-  //TODO: vet ikke om vi burde bruke exceptions eller bare returne false fra metoder..
   private void checkUsername(String username) {
     if (!hasUser(username)) {
       throw new IllegalArgumentException("No user with the username: " + username);
@@ -114,8 +113,6 @@ public class DirectWorkspaceAccess implements WorkspaceAccess {
   }
 
   @Override public boolean isGroupAdmin(int groupId, String username) {
-    checkGroupId(groupId);
-    checkUsername(username);
     return getGroup(groupId).isAdmin(getUser(username));
   }
 
