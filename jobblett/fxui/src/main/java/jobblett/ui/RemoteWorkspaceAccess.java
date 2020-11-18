@@ -96,7 +96,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public boolean hasUser(String username) {
-    return get(Boolean.class, USER_LIST_RESOURCE_PATH + "/exist/" + username);
+    return post(Boolean.class, USER_LIST_RESOURCE_PATH + "/exist", username);
   }
 
   private User getUser(String userName) {
@@ -105,6 +105,9 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public boolean correctPassword(String username, String passwordString) {
+    if (!hasUser(username)) {
+      return false;
+    }
     HashedPassword password = new HashedPassword(passwordString);
     return getUser(username).getPassword().matches(password);
   }
