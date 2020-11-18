@@ -16,15 +16,15 @@ import org.junit.jupiter.api.Test;
 
 public class UpdateShiftControllerTest extends JobbLettTest {
 
-  @Override protected JobblettScenes giveId() {
+  @Override public JobblettScenes giveId() {
     return UPDATE_SHIFT;
   }
 
-  @Override protected User optionalActiveUser() {
+  @Override public User optionalActiveUser() {
     return user1;
   }
 
-  @Override protected Group optionalActiveGroup() {
+  @Override public Group optionalActiveGroup() {
     return group1;
   }
 

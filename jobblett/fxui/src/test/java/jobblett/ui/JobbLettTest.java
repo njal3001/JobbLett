@@ -24,29 +24,34 @@ public abstract class JobbLettTest extends ApplicationTest {
 
   protected SceneController controller;
 
-  private ControllerMap controllerMap;
+  // Todo maybe make it private
+  public ControllerMap controllerMap;
 
   protected UIAssertions uiAssertions;
 
   //TODO find a better name, we are not calling them ID
   // Subclasses implement this method to give the scene ID
   // for the starting scene of the test
-  protected abstract JobblettScenes giveId();
+  // TODO dumt å ha denne public?
+  public abstract JobblettScenes giveId();
 
   // Subclasses implement these methods to give the active user and group
   // for the starting scene of the test
-  protected User optionalActiveUser() {
+  // TODO dumt å ha disse public?
+  public User optionalActiveUser() {
     return null;
   }
-  protected Group optionalActiveGroup(){
+  public Group optionalActiveGroup(){
     return null;
   }
 
-  private Workspace workspace;
+  // Todo maybe make it private
+  public Workspace workspace;
   private UserList userList;
   private GroupList groupList;
 
   @BeforeEach
+  // TODO dumt å ha den public?
   public void setUp() {
     uiAssertions = new UIAssertions(controllerMap);
   }
@@ -73,7 +78,7 @@ public abstract class JobbLettTest extends ApplicationTest {
     return controllerMap.getAccess();
   }
 
-  protected void setupData() {
+  public void setupData() {
     userList = workspace.getUserList();
     groupList = workspace.getGroupList();
     user1 = new User("CorrectUsername", new HashedPassword("CorrectPassword12345"), "Ole", "Dole");
@@ -108,4 +113,5 @@ public abstract class JobbLettTest extends ApplicationTest {
   public void testInitialScene(){
     uiAssertions.assertOnScene(giveId());
   }
+
 }

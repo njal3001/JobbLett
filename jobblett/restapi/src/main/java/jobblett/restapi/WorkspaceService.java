@@ -4,7 +4,9 @@ import static jobblett.restapi.GroupListResource.GROUP_LIST_RESCORCE_PATH;
 import static jobblett.restapi.UserListResource.USER_LIST_RESCORCE_PATH;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -25,6 +27,8 @@ public class WorkspaceService extends RestApiClass {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Workspace getWorkspace() {
+    debug("Returning workspace");
+    debug(workspace.getGroupList().toString());
     return workspace;
   }
 

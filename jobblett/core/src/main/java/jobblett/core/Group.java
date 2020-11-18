@@ -154,7 +154,7 @@ public class Group extends JobblettPropertyChangeSupporter
    * @param groupName the group name
    * @throws IllegalArgumentException throws exception if criteria is not fulfilled
    */
-  private void checkGroupName(String groupName) throws IllegalArgumentException {
+  public static void checkGroupName(String groupName) throws IllegalArgumentException {
     if (groupName.trim().length() < 2) {
       throw new IllegalArgumentException("Group name must have at least 2 characters");
     }

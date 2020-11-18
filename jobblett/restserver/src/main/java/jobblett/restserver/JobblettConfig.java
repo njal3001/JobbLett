@@ -11,7 +11,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class JobblettConfig extends ResourceConfig {
   private Workspace workspace;
 
-  private JobblettConfig(Workspace workspace) {
+  protected JobblettConfig(Workspace workspace) {
     setWorkspace(workspace);
     register(WorkspaceService.class);
     register(JobblettModuleObjectMapperProvider.class);

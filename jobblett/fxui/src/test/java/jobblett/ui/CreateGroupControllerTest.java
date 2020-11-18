@@ -8,13 +8,15 @@ import jobblett.core.Group;
 import jobblett.core.User;
 import org.junit.jupiter.api.Test;
 
+import java.util.concurrent.TimeUnit;
+
 public class CreateGroupControllerTest extends JobbLettTest {
 
-  @Override protected JobblettScenes giveId() {
+  @Override public JobblettScenes giveId() {
     return CREATE_GROUP;
   }
 
-  @Override protected User optionalActiveUser() {
+  @Override public User optionalActiveUser() {
     return user1;
   }
 

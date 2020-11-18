@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class CreateUserControllerTest extends JobbLettTest {
 
-  @Override protected JobblettScenes giveId() {
+  @Override public JobblettScenes giveId() {
     return CREATE_USER;
   }
 

@@ -144,7 +144,7 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
 
   protected abstract K identifier(T t);
 
-  protected void optionalAlreadyExists() {
+  public void optionalAlreadyExists() {
 
   }
 

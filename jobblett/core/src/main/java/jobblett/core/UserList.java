@@ -8,7 +8,7 @@ public class UserList extends JobblettList<String, User> {
   }
 
   @Override
-  protected void optionalAlreadyExists() {
+  public void optionalAlreadyExists() {
     throw new IllegalArgumentException("User with the same username already exists");
   }
 }

@@ -13,11 +13,11 @@ import org.junit.jupiter.api.Test;
 
 public class JoinGroupControllerTest extends JobbLettTest {
 
-  @Override protected JobblettScenes giveId() {
+  @Override public JobblettScenes giveId() {
     return JOIN_GROUP;
   }
 
-  @Override protected User optionalActiveUser() {
+  @Override public User optionalActiveUser() {
     return user1;
   }
 

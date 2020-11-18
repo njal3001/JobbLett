@@ -10,7 +10,7 @@ public class GroupMemberList extends JobblettList<String, User> {
   }
 
   @Override
-  protected void optionalAlreadyExists() {
+  public void optionalAlreadyExists() {
     throw new IllegalArgumentException(ALREADY_EXIST_ERROR_TEXT);
   }
 

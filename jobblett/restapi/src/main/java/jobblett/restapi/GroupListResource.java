@@ -75,10 +75,11 @@ public class GroupListResource extends RestApiClass {
    * @param groupName the specified groupName
    * @return the created group
    */
-  @GET
+  @POST
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("/new/{groupName}")
-  public Group newGroup(@PathParam("groupName") String groupName) {
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("/new")
+  public Group newGroup(String groupName) {
     Group group = groupList.newGroup(groupName);
     debug("New group: " + group);
     return group;

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class LoginControllerTest extends JobbLettTest {
 
-  @Override protected JobblettScenes giveId() {
+  @Override public JobblettScenes giveId() {
     return LOGIN;
   }
 

@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
 
 public class UserHomeControllerTest extends JobbLettTest {
 
-  @Override protected JobblettScenes giveId() {
+  @Override public JobblettScenes giveId() {
     return USER_HOME;
   }
 
-  @Override protected User optionalActiveUser() {
+  @Override public User optionalActiveUser() {
     return user1;
   }
 

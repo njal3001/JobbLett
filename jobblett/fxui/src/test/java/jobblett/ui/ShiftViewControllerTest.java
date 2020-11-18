@@ -20,18 +20,15 @@ import java.time.LocalDateTime;
 
 public class ShiftViewControllerTest extends JobbLettTest {
 
-  @Override
-  protected JobblettScenes giveId() {
+  @Override public JobblettScenes giveId() {
     return SHIFT_VIEW;
   }
 
-  @Override
-  protected User optionalActiveUser() {
+  @Override public User optionalActiveUser() {
     return user1;
   }
 
-  @Override
-  protected Group optionalActiveGroup() {
+  @Override public Group optionalActiveGroup() {
     return group1;
   }
 

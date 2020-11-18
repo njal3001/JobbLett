@@ -18,7 +18,11 @@ import jobblett.core.HashedPassword;
 import jobblett.core.JobShift;
 import jobblett.core.JobShiftList;
 import jobblett.core.User;
+import jobblett.core.UserList;
+import jobblett.core.Workspace;
 import jobblett.json.JobblettPersistence;
+
+import static jobblett.core.Group.checkGroupName;
 
 public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
@@ -95,6 +99,9 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public void addUser(String username, String password, String givenName, String familyName) {
+    if (hasUser(username)) {
+      new UserList().optionalAlreadyExists();
+    }
     User user = new User(username, new HashedPassword(password), givenName, familyName);
     String serializedUser = new JobblettPersistence().writeValueAsString(user);
     put(USER_LIST_RESOURCE_PATH + "/add", serializedUser);
@@ -138,7 +145,8 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public int newGroup(String groupName) {
-    Group group =  get(Group.class, GROUP_LIST_RESOURCE_PATH + "/new/" + groupName);
+    checkGroupName(groupName);
+    Group group =  post(Group.class, GROUP_LIST_RESOURCE_PATH + "/new", groupName);
     return group.getGroupId();
   }
 
@@ -186,6 +194,11 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   @Override
   public void addGroupMember(int groupId, String userName) {
     User user = getUser(userName);
+
+    // Throwing error if user already exist.
+    // Doing it by adding the user to a deserialized copy
+    getGroup(groupId).addUser(user);
+
     String serializedUser = new JobblettPersistence().writeValueAsString(user);
     put(GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/add", serializedUser);
   }
@@ -288,4 +301,5 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   public boolean jobShiftIsOutdated(int groupId, int index) {
     return getJobShift(groupId, index).isOutDated();
   }
+
 }
