@@ -10,4 +10,8 @@ public class DirectApp extends Application {
     App app = new App(false);
     app.start(stage);
   }
+
+  public static void main(String[] args) {
+    launch(args);
+  }
 }

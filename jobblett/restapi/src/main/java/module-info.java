@@ -5,4 +5,5 @@ module jobblett.restapi {
     requires slf4j.api;
     requires jobblett.core;
     requires jobblett.json;
+    opens jobblett.restapi;
 }
