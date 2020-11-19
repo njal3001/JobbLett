@@ -16,8 +16,6 @@ public class ShiftViewController extends SceneController {
 
   @FXML Label groupName;
 
-  // TODO: hvilket shift er definert ut i fra indeks, vet ikke
-  // om dette vil funke
   @FXML ListView<Integer> shifts;
 
   @FXML Button backToGroup;
@@ -38,21 +36,11 @@ public class ShiftViewController extends SceneController {
   @Override public void onSceneDisplayed() {
     groupName.setText(getAccess().getGroupName(getActiveGroupId()));
     toggleUserFilterCheckBox.setSelected(false);
+    System.out.println(getAccess().jobShiftIsOutdated(getActiveGroupId(), 0));
+    getAccess().deleteOutdatedJobShift(getActiveGroupId());
     updateView();
     updateButtons();
     setButtonVisibility();
-
-    //Deletes outdated shifts:
-
-    //TODO: Litt vanskelig å itere gjennom listen, mens man sletter elementer...
-    int index = 0;
-    for (int i = 0; i < getAccess().getJobShiftsSize(getActiveGroupId()); i++) {
-      if (getAccess().jobShiftIsOutdated(getActiveGroupId(), index)) {
-        getAccess().deleteJobShift(getActiveGroupId(), index);
-        index--;
-      }
-      index++;
-    }
   }
 
   private void setButtonVisibility() {
@@ -90,7 +78,7 @@ public class ShiftViewController extends SceneController {
   @FXML public void handleDeleteShift() {
     int index = shifts.getSelectionModel().getSelectedIndex();
     if (index != - 1) {
-      getAccess().deleteJobShift(getActiveGroupId(), index);
+      getAccess().deleteJobShift(getActiveUsername(), getActiveGroupId(), index);
       updateView();
     }
   }

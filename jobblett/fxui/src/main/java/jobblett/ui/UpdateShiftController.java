@@ -158,7 +158,7 @@ public class UpdateShiftController extends SceneController {
       }
    
       if (activeJobShiftIndex != null) {
-        getAccess().deleteJobShift(getActiveGroupId(), activeJobShiftIndex);
+        getAccess().deleteJobShift(getActiveUsername(), getActiveGroupId(), activeJobShiftIndex);
       }
       getAccess().addJobShift(getActiveUsername(), getActiveGroupId(),
           username, startingTime, duration, info);

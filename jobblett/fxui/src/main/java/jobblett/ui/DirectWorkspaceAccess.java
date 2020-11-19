@@ -76,6 +76,7 @@ public class DirectWorkspaceAccess implements WorkspaceAccess {
   }
 
   private Group getGroup(int groupId) {
+    checkGroupId(groupId);
     return workspace.getGroupList().get(groupId);
   }
 
@@ -120,19 +121,10 @@ public class DirectWorkspaceAccess implements WorkspaceAccess {
     return getGroup(groupId).getJobShiftList().get(index);
   }
 
-  @Override
-  public void updateJobShift(int groupId, int index, String username,
-      LocalDateTime startingTime, Duration duration, String info) {
+  @Override public void deleteJobShift(String adminUsername, int groupId, int index) {
     JobShift jobShift = getJobShift(groupId, index);
-    jobShift.setUser(getUser(username));
-    jobShift.setStartingTime(startingTime);
-    jobShift.setDuration(duration);
-    jobShift.setInfo(info);
-  }
-
-  @Override public void deleteJobShift(int groupId, int index) {
-    JobShift jobShift = getJobShift(groupId, index);
-    getGroup(groupId).getJobShiftList().remove(jobShift);
+    User admin = getUser(adminUsername);
+    getGroup(groupId).removeJobShift(admin, jobShift);
   }
 
   @Override
@@ -172,5 +164,9 @@ public class DirectWorkspaceAccess implements WorkspaceAccess {
 
   @Override public boolean jobShiftIsOutdated(int groupId, int index) {
     return getJobShift(groupId, index).isOutDated();
+  }
+
+  @Override public void deleteOutdatedJobShift(int groupId) {
+    getGroup(groupId).deleteOutdatedJobShifts();
   }
 }

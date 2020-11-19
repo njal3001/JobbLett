@@ -27,18 +27,17 @@ public class Group extends PropertyChangeSupporter
     this.groupId = groupId;
   }
 
-
   /**
    * The given user adds a JobShift to the group.
    *
    * @param jobShift Jobshift to be added.
    * @param user the user that is creating the JobShift, must be admin.
    */
-  public void addJobShift(JobShift jobShift, User user) {
+  public void addJobShift(JobShift jobShift, User admin) {
     if (!groupMembers.contains(jobShift.getUser())) {
       throw new IllegalArgumentException("Job shift user is not a member of the group");
     }
-    if (!isAdmin(user)) {
+    if (!isAdmin(admin)) {
       throw new IllegalArgumentException("It's only admin that can add new job shift");
     }
     jobShifts.add(jobShift);
@@ -196,11 +195,35 @@ public class Group extends PropertyChangeSupporter
     return groupId;
   }
 
-
+  /**
+   * Gets a copy of the job shifts for this group.
+   *
+   * @return a copied list of job shifts
+   */
   public JobShiftList getJobShiftList() {
     JobShiftList newList = new JobShiftList();
     jobShifts.getJobShifts().forEach((shift) -> newList.add(shift));
     return newList;
+  }
+
+  /**
+   * The given user removes the JobShift from the group.
+   *
+   * @param jobShift Jobshift to be removed.
+   * @param user the user that is removing the JobShift, must be admin.
+   */
+  public void removeJobShift(User admin, JobShift jobShift) {
+    if (!isAdmin(admin)) {
+      throw new IllegalArgumentException("It's only admin that can remove a job shift");
+    }
+    jobShifts.remove(jobShift);
+  }
+
+  /**
+   * Deletes outdated job shifts.
+   */  
+  public void deleteOutdatedJobShifts() {
+    jobShifts.deleteOutdatedJobShifts();
   }
 
   @Override
