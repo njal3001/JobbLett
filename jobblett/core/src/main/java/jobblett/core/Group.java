@@ -1,11 +1,8 @@
 package jobblett.core;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Collectors;
-
 
 /**
  * Represents a group in jobblett.
@@ -200,10 +197,10 @@ public class Group extends JobblettPropertyChangeSupporter
   }
 
 
-  //TODO: Dette er dårlig innkapsling,
-  //burde fjernes
   public JobShiftList getJobShiftList() {
-    return jobShifts;
+    JobShiftList newList = new JobShiftList();
+    jobShifts.getJobShifts().forEach((shift) -> newList.add(shift));
+    return newList;
   }
 
   @Override

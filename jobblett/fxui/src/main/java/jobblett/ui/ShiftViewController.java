@@ -28,7 +28,6 @@ public class ShiftViewController extends SceneController {
 
   @FXML Button deleteShiftButton;
 
-
   @FXML CheckBox toggleUserFilterCheckBox;
 
   @FXML public void initialize() {

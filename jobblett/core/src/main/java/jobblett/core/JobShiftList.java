@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 /**
  * Handles all of the JobShifts created.
  */
-public class JobShiftList extends JobblettList<Integer, JobShift> {
+public class JobShiftList extends AbstractList<Integer, JobShift> {
 
   /**
    * Gets a list of the job shifts.
