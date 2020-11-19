@@ -1,5 +1,7 @@
 package jobblett.ui;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,15 +14,16 @@ import jobblett.core.User;
 import jobblett.core.Workspace;
 import jobblett.json.JobblettPersistence;
 
-public class DirectWorkspaceAccess implements WorkspaceAccess {
+
+public class DirectWorkspaceAccess implements WorkspaceAccess, PropertyChangeListener {
 
   private Workspace workspace;
 
   public DirectWorkspaceAccess(Workspace workspace) {
     this.workspace = workspace;
+    this.workspace.addListener(this);
   }
 
-  //TODO: brukt?
   private void save() {
     new JobblettPersistence().writeValueOnDefaultLocation(workspace);
   }
@@ -172,5 +175,9 @@ public class DirectWorkspaceAccess implements WorkspaceAccess {
 
   @Override public boolean jobShiftIsOutdated(int groupId, int index) {
     return getJobShift(groupId, index).isOutDated();
+  }
+
+  @Override public void propertyChange(PropertyChangeEvent evt) {
+    save();
   }
 }

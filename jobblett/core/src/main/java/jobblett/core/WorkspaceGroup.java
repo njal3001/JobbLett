@@ -1,5 +1,7 @@
 package jobblett.core;
 
+import java.beans.PropertyChangeListener;
+
 public class WorkspaceGroup extends Group {
 
   private final Workspace workspace;
@@ -32,9 +34,17 @@ public class WorkspaceGroup extends Group {
       throw new IllegalArgumentException("User must be added to the user list first");
     }
     super.addUser(user);
+    firePropertyChange("GroupMember", user);
   }
 
   public Workspace getWorkspace() {
     return workspace;
+  }
+
+  @Override public void addListener(PropertyChangeListener pcl) {
+    super.addListener(pcl);
+    forEach(user -> user.addListener(pcl));
+    getJobShiftList().addListener(pcl);
+    getJobShiftList().forEach(shift -> shift.addListener(pcl));
   }
 }

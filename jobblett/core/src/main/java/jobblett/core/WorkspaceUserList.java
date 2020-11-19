@@ -1,5 +1,7 @@
 package jobblett.core;
 
+import java.beans.PropertyChangeListener;
+
 public class WorkspaceUserList extends UserList {
 
   private final Workspace workspace;
@@ -26,5 +28,10 @@ public class WorkspaceUserList extends UserList {
 
   public Workspace getWorkspace() {
     return workspace;
+  }
+
+  @Override public void addListener(PropertyChangeListener pcl) {
+    super.addListener(pcl);
+    forEach(user -> user.addListener(pcl));
   }
 }

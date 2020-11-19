@@ -60,6 +60,17 @@ public class UIAssertions extends FxRobot {
   }
 
   public void assertOnScene(JobblettScenes sceneID) {
+    int millisecondTimeout = 2000;
+    for (int tenthsMillisecond = 0; tenthsMillisecond < millisecondTimeout/10; tenthsMillisecond ++) {
+      if (controllerMap.getScene(sceneID).equals(controllerMap.getStage().getScene())) {
+        break;
+      }
+      try {
+        TimeUnit.MILLISECONDS.sleep(10);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
     assertEquals(controllerMap.getScene(sceneID), controllerMap.getStage().getScene());
   }
 
