@@ -10,7 +10,7 @@ import java.net.URISyntaxException;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-
+//TODO: Må gjøre noe med dette.....
 public class JobblettScenesTest extends ApplicationTest {
 
   /*@Override public void start(final Stage primaryStage) throws IOException {

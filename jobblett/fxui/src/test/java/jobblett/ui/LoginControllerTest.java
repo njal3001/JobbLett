@@ -4,13 +4,11 @@ import static jobblett.ui.JobblettScenes.CREATE_USER;
 import static jobblett.ui.JobblettScenes.LOGIN;
 import static jobblett.ui.JobblettScenes.USER_HOME;
 
-import jobblett.core.Group;
-import jobblett.core.User;
 import org.junit.jupiter.api.Test;
 
 public class LoginControllerTest extends JobbLettTest {
 
-  @Override protected JobblettScenes giveId() {
+  @Override public JobblettScenes giveId() {
     return LOGIN;
   }
 

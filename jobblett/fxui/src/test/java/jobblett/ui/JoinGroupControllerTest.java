@@ -6,18 +6,17 @@ import static jobblett.ui.JobblettScenes.USER_HOME;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import javafx.scene.control.TextField;
-import jobblett.core.Group;
 import jobblett.core.GroupMemberList;
 import jobblett.core.User;
 import org.junit.jupiter.api.Test;
 
 public class JoinGroupControllerTest extends JobbLettTest {
 
-  @Override protected JobblettScenes giveId() {
+  @Override public JobblettScenes giveId() {
     return JOIN_GROUP;
   }
 
-  @Override protected User optionalActiveUser() {
+  @Override public User optionalActiveUser() {
     return user1;
   }
 
@@ -27,7 +26,7 @@ public class JoinGroupControllerTest extends JobbLettTest {
     uiAssertions.assertLabel("groupName", group2.getGroupName());
     clickOn("#backToHome");
     uiAssertions.assertOnScene(USER_HOME);
-    uiAssertions.assertListViewHasItem("groups", group2);
+    uiAssertions.assertListViewHasItem("groups", group2.getGroupId());
   }
 
   @Test public void testJoinGroup_invalidGroupId() {

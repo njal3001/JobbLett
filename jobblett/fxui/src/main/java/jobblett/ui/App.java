@@ -9,6 +9,8 @@ import java.time.format.DateTimeFormatter;
 import javafx.application.Application;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import jobblett.core.Workspace;
+import jobblett.json.JobblettPersistence;
 
 //Code is inspired by: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
 
@@ -39,6 +41,7 @@ public class App extends Application {
     primaryStage.show();
   }
 
+  //TODO: denne burde endres
   /**
    * A common methods used in the startmethod for the app and the tests.
    *
@@ -48,15 +51,16 @@ public class App extends Application {
     Font.loadFont(ButtonAnimationSkin.class.getResourceAsStream(App.FONT_FILE), 16);
     Font.loadFont(ButtonAnimationSkin.class.getResourceAsStream(App.BOLD_FONT_FILE), 16);
     primaryStage.setTitle("Jobblett");
-    JobblettAccess access = null;
+    WorkspaceAccess access = null;
     if (restApiOn) {
       try {
-        access = new JobblettRemoteAccess(new URI("http://localhost:8999/jobblett/"));
+        access = new RemoteWorkspaceAccess(new URI("http://localhost:8999/jobblett/"));
       } catch (URISyntaxException e) {
         e.printStackTrace();
       }
     } else {
-      access = new JobblettDirectAccess();
+      //TODO: Vet ikke om dette funker...
+      access = new DirectWorkspaceAccess(new JobblettPersistence().readValue(Workspace.class));
     }
     ControllerMap controllerMap = new ControllerMap(primaryStage, access);
     return controllerMap;

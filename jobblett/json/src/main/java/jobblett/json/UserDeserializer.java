@@ -16,10 +16,15 @@ public class UserDeserializer extends JsonDeserializer<User> {
   public User deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws IOException, JsonProcessingException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-
     if (node.isNull()) {
       return null;
     }
+
+    if (node.has("user")) {
+      // Rest-api wraps the whole user into "user"-node
+      node = node.get("user");
+    }
+
     String username = node.get("username").asText();
     HashedPassword password = new JobblettPersistence()
         .readValue(HashedPassword.class, node.get("password"));

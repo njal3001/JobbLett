@@ -5,22 +5,21 @@ import static jobblett.ui.JobblettScenes.GROUP_HOME;
 import static jobblett.ui.JobblettScenes.JOIN_GROUP;
 import static jobblett.ui.JobblettScenes.USER_HOME;
 
-import jobblett.core.Group;
 import jobblett.core.User;
 import org.junit.jupiter.api.Test;
 
 public class UserHomeControllerTest extends JobbLettTest {
 
-  @Override protected JobblettScenes giveId() {
+  @Override public JobblettScenes giveId() {
     return USER_HOME;
   }
 
-  @Override protected User optionalActiveUser() {
+  @Override public User optionalActiveUser() {
     return user1;
   }
 
   @Test public void testGroupsView_initialGroup() {
-    uiAssertions.assertListViewHasItem("groups", group1);
+    uiAssertions.assertListViewHasItem("groups", group1.getGroupId());
   }
 
   @Test public void testGoTo_GroupHome() {

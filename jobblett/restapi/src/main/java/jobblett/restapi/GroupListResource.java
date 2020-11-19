@@ -1,6 +1,5 @@
 package jobblett.restapi;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import javax.ws.rs.Consumes;
@@ -12,30 +11,32 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import jobblett.core.Group;
 import jobblett.core.GroupList;
-import jobblett.core.JobShift;
 import jobblett.core.User;
-import jobblett.core.UserList;
-import jobblett.core.Workspace;
-import jobblett.json.JobblettPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 public class GroupListResource extends RestApiClass {
-  public static final String GROUP_LIST_SERVICE_PATH = "grouplist";
+  public static final String GROUP_LIST_RESCORCE_PATH = "grouplist";
   protected static final Logger LOG = LoggerFactory.getLogger(GroupListResource.class);
 
-  private Workspace workspace;
+  private GroupList groupList;
 
-
-  public GroupListResource(Workspace workspace) {
-    this.workspace = workspace;
+  public GroupListResource(GroupList groupList) {
+    this.groupList = groupList;
   }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public GroupList getGroupList() {
-    return workspace.getGroupList();
+    debug("Returns the GroupList");
+    return groupList;
+  }
+
+  private void checkGroupId(int groupId) {
+    if (groupList.get(groupId) == null) {
+      throw new IllegalArgumentException("No group with groupID: " + groupId);
+    }
   }
 
   /**
@@ -47,9 +48,25 @@ public class GroupListResource extends RestApiClass {
   @Path("/get/{groupIdString}")
   public GroupResource getGroup(@PathParam("groupIdString") String groupIdString) {
     int groupId = Integer.parseInt(groupIdString);
-    Group group = workspace.getGroupList().get(groupId);
+    checkGroupId(groupId);
+    Group group = groupList.get(groupId);
     debug("Sub-resource for Group " + group.getGroupName() + ": " + group);
     return new GroupResource(group);
+  }
+
+  /**
+   * Delegates to the right GroupResource by using the GroupID.
+   *
+   * @param groupIdString GroupID as a string
+   * @return GroupResource instance
+   */
+  @GET
+  @Path("/exist/{groupIdString}")
+  public boolean exist(@PathParam("groupIdString") String groupIdString) {
+    int groupId = Integer.parseInt(groupIdString);
+    boolean exist = groupList.get(groupId) != null;
+    debug("Returns if the group " + groupIdString + "exist: " + exist);
+    return exist;
   }
 
   /**
@@ -58,11 +75,12 @@ public class GroupListResource extends RestApiClass {
    * @param groupName the specified groupName
    * @return the created group
    */
-  @GET
+  @POST
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("/new/{groupName}")
-  public Group newGroup(@PathParam("groupName") String groupName) {
-    Group group = workspace.getGroupList().newGroup(groupName);
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("/new")
+  public Group newGroup(String groupName) {
+    Group group = groupList.newGroup(groupName);
     debug("New group: " + group);
     return group;
   }
@@ -82,9 +100,10 @@ public class GroupListResource extends RestApiClass {
     //correctGroupList(workspace.getGroupList(), workspace.getUserList());
 
     debug("Returns every group " + user + "is a member of.");
-    user = workspace.getUserList().get(user.getUsername());
+
+    //user = groupList.get(user);
     GroupList groupList = new GroupList();
-    groupList.addAll(workspace.getGroupList().getGroups(user));
+    groupList.addAll(groupList.getGroups(user));
     return groupList;
   }
 
@@ -98,8 +117,9 @@ public class GroupListResource extends RestApiClass {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/replaceGroup/")
+  // TODO Maybe unnecessary
   public boolean replaceGroup(Group group) {
-    Collection<Integer> groupIds = workspace.getGroupList()
+    Collection<Integer> groupIds = groupList
         .stream()
         .map(Group::getGroupId)
         .collect(Collectors.toList());
@@ -107,9 +127,9 @@ public class GroupListResource extends RestApiClass {
       debug("Could not replace with group: " + group);
       return false;
     }
-    Group toBeRemoved = workspace.getGroupList().get(group.getGroupId());
-    workspace.getGroupList().remove(toBeRemoved);
-    workspace.getGroupList().add(group);
+    Group toBeRemoved = groupList.get(group.getGroupId());
+    groupList.remove(toBeRemoved);
+    groupList.add(group);
     debug("Replaced to: " + group);
     return true;
   }

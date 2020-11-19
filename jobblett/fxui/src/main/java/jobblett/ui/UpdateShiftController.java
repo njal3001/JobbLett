@@ -17,37 +17,45 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
-import jobblett.core.JobShift;
-import jobblett.core.User;
 
 public class UpdateShiftController extends SceneController {
 
-  @FXML ListView<User> members;
+  @FXML
+  ListView<String> members;
 
-  @FXML DatePicker date;
+  @FXML
+  DatePicker date;
 
-  @FXML TextField fromField;
+  @FXML
+  TextField fromField;
 
-  @FXML TextField toField;
+  @FXML
+  TextField toField;
 
-  @FXML TextArea infoArea;
+  @FXML
+  TextArea infoArea;
 
-  @FXML Button goBackButton;
+  @FXML
+  Button goBackButton;
 
-  @FXML Button createShiftButton;
+  @FXML
+  Button createShiftButton;
 
-  @FXML Label errorMessage;
+  @FXML
+  Label errorMessage;
 
-  private JobShift activeJobShift;
+  private Integer activeJobShiftIndex;
 
   /**
    * TODO.
    */
-  @FXML public void initialize() {
+  @FXML
+  public void initialize() {
     // setting up dateformat for the datepicker
     date.setConverter(new StringConverter<LocalDate>() {
 
-      @Override public String toString(LocalDate date) {
+      @Override
+      public String toString(LocalDate date) {
         if (date == null) {
           return "";
         }
@@ -55,7 +63,8 @@ public class UpdateShiftController extends SceneController {
         return App.EXPECTED_DATE_FORMAT.format(date);
       }
 
-      @Override public LocalDate fromString(String dateString) {
+      @Override
+      public LocalDate fromString(String dateString) {
         if (dateString == null || dateString.isEmpty()) {
           return null;
         }
@@ -69,21 +78,13 @@ public class UpdateShiftController extends SceneController {
     date.setEditable(false);
     date.setDayCellFactory(new DatePickerDayCell());
 
-    //Det her er litt mye logikk, burde kanskje heller ligge i en core klasse?
     ChangeListener<String> listener = (observable, oldValue, newValue) -> {
-
-      /*
-       * String pattern = "^(?=.*[0-9])(?=.*[:]).{0,}$";
-       * if(!newValue.matches(pattern)){ if(oldValue.matches(pattern))
-       * fromField.setText(oldValue); else fromField.setText("00:00"); }
-       */
 
       if (newValue.length() > 5) {
         errorMessage.setText("Time period is not written in the correct format");
         return;
       }
 
-      //Finnes definitivt bedre måter å gjøre dette på
       List<String> patterns = List.of("[0-2]", "[0-9]", ":", "[0-5]", "[0-9]");
 
       for (int i = 0; i < newValue.length(); i++) {
@@ -94,24 +95,24 @@ public class UpdateShiftController extends SceneController {
       }
       errorMessage.setText("");
     };
-    //utbedre til å detektere feil inntast automatisk??
     fromField.textProperty().addListener(listener);
     toField.textProperty().addListener(listener);
   }
 
-  //TODO: trenger kanskje ikke fet skrift for admin her?
-  @Override public void onSceneDisplayed() {
-
+  // TODO: trenger kanskje ikke fet skrift for admin her?
+  @Override
+  public void onSceneDisplayed() {
     // Lists all members
-    members.setCellFactory(member -> new GroupMemberListCell(getControllerMap()));
+    members.setCellFactory(member -> new UserListCell(getControllerMap()));
     members.getItems().clear();
-    for (User user : getActiveGroup()) {
-      members.getItems().add(user);
+    for (String username : getAccess().getGroupUsernames(getActiveGroupId())) {
+      members.getItems().add(username);
     }
     errorMessage.setText("");
 
-    if (activeJobShift == null) {
+    if (activeJobShiftIndex == null) {
       // Create new JobShift
+      members.getSelectionModel().select(0);
       fromField.setText("12:00");
       toField.setText(("19:30"));
       date.setValue(LocalDate.now());
@@ -119,46 +120,51 @@ public class UpdateShiftController extends SceneController {
       createShiftButton.setText("Create shift");
     } else {
       // Update existing JobShift
-      if (activeJobShift.getUser() != null) {
-        members.getSelectionModel().select(activeJobShift.getUser());
-      }
-      String fromTime = activeJobShift.getStartingTime().format(App.EXPECTED_TIME_FORMAT);
-      String toTime = activeJobShift.getEndingTime().format(App.EXPECTED_TIME_FORMAT);
-      date.setValue(activeJobShift.getStartingTime().toLocalDate());
+      members.getSelectionModel().select(activeJobShiftIndex);
+      LocalDateTime startingTime = getAccess()
+          .getJobShiftStartingTime(getActiveGroupId(), activeJobShiftIndex);
+      String fromTime = startingTime.format(App.EXPECTED_TIME_FORMAT);
+      String toTime = getAccess()
+          .getJobShiftEndingTime(getActiveGroupId(), activeJobShiftIndex)
+          .format(App.EXPECTED_TIME_FORMAT);
+      date.setValue(startingTime.toLocalDate());
       fromField.setText(fromTime);
       toField.setText(toTime);
-      infoArea.setText(activeJobShift.getInfo());
+      infoArea.setText(getAccess().getJobShiftInfo(getActiveGroupId(), activeJobShiftIndex));
       createShiftButton.setText("Update shift");
     }
   }
 
-  @FXML public void goBack() throws IOException {
-    activeJobShift = null;
+  @FXML
+  public void goBack() throws IOException {
+    activeJobShiftIndex = null;
     switchScene(SHIFT_VIEW);
   }
-
 
   /**
    * TODO.
    */
   @FXML public void createShift() {
     try {
-      User user = members.getSelectionModel().getSelectedItem();
+      String username = members.getSelectionModel().getSelectedItem();
       String info = infoArea.getText();
       LocalDateTime startingTime = getStartingTime(date.getValue(), fromField.getText());
       Duration duration = getDuration(fromField.getText(), toField.getText());
-      JobShift newShift = new JobShift(user, startingTime, duration, info);
       
-      if (newShift.isOutDated()) {
+      //TODO: blir kanskje litt mye logikk her...
+      if (startingTime.isBefore(LocalDateTime.now())) {
         throw new IllegalArgumentException("Starting time must be later than the current time");
       }
       //TODO: Litt rart at vi har en direkte addJobShift metode, 
       //men at får å fjerne et job skift så må man først
       //bruke getJobShiftList.
-      getActiveGroup().addJobShift(newShift, getActiveUser());
-      if (activeJobShift != null) {
-        getActiveGroup().getJobShiftList().remove(activeJobShift);
+   
+      if (activeJobShiftIndex != null) {
+        getAccess().deleteJobShift(getActiveGroupId(), activeJobShiftIndex);
       }
+      //TODO: kan være at den slette shift uten at et nytt et faktisk blir lagt til..
+      getAccess().addJobShift(getActiveUsername(), getActiveGroupId(),
+          username, startingTime, duration, info);
       goBack();
     } catch (Exception e) {
       errorMessage.setText(e.getMessage());
@@ -184,13 +190,14 @@ public class UpdateShiftController extends SceneController {
     }
   }
 
-  @Override public void styleIt() {
+  @Override
+  public void styleIt() {
     super.styleIt();
     goBackButton.setSkin(new ButtonAnimationSkin(goBackButton));
     createShiftButton.setSkin(new ButtonAnimationSkin(createShiftButton));
   }
 
-  protected void setActiveJobShift(JobShift activeJobShift) {
-    this.activeJobShift = activeJobShift;
+  protected void setActiveJobShiftIndex(Integer activeJobShiftIndex) {
+    this.activeJobShiftIndex = activeJobShiftIndex;
   }
 }

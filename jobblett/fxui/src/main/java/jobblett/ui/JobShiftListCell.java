@@ -2,50 +2,41 @@ package jobblett.ui;
 
 import java.time.LocalDateTime;
 import javafx.scene.control.ListCell;
-import jobblett.core.JobShift;
 
-public class JobShiftListCell extends ListCell<JobShift> {
+public class JobShiftListCell extends ListCell<Integer> {
 
-  //Basic implementasjon av celle for job shift view i ShiftViewController, burde sikkert 
-  //endre de to formaterings metodene i bunnen av klassen, men de fungerer
+  private ControllerMap controllerMap;
 
-  @Override public void updateItem(JobShift jobShift, boolean empty) {
+  public JobShiftListCell(ControllerMap controllerMap) {
+    this.controllerMap = controllerMap;
+  }
+
+  @Override public void updateItem(Integer jobShiftIndex, boolean empty) {
+    super.updateItem(jobShiftIndex, empty);
     setGraphic(null);
-    if (empty || jobShift == null) {
+    if (empty || jobShiftIndex == null) {
       setText(null);
       return;
     }
+    WorkspaceAccess access = controllerMap.getAccess();
+    int activeGroupId = controllerMap.getActiveGroupId();
 
-    /*TODO: bør gjøres på en bedre måte...
-       Nå legger den ny listener hver gang den oppdateres (den gamle slettes ikke)*/
-    boolean isNewItem = getItem() != jobShift;
-    super.updateItem(jobShift, empty);
-
-    final String shiftText = formatJobShift(jobShift);
-    if (isNewItem) {
-      setText(shiftText);
-      selectedProperty().addListener((o, old, newValue) -> {
-        if (isSelected()) {
-          final String infoText = "\nInfo:\n" + jobShift.getInfo();
-          setText(shiftText + infoText);
-        } else {
-          setText(shiftText);
-        }
-      });
-    }
-
+    final String shiftText = formatJobShift(jobShiftIndex);
+    final String infoText = "\nInfo:\n" + access.getJobShiftInfo(activeGroupId, jobShiftIndex);
+    setText(shiftText + infoText);
   }
 
-
   //String representation of the job shift, which is used by the cell
-  private String formatJobShift(JobShift jobShift) {
+  private String formatJobShift(int jobShiftIndex) {
+    WorkspaceAccess access = controllerMap.getAccess();
+    int activeGroupId = controllerMap.getActiveGroupId();
+
     String s = "";
-    if (jobShift.getUser() != null) {
-      s += jobShift.getUser().toString() + "\t";
-    }
-    LocalDateTime startingDateTime = jobShift.getStartingTime();
+    String username = access.getJobShiftUsername(activeGroupId, jobShiftIndex);
+    s += access.getUserToString(username) + "\t";
+    LocalDateTime startingDateTime = access.getJobShiftStartingTime(activeGroupId, jobShiftIndex);
     s += startingDateTime.format(App.EXPECTED_DATE_FORMAT) + "\t";
-    LocalDateTime endingDateTime = jobShift.getEndingTime();
+    LocalDateTime endingDateTime = access.getJobShiftEndingTime(activeGroupId, jobShiftIndex);
     s += startingDateTime.format(App.EXPECTED_TIME_FORMAT);
     s += " - ";
     s += endingDateTime.format(App.EXPECTED_TIME_FORMAT);

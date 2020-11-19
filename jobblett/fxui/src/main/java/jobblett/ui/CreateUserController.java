@@ -86,17 +86,15 @@ public class CreateUserController extends SceneController {
   @FXML
   public void createAccount() {
     String username = this.usernameField.getText();
-    String passwordString = this.passwordField.getText();
+    String password = this.passwordField.getText();
     String givenName = this.givenNameField.getText();
     String familyName = this.familyNameField.getText();
 
     try {
-      HashedPassword password = new HashedPassword(passwordString);
-      User newUser = new User(username, password, givenName, familyName);
-      getAccess().add(newUser);
-      setActiveUser(newUser);
+      getAccess().addUser(username, password, givenName, familyName);
+      setActiveUsername(username);
       switchScene(USER_HOME);
-    } catch (IllegalArgumentException e) {
+    } catch (Exception e) {
       errorMessage.setText(e.getMessage());
     }
   }

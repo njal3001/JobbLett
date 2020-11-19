@@ -17,10 +17,7 @@ public class WorkspaceGroup extends Group {
   */
   @Override
   public void addUser(User user) {
-    if (!workspace.getUserList().contains(user)) {
-      throw new IllegalArgumentException("User must be added to the user list first");
-    }
-    super.addUser(user);
+    addUser(user.getUsername());
   }
 
   /**
@@ -30,7 +27,11 @@ public class WorkspaceGroup extends Group {
    * @param username Username of the user to be added
    */
   public void addUser(String username) {
-    addUser(workspace.getUserList().get(username));
+    User user = workspace.getUserList().get(username);
+    if (user == null) {
+      throw new IllegalArgumentException("User must be added to the user list first");
+    }
+    super.addUser(user);
   }
 
   public Workspace getWorkspace() {

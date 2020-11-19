@@ -35,19 +35,6 @@ public class UserListTest {
     }
   }
 
-  //TODO: navnet burde endres, kanskje bare droppe metoden
-  @Test public void testLogin_CorrectUsernameAndPassword() {
-    userList.add(user1);
-    assertEquals(user1,
-        userList.checkUserNameAndPassword(user1.getUsername(), new HashedPassword("Test12345")));
-  }
-
-  @Test public void testLogin_WrongPassword() {
-    userList.add(user1);
-    assertEquals(null,
-        userList.checkUserNameAndPassword(user1.getUsername(), new HashedPassword("TotallyWrongPassword123")));
-  }
-
   @Test public void testIterator() {
     userList.add(user1);
     userList.add(user2);

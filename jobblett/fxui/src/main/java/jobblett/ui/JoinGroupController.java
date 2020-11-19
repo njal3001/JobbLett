@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import jobblett.core.Group;
 
 public class JoinGroupController extends SceneController {
 
@@ -58,17 +57,17 @@ public class JoinGroupController extends SceneController {
       errorMessage.setText("Invalid group ID");
       return;
     }
-    Group group = getAccess().getGroup(groupId);
-    if (group == null) {
+    if (!getAccess().hasGroup(groupId)) {
       errorMessage.setText("No group has the given ID");
       return;
     }
     try {
-      group.addUser(getActiveUser());
-      setActiveGroup(group);
+      getAccess().addGroupMember(groupId, getActiveUsername());
+      setActiveGroupId(groupId);
       switchScene(GROUP_HOME);
     } catch (Exception e) {
       errorMessage.setText(e.getMessage());
     }
+
   }
 }
