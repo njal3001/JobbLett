@@ -10,4 +10,8 @@ public class RemoteApp extends Application {
     App app = new App(true);
     app.start(stage);
   }
+
+  public static void main(String[] args) {
+    launch(args);
+  }
 }

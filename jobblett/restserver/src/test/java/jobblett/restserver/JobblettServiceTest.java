@@ -55,6 +55,7 @@ public class JobblettServiceTest extends JerseyTest{
   public void setUp() throws Exception{
     super.setUp();
     objectMapper = new JobblettModuleObjectMapperProvider().getContext(getClass());
+    System.out.println(objectMapper);
   }
 
   @Override
@@ -69,8 +70,6 @@ public class JobblettServiceTest extends JerseyTest{
     assertEquals(user.getFamilyName(), familyName);
   }
 
-  /*
-  // TODO
   @Test
   public void UserListTest(){
     Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("userlist")
@@ -99,7 +98,6 @@ public class JobblettServiceTest extends JerseyTest{
     }
   }
 
-  // TODO
   @Test
   public void GroupListTest(){
     Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist")
@@ -116,11 +114,7 @@ public class JobblettServiceTest extends JerseyTest{
 
 
     } catch (JsonProcessingException e){
-
+      fail(e.getMessage());
     }
   }
-
-
-*/
-
 }
