@@ -120,7 +120,9 @@ public class UpdateShiftController extends SceneController {
       createShiftButton.setText("Create shift");
     } else {
       // Update existing JobShift
-      members.getSelectionModel().select(activeJobShiftIndex);
+      String username = getAccess().getJobShiftUsername(
+          getActiveGroupId(), activeJobShiftIndex);
+      members.getSelectionModel().select(username);
       LocalDateTime startingTime = getAccess()
           .getJobShiftStartingTime(getActiveGroupId(), activeJobShiftIndex);
       String fromTime = startingTime.format(App.EXPECTED_TIME_FORMAT);
@@ -151,18 +153,13 @@ public class UpdateShiftController extends SceneController {
       LocalDateTime startingTime = getStartingTime(date.getValue(), fromField.getText());
       Duration duration = getDuration(fromField.getText(), toField.getText());
       
-      //TODO: blir kanskje litt mye logikk her...
       if (startingTime.isBefore(LocalDateTime.now())) {
         throw new IllegalArgumentException("Starting time must be later than the current time");
       }
-      //TODO: Litt rart at vi har en direkte addJobShift metode, 
-      //men at får å fjerne et job skift så må man først
-      //bruke getJobShiftList.
    
       if (activeJobShiftIndex != null) {
         getAccess().deleteJobShift(getActiveGroupId(), activeJobShiftIndex);
       }
-      //TODO: kan være at den slette shift uten at et nytt et faktisk blir lagt til..
       getAccess().addJobShift(getActiveUsername(), getActiveGroupId(),
           username, startingTime, duration, info);
       goBack();

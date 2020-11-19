@@ -16,7 +16,7 @@ import java.util.stream.Stream;
  * SuperClass for all List-classes in core. Type "k" is the class-type used for in the
  * identification. Type "T" is the class-type which is stored in the list.
  */
-public abstract class AbstractList<K, T> extends JobblettPropertyChangeSupporter
+public abstract class AbstractList<K, T> extends PropertyChangeSupporter
     implements Iterable<T> {
 
   private List<T> list = new ArrayList<>();
@@ -76,8 +76,6 @@ public abstract class AbstractList<K, T> extends JobblettPropertyChangeSupporter
   public boolean remove(T o) {
     return list.remove(o);
   }
-
-  //Trenger vi alle disse metodene?
 
   public boolean contains(T o) {
     return list.contains(o);

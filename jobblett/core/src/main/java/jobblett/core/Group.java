@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 /**
  * Represents a group in jobblett.
  */
-public class Group extends JobblettPropertyChangeSupporter 
+public class Group extends PropertyChangeSupporter 
     implements Iterable<User> {
 
   private final int groupId;

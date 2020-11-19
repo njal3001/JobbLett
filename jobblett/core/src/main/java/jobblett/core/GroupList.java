@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 /**
  * Handles all of the groups in the "database".
  */
-public class GroupList extends JobblettList<Integer, Group> {
+public class GroupList extends AbstractList<Integer, Group> {
   /**
    * Generates a unique groupID with 4 digits which is available.
    *

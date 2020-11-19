@@ -223,7 +223,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   @Override
   //TODO: DENNE BRUKES IKKE??
   public void updateJobShift(int groupId, int index, String username,
-      LocalDateTime startingTime, Duration duration, String info) {
+    LocalDateTime startingTime, Duration duration, String info) {
     JobShift jobShift = new JobShift(getUser(username), startingTime, duration, info);
     String serializedJobshift = new JobblettPersistence().writeValueAsString(jobShift);
     put(GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/"

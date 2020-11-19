@@ -69,6 +69,7 @@ public class JobblettServiceTest extends JerseyTest{
     assertEquals(user.getFamilyName(), familyName);
   }
 
+  /*
   // TODO
   @Test
   public void UserListTest(){
@@ -120,6 +121,6 @@ public class JobblettServiceTest extends JerseyTest{
   }
 
 
-
+*/
 
 }
