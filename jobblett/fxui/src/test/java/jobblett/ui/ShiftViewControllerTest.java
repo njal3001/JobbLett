@@ -5,13 +5,10 @@ import static jobblett.ui.JobblettScenes.GROUP_HOME;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.input.KeyCode;
 import jobblett.core.Group;
 import jobblett.core.JobShift;
 import jobblett.core.User;

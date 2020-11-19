@@ -60,7 +60,6 @@ public class UserListResource extends RestApiClass {
   /**
    * Returns if a user with the same username exist.
    *
-   * @param username user's username
    * @return boolean
    */
   @POST

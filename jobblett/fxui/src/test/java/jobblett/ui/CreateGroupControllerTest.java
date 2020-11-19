@@ -4,11 +4,8 @@ import static jobblett.ui.JobblettScenes.CREATE_GROUP;
 import static jobblett.ui.JobblettScenes.GROUP_HOME;
 import static jobblett.ui.JobblettScenes.USER_HOME;
 
-import jobblett.core.Group;
 import jobblett.core.User;
 import org.junit.jupiter.api.Test;
-
-import java.util.concurrent.TimeUnit;
 
 public class CreateGroupControllerTest extends JobbLettTest {
 

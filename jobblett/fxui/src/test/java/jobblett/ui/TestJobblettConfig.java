@@ -1,4 +1,4 @@
-package jobblett.ui.remote;
+package jobblett.ui;
 
 import jobblett.core.Workspace;
 import jobblett.json.JobblettPersistence;
@@ -10,9 +10,4 @@ public class TestJobblettConfig extends JobblettConfig {
     super(workspace);
   }
 
-  private static Workspace createTestWorkspace() {
-    Workspace workspace = new Workspace();
-
-    return new JobblettPersistence().readDefault(Workspace.class);
-  }
 }

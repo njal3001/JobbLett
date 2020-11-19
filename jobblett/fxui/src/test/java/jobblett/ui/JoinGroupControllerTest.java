@@ -6,7 +6,6 @@ import static jobblett.ui.JobblettScenes.USER_HOME;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import javafx.scene.control.TextField;
-import jobblett.core.Group;
 import jobblett.core.GroupMemberList;
 import jobblett.core.User;
 import org.junit.jupiter.api.Test;

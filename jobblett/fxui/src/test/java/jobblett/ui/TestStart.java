@@ -1,15 +1,15 @@
-package jobblett.ui.remote;
+package jobblett.ui;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 import jobblett.core.Workspace;
-import jobblett.restserver.JobblettConfig;
-import jobblett.ui.ControllerMap;
-import jobblett.ui.JobbLettTest;
-import jobblett.ui.RemoteWorkspaceAccess;
-import jobblett.ui.SceneController;
 
+import java.net.ConnectException;
 import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.concurrent.TimeUnit;
 
 public class TestStart extends Application {
   private JobbLettTest jobbLettTest;
@@ -21,13 +21,23 @@ public class TestStart extends Application {
   }
 
   @Override public void start(Stage stage) throws Exception {
-    RemoteWorkspaceAccess remoteWorkspaceAccess = new RemoteWorkspaceAccess(new URI("http://localhost:8999/jobblett/"));
+    URI uri = new URI("http://localhost:8999/jobblett/");
+    RemoteWorkspaceAccess remoteWorkspaceAccess = new RemoteWorkspaceAccess(uri);
     jobbLettTest.controllerMap = new ControllerMap(stage, remoteWorkspaceAccess);
     jobbLettTest.workspace = new Workspace();
     testServerStarter = new TestServerStarter(jobbLettTest.workspace);
+    jobbLettTest.setupData();
     Thread thread = new Thread(testServerStarter);
     thread.start();
-    jobbLettTest.setupData();
+    for (int i = 0; i < 200; i++) {
+      try {
+        HttpRequest requestObject = HttpRequest.newBuilder(uri).header("Accept", "application/json").build();
+        HttpClient.newBuilder().build().send(requestObject, HttpResponse.BodyHandlers.ofString());
+        break;
+      } catch (ConnectException e) {
+        TimeUnit.MILLISECONDS.sleep(10);
+      }
+    }
     if(jobbLettTest.optionalActiveUser() != null) {
       jobbLettTest.controllerMap.setActiveUsername(jobbLettTest.optionalActiveUser().getUsername());
     }

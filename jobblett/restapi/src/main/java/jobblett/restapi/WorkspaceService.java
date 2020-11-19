@@ -27,7 +27,6 @@ public class WorkspaceService extends RestApiClass {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Workspace getWorkspace() {
-    debug("Returning workspace");
     debug(workspace.getGroupList().toString());
     return workspace;
   }

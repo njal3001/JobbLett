@@ -5,10 +5,8 @@ import static jobblett.ui.JobblettScenes.UPDATE_SHIFT;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
-import javafx.application.Platform;
+
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import jobblett.core.Group;
 import jobblett.core.User;

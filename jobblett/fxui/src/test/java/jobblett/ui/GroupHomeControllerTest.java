@@ -3,13 +3,11 @@ package jobblett.ui;
 import static jobblett.ui.JobblettScenes.GROUP_HOME;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
+
 import jobblett.core.Group;
 import jobblett.core.User;
-import jobblett.core.UserList;
 import org.junit.jupiter.api.Test;
-import javafx.scene.control.ListView;
-import javafx.scene.input.KeyCode;
+
 import static jobblett.ui.JobblettScenes.USER_HOME;
 import static jobblett.ui.JobblettScenes.SHIFT_VIEW;
 

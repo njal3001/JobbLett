@@ -2,6 +2,12 @@ package jobblett.ui;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import jobblett.ui.ControllerMap;
+import jobblett.ui.DirectWorkspaceAccess;
+import jobblett.ui.JobblettScenes;
+import jobblett.ui.SceneController;
+import jobblett.ui.UIAssertions;
+import jobblett.ui.WorkspaceAccess;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -24,8 +30,7 @@ public abstract class JobbLettTest extends ApplicationTest {
 
   protected SceneController controller;
 
-  // Todo maybe make it private
-  public ControllerMap controllerMap;
+  protected ControllerMap controllerMap;
 
   protected UIAssertions uiAssertions;
 
@@ -38,10 +43,10 @@ public abstract class JobbLettTest extends ApplicationTest {
   // Subclasses implement these methods to give the active user and group
   // for the starting scene of the test
   // TODO dumt å ha disse public?
-  public User optionalActiveUser() {
+  protected User optionalActiveUser() {
     return null;
   }
-  public Group optionalActiveGroup(){
+  protected Group optionalActiveGroup(){
     return null;
   }
 

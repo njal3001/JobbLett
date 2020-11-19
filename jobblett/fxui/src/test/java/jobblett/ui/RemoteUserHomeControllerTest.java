@@ -1,12 +1,11 @@
-package jobblett.ui.remote;
+package jobblett.ui;
 
 import javafx.stage.Stage;
-import jobblett.ui.JoinGroupControllerTest;
-import jobblett.ui.UpdateShiftControllerTest;
 import org.junit.jupiter.api.AfterEach;
 
-public class RemoteUpdateShiftControllerTest extends UpdateShiftControllerTest {
+public class RemoteUserHomeControllerTest extends UserHomeControllerTest {
     TestServerStarter testServerStarter;
+
 
   @Override public void start(Stage primaryStage) throws Exception {
     TestStart starter = new TestStart(this);

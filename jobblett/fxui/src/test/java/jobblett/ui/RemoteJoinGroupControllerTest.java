@@ -1,16 +1,9 @@
-package jobblett.ui.remote;
+package jobblett.ui;
 
 import javafx.stage.Stage;
-import jobblett.core.Workspace;
-import jobblett.ui.ControllerMap;
-import jobblett.ui.CreateGroupControllerTest;
-import jobblett.ui.RemoteWorkspaceAccess;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
 
-import java.net.URI;
-
-public class RemoteCreateGroupControllerTest extends CreateGroupControllerTest {
+public class RemoteJoinGroupControllerTest extends JoinGroupControllerTest {
     TestServerStarter testServerStarter;
 
   @Override public void start(Stage primaryStage) throws Exception {

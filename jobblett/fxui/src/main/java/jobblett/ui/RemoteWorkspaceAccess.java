@@ -1,5 +1,7 @@
 package jobblett.ui;
 
+import static jobblett.core.Group.checkGroupName;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,10 +21,8 @@ import jobblett.core.JobShift;
 import jobblett.core.JobShiftList;
 import jobblett.core.User;
 import jobblett.core.UserList;
-import jobblett.core.Workspace;
 import jobblett.json.JobblettPersistence;
 
-import static jobblett.core.Group.checkGroupName;
 
 public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
@@ -239,6 +239,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   @Override
   public void addJobShift(String username, int groupId, String jobShiftUsername,
       LocalDateTime startingTime, Duration duration, String info) {
+    System.out.println(duration);
 
     JobShift jobShift = new JobShift(getUser(jobShiftUsername), startingTime, duration, info);
     String serializedJobshift = new JobblettPersistence().writeValueAsString(jobShift);
@@ -249,8 +250,6 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public int getJobShiftsSize(int groupId) {
-    System.out.println(get(JobShiftList.class,
-        GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/" + JOB_SHIFT_LIST_RESOURCE_PATH));
     return get(JobShiftList.class,
         GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/" + JOB_SHIFT_LIST_RESOURCE_PATH).size();
   }
@@ -258,9 +257,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   @Override
   public List<Integer> getJobShiftIndexes(int groupId, String username) {
     Group group = getGroup(groupId);
-    System.out.println(group);
     User user = group.getUser(username);
-    System.out.println(user);
     JobShiftList jobShiftList = group.getJobShiftList();
     return jobShiftList
         .stream()
@@ -289,7 +286,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public LocalDateTime getJobShiftEndingTime(int groupId, int index) {
-    return getJobShift(groupId, index).getStartingTime();
+    return getJobShift(groupId, index).getEndingTime();
   }
 
   @Override
