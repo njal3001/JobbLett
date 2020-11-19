@@ -45,7 +45,7 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
     }
     boolean result = list.addAll(Arrays.asList(objects));
     //TODO
-    //firePropertyChange(simpleTypeName() + "List", list);
+    firePropertyChange(simpleTypeName() + "List", list);
     if (optionalComparator() != null) {
       Collections.sort(list, optionalComparator());
     }
@@ -80,7 +80,9 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
    * @return if the object was removed or not.
    */
   public boolean remove(T o) {
-    return list.remove(o);
+    boolean done = list.remove(o);
+    firePropertyChange(simpleTypeName() + "List", list);
+    return done;
   }
 
   //Trenger vi alle disse metodene?

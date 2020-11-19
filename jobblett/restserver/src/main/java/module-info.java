@@ -8,4 +8,5 @@ module jobblett.restserver {
     requires jobblett.restapi;
     requires jersey.media.json.jackson;
     requires hk2.api;
+  requires java.desktop;
 }
