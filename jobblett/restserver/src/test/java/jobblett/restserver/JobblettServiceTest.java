@@ -118,6 +118,22 @@ public class JobblettServiceTest extends JerseyTest{
     }
   }
 
+  @Test
+  public void testGetUser(){
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("userlist/get/olav")
+        .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
+        .get();
+    assertEquals(200, getResponse.getStatus());
+
+    try{
+      User user = objectMapper.readValue(getResponse.readEntity(String.class),User.class);
+      assertUser(user, "olav", "Olav", "Nordmann");
+    } catch(JsonProcessingException e){
+
+    }
+
+  }
+
 
 
 
