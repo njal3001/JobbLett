@@ -3,6 +3,9 @@ package jobblett.ui;
 import java.time.LocalDateTime;
 import javafx.scene.control.ListCell;
 
+/**
+ * CellFactory for the listView showing the shifts ShiftViewController.
+ */
 public class JobShiftListCell extends ListCell<Integer> {
 
   private ControllerMap controllerMap;
@@ -26,7 +29,12 @@ public class JobShiftListCell extends ListCell<Integer> {
     setText(shiftText + infoText);
   }
 
-  //String representation of the job shift, which is used by the cell
+  /**
+   * String representation of the jobShift, which is used by the cell.
+   *
+   * @param jobShiftIndex the jobShift that we want string representation of.
+   * @return the string representation
+   */
   private String formatJobShift(int jobShiftIndex) {
     WorkspaceAccess access = controllerMap.getAccess();
     int activeGroupId = controllerMap.getActiveGroupId();
