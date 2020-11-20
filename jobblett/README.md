@@ -41,7 +41,7 @@ testdekning.
 * [core](core/)
 * [fxui](fxui/)
 * [json](json/)
-* [restAPI](/restAPI)
+* [restapi](/restapi)
 * [restserver](/restserver)
 * [integrationtests](/integrationtests)
 
