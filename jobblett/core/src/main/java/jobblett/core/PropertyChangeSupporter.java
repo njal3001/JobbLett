@@ -30,7 +30,6 @@ public abstract class PropertyChangeSupporter {
     pcs.firePropertyChange(propertyName, oldValue, newValue);
   }
 
-  // Trenger jo egentlig ikke oldValue
   protected void firePropertyChange(String propertyName, Object newValue) {
     firePropertyChange(propertyName, null, newValue);
   }
