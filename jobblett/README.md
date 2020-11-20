@@ -43,6 +43,7 @@ testdekning.
 * [integrationtests](integrationtests/)
 
 Dersom man vil se et eksempel hvordan appen fungerer i sin helhet, uten å måtte lage brukere og koble dem opp til et workspace, kan man logge inn med brukeren: "**Olav**", "**BestePassord123**".
+**EDIT: I etterkant etter innleveringsfristen la vi merke til at testene endrer lokale persistenslagringen og får appen til å tro at appen har vært i bruk før. Dermed benytter den seg ikke av standard-verdiene til appen som skal dukke opp første gang appen kjører. Man må derfor logge seg inn i appen med brukernavnet "CorrectUsername" og passordet "CorrectPassword12345" dersom man han kjørt testene. Det er også alltid mulig å opprette nye brukere.**
 
 ### Arkitekturdiagram:
 
