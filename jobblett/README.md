@@ -41,9 +41,9 @@ testdekning.
 * [core](core/)
 * [fxui](fxui/)
 * [json](json/)
-* [restapi](/restapi)
-* [restserver](/restserver)
-* [integrationtests](/integrationtests)
+* [restapi](restapi/)
+* [restserver](restserver/)
+* [integrationtests](integrationtests/)
 
 
 ### Arkitekturdiagram:
