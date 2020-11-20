@@ -33,6 +33,8 @@ public class LoginController extends SceneController {
   @FXML
   PasswordField passwordField;
 
+  //TODO finn ut av om vi skal ha font for inputs
+
   @Override
   public void styleIt() {
     super.styleIt();
@@ -51,7 +53,7 @@ public class LoginController extends SceneController {
   }
 
   /**
-   * Logging the user in.
+   * Logging the user in as the active user.
    */
   @FXML
   public void logInToUserHome() {

@@ -35,6 +35,11 @@ public abstract class SceneController {
     return controllerMap.getAccess();
   }
 
+  /**
+   * Changes current screne.
+   *
+   * @param jobblettScenes the scene we want to change to
+   */
   public void switchScene(final JobblettScenes jobblettScenes) {
     getControllerMap().switchScene(jobblettScenes);
   }
@@ -50,6 +55,9 @@ public abstract class SceneController {
   public void onSceneDisplayed() {
   }
 
+  /**
+   * Styles UI elements.
+   */
   public void styleIt() {
 
   }

@@ -8,30 +8,30 @@ import javafx.util.Duration;
 public class ButtonAnimationSkin extends ButtonSkin {
 
   /**
-   * TODO.
+   * Defines the effects for button transition when they are hovered, pressed and released.
    *
-   * @param control TODO
+   * @param button the button we are adding the effects to
    */
-  public ButtonAnimationSkin(Button control) {
-    super(control);
+  public ButtonAnimationSkin(Button button) {
+    super(button);
     final ScaleTransition fadeIn = new ScaleTransition(Duration.millis(200));
-    fadeIn.setNode(control);
+    fadeIn.setNode(button);
     fadeIn.setToX(1.05);
     fadeIn.setToY(1.05);
-    control.setOnMouseEntered(e -> fadeIn.playFromStart());
+    button.setOnMouseEntered(e -> fadeIn.playFromStart());
 
     final ScaleTransition fadeOut = new ScaleTransition(Duration.millis(100));
-    fadeOut.setNode(control);
+    fadeOut.setNode(button);
     fadeOut.setToX(1);
     fadeOut.setToY(1);
-    control.setOnMouseExited(e -> fadeOut.playFromStart());
-    control.setOnMouseReleased(e -> fadeOut.playFromStart());
+    button.setOnMouseExited(e -> fadeOut.playFromStart());
+    button.setOnMouseReleased(e -> fadeOut.playFromStart());
 
     final ScaleTransition pressedFade = new ScaleTransition(Duration.millis(100));
-    pressedFade.setNode(control);
+    pressedFade.setNode(button);
     pressedFade.setToX(0.975);
     pressedFade.setToY(0.975);
-    control.setOnMousePressed(e -> pressedFade.playFromStart());
+    button.setOnMousePressed(e -> pressedFade.playFromStart());
   }
 
 }
