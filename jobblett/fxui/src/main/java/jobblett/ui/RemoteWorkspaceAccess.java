@@ -37,6 +37,8 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     this.endpointBaseUri = endpointBaseUri;
   }
 
+  //TODO: JAVAAADOC
+
   private String getBody(String url) {
     HttpRequest requestObject = null;
     try {
@@ -220,32 +222,21 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
         GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/isAdmin/" + username);
   }
 
+ 
   @Override
-  //TODO: DENNE BRUKES IKKE??
-  public void updateJobShift(int groupId, int index, String username,
-      LocalDateTime startingTime, Duration duration, String info) {
-    JobShift jobShift = new JobShift(getUser(username), startingTime, duration, info);
-    String serializedJobshift = new JobblettPersistence().writeValueAsString(jobShift);
-    put(GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/"
-        + JOB_SHIFT_LIST_RESOURCE_PATH + "/get/" + index + "/update", serializedJobshift);
-  }
-
-  @Override
-  public void deleteJobShift(int groupId, int index) {
+  public void deleteJobShift(String adminUsername, int groupId, int index) {
     get(Boolean.class, GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/"
-        + JOB_SHIFT_LIST_RESOURCE_PATH + "/remove/" + index);
+        + JOB_SHIFT_LIST_RESOURCE_PATH + "/remove/" + adminUsername + "/" + index);
   }
 
   @Override
-  public void addJobShift(String username, int groupId, String jobShiftUsername,
+  public void addJobShift(String adminUsername, int groupId, String jobShiftUsername,
       LocalDateTime startingTime, Duration duration, String info) {
-    System.out.println(duration);
-
+    
     JobShift jobShift = new JobShift(getUser(jobShiftUsername), startingTime, duration, info);
     String serializedJobshift = new JobblettPersistence().writeValueAsString(jobShift);
     put(GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/"
-        + JOB_SHIFT_LIST_RESOURCE_PATH + "/add", serializedJobshift);
-
+        + JOB_SHIFT_LIST_RESOURCE_PATH + "/add/" + adminUsername, serializedJobshift);
   }
 
   @Override
@@ -299,4 +290,9 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     return getJobShift(groupId, index).isOutDated();
   }
 
+  @Override
+  public void deleteOutdatedJobShift(int groupId) {
+    put(GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/"
+        + JOB_SHIFT_LIST_RESOURCE_PATH + "/deleteOutdated", "");
+  }
 }

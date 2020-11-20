@@ -42,6 +42,7 @@ public class JobShiftResource extends RestApiClass {
    *
    * @param jobShift a jobShift-instance containing the information
    */
+  /*
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/update")
@@ -54,6 +55,7 @@ public class JobShiftResource extends RestApiClass {
     this.jobShift.setStartingTime(jobShift.getStartingTime());
     //TODO: Kanskje lista må sorteres på nytt etter dette?
   }
+  */
 
   @Override protected Logger logger() {
     return LOG;

@@ -2,7 +2,6 @@ package jobblett.core;
 
 import com.google.common.hash.Hashing;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 public class HashedPassword {
   private final String password;

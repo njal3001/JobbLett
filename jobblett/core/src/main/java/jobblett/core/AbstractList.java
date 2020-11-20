@@ -1,8 +1,5 @@
 package jobblett.core;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,13 +12,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
-//TODO: Er litt rart at vi har en klasse som heter noe med jobblett
-// i core modulen.
 /**
- * SuperClass for all List-classes in Jobblett. Type "k" is the class-type used for in the
+ * SuperClass for all List-classes in core. Type "k" is the class-type used for in the
  * identification. Type "T" is the class-type which is stored in the list.
  */
-public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
+public abstract class AbstractList<K, T> extends PropertyChangeSupporter
     implements Iterable<T> {
 
   private List<T> list = new ArrayList<>();
@@ -30,7 +25,6 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
     return stream().filter(a -> identifier(a).equals(k)).findAny().orElse(null);
   }
 
-  //TODO: Denne metoden passer ikke med WorkspaceGroupList
   /**
    * Adds objects to the list.
    *
@@ -85,8 +79,6 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
     return done;
   }
 
-  //Trenger vi alle disse metodene?
-
   public boolean contains(T o) {
     return list.contains(o);
   }
@@ -117,23 +109,6 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
     return simpleTypeName() + "List=" + list;
   }
 
-  //TODO: fjernes?
-  @Override
-  public boolean equals(Object o) {
-    if (o instanceof JobblettList) {
-      JobblettList newList = (JobblettList) o;
-      return list.equals(newList.list);
-    } else {
-      return super.equals(o);
-    }
-  }
-
-  @Override
-  public int hashCode() {
-    assert false : "hashCode not designed";
-    return 42; // any arbitrary constant will do
-  }
-
   protected String simpleTypeName() {
     /*ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
     String fullTypeName = parameterizedType.getActualTypeArguments()[1].getTypeName();
@@ -146,7 +121,7 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
 
   protected abstract K identifier(T t);
 
-  public void optionalAlreadyExists() {
+  protected void optionalAlreadyExists() {
 
   }
 

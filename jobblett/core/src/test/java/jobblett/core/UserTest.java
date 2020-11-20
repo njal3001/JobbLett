@@ -35,28 +35,28 @@ public class UserTest {
       fail("Exception should not be thrown for this input");
     }
     try {
-      User u2 = new User("", new HashedPassword("Nils1254"), "Nils", "Enge");
+      new User("", new HashedPassword("Nils1254"), "Nils", "Enge");
       fail("Exception should be thrown because of invalid username");
     } catch (Exception e) {
       assertTrue(e instanceof IllegalArgumentException);
     }
 
     try {
-      User u2 = new User("njal3001", new HashedPassword(""), "Nils", "Enge");
+      new User("njal3001", new HashedPassword(""), "Nils", "Enge");
       fail("Exception should be thrown because of invalid password");
     } catch (Exception e) {
       assertTrue(e instanceof IllegalArgumentException);
     }
 
     try {
-      User u2 = new User("njal3001", new HashedPassword("Nils1254"), "", "Enge");
+      new User("njal3001", new HashedPassword("Nils1254"), "", "Enge");
       fail("Exception should be thrown because of invalid given name");
     } catch (Exception e) {
       assertTrue(e instanceof IllegalArgumentException);
     }
 
     try {
-      User u2 = new User("njal3001", new HashedPassword("Nils1254"), "Nils", "");
+      new User("njal3001", new HashedPassword("Nils1254"), "Nils", "");
       fail("Exception should be thrown because of invalid family name");
     } catch (Exception e) {
       assertTrue(e instanceof IllegalArgumentException);
