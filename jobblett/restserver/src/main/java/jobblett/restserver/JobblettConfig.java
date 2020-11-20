@@ -12,7 +12,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class JobblettConfig extends ResourceConfig implements PropertyChangeListener {
   private Workspace workspace;
 
-  protected JobblettConfig(Workspace workspace) {
+  public JobblettConfig(Workspace workspace) {
     setWorkspace(workspace);
     register(WorkspaceService.class);
     register(JobblettModuleObjectMapperProvider.class);

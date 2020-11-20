@@ -2,10 +2,8 @@ package jobblett.restserver;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jobblett.core.Group;
-import jobblett.core.GroupList;
-import jobblett.core.User;
-import jobblett.core.UserList;
+import jobblett.core.*;
+import jobblett.json.JobblettPersistence;
 import jobblett.restapi.WorkspaceService;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -22,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Iterator;
 
+import static jobblett.restapi.JobShiftListResource.JOB_SHIFT_LIST_RESOURCE_PATH;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -34,7 +33,8 @@ public class JobblettServiceTest extends JerseyTest{
 
   @Override
   protected ResourceConfig configure(){
-    final JobblettConfig jobblettConfig = new JobblettConfig();
+    Workspace workspace = new JobblettPersistence().readDefault(Workspace.class);
+    final JobblettConfig jobblettConfig = new JobblettConfig(workspace);
     if(shouldLog()){
       enable(TestProperties.LOG_TRAFFIC);
       enable(TestProperties.DUMP_ENTITY);
@@ -71,7 +71,7 @@ public class JobblettServiceTest extends JerseyTest{
   }
 
   @Test
-  public void UserListTest(){
+  public void getUserListTest(){
     Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("userlist")
         .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
         .get();
@@ -99,7 +99,7 @@ public class JobblettServiceTest extends JerseyTest{
   }
 
   @Test
-  public void GroupListTest(){
+  public void getGroupListTest(){
     Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist")
         .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
         .get();
@@ -134,27 +134,27 @@ public class JobblettServiceTest extends JerseyTest{
 
   }
 
-    @Test
+  @Test
   public void getGroupIDtest(){
-    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/"+6210)
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/6803")
         .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
         .get();
     assertEquals(200, getResponse.getStatus());
 
     try{
       Group group = objectMapper.readValue(getResponse.readEntity(String.class),Group.class);
-      assertEquals(group.getGroupId(), 6210);
+      assertEquals(group.getGroupId(), 6803);
     } catch(JsonProcessingException e){
 
     }
 
   }
 
-  @Test
+  /*@Test
     public void newGroupTest(){
     Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/new")
         .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
-        .get();
+        .post()
     assertEquals(200, getResponse.getStatus());
 
     Response getResponseGroup = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist")
@@ -168,11 +168,26 @@ public class JobblettServiceTest extends JerseyTest{
       assertTrue(groupList.contains(group));
     } catch(JsonProcessingException e){
 
+    }*/
+
+  /*@Test
+  public void getJobshifts(){
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/"+JOB_SHIFT_LIST_RESOURCE_PATH)
+        .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
+        .get();
+    assertEquals(200, getResponse.getStatus());
+
+    try{
+      JobShiftList jobShiftList = objectMapper.readValue(getResponse.readEntity(String.class),JobShiftList.class);
+    } catch(JsonProcessingException e){
+
     }
+
+  }*/
+
+
 
   }
   
 
-
-}
     
