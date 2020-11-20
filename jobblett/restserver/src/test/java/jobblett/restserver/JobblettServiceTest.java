@@ -264,6 +264,17 @@ public class JobblettServiceTest extends JerseyTest {
 
   }
 
+  @Test public void deleteOutdatedJobShiftsTest() {
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/6803/"+JOB_SHIFT_LIST_RESOURCE_PATH+"/deleteOutdated")
+        .request()
+        .accept(MediaType.APPLICATION_JSON)
+        .put(Entity.json(""));
+    // Excpecting 204 and 200 because put does not return anything
+    assertEquals(204, getResponse.getStatus());
+
+
+  }
+
 
 
 
