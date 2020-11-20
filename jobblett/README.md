@@ -44,7 +44,9 @@ testdekning.
 * [restapi](restapi/)
 * [restserver](restserver/)
 * [integrationtests](integrationtests/)
+* 
 
+Dersom man vil se et eksempel hvordan appen fungerer i sin helhet, uten å måtte lage brukere og koble dem opp til et workspace, kan man logge inn med brukeren: "**Olav**", "**BestePassord123**".
 
 ### Arkitekturdiagram:
 

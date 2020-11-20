@@ -36,7 +36,9 @@ public class ShiftViewController extends SceneController {
     shifts.getSelectionModel().selectedItemProperty().addListener(listener -> updateButtons());
   }
 
-  // TODO: skrive javadoc
+  /**
+   * method for displaying scene.
+   */
   @Override public void onSceneDisplayed() {
     groupName.setText(getAccess().getGroupName(getActiveGroupId()));
     toggleUserFilterCheckBox.setSelected(false);
@@ -66,7 +68,7 @@ public class ShiftViewController extends SceneController {
   }
 
   /**
-   * TODO.
+   *method for going to edit shift.
    */
   @FXML public void goToEditShift() {
     int selectedJobShiftIndex = shifts.getSelectionModel().getSelectedIndex();
@@ -91,7 +93,7 @@ public class ShiftViewController extends SceneController {
   /**
    * Updates the shiftView to only show the active user's shifts or all of the shifts.
    *
-   * @param event TODO event fired when the tooglebox is interacted with
+   * @param event event fired when the tooglebox is interacted with user.
    */
   @FXML public void toggleUserFilter(ActionEvent event) {
     CheckBox checkBox = (CheckBox) event.getSource();

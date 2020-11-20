@@ -49,7 +49,7 @@ public class UserListResource extends RestApiClass {
    */
   @GET
   @Path("/get/{userName}")
-  @Produces(MediaType.APPLICATION_JSON) // TODO trengs denne? sjekk dette på alle
+  @Produces(MediaType.APPLICATION_JSON)
   public UserResource getUser(@PathParam("userName") String userName) {
     checkUsername(userName);
     User user = userList.get(userName);
