@@ -37,26 +37,6 @@ public class JobShiftResource extends RestApiClass {
     return jobShift;
   }
 
-  /**
-   * Updates jobShift with new information.
-   *
-   * @param jobShift a jobShift-instance containing the information
-   */
-  /*
-  @PUT
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Path("/update")
-  public void update(JobShift jobShift) {
-    debug("Replacing JobShift with new information");
-    User user = group.getUser(jobShift.getUser().getUsername());
-    this.jobShift.setUser(user);
-    this.jobShift.setDuration(jobShift.getDuration());
-    this.jobShift.setInfo(jobShift.getInfo());
-    this.jobShift.setStartingTime(jobShift.getStartingTime());
-    //TODO: Kanskje lista må sorteres på nytt etter dette?
-  }
-  */
-
   @Override protected Logger logger() {
     return LOG;
   }
