@@ -31,7 +31,7 @@ public class WorkspaceService extends RestApiClass {
   @Path("/" + GROUP_LIST_RESCORCE_PATH)
   public GroupListResource getGroupListResource() {
     debug("Sub-resource for GroupList");
-    return new GroupListResource(workspace.getGroupList());
+    return new GroupListResource(workspace);
   }
 
   @Path("/" + USER_LIST_RESCORCE_PATH)

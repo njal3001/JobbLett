@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import jobblett.core.HashedPassword;
 
-public class HashedPasswordSerializer extends JsonSerializer<HashedPassword>  {
+class HashedPasswordSerializer extends JsonSerializer<HashedPassword>  {
 
   @Override
   public void serialize(

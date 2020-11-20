@@ -2,7 +2,6 @@ package jobblett.json;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -10,7 +9,7 @@ import java.io.IOException;
 import jobblett.core.HashedPassword;
 import jobblett.core.User;
 
-public class UserDeserializer extends JsonDeserializer<User> {
+class UserDeserializer extends JsonDeserializer<User> {
 
   @Override
   public User deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
