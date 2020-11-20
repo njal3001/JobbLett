@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.Iterator;
 
 import static jobblett.restapi.JobShiftListResource.JOB_SHIFT_LIST_RESOURCE_PATH;
+import static jobblett.restapi.UserListResource.USER_LIST_RESCORCE_PATH;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -176,12 +177,25 @@ public class JobblettServiceTest extends JerseyTest {
   @Test
   public void testAddJobshift(){
     User user = new User("olav", new HashedPassword("bestePassord123"), "Olav", "Nordmann");
-    JobShift jobShift = new JobShift(user, LocalDateTime.of(2021, 12, 20, 12, 30), Duration.ofHours(3), "tester update jobshift");
+    JobShift jobShift = new JobShift(user, LocalDateTime.of(2021, 12, 20, 12, 30), Duration.ofHours(3), "tester add jobshift");
 
     Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/6803/"+JOB_SHIFT_LIST_RESOURCE_PATH+"/add")
         .request()
         .accept(MediaType.APPLICATION_JSON)
         .put(Entity.json(new JobblettPersistence().writeValueAsString(jobShift)));
+
+    // Excpecting 204 and 200 because put does not return anything
+    assertEquals(204, getResponse.getStatus());
+
+  }
+
+  @Test
+  public void testAddUser(){
+    User user = new User("newUser", new HashedPassword("bestePassord123"), "NewUser", "LastName");
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("userlist/add")
+        .request()
+        .accept(MediaType.APPLICATION_JSON)
+        .put(Entity.json(new JobblettPersistence().writeValueAsString(user)));
 
     // Excpecting 204 and 200 because put does not return anything
     assertEquals(204, getResponse.getStatus());
@@ -225,6 +239,16 @@ public class JobblettServiceTest extends JerseyTest {
     }
 
   }
+
+  @Test public void getWorkspace() {
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH)
+        .request().accept(MediaType.APPLICATION_JSON).get();
+    assertEquals(200, getResponse.getStatus());
+
+
+  }
+
+
 
 }
   
