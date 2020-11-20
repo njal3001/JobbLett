@@ -19,6 +19,8 @@ import org.junit.jupiter.api.Test;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 
 import static jobblett.restapi.JobShiftListResource.JOB_SHIFT_LIST_RESOURCE_PATH;
@@ -124,8 +126,11 @@ public class JobblettServiceTest extends JerseyTest {
   }
 
   @Test public void getGroupIDtest() {
-    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/6803")
-        .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF8").get();
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH)
+        .path("grouplist/get/6803")
+        .request()
+        .accept(MediaType.APPLICATION_JSON)
+        .get();
     assertEquals(200, getResponse.getStatus());
 
     try {
@@ -137,46 +142,51 @@ public class JobblettServiceTest extends JerseyTest {
 
   }
 
-  /*@Test public void newGroupTest() {
-    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/new")
-        .acc(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF8").post(Entity.json("testerGroup"));
+  @Test public void newGroupTest() {
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH)
+        .path("grouplist/new")
+        .request()
+        .accept(MediaType.APPLICATION_JSON)
+        .post(Entity.json("testerGroup"));
+
     assertEquals(200, getResponse.getStatus());
 
-    Response getResponseGroup = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist")
-        .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF8").get();
-    assertEquals(200, getResponseGroup.getStatus());
+    Response getResponseGroupList = target(WorkspaceService.WORKSPACE_SERVICE_PATH)
+        .path("grouplist")
+        .request()
+        .accept(MediaType.APPLICATION_JSON)
+        .get();
+
+    assertEquals(200, getResponseGroupList.getStatus());
 
     try {
       Group group = objectMapper.readValue(getResponse.readEntity(String.class), Group.class);
-      GroupList groupList = objectMapper.readValue(getResponse.readEntity(String.class), GroupList.class);
-      assertTrue(groupList.contains(group));
+      GroupList groupList = objectMapper.readValue(getResponseGroupList.readEntity(String.class), GroupList.class);
+      Group group1 = groupList.get(group.getGroupId());
+      assertNotNull(group1);
+      assertEquals(group.getGroupName(), group1.getGroupName());
+      assertEquals(group.getGroupSize(), group1.getGroupSize());
+
     } catch (JsonProcessingException e) {
 
     }
   }
-  */
 
 
-  /*@Test
-  public void testupdateJobshift(){
-    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/6803/"+JOB_SHIFT_LIST_RESOURCE_PATH+"update")
-        .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
-        .put();
-    assertEquals(200, getResponse.getStatus());
+  @Test
+  public void testAddJobshift(){
+    User user = new User("olav", new HashedPassword("bestePassord123"), "Olav", "Nordmann");
+    JobShift jobShift = new JobShift(user, LocalDateTime.of(2021, 12, 20, 12, 30), Duration.ofHours(3), "tester update jobshift");
 
-    try{
-      JobShiftList jobShiftList = objectMapper.readValue(getResponse.readEntity(String.class),JobShiftList.class);
-      Iterator<JobShift> iterator = jobShiftList.iterator();
-      assertTrue(iterator.hasNext());
-      
-    } catch(JsonProcessingException e){
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/6803/"+JOB_SHIFT_LIST_RESOURCE_PATH+"/add")
+        .request()
+        .accept(MediaType.APPLICATION_JSON)
+        .put(Entity.json(new JobblettPersistence().writeValueAsString(jobShift)));
 
-    }
+    // Excpecting 204 and 200 because put does not return anything
+    assertEquals(204, getResponse.getStatus());
 
-  }*/
-
-
-
+  }
 
   @Test public void testGetJobshifts() {
     Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/6803/" + JOB_SHIFT_LIST_RESOURCE_PATH)
