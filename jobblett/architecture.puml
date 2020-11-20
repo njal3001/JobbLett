@@ -22,12 +22,27 @@ component javafx{
 component jackson{
 }
 
+component restAPI{
+package jobblett.restAPI
+}
+
+component restserver{
+package jobblett.restserver
+}
+
+
+component integrationstest{
+package jobblett.integrationstest
+}
+
+
 joblett.ui ..>fxml
 joblett.core ..> google.guava
 joblett.ui ..> joblett.core
 joblett.json ..> jackson
 joblett.ui ..> joblett.json
 joblett.json ..> joblett.core
+
 
 
 @enduml

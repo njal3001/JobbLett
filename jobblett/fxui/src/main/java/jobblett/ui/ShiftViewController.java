@@ -68,7 +68,7 @@ public class ShiftViewController extends SceneController {
   }
 
   /**
-   *
+   *method for going to edit shift.
    */
   @FXML public void goToEditShift() {
     int selectedJobShiftIndex = shifts.getSelectionModel().getSelectedIndex();
