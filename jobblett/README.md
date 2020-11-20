@@ -2,10 +2,6 @@
 En app som skal gjøre det enklere å holde oversikt over jobbskift. Arbeidsgiveren oppretter en gruppe der arbeidstakerne blir lagt til. 
 Deretter tildeler arbeidsgiveren skift til arbeidstakerne og hele gruppen får en oversikt over hvem som jobber når. 
 
-## Planlagte tilleggsfunksjoner
-
-- Mulighet for å bytte skift mellom arbeidstakerne
-- Mulighet for å legge til tilleggsinformasjon knyttet til et skift
 
 [Trykk her for å lese brukerhistorie](Brukerhistorie.md)
 
@@ -35,6 +31,7 @@ Implementasjon av restAPI, restserver og integrationtests er nå lagt til. I til
 testdekning. 
 
 
+
 ## Tilleggsinformasjon
 
 **Du kan lese mer om modulene her:**
@@ -44,7 +41,6 @@ testdekning.
 * [restapi](restapi/)
 * [restserver](restserver/)
 * [integrationtests](integrationtests/)
-* 
 
 Dersom man vil se et eksempel hvordan appen fungerer i sin helhet, uten å måtte lage brukere og koble dem opp til et workspace, kan man logge inn med brukeren: "**Olav**", "**BestePassord123**".
 
