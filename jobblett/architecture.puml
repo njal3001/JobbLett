@@ -1,15 +1,15 @@
 @startuml
 
 component core{
-package joblett.core
+package jobblett.core
 }
 
 component fxui{
-package joblett.ui
+package jobblett.ui
 }
 
 component json{
-package joblett.json
+package jobblett.json
 }
 
 component google.guava{
@@ -22,12 +22,42 @@ component javafx{
 component jackson{
 }
 
-joblett.ui ..>fxml
-joblett.core ..> google.guava
-joblett.ui ..> joblett.core
-joblett.json ..> jackson
-joblett.ui ..> joblett.json
-joblett.json ..> joblett.core
+component restapi{
+package jobblett.restapi
+}
+
+component restserver{
+package jobblett.restserver
+}
+
+
+component integrationstest{
+package jobblett.integrationstest
+}
+
+
+jobblett.ui ..>fxml
+jobblett.core ..> google.guava
+jobblett.ui ..> jobblett.core
+jobblett.json ..> jackson
+jobblett.ui ..> jobblett.json
+jobblett.json ..> jobblett.core
+
+jobblett.restserver ..> jobblett.core
+jobblett.restserver ..> jobblett.json
+jobblett.restserver ..> jobblett.restapi
+
+
+component jersey {
+}
+
+component grizzly2 {
+}
+
+restserver ..> jersey
+restserver ..> grizzly2
+
+
 
 
 @enduml

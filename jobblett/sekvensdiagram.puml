@@ -1,0 +1,36 @@
+@startuml
+actor User
+User -> "~#newShiftButton: Button" as newShiftButton: click
+newShiftButton->"ShiftViewController" as shiftView: goToCreateShift()
+User -> "UpdateShiftController" as updateShift: (write in values for the new shift)
+User -> "~#createShiftButton: Button" as createShiftButton: click
+createShiftButton -> updateShift: createShift()
+updateShift->"~#members: ListView" as membersList: getSelectedItem()
+membersList-->updateShift: an username String
+updateShift->"~#infoArea: TextArea" as infoArea: getText()
+infoArea-->updateShift: an shiftinfo String
+updateShift->updateShift: getStartingTime(date.getValue(), fromField.getText())
+updateShift->"~date: DatePicker" as date: getValue()
+date-->updateShift: a date LocalDate
+updateShift->"~fromField: TextField" as from: getText()
+from-->updateShift: a time String
+updateShift-->updateShift: a startingTime LocalDateTime
+updateShift->updateShift: getDuration(fromField.getText(), toField.getText())
+updateShift->from: getText()
+from-->updateShift: a time String
+updateShift->"~toField: TextField" as to: getText()
+to-->updateShift: a time String
+updateShift-->updateShift: a duration Duration
+updateShift->updateShift: getActiveUsername(), getActiveGroupId()
+updateShift-->updateShift: an activeUser String, an activeGroupId int
+updateShift->"SceneController" as scene: getAccess()
+scene->"ControllerMap" as cMap: getAccess()
+cMap->"RemoteWorkspaceAccess" as rWspace: addJobShift(activeUsername, activeGroupId, username, startingTime, duration, info);
+rWspace->"JoblettPersistence" as jPersistence: writeValueAsString
+jPersistence-->rWspace: a JobShift JSON string
+rWspace->"JobShiftListResource" as jShiftListR: HTTP PUT...
+updateShift->shiftView: goBack()
+shiftView->shiftView: "updates the shiftView with the new shift"
+
+
+@enduml
