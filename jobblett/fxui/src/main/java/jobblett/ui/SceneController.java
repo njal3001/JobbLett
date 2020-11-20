@@ -3,17 +3,13 @@ package jobblett.ui;
 
 //Code is inspired by: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
 
-
 import javafx.stage.Stage;
-import jobblett.core.Group;
-import jobblett.core.User;
 
 //super class for scene controllers
 public abstract class SceneController {
 
   private ControllerMap controllerMap;
 
-  //TODO: trenger vi virkelig alt dette?
 
   public Stage getStage() {
     return controllerMap.getStage();

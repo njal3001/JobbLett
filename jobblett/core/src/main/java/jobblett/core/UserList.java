@@ -1,6 +1,6 @@
 package jobblett.core;
 
-public class UserList extends JobblettList<String, User> {
+public class UserList extends AbstractList<String, User> {
 
   @Override
   protected String identifier(User type) {

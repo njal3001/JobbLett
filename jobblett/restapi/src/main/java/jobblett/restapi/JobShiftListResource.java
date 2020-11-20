@@ -2,14 +2,12 @@ package jobblett.restapi;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import jobblett.core.Group;
-import jobblett.core.GroupList;
 import jobblett.core.JobShift;
 import jobblett.core.JobShiftList;
 import org.slf4j.Logger;
@@ -20,11 +18,9 @@ public class JobShiftListResource extends RestApiClass {
   public static final String JOB_SHIFT_LIST_RESOURCE_PATH = "shifts";
 
   private final Group group;
-  private final JobShiftList jobShiftList;
 
   public JobShiftListResource(Group group) {
     this.group = group;
-    this.jobShiftList = group.getJobShiftList();
   }
 
   /**
@@ -35,8 +31,8 @@ public class JobShiftListResource extends RestApiClass {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public JobShiftList get() {
-    debug("Returns the jobShiftList");
-    return jobShiftList;
+    debug("Returns a copy of the jobShiftList");
+    return group.getJobShiftList();
   }
 
   /**
@@ -49,11 +45,12 @@ public class JobShiftListResource extends RestApiClass {
   @Produces(MediaType.APPLICATION_JSON)
   public JobShiftResource getJobShifts(@PathParam("indexString") String indexString) {
     int index = Integer.parseInt(indexString);
-    JobShift jobShift = jobShiftList.get(index);
+    JobShift jobShift = get().get(index);
     LOG.debug("Returns jobShift: " + jobShift);
     return new JobShiftResource(jobShift, group);
   }
 
+  //TODO: Validere adminUsername??
   /**
    * Removed a JobShift.
    *
@@ -61,18 +58,20 @@ public class JobShiftListResource extends RestApiClass {
    * @return if the shift was removed
    */
   @GET
-  @Path("/remove/{indexString}")
+  @Path("/remove/{adminUsername}/{indexString}")
   @Produces(MediaType.APPLICATION_JSON)
-  public boolean removeJobShifts(@PathParam("indexString") String indexString) {
+  public boolean removeJobShifts(@PathParam("adminUsername") String adminUsername,
+      @PathParam("indexString") String indexString) {
     boolean removed = false;
     int index = Integer.parseInt(indexString);
-    JobShift jobShift = jobShiftList.get(index);
+    JobShift jobShift = get().get(index);
     if (jobShift == null) {
       debug("Removed jobShift: " + removed);
       return false;
     }
-    removed = jobShiftList.remove(jobShift);
+    removed = group.removeJobShift(group.getUser(adminUsername), jobShift);
     debug("Removed jobShift: " + removed);
+    //TODO: Blir false uansett hva nå...
     return removed;
   }
 
@@ -82,11 +81,22 @@ public class JobShiftListResource extends RestApiClass {
    * @param jobShift jobShift going to be added
    */
   @PUT
-  @Path("/add")
+  @Path("/add/{adminUsername}")
   @Consumes(MediaType.APPLICATION_JSON)
-  public void addJobShifts(JobShift jobShift) {
-    jobShiftList.add(jobShift);
-    LOG.debug("Added jobShift");
+  public void addJobShift(@PathParam("adminUsername") String adminUsername, JobShift jobShift) {
+    jobShift.setUser(group.getUser(jobShift.getUser().getUsername()));
+    group.addJobShift(jobShift, group.getUser(adminUsername));
+    debug("Added jobShift");
+  }
+
+  /**
+   * Deletes outdated jobShifts.
+   */
+  @PUT
+  @Path("/deleteOutdated")
+  public void deleteOutdatedJobShifts() {
+    group.deleteOutdatedJobShifts();
+    debug("Deleted outdated jobShifts");
   }
 
   @Override protected Logger logger() {

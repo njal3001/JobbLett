@@ -3,7 +3,7 @@ package jobblett.core;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class JobShift extends JobblettPropertyChangeSupporter {
+public class JobShift extends PropertyChangeSupporter {
 
   private User user;
   private LocalDateTime startingTime;

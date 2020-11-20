@@ -6,9 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-//TODO: Er litt rart at vi har en klasse som heter noe med
-//med jobblett i core modulen.
-public abstract class JobblettPropertyChangeSupporter {
+public abstract class PropertyChangeSupporter {
   protected PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
   /**

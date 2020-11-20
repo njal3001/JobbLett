@@ -1,16 +1,13 @@
 package jobblett.core;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 
-
 /**
  * Represents a group in jobblett.
  */
-public class Group extends JobblettPropertyChangeSupporter 
+public class Group extends PropertyChangeSupporter 
     implements Iterable<User> {
 
   private final int groupId;
@@ -30,21 +27,20 @@ public class Group extends JobblettPropertyChangeSupporter
     this.groupId = groupId;
   }
 
-
   /**
    * The given user adds a JobShift to the group.
    *
    * @param jobShift Jobshift to be added.
-   * @param user the user that is creating the JobShift, must be admin.
+   * @param admin the user that is creating the JobShift, must be admin.
    */
-  public void addJobShift(JobShift jobShift, User user) {
+  public boolean addJobShift(JobShift jobShift, User admin) {
     if (!groupMembers.contains(jobShift.getUser())) {
       throw new IllegalArgumentException("Job shift user is not a member of the group");
     }
-    if (!isAdmin(user)) {
+    if (!isAdmin(admin)) {
       throw new IllegalArgumentException("It's only admin that can add new job shift");
     }
-    jobShifts.add(jobShift);
+    return jobShifts.add(jobShift);
   }
 
 
@@ -134,6 +130,7 @@ public class Group extends JobblettPropertyChangeSupporter
     return groupMembers.get(username);
   }
 
+  //TODO: fjern??
   /*
    * Checks if user is already a member of the group.
    *
@@ -199,11 +196,35 @@ public class Group extends JobblettPropertyChangeSupporter
     return groupId;
   }
 
-
-  //TODO: Dette er dårlig innkapsling,
-  //burde fjernes
+  /**
+   * Gets a copy of the job shifts for this group.
+   *
+   * @return a copied list of job shifts
+   */
   public JobShiftList getJobShiftList() {
-    return jobShifts;
+    JobShiftList newList = new JobShiftList();
+    jobShifts.getJobShifts().forEach((shift) -> newList.add(shift));
+    return newList;
+  }
+
+  /**
+   * The given user removes the JobShift from the group.
+   *
+   * @param jobShift Jobshift to be removed.
+   * @param admin the user that is removing the JobShift, must be admin.
+   */
+  public boolean removeJobShift(User admin, JobShift jobShift) {
+    if (!isAdmin(admin)) {
+      throw new IllegalArgumentException("It's only admin that can remove a job shift");
+    }
+    return jobShifts.remove(jobShift);
+  }
+
+  /**
+   * Deletes outdated job shifts.
+   */  
+  public void deleteOutdatedJobShifts() {
+    jobShifts.deleteOutdatedJobShifts();
   }
 
   @Override

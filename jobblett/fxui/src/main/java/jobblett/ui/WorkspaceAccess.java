@@ -37,12 +37,9 @@ public interface WorkspaceAccess {
 
   boolean isGroupAdmin(int groupId, String username);
 
-  void updateJobShift(int groupId, int index, String username,
-       LocalDateTime startingTime, Duration duration, String info);
+  void deleteJobShift(String adminUsername, int groupId, int index);
 
-  void deleteJobShift(int groupId, int index);
-
-  void addJobShift(String username, int groupId, String jobShiftUsername,
+  void addJobShift(String adminUsername, int groupId, String jobShiftUsername,
        LocalDateTime startingTime, Duration duration, String info);
 
   int getJobShiftsSize(int groupId);
@@ -59,4 +56,6 @@ public interface WorkspaceAccess {
   String getJobShiftInfo(int groupId, int index);
 
   boolean jobShiftIsOutdated(int groupId, int index);
+
+  void deleteOutdatedJobShift(int groupId);
 }
