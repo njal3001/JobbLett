@@ -143,7 +143,7 @@ public class UpdateShiftController extends SceneController {
   }
 
   /**
-   * TODO.
+   * method for creating shift.
    */
   @FXML public void createShift() {
     try {
