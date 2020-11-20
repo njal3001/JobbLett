@@ -240,6 +240,33 @@ public class JobblettServiceTest extends JerseyTest {
 
   }
 
+
+  @Test public void removeJobshiftsTest() {
+    User user = new User("olav", new HashedPassword("bestePassord123"), "Olav", "Nordmann");
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/6803/"+JOB_SHIFT_LIST_RESOURCE_PATH+"/remove/olav/0")
+        .request()
+        .accept(MediaType.APPLICATION_JSON)
+        .get();
+
+    Response getResponseJobshiftList = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/6803/"+JOB_SHIFT_LIST_RESOURCE_PATH+"/get")
+        .request()
+        .accept(MediaType.APPLICATION_JSON)
+        .get();
+    assertEquals(200, getResponse.getStatus());
+    try {
+      JobShiftList jobShiftList = objectMapper.readValue(getResponseJobshiftList.readEntity(String.class), JobShiftList.class);
+      assertEquals(jobShiftList.size(), 0);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
+    // Excpecting 204 and 200 because put does not return anything
+
+
+  }
+
+
+
+
   @Test public void getWorkspace() {
     Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH)
         .request().accept(MediaType.APPLICATION_JSON).get();
