@@ -6,4 +6,4 @@ Denne modulen inneholder den koden til brukergrensesnittet til jobblett-appen. D
 
 ### sekvendsdiagram:
 
-![](/jobblett/pictures/pictures/sekvensdiagram.png)
+![](/jobblett/pictures/sekvensdiagram.png)
