@@ -1,6 +1,5 @@
 package jobblett.restserver;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jobblett.core.User;
 import jobblett.core.Workspace;
 import jobblett.json.JobblettPersistence;

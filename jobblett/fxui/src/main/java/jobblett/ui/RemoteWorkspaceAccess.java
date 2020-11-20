@@ -26,8 +26,6 @@ import jobblett.json.JobblettPersistence;
 
 public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
-  //TODO: Ikke bedre å importe fra rest api?
-
   public static final String JOBBLETT_SERVICE_PATH = "jobblett";
   public static final String USER_LIST_RESOURCE_PATH = "userlist";
   public static final String GROUP_LIST_RESOURCE_PATH = "grouplist";
