@@ -37,8 +37,6 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     this.endpointBaseUri = endpointBaseUri;
   }
 
-  //TODO: JAVAAADOC
-
   private String getBody(String url) {
     HttpRequest requestObject = null;
     try {
@@ -98,7 +96,14 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     }
   }
 
-
+  /**
+   * Adds a new User with the given parameters.
+   *
+   * @param username of the user
+   * @param password of the user
+   * @param givenName of the user
+   * @param familyName of the user
+   */
   @Override
   public void addUser(String username, String password, String givenName, String familyName) {
     if (hasUser(username)) {
@@ -109,6 +114,12 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     put(USER_LIST_RESOURCE_PATH + "/add", serializedUser);
   }
 
+  /**
+   * Checks if an user with the given username exists.
+   *
+   * @param username of a user
+   * @return true if user with username exists, false otherwise
+   */
   @Override
   public boolean hasUser(String username) {
     return post(Boolean.class, USER_LIST_RESOURCE_PATH + "/exist", username);
@@ -119,6 +130,14 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     return get(User.class, USER_LIST_RESOURCE_PATH + "/get/" + username);
   }
 
+  /**
+   * Checks if there is an user with the given username and checks if password
+   * matches.
+   *
+   * @param username username of the user
+   * @param passwordString password to be checked
+   * @return true if password of user with given username matches the given password
+   */
   @Override
   public boolean correctPassword(String username, String passwordString) {
     if (!hasUser(username)) {
@@ -128,15 +147,27 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     return getUser(username).getPassword().matches(password);
   }
 
+  /**
+   * Gets the full name of the user with the given username.
+   *
+   * @param username of the user
+   * @return the full name of the user
+   */
   @Override
-  public String getUserFullName(String userName) {
-    User user = getUser(userName);
+  public String getUserFullName(String username) {
+    User user = getUser(username);
     return user.getGivenName() + " " + user.getFamilyName();
   }
 
+  /**
+   * Gets the toString of the user with the given username.
+   *
+   * @param username of the user
+   * @return toString of the user
+   */
   @Override
-  public String getUserToString(String userName) {
-    return getUser(userName).toString();
+  public String getUserToString(String username) {
+    return getUser(username).toString();
   }
 
   private void checkGroupId(int groupId) {
@@ -145,6 +176,12 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     }
   }
 
+  /**
+   * Creates a new group with the given name.
+   *
+   * @param groupName the name of the new group
+   * @return Id of the newly created group
+   */
   @Override
   public int newGroup(String groupName) {
     checkGroupName(groupName);
@@ -152,6 +189,12 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     return group.getGroupId();
   }
 
+  /**
+   * Checks if there exists a group with the given id.
+   *
+   * @param groupId of a group
+   * @return true if group with given id exists, false otherwise
+   */
   @Override
   public boolean hasGroup(int groupId) {
     return get(Boolean.class, GROUP_LIST_RESOURCE_PATH + "/exist/" + groupId);
@@ -162,11 +205,25 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     return get(Group.class, GROUP_LIST_RESOURCE_PATH + "/get/" + groupId);
   }
 
+  /**
+   * Gets the group name of the group with the given id.
+   *
+   * @param groupId of the group
+   * @return the name of the group
+   */
   @Override
   public String getGroupName(int groupId) {
     return getGroup(groupId).getGroupName();
   }
 
+  /**
+   * Gets a collection of all group ids of groups which contain
+   * the user with the given username.
+   *
+   * @param username of the user
+   * @return a collection of group ids
+   * 
+   */
   @Override
   public Collection<Integer> getAllGroupIds(String username) {
     GroupList groupList = get(GroupList.class, GROUP_LIST_RESOURCE_PATH);
@@ -185,6 +242,13 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
         .collect(Collectors.toList());
   }
 
+  /**
+   * Gets a collection of all usernames of users in the group
+   * with the given id.
+   *
+   * @param groupId of the group
+   * @return a collection of usernames
+   */
   @Override
   public Collection<String> getGroupUsernames(int groupId) {
     Group group = getGroup(groupId);
@@ -193,9 +257,16 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     return userNames;
   }
 
+  /**
+   * Adds the user with the given username to the group
+   * with the given id.
+   *
+   * @param groupId of the group
+   * @param username of the user
+   */
   @Override
-  public void addGroupMember(int groupId, String userName) {
-    User user = getUser(userName);
+  public void addGroupMember(int groupId, String username) {
+    User user = getUser(username);
 
     // Throwing error if user already exist.
     // Doing it by adding the user to a deserialized copy
@@ -205,17 +276,40 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     put(GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/add", serializedUser);
   }
 
+  /**
+   * Checks if the group with given groupId contains the user with
+   * the given username.
+   *
+   * @param groupId of the group
+   * @param username of the user
+   * @return true if the group contains the user, false otherwise
+   */
   @Override
   public boolean hasGroupUser(int groupId, String username) {
     Group group = getGroup(groupId);
     return group.getUser(username) != null;
   }
 
+  /**
+   * Adds the user with the given username as an admin in the group
+   * with the given groupId.
+   *
+   * @param groupId of the group
+   * @param username of the user
+   */
   @Override
   public void addGroupAdmin(int groupId, String username) {
     get(Boolean.class, GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/addAdmin/" + username);
   }
 
+  /**
+   * Checks if the user with the given username is an admin of the 
+   * group with the given groupId.
+   *
+   * @param groupId of the group
+   * @param username of the user
+   * @return true if user is admin in the group, false otherwise
+   */
   @Override
   public boolean isGroupAdmin(int groupId, String username) {
     return get(Boolean.class,
@@ -223,12 +317,36 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
   }
 
  
+  /**
+   * An user with the given username deletes the jobshift with the given index
+   * in the group with the given groupId.
+   *
+   * @param adminUsername username of the user
+   * @param groupId of the group
+   * @param index of the jobshift
+   * @throws IllegalArgumentException if the user is not an admin in the group
+   */
   @Override
   public void deleteJobShift(String adminUsername, int groupId, int index) {
     get(Boolean.class, GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/"
         + JOB_SHIFT_LIST_RESOURCE_PATH + "/remove/" + adminUsername + "/" + index);
   }
 
+  /**
+   * An user with the given username adds a jobshift with the given values
+   * in the group with the given groupId. 
+   * Throws an exception if the user that adds the shift
+   * is not an admin in the group or the jobshift user is not a member
+   * of the group.
+   *
+   * @param adminUsername username of the user that adds the shift
+   * @param groupId of the group
+   * @param jobShiftUsername username of the user with the jobshift
+   * @param startingTime of the jobshift
+   * @param duration of the jobshift
+   * @param info of the jobshift
+   * @throws IllegalArgumentException if users are not valid
+   */
   @Override
   public void addJobShift(String adminUsername, int groupId, String jobShiftUsername,
       LocalDateTime startingTime, Duration duration, String info) {
@@ -239,12 +357,23 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
         + JOB_SHIFT_LIST_RESOURCE_PATH + "/add/" + adminUsername, serializedJobshift);
   }
 
+  /**
+   * Gets the number of jobshifts for the group with
+   * the given groupId.
+   */
   @Override
   public int getJobShiftsSize(int groupId) {
     return get(JobShiftList.class,
         GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/" + JOB_SHIFT_LIST_RESOURCE_PATH).size();
   }
 
+  /** Gets a list of the indexes of the jobshifts in the group with the given groupId
+   * filtered by the user with the given username.
+   *
+   * @param groupId of the group
+   * @param username of the user
+   * @return a filtered list of the jobshift indexes
+   */
   @Override
   public List<Integer> getJobShiftIndexes(int groupId, String username) {
     Group group = getGroup(groupId);
@@ -265,31 +394,78 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     );
   }
 
+  /**
+   * Gets the username of the user for the jobshift with the given index in
+   * the group with the given groupId.
+   *
+   * @param groupId of the group
+   * @param index of the jobshift
+   * @return the username of jobshifts user
+   */
   @Override
   public String getJobShiftUsername(int groupId, int index) {
     return getJobShift(groupId, index).getUser().getUsername();
   }
 
+
+  /**
+   * Gets the starting time of the jobshift with the given index in
+   * the group with the given groupId.
+   *
+   * @param groupId of the group
+   * @param index of the jobshift
+   * @return the starting time of the jobshift
+   */
   @Override
   public LocalDateTime getJobShiftStartingTime(int groupId, int index) {
     return getJobShift(groupId, index).getStartingTime();
   }
 
+  /**
+   * Gets the ending time of the jobshift with the given index in
+   * the group with the given groupId.
+   *
+   * @param groupId of the group
+   * @param index of the jobshift
+   * @return the ending time of the jobshift
+   */
   @Override
   public LocalDateTime getJobShiftEndingTime(int groupId, int index) {
     return getJobShift(groupId, index).getEndingTime();
   }
 
+  /**
+   * Gets the info of the jobshift with the given index in
+   * the group with the given groupId.
+   *
+   * @param groupId of the group
+   * @param index of the jobshift
+   * @return the info of the jobshift
+   */
   @Override
   public String getJobShiftInfo(int groupId, int index) {
     return getJobShift(groupId, index).getInfo();
   }
 
+  /**
+   * Checks if the jobshift with the given index in the group with the given
+   * groupId, is outdated.
+   *
+   * @param groupId of the group
+   * @param index of the jobshift
+   * @return true if the jobshift is outdated, false otherwise
+   */
   @Override
   public boolean jobShiftIsOutdated(int groupId, int index) {
     return getJobShift(groupId, index).isOutDated();
   }
 
+  /**
+   * Deletes alle outdated jobshifts in the group with the 
+   * given groupId.
+   *
+   * @param groupId of the group
+   */
   @Override
   public void deleteOutdatedJobShift(int groupId) {
     put(GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/"

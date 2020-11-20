@@ -53,7 +53,6 @@ public class Group extends PropertyChangeSupporter
   public void addUser(User user) throws IllegalArgumentException {
     UserList oldUsers = new UserList();
     oldUsers.addAll(groupMembers);
-    // checkExistingUser(user);
     this.groupMembers.add(user);
     firePropertyChange("groupMembers", oldUsers, groupMembers);
   }
@@ -129,21 +128,6 @@ public class Group extends PropertyChangeSupporter
   public User getUser(String username) {
     return groupMembers.get(username);
   }
-
-  //TODO: fjern??
-  /*
-   * Checks if user is already a member of the group.
-   *
-   * @param user the user that should be checked
-   * 
-   * @throws IllegalArgumentException throws exception if the user already exist.
-   */
-  /*
-   * private void checkExistingUser(User user) throws IllegalArgumentException { if
-   * (this.groupMembers.contains(user)) { //Vet ikke om jeg skal ha det sånn, passer bedre for UIen,
-   * //men er mer passende generelt å skrive "User is already a member of the group" throw new
-   * IllegalArgumentException("You are already a member of the group"); } }
-   */
 
   /**
    * Checks if the group name is more than 1 character.
