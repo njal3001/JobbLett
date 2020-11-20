@@ -93,7 +93,7 @@ public class ShiftViewController extends SceneController {
   /**
    * Updates the shiftView to only show the active user's shifts or all of the shifts.
    *
-   * @param event TODO event fired when the tooglebox is interacted with
+   * @param event event fired when the tooglebox is interacted with user.
    */
   @FXML public void toggleUserFilter(ActionEvent event) {
     CheckBox checkBox = (CheckBox) event.getSource();
