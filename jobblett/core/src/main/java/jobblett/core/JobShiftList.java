@@ -35,7 +35,6 @@ public class JobShiftList extends AbstractList<Integer, JobShift> {
   public void deleteOutdatedJobShifts() {
     Collection<JobShift> outdatedShifts = stream().filter(JobShift::isOutDated)
         .collect(Collectors.toList());
-    System.out.println(outdatedShifts);
     outdatedShifts.forEach((shift) -> remove(shift));
   }
 

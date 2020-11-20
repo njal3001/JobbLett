@@ -138,7 +138,6 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <!-- System.getProperty("todo.port") gir riktig port -->
                             <systemPropertyVariables>
                                 <jobblett.port>${jetty.port}</jobblett.port>
                             </systemPropertyVariables>
