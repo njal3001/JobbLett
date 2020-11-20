@@ -5,5 +5,6 @@ Denne modulen inneholder den koden til brukergrensesnittet til jobblett-appen. D
 ![Klassediagram av core-modulen](/jobblett/pictures/fxui_class_diagram.png)
 
 ### sekvendsdiagram:
+Her kan man se hvordan interaksjonen skjer når en **admin(User)** skal legge til et **shift(JobShift)** for en **ansatt(User)** i teamet(Group) sitt.
 
 ![](/jobblett/pictures/sekvensdiagram.png)
