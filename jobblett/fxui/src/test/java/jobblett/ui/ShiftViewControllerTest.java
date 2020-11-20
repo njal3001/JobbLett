@@ -2,9 +2,6 @@ package jobblett.ui;
 
 import static jobblett.ui.JobblettScenes.SHIFT_VIEW;
 import static jobblett.ui.JobblettScenes.GROUP_HOME;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +37,6 @@ public class ShiftViewControllerTest extends JobbLettTest {
     clickOn("#goToShifts");
     uiAssertions.assertHasJobShift(jobShiftInFuture);
     uiAssertions.assertHasNotJobShift(jobShiftInPast);
-    //TODO: test for sjekke over natta
   }
 
   @Test
@@ -64,6 +60,7 @@ public class ShiftViewControllerTest extends JobbLettTest {
 
   @Test
   public void testDeleteShift() {
+    uiAssertions.assertListViewSize("shifts", 3);
     clickOn(uiAssertions.findListCell(0));
     clickOn("#deleteShiftButton");
     uiAssertions.assertListViewSize("shifts", 2);

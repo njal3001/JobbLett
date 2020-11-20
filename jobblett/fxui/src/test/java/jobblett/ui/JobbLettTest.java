@@ -119,4 +119,7 @@ public abstract class JobbLettTest extends ApplicationTest {
     uiAssertions.assertOnScene(giveId());
   }
 
+  @BeforeEach public void assertOnScene() {
+    uiAssertions.assertOnScene(giveId());
+  }
 }

@@ -30,7 +30,7 @@ public class WorkspaceGroupListTest {
     Group group = new Group("Test", 1500);
     group.addUser(user);
     workspace.getGroupList().add(group);
-    Iterator iter = workspace.getGroupList().iterator();
+    Iterator<Group> iter = workspace.getGroupList().iterator();
     assertTrue(iter.hasNext());
     assertTrue(iter.next() instanceof WorkspaceGroup);
   }

@@ -1,6 +1,6 @@
 package jobblett.core;
 
-
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 /**
  * Handles all of the JobShifts created.
  */
-public class JobShiftList extends JobblettList<Integer, JobShift> {
+public class JobShiftList extends AbstractList<Integer, JobShift> {
 
   /**
    * Gets a list of the job shifts.
@@ -27,6 +27,16 @@ public class JobShiftList extends JobblettList<Integer, JobShift> {
    */
   public List<JobShift> getJobShifts(User userFilter) {
     return filter(jobShift -> jobShift.getUser() == userFilter);
+  }
+
+  /**
+   * Deletes outdated job shifts.
+   */
+  public void deleteOutdatedJobShifts() {
+    Collection<JobShift> outdatedShifts = stream().filter(JobShift::isOutDated)
+        .collect(Collectors.toList());
+    System.out.println(outdatedShifts);
+    outdatedShifts.forEach((shift) -> remove(shift));
   }
 
   @Override

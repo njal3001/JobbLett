@@ -32,7 +32,7 @@ public class RemoteWorkspaceAccessTest {
     remoteWorkspaceAccess = new RemoteWorkspaceAccess(new URI("http://localhost:" + wireMockServer.port() + "/jobblett"));
   }
 
-  // TODO
+  // TODO SLETTE??
   /*@Test
   public void testAddUser() {
     remoteWorkspaceAccess.addUser("TestUser", "Test12345", "Te", "Te");

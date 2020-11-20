@@ -179,7 +179,7 @@ public class JobblettServiceTest extends JerseyTest {
     User user = new User("olav", new HashedPassword("bestePassord123"), "Olav", "Nordmann");
     JobShift jobShift = new JobShift(user, LocalDateTime.of(2021, 12, 20, 12, 30), Duration.ofHours(3), "tester add jobshift");
 
-    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/6803/"+JOB_SHIFT_LIST_RESOURCE_PATH+"/add")
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/6803/"+JOB_SHIFT_LIST_RESOURCE_PATH+"/add/olav")
         .request()
         .accept(MediaType.APPLICATION_JSON)
         .put(Entity.json(new JobblettPersistence().writeValueAsString(jobShift)));
