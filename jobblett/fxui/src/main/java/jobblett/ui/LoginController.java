@@ -38,11 +38,6 @@ public class LoginController extends SceneController {
     super.styleIt();
     login.setSkin(new ButtonAnimationSkin(login));
     createAccount.setSkin(new ButtonAnimationSkin(createAccount));
-    // TODO: fjernes?
-    /*
-     * errorMessage.setFont(font); username.setFont(font); password.setFont(font);
-     * usernameField.setFont(font);
-     */
   }
 
   @FXML

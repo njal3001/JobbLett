@@ -67,7 +67,6 @@ public class ShiftViewController extends SceneController {
     SceneController sceneController = getControllerMap().getController(UPDATE_SHIFT);
     UpdateShiftController newController = (UpdateShiftController) sceneController;
     newController.setActiveJobShiftIndex(Integer.valueOf(selectedJobShiftIndex));
-    //TODO: quick fix...
     newController.onSceneDisplayed();
   }
 

@@ -9,7 +9,6 @@ public interface WorkspaceAccess {
 
   void addUser(String username, String password, String givenName, String familyName);
   
-  //TODO: Tror ikke denne brukes
   boolean hasUser(String username);
   
   boolean correctPassword(String username, String password);
@@ -20,7 +19,6 @@ public interface WorkspaceAccess {
 
   int newGroup(String groupName);
   
-  //TODO: Tror ikke denne brukes
   boolean hasGroup(int groupId);
 
   String getGroupName(int groupId);
@@ -44,7 +42,6 @@ public interface WorkspaceAccess {
 
   int getJobShiftsSize(int groupId);
 
-  //Vet ikke om dette kommer til å funke....
   List<Integer> getJobShiftIndexes(int groupId, String username);
   
   String getJobShiftUsername(int groupId, int index);

@@ -7,8 +7,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+//Code is inspired by: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
 
 public class ControllerMap {
+
   private HashMap<JobblettScenes, Scene> map = new HashMap<>();
   private HashMap<JobblettScenes, SceneController> controllerMap = new HashMap<>();
 
@@ -78,7 +80,6 @@ public class ControllerMap {
     try {
       parent = loader.load();
     } catch (IOException e) {
-      System.out.println("TESTTT");
       e.printStackTrace();
     }
     Scene scene = new Scene(parent);

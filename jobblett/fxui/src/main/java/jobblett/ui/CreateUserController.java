@@ -9,8 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import jobblett.core.HashedPassword;
-import jobblett.core.User;
 
 public class CreateUserController extends SceneController {
 
@@ -71,7 +69,6 @@ public class CreateUserController extends SceneController {
   /**
    * Styles UI elements.
    */
-
   @Override
   public void styleIt() {
     super.styleIt();
@@ -82,7 +79,6 @@ public class CreateUserController extends SceneController {
   /**
    * Creates a new User.
    */
-
   @FXML
   public void createAccount() {
     String username = this.usernameField.getText();

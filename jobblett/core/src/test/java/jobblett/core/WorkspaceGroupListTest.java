@@ -1,5 +1,6 @@
 package jobblett.core;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import java.util.Iterator;
@@ -33,6 +34,19 @@ public class WorkspaceGroupListTest {
     Iterator<Group> iter = workspace.getGroupList().iterator();
     assertTrue(iter.hasNext());
     assertTrue(iter.next() instanceof WorkspaceGroup);
+  }
+
+  @Test
+  public void testAdd_differentUser() {
+    workspace.getUserList().add(user);
+    Group group = new Group("Test", 1500);
+    User diffUser = new User(user.getUsername(), new HashedPassword("Test12345"), "Doffy", "Doff");
+    group.addUser(diffUser);
+    workspace.getGroupList().add(group);
+    Iterator<Group> iter = workspace.getGroupList().iterator();
+    assertTrue(iter.hasNext());
+    Group workspaceGroup = iter.next();
+    assertEquals(user, workspaceGroup.getUser("User1"));
   }
 
   @Test

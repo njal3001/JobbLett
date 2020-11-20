@@ -71,7 +71,6 @@ public class JobShiftListResource extends RestApiClass {
     }
     removed = group.removeJobShift(group.getUser(adminUsername), jobShift);
     debug("Removed jobShift: " + removed);
-    //TODO: Blir false uansett hva nå...
     return removed;
   }
 

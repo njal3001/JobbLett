@@ -10,7 +10,6 @@ import javafx.scene.control.ListView;
 
 public class GroupHomeController extends SceneController {
 
-  //TODO: burde oppdatere navn
 
   @FXML Label groupName;
 

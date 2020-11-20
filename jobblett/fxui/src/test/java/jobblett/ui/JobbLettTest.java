@@ -2,12 +2,6 @@ package jobblett.ui;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import jobblett.ui.ControllerMap;
-import jobblett.ui.DirectWorkspaceAccess;
-import jobblett.ui.JobblettScenes;
-import jobblett.ui.SceneController;
-import jobblett.ui.UIAssertions;
-import jobblett.ui.WorkspaceAccess;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -27,22 +21,18 @@ public abstract class JobbLettTest extends ApplicationTest {
   protected Group group1, group2;
   protected JobShift jobShift1, jobShift2, jobShift3, newShift;;
 
-
   protected SceneController controller;
 
   protected ControllerMap controllerMap;
 
   protected UIAssertions uiAssertions;
 
-  //TODO find a better name, we are not calling them ID
   // Subclasses implement this method to give the scene ID
   // for the starting scene of the test
-  // TODO dumt å ha denne public?
-  public abstract JobblettScenes giveId();
+  protected abstract JobblettScenes giveId();
 
   // Subclasses implement these methods to give the active user and group
   // for the starting scene of the test
-  // TODO dumt å ha disse public?
   protected User optionalActiveUser() {
     return null;
   }
@@ -50,13 +40,11 @@ public abstract class JobbLettTest extends ApplicationTest {
     return null;
   }
 
-  // Todo maybe make it private
-  public Workspace workspace;
+  protected Workspace workspace;
   private UserList userList;
   private GroupList groupList;
 
   @BeforeEach
-  // TODO dumt å ha den public?
   public void setUp() {
     uiAssertions = new UIAssertions(controllerMap);
   }

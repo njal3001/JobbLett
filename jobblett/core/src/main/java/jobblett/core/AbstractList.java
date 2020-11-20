@@ -38,7 +38,6 @@ public abstract class AbstractList<K, T> extends PropertyChangeSupporter
       }
     }
     boolean result = list.addAll(Arrays.asList(objects));
-    //TODO
     firePropertyChange(simpleTypeName() + "List", list);
     if (optionalComparator() != null) {
       Collections.sort(list, optionalComparator());
@@ -109,13 +108,14 @@ public abstract class AbstractList<K, T> extends PropertyChangeSupporter
     return simpleTypeName() + "List=" + list;
   }
 
+  //TODO: BEHOLDE??
   protected String simpleTypeName() {
     /*ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
     String fullTypeName = parameterizedType.getActualTypeArguments()[1].getTypeName();
     String[] splitTypeName = fullTypeName.split("\\.");
     String simpleTypeName = splitTypeName[splitTypeName.length - 1];
     return simpleTypeName;*/
-    // TODO
+    // 
     return "Instance of JobblettList";
   }
 

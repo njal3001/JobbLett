@@ -22,7 +22,6 @@ public class CreateUserControllerTest extends JobbLettTest {
     uiAssertions.assertOnScene(LOGIN);
   }
 
-  //TODO: Nå testes ikke hver feilmelding
   @Test public void testCreateUser_invalidUserData() {
     tryToCreateUser("", "", "", "");
     uiAssertions.assertOnScene(CREATE_USER);

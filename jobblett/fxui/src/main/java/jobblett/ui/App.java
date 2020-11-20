@@ -12,9 +12,6 @@ import javafx.stage.Stage;
 import jobblett.core.Workspace;
 import jobblett.json.JobblettPersistence;
 
-//Code is inspired by: https://github.com/acaicedo/JFX-MultiScreen/tree/master/ScreensFramework/src/screensframework
-
-
 public class App extends Application {
 
   public static final DateTimeFormatter EXPECTED_TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
@@ -41,7 +38,6 @@ public class App extends Application {
     primaryStage.show();
   }
 
-  //TODO: denne burde endres
   /**
    * A common methods used in the startmethod for the app and the tests.
    *
@@ -59,7 +55,6 @@ public class App extends Application {
         e.printStackTrace();
       }
     } else {
-      //TODO: Vet ikke om dette funker...
       access = new DirectWorkspaceAccess(new JobblettPersistence().readValue(Workspace.class));
     }
     ControllerMap controllerMap = new ControllerMap(primaryStage, access);

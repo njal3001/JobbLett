@@ -20,9 +20,6 @@ public class CreateGroupController extends SceneController {
     goBackButton.setSkin(new ButtonAnimationSkin(goBackButton));
   }
 
-  /**
-   * TODO.
-   */
   @FXML public void goToUserHome() {
     switchScene(USER_HOME);
   }
