@@ -148,6 +148,7 @@
                             <phase>verify</phase>
                             <goals>
                                 <goal>report</goal>
+                                <goal>report-aggregate</goal>
                             </goals>
                         </execution>
                     </executions>

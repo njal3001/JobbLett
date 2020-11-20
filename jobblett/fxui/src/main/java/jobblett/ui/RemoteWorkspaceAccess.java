@@ -226,7 +226,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
    */
   @Override
   public Collection<Integer> getAllGroupIds(String username) {
-    GroupList groupList = get(GroupList.class, GROUP_LIST_RESOURCE_PATH);
+    /*GroupList groupList = get(GroupList.class, GROUP_LIST_RESOURCE_PATH);
     return groupList.stream()
         .filter(group -> {
           boolean containsUser = false;
@@ -238,6 +238,10 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
           }
           return containsUser;
         })
+        .map(Group::getGroupId)
+        .collect(Collectors.toList());*/
+    return post(GroupList.class, GROUP_LIST_RESOURCE_PATH + "/getFromUsers", username)
+        .stream()
         .map(Group::getGroupId)
         .collect(Collectors.toList());
   }
