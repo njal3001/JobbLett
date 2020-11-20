@@ -170,15 +170,40 @@ public class JobblettServiceTest extends JerseyTest{
 
     }*/
 
-  /*@Test
-  public void getJobshifts(){
-    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/"+JOB_SHIFT_LIST_RESOURCE_PATH)
+  @Test
+  public void testgetJobshifts(){
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/6803/"+JOB_SHIFT_LIST_RESOURCE_PATH)
         .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
         .get();
     assertEquals(200, getResponse.getStatus());
 
     try{
       JobShiftList jobShiftList = objectMapper.readValue(getResponse.readEntity(String.class),JobShiftList.class);
+      Iterator<JobShift> iterator = jobShiftList.iterator();
+      assertTrue(iterator.hasNext());
+      JobShift jobShift = iterator.next();
+      assertEquals(7200, jobShift.getDuration());
+      assertEquals("2021-10-15T17:44:04.738", jobShift.getStartingTime());
+      assertEquals("Dette er Olav sin skift.", jobShift.getInfo());
+
+    } catch(JsonProcessingException e){
+
+    }
+
+  }
+
+  /*@Test
+  public void testupdateJobshift(){
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/6803/"+JOB_SHIFT_LIST_RESOURCE_PATH+"update")
+        .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
+        .put();
+    assertEquals(200, getResponse.getStatus());
+
+    try{
+      JobShiftList jobShiftList = objectMapper.readValue(getResponse.readEntity(String.class),JobShiftList.class);
+      Iterator<JobShift> iterator = jobShiftList.iterator();
+      assertTrue(iterator.hasNext());
+      
     } catch(JsonProcessingException e){
 
     }
