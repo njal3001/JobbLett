@@ -1,5 +1,5 @@
 # Restapi-modul
-Denne modulen inneholder den koden bak RESTAPI-en til jobblett-appen.
+Denne modulen inneholder den koden bak restserveren til jobblett-appen.
 
 ## Klassediagram
 
