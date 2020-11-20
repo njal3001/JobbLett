@@ -12,6 +12,11 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class JobblettConfig extends ResourceConfig implements PropertyChangeListener {
   private Workspace workspace;
 
+  /**
+   * Initialize a instance of Group with a groupName and groupID.
+   *
+   * @param workspace for JobblettConfig
+   */
   public JobblettConfig(Workspace workspace) {
     setWorkspace(workspace);
     register(WorkspaceService.class);
