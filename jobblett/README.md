@@ -47,7 +47,7 @@ testdekning.
 
 ### sekvendsdiagram:
 
-![](pictures/sekvendsdiagram.png)
+![](pictures/sekvensdiagram.png)
 
 ### Arkitekturdiagram:
 
