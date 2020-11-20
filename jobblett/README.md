@@ -31,7 +31,7 @@ Implementasjon av oppretting av gruppe, legge til jobbshift er nå implementert.
 som kan legge til jobbshift.
 
 ### Gruppeøving 3
-Implementasjon av restAPI, restserver og integrationtests er nå lagt til. I tillegg har dey blitt lagt til endringer i CSS for design av appen, samt større
+Implementasjon av restAPI, restserver og integrationtests er nå lagt til. I tillegg har det blitt lagt til endringer i CSS for design av appen, samt større
 testdekning. 
 
 
@@ -48,5 +48,5 @@ testdekning.
 
 ### Arkitekturdiagram:
 
-![](pictures/architecturediagram.png)
+![](pictures/architectur.png)
 

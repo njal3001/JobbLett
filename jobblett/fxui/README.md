@@ -3,3 +3,7 @@ Denne modulen inneholder den koden til brukergrensesnittet til jobblett-appen. D
 
 ## Klassediagram
 ![Klassediagram av core-modulen](/jobblett/pictures/classdiagramUI.png)
+
+### sekvendsdiagram:
+
+![](/jobblett/pictures/sekvensdiagram.png)
