@@ -31,7 +31,8 @@ Implementasjon av oppretting av gruppe, legge til jobbshift er nå implementert.
 som kan legge til jobbshift.
 
 ### Gruppeøving 3
-jdsfldsjfkldajlk09382473298RYUFEIHSDJKJFHDHFDSDASDS
+Implementasjon av restAPI, restserver og integrationtests er nå lagt til. I tillegg har dey blitt lagt til endringer i CSS for design av appen, samt større
+testdekning. 
 
 
 ## Tilleggsinformasjon
