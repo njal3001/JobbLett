@@ -48,5 +48,5 @@ testdekning.
 
 ### Arkitekturdiagram:
 
-![](pictures/architecturediagram.png)
+![](pictures/architectur.png)
 
