@@ -114,7 +114,7 @@ public class GroupListResource extends RestApiClass {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/replaceGroup/")
-  // TODO Maybe unnecessary
+
   public boolean replaceGroup(Group group) {
     Collection<Integer> groupIds = workspace.getGroupList()
         .stream()

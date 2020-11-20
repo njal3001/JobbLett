@@ -50,7 +50,6 @@ public class JobShiftListResource extends RestApiClass {
     return new JobShiftResource(jobShift, group);
   }
 
-  //TODO: Validere adminUsername??
   /**
    * Removed a JobShift.
    *

@@ -81,7 +81,6 @@ public class GroupResource extends RestApiClass {
     return group.addAdmin(user);
   }
 
-  //TODO: feil navn??
   /**
    * Returns JobShiftResource.
    *

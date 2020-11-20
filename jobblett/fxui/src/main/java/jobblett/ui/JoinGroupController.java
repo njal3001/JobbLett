@@ -45,8 +45,7 @@ public class JoinGroupController extends SceneController {
   }
 
   /**
-   * Sets the activeUser as a member of the written group 
-   * TODO.
+   * method for joining group.
    */
   @FXML public void joinGroup() {
     int groupId = 0;

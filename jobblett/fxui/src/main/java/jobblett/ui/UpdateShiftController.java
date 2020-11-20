@@ -47,7 +47,7 @@ public class UpdateShiftController extends SceneController {
   private Integer activeJobShiftIndex;
 
   /**
-   * TODO.
+   * initialize method.
    */
   @FXML
   public void initialize() {
@@ -143,7 +143,7 @@ public class UpdateShiftController extends SceneController {
   }
 
   /**
-   * TODO.
+   * method for creating shift.
    */
   @FXML public void createShift() {
     try {

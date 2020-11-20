@@ -15,7 +15,12 @@ public class GroupListCell extends ListCell<Integer> {
     this.controllerMap = controllerMap;
   }
 
-  // TODO: Skrive javadoc
+  /**
+   *Updating list with listview.
+   *
+   * @param groupId each group has a unique groupID
+   * @param empty is a booleanValue
+   */
   @Override public void updateItem(Integer groupId, boolean empty) {
     super.updateItem(groupId, empty);
     if (empty) {

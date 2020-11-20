@@ -108,14 +108,7 @@ public abstract class AbstractList<K, T> extends PropertyChangeSupporter
     return simpleTypeName() + "List=" + list;
   }
 
-  //TODO: BEHOLDE??
   protected String simpleTypeName() {
-    /*ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
-    String fullTypeName = parameterizedType.getActualTypeArguments()[1].getTypeName();
-    String[] splitTypeName = fullTypeName.split("\\.");
-    String simpleTypeName = splitTypeName[splitTypeName.length - 1];
-    return simpleTypeName;*/
-    // 
     return "Instance of JobblettList";
   }
 
