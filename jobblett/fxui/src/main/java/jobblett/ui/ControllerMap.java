@@ -75,9 +75,9 @@ public class ControllerMap {
   }
 
   /**
-   * TODO.
+   * Resets scenes.
    *
-   * @param jobblettScenes TODO
+   * @param jobblettScenes objectType of jobblettScene
    */
   private void reset(JobblettScenes jobblettScenes) {
     FXMLLoader loader = new FXMLLoader(App.class.getResource(jobblettScenes.getFilename()));
