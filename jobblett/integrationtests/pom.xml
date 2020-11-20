@@ -26,13 +26,6 @@
             <groupId>gr2007.jobblett</groupId>
             <artifactId>fxui</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>gr2007.jobblett</groupId>
-            <artifactId>fxui</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>gr2007.jobblett</groupId>
@@ -145,7 +138,6 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <!-- System.getProperty("todo.port") gir riktig port -->
                             <systemPropertyVariables>
                                 <jobblett.port>${jetty.port}</jobblett.port>
                             </systemPropertyVariables>
