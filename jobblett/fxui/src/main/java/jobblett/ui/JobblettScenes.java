@@ -2,7 +2,7 @@ package jobblett.ui;
 
 /**
  * An enum for switching scene easier.
- * TODO
+ *
  */
 public enum JobblettScenes {
   LOGIN("Login.fxml"),
