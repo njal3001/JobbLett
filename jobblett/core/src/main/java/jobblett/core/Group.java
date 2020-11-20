@@ -31,16 +31,16 @@ public class Group extends PropertyChangeSupporter
    * The given user adds a JobShift to the group.
    *
    * @param jobShift Jobshift to be added.
-   * @param user the user that is creating the JobShift, must be admin.
+   * @param admin the user that is creating the JobShift, must be admin.
    */
-  public void addJobShift(JobShift jobShift, User admin) {
+  public boolean addJobShift(JobShift jobShift, User admin) {
     if (!groupMembers.contains(jobShift.getUser())) {
       throw new IllegalArgumentException("Job shift user is not a member of the group");
     }
     if (!isAdmin(admin)) {
       throw new IllegalArgumentException("It's only admin that can add new job shift");
     }
-    jobShifts.add(jobShift);
+    return jobShifts.add(jobShift);
   }
 
 
@@ -130,6 +130,7 @@ public class Group extends PropertyChangeSupporter
     return groupMembers.get(username);
   }
 
+  //TODO: fjern??
   /*
    * Checks if user is already a member of the group.
    *
@@ -210,13 +211,13 @@ public class Group extends PropertyChangeSupporter
    * The given user removes the JobShift from the group.
    *
    * @param jobShift Jobshift to be removed.
-   * @param user the user that is removing the JobShift, must be admin.
+   * @param admin the user that is removing the JobShift, must be admin.
    */
-  public void removeJobShift(User admin, JobShift jobShift) {
+  public boolean removeJobShift(User admin, JobShift jobShift) {
     if (!isAdmin(admin)) {
       throw new IllegalArgumentException("It's only admin that can remove a job shift");
     }
-    jobShifts.remove(jobShift);
+    return jobShifts.remove(jobShift);
   }
 
   /**

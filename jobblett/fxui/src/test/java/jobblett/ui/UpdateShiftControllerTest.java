@@ -2,8 +2,6 @@ package jobblett.ui;
 
 import static jobblett.ui.JobblettScenes.SHIFT_VIEW;
 import static jobblett.ui.JobblettScenes.UPDATE_SHIFT;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
 
 import javafx.scene.control.DatePicker;

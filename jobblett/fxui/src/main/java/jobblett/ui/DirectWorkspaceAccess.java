@@ -16,6 +16,8 @@ public class DirectWorkspaceAccess implements WorkspaceAccess {
 
   private Workspace workspace;
 
+  //TODO: JAVAAADOC
+
   public DirectWorkspaceAccess(Workspace workspace) {
     this.workspace = workspace;
   }

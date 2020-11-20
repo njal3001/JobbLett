@@ -36,7 +36,6 @@ public class ShiftViewController extends SceneController {
   @Override public void onSceneDisplayed() {
     groupName.setText(getAccess().getGroupName(getActiveGroupId()));
     toggleUserFilterCheckBox.setSelected(false);
-    System.out.println(getAccess().jobShiftIsOutdated(getActiveGroupId(), 0));
     getAccess().deleteOutdatedJobShift(getActiveGroupId());
     updateView();
     updateButtons();

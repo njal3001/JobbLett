@@ -37,6 +37,8 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     this.endpointBaseUri = endpointBaseUri;
   }
 
+  //TODO: JAVAAADOC
+
   private String getBody(String url) {
     HttpRequest requestObject = null;
     try {
@@ -220,14 +222,13 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
         GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/isAdmin/" + username);
   }
 
-  //TODO: Samme som under...
+ 
   @Override
   public void deleteJobShift(String adminUsername, int groupId, int index) {
     get(Boolean.class, GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/"
-        + JOB_SHIFT_LIST_RESOURCE_PATH + "/remove/" + index);
+        + JOB_SHIFT_LIST_RESOURCE_PATH + "/remove/" + adminUsername + "/" + index);
   }
 
-  //TODO: Ikke noe admin validering?
   @Override
   public void addJobShift(String adminUsername, int groupId, String jobShiftUsername,
       LocalDateTime startingTime, Duration duration, String info) {
@@ -235,7 +236,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
     JobShift jobShift = new JobShift(getUser(jobShiftUsername), startingTime, duration, info);
     String serializedJobshift = new JobblettPersistence().writeValueAsString(jobShift);
     put(GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/"
-        + JOB_SHIFT_LIST_RESOURCE_PATH + "/add", serializedJobshift);
+        + JOB_SHIFT_LIST_RESOURCE_PATH + "/add/" + adminUsername, serializedJobshift);
   }
 
   @Override
@@ -291,7 +292,7 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
   @Override
   public void deleteOutdatedJobShift(int groupId) {
-    // TODO Auto-generated method stub
+    put(GROUP_LIST_RESOURCE_PATH + "/get/" + groupId + "/"
+        + JOB_SHIFT_LIST_RESOURCE_PATH + "/deleteOutdated", "");
   }
-
 }
