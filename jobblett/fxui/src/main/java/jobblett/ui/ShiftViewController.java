@@ -36,7 +36,9 @@ public class ShiftViewController extends SceneController {
     shifts.getSelectionModel().selectedItemProperty().addListener(listener -> updateButtons());
   }
 
-  // TODO: skrive javadoc
+  /**
+   * method for displaying scene.
+   */
   @Override public void onSceneDisplayed() {
     groupName.setText(getAccess().getGroupName(getActiveGroupId()));
     toggleUserFilterCheckBox.setSelected(false);
