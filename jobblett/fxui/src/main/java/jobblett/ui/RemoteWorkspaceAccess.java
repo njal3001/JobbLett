@@ -26,6 +26,8 @@ import jobblett.json.JobblettPersistence;
 
 public class RemoteWorkspaceAccess implements WorkspaceAccess {
 
+  //TODO: Ikke bedre å importe fra rest api?
+
   public static final String JOBBLETT_SERVICE_PATH = "jobblett";
   public static final String USER_LIST_RESOURCE_PATH = "userlist";
   public static final String GROUP_LIST_RESOURCE_PATH = "grouplist";
@@ -226,20 +228,6 @@ public class RemoteWorkspaceAccess implements WorkspaceAccess {
    */
   @Override
   public Collection<Integer> getAllGroupIds(String username) {
-    /*GroupList groupList = get(GroupList.class, GROUP_LIST_RESOURCE_PATH);
-    return groupList.stream()
-        .filter(group -> {
-          boolean containsUser = false;
-          for (User user : group) {
-            if (user.getUsername().equals(username)) {
-              containsUser = true;
-              break;
-            }
-          }
-          return containsUser;
-        })
-        .map(Group::getGroupId)
-        .collect(Collectors.toList());*/
     return post(GroupList.class, GROUP_LIST_RESOURCE_PATH + "/getFromUsers", username)
         .stream()
         .map(Group::getGroupId)
