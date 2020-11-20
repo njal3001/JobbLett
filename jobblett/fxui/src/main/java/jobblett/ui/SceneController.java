@@ -13,31 +13,35 @@ public abstract class SceneController {
 
   private ControllerMap controllerMap;
 
+  //TODO: trenger vi virkelig alt dette?
+
   public Stage getStage() {
     return controllerMap.getStage();
   }
 
-  public User getActiveUser() {
-    return getControllerMap().getActiveUser();
+  public String getActiveUsername() {
+    return getControllerMap().getActiveUsername();
   }
 
-  public void setActiveUser(User activeUser) {
-    getControllerMap().setActiveUser(activeUser);
+  public void setActiveUsername(String activeUsername) {
+    getControllerMap().setActiveUsername(activeUsername);
   }
 
-  public Group getActiveGroup() {
-    return getControllerMap().getActiveGroup();
+  public int getActiveGroupId() {
+    return getControllerMap().getActiveGroupId();
   }
 
-  public void setActiveGroup(Group activeGroup) {
-    getControllerMap().setActiveGroup(activeGroup);
+  public void setActiveGroupId(int activeGroupId) {
+    getControllerMap().setActiveGroupId(activeGroupId);
   }
 
-  protected JobblettAccess getAccess() {
+  protected WorkspaceAccess getAccess() {
     return controllerMap.getAccess();
   }
+
   /**
    * Changes current screne.
+   *
    * @param jobblettScenes the scene we want to change to
    */
   public void switchScene(final JobblettScenes jobblettScenes) {

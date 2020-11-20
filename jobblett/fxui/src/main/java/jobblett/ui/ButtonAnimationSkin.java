@@ -9,6 +9,7 @@ public class ButtonAnimationSkin extends ButtonSkin {
 
   /**
    * Defines the effects for button transition when they are hovered, pressed and released.
+   *
    * @param button the button we are adding the effects to
    */
   public ButtonAnimationSkin(Button button) {

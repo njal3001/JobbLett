@@ -1,12 +1,14 @@
 package jobblett.restapi;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import jobblett.core.HashedPassword;
 import jobblett.core.User;
@@ -17,20 +19,26 @@ import org.slf4j.LoggerFactory;
 
 
 public class UserListResource extends RestApiClass {
-  public static final String USER_LIST_SERVICE_PATH = "userlist";
+  public static final String USER_LIST_RESCORCE_PATH = "userlist";
   protected static final Logger LOG = LoggerFactory.getLogger(UserListResource.class);
 
-  private Workspace workspace;
+  private UserList userList;
 
-  public UserListResource(Workspace workspace) {
-    this.workspace = workspace;
+  public UserListResource(UserList userList) {
+    this.userList = userList;
   }
 
+  private void checkUsername(String username) {
+    if (userList.get(username) == null) {
+      throw new IllegalArgumentException("No user with username: " + username);
+    }
+  }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public UserList getJobblettService() {
-    return workspace.getUserList();
+    debug("Returns UserList.");
+    return userList;
   }
 
   /**
@@ -39,12 +47,31 @@ public class UserListResource extends RestApiClass {
    * @param userName user's username
    * @return UserResource
    */
+  @GET
   @Path("/get/{userName}")
+  @Produces(MediaType.APPLICATION_JSON) // TODO trengs denne? sjekk dette på alle
   public UserResource getUser(@PathParam("userName") String userName) {
-    User user = workspace.getUserList().get(userName);
+    checkUsername(userName);
+    User user = userList.get(userName);
     LOG.debug("Sub-resource for User " + userName + ": " + user);
     return new UserResource(user);
   }
+
+  /**
+   * Returns if a user with the same username exist.
+   *
+   * @return boolean
+   */
+  @POST
+  @Path("/exist")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public boolean exist(String userName) {
+    boolean exist = (userList.get(userName) != null);
+    LOG.debug("Returns if the user " + userName + "exist: " + exist);
+    return exist;
+  }
+
 
   /**
    * Adds the specified user into the userList.
@@ -54,36 +81,12 @@ public class UserListResource extends RestApiClass {
   @PUT
   @Path("/add")
   @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
   public void add(User user) {
-    try {
-      workspace.getUserList().add(user);
-      debug(user + " added into the UserList");
-    } catch (Exception e) {
-      debug(e.getMessage());
-      debug("Something went wrong while adding the user: " + user);
-    }
+    userList.add(user);
   }
 
   @Override protected Logger logger() {
     return LOG;
   }
 
-  /**
-   * Returns a User-object with the same username and password.
-   *
-   * @param userName the userName
-   * @param hashedPassword the hashedPassword
-   * @return logged in user
-   */
-  @POST
-  @Produces(MediaType.APPLICATION_JSON)
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Path("/login/{userName}")
-  public User login(@PathParam("userName") String userName, String hashedPassword) {
-    User user = workspace.getUserList()
-        .checkUserNameAndPassword(userName, HashedPassword.alreadyHashed(hashedPassword));
-    debug("Logging in as " + user);
-    return user;
-  }
 }

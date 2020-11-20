@@ -11,6 +11,7 @@ import javafx.util.Callback;
 public class DatePickerDayCell implements Callback<DatePicker, DateCell> {
   /**
    * Disables past dates.
+   *
    * @param param TODO //må være med i opprinnelige metode
    */
   @Override public DateCell call(DatePicker param) {

@@ -45,7 +45,7 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
     }
     boolean result = list.addAll(Arrays.asList(objects));
     //TODO
-    //firePropertyChange(simpleTypeName() + "List", list);
+    firePropertyChange(simpleTypeName() + "List", list);
     if (optionalComparator() != null) {
       Collections.sort(list, optionalComparator());
     }
@@ -80,7 +80,9 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
    * @return if the object was removed or not.
    */
   public boolean remove(T o) {
-    return list.remove(o);
+    boolean done = list.remove(o);
+    firePropertyChange(simpleTypeName() + "List", list);
+    return done;
   }
 
   //Trenger vi alle disse metodene?
@@ -101,7 +103,7 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
     return list.size();
   }
 
-  protected int indexOf(T t) {
+  public int indexOf(T t) {
     return list.indexOf(t);
   }
 
@@ -133,16 +135,18 @@ public abstract class JobblettList<K, T> extends JobblettPropertyChangeSupporter
   }
 
   protected String simpleTypeName() {
-    ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
+    /*ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
     String fullTypeName = parameterizedType.getActualTypeArguments()[1].getTypeName();
     String[] splitTypeName = fullTypeName.split("\\.");
     String simpleTypeName = splitTypeName[splitTypeName.length - 1];
-    return simpleTypeName;
+    return simpleTypeName;*/
+    // TODO
+    return "Instance of JobblettList";
   }
 
   protected abstract K identifier(T t);
 
-  protected void optionalAlreadyExists() {
+  public void optionalAlreadyExists() {
 
   }
 

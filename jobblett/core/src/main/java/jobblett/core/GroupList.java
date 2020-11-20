@@ -73,7 +73,7 @@ public class GroupList extends JobblettList<Integer, Group> {
   }
 
   @Override
-  protected void optionalAlreadyExists() {
+  public void optionalAlreadyExists() {
     throw new IllegalArgumentException("Group with same ID already exists");
   }
 

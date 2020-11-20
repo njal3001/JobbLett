@@ -1,10 +1,5 @@
 package jobblett.ui;
 
-import java.io.IOException;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-
 /**
  * An enum for switching scene easier.
  * TODO

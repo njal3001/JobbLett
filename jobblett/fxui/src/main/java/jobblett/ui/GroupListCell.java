@@ -3,32 +3,30 @@ package jobblett.ui;
 import static jobblett.ui.JobblettScenes.GROUP_HOME;
 
 import javafx.scene.control.ListCell;
-import jobblett.core.Group;
 
 /**
  * CellFactory for the listView showing your groups in UserHomeController.
  */
-public class GroupListCell extends ListCell<Group> {
+public class GroupListCell extends ListCell<Integer> {
 
-  ControllerMap controllerMap;
+  private ControllerMap controllerMap;
 
   public GroupListCell(ControllerMap controllerMap) {
     this.controllerMap = controllerMap;
   }
 
-//TODO
-  @Override public void updateItem(Group group, boolean empty) {
-    super.updateItem(group, empty);
-    if (empty || group == null) {
+  // TODO: Skrive javadoc
+  @Override public void updateItem(Integer groupId, boolean empty) {
+    super.updateItem(groupId, empty);
+    if (empty) {
       setGraphic(null);
       setText(null);
     } else {
-      setText(group.getGroupName());
+      setText(controllerMap.getAccess().getGroupName(groupId));
       setOnMouseClicked((event) -> {
-        controllerMap.setActiveGroup(group);
+        controllerMap.setActiveGroupId(groupId);
         controllerMap.switchScene(GROUP_HOME);
       });
-
     }
   }
 }

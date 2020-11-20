@@ -1,5 +1,6 @@
 package jobblett.core;
 
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 public class WorkspaceGroupList extends GroupList {
@@ -65,5 +66,10 @@ public class WorkspaceGroupList extends GroupList {
 
   public Workspace getWorkspace() {
     return workspace;
+  }
+
+  @Override public void addListener(PropertyChangeListener pcl) {
+    super.addListener(pcl);
+    forEach(group -> group.addListener(pcl));
   }
 }

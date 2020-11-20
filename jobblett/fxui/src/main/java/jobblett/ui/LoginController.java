@@ -8,53 +8,61 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import jobblett.core.User;
+
 
 public class LoginController extends SceneController {
 
-  @FXML Button createAccount;
+  @FXML
+  Button createAccount;
 
-  @FXML Button login;
+  @FXML
+  Button login;
 
-  @FXML TextField usernameField;
+  @FXML
+  TextField usernameField;
 
-  @FXML Label errorMessage;
+  @FXML
+  Label errorMessage;
 
-  @FXML Label username;
+  @FXML
+  Label username;
 
-  @FXML Label password;
+  @FXML
+  Label password;
 
-  @FXML PasswordField passwordField;
+  @FXML
+  PasswordField passwordField;
+
   //TODO finn ut av om vi skal ha font for inputs
-  @Override public void styleIt() {
+
+  @Override
+  public void styleIt() {
     super.styleIt();
     login.setSkin(new ButtonAnimationSkin(login));
     createAccount.setSkin(new ButtonAnimationSkin(createAccount));
-    /*errorMessage.setFont(font);
-    username.setFont(font);
-    password.setFont(font);
-    usernameField.setFont(font);*/
+    // TODO: fjernes?
+    /*
+     * errorMessage.setFont(font); username.setFont(font); password.setFont(font);
+     * usernameField.setFont(font);
+     */
   }
 
-  @FXML public void goToCreateUser() {
+  @FXML
+  public void goToCreateUser() {
     switchScene(CREATE_USER);
   }
 
   /**
-   * If the the username and password belongs to an user, the user will be logged in as active user.
+   * Logging the user in as the active user.
    */
-  @FXML public void logInToUserHome() {
-    String userName = this.usernameField.getText();
+  @FXML
+  public void logInToUserHome() {
+    String username = this.usernameField.getText();
     String password = this.passwordField.getText();
-    try {
-      User user = getAccess().login(userName, password);
-      if (user == null) {
-        throw new IllegalArgumentException();
-      }
-      setActiveUser(user);
+    if (getAccess().correctPassword(username, password)) {
+      getControllerMap().setActiveUsername(username);
       switchScene(USER_HOME);
-    } catch (IllegalArgumentException e) {
-      System.out.println(e.getMessage());
+    } else {
       errorMessage.setText("Wrong username or password");
     }
   }

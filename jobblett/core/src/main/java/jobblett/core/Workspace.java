@@ -1,6 +1,8 @@
 package jobblett.core;
 
-public class Workspace {
+import java.beans.PropertyChangeListener;
+
+public class Workspace extends JobblettPropertyChangeSupporter {
 
   //Contains all users in the workspace
   private WorkspaceUserList userList;
@@ -22,4 +24,9 @@ public class Workspace {
     return groupList;
   }
 
+  @Override public void addListener(PropertyChangeListener pcl) {
+    super.addListener(pcl);
+    userList.addListener(pcl);
+    groupList.addListener(pcl);
+  }
 }
