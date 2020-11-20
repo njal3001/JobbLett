@@ -12,7 +12,7 @@ import jobblett.core.User;
 import jobblett.core.UserList;
 import jobblett.core.Workspace;
 
-public class WorkspaceDeserializer extends JsonDeserializer<Workspace> {
+class WorkspaceDeserializer extends JsonDeserializer<Workspace> {
 
   @Override
   public Workspace deserialize(JsonParser jsonParser, DeserializationContext ctxt) 

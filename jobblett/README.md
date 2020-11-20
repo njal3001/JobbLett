@@ -10,11 +10,11 @@ Deretter tildeler arbeidsgiveren skift til arbeidstakerne og hele gruppen får e
 [Trykk her for å lese brukerhistorie](Brukerhistorie.md)
 
 
-Under vises et bilde av appens hovedside. Her ser man navnet på teamet og en oversikt over alle medlemmene i teamet. 
-Her er det planlagt at man vil få en oversikt over teamets jobbskift når appen er ferdig utviklet. Gruppe ID-en vises nederst på denne siden og 
-andre brukere kan bruke denne ID-en for å bli med i gruppen.
+Under vises et bilde av appens hovedside. Her ser man navnet på teamet og en oversikt over alle medlemmene i teamet. Gruppe ID-en vises nederst på denne siden og 
+andre brukere kan bruke denne ID-en for å bli med i gruppen. Videre kan man trykke seg inn til alle shiftene for teamet. Der kan man få mer info om shiftet ved å trykke på en shift.
 
-![](pictures/prosjekt_skjermbilde.png)
+![](pictures/Jobblett_GroupHome.png)
+![](pictures/Jobblett_ShiftView.png)
 
 
 ## Instruksjoner for gruppeøving
@@ -29,6 +29,9 @@ er medlem i testgruppen for å se Gruppe ID-en. Hvis du skriver inn gruppe ID-en
 ###  Gruppeøving 2
 Implementasjon av oppretting av gruppe, legge til jobbshift er nå implementert. Det er i tillegg lagt inn funksjonalitet for at det kun  er administratoren av gruppen
 som kan legge til jobbshift.
+
+### Gruppeøving 3
+jdsfldsjfkldajlk09382473298RYUFEIHSDJKJFHDHFDSDASDS
 
 
 ## Tilleggsinformasjon

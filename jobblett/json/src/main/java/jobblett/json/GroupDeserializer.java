@@ -11,7 +11,7 @@ import jobblett.core.JobShift;
 import jobblett.core.JobShiftList;
 import jobblett.core.User;
 
-public class GroupDeserializer extends JsonDeserializer<Group> {
+class GroupDeserializer extends JsonDeserializer<Group> {
 
   @Override
   public Group deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)

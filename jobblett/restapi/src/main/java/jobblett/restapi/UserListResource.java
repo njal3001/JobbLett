@@ -83,6 +83,7 @@ public class UserListResource extends RestApiClass {
   @Consumes(MediaType.APPLICATION_JSON)
   public void add(User user) {
     userList.add(user);
+    debug("Adding user: " + user);
   }
 
   @Override protected Logger logger() {

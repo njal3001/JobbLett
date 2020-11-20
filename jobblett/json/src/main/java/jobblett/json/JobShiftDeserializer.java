@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import jobblett.core.JobShift;
 import jobblett.core.User;
 
-public class JobShiftDeserializer extends JsonDeserializer<JobShift> {
+class JobShiftDeserializer extends JsonDeserializer<JobShift> {
 
   @Override
   public JobShift deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)

@@ -10,7 +10,7 @@ import jobblett.core.User;
 import jobblett.core.UserList;
 import jobblett.core.Workspace;
 
-public class JobblettCoreModule extends SimpleModule {
+class JobblettCoreModule extends SimpleModule {
 
   /**
    * Initializes JobblettCoreModule by adding serializers to the superclass.

@@ -9,7 +9,7 @@ import java.io.IOException;
 import jobblett.core.Group;
 import jobblett.core.GroupList;
 
-public class GroupListDeserializer extends JsonDeserializer<GroupList> {
+class GroupListDeserializer extends JsonDeserializer<GroupList> {
 
   @Override
   public GroupList deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)

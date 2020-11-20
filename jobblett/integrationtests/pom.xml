@@ -26,10 +26,12 @@
             <groupId>gr2007.jobblett</groupId>
             <artifactId>fxui</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>gr2007.jobblett</groupId>
-            <artifactId>restserver</artifactId>
+            <artifactId>fxui</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -151,7 +153,11 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <!-- Running tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 
