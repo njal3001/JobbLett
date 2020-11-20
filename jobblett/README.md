@@ -45,9 +45,6 @@ testdekning.
 * [restserver](restserver/)
 * [integrationtests](integrationtests/)
 
-### sekvendsdiagram:
-
-![](pictures/sekvensdiagram.png)
 
 ### Arkitekturdiagram:
 
