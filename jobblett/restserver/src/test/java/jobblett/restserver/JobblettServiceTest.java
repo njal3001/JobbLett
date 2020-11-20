@@ -134,6 +134,45 @@ public class JobblettServiceTest extends JerseyTest{
 
   }
 
+    @Test
+  public void getGroupIDtest(){
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/get/"+6210)
+        .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
+        .get();
+    assertEquals(200, getResponse.getStatus());
+
+    try{
+      Group group = objectMapper.readValue(getResponse.readEntity(String.class),Group.class);
+      assertEquals(group.getGroupId(), 6210);
+    } catch(JsonProcessingException e){
+
+    }
+
+  }
+
+  @Test
+    public void newGroupTest(){
+    Response getResponse = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist/new")
+        .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
+        .get();
+    assertEquals(200, getResponse.getStatus());
+
+    Response getResponseGroup = target(WorkspaceService.WORKSPACE_SERVICE_PATH).path("grouplist")
+        .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER+"=UTF8")
+        .get();
+    assertEquals(200, getResponseGroup.getStatus());
+
+    try{
+      Group group = objectMapper.readValue(getResponse.readEntity(String.class),Group.class);
+      GroupList groupList = objectMapper.readValue(getResponse.readEntity(String.class),GroupList.class);
+      assertTrue(groupList.contains(group));
+    } catch(JsonProcessingException e){
+
+    }
+
+  }
+  
+
 
 }
     
