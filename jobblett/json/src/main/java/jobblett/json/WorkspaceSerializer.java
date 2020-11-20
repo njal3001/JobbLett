@@ -8,7 +8,7 @@ import jobblett.core.GroupList;
 import jobblett.core.UserList;
 import jobblett.core.Workspace;
 
-public class WorkspaceSerializer extends JsonSerializer<Workspace> {
+class WorkspaceSerializer extends JsonSerializer<Workspace> {
 
   @Override
   public void serialize(Workspace workspace, JsonGenerator jsonGenerator, 

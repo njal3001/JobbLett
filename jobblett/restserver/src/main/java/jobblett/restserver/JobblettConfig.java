@@ -5,7 +5,7 @@ import java.beans.PropertyChangeListener;
 import jobblett.core.Workspace;
 import jobblett.json.JobblettPersistence;
 import jobblett.restapi.WorkspaceService;
-import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 

@@ -9,7 +9,7 @@ import java.io.IOException;
 import jobblett.core.JobShift;
 import jobblett.core.JobShiftList;
 
-public class JobShiftListDeserializer extends JsonDeserializer<JobShiftList> {
+class JobShiftListDeserializer extends JsonDeserializer<JobShiftList> {
 
   @Override public JobShiftList deserialize(JsonParser jsonParser,
       DeserializationContext deserializationContext) throws IOException {

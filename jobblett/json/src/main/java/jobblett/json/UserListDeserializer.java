@@ -10,7 +10,7 @@ import java.io.IOException;
 import jobblett.core.User;
 import jobblett.core.UserList;
 
-public class UserListDeserializer extends JsonDeserializer<UserList> {
+class UserListDeserializer extends JsonDeserializer<UserList> {
 
   @Override
   public UserList deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)

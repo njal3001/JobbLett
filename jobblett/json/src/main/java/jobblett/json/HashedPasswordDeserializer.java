@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 import jobblett.core.HashedPassword;
 
-public class HashedPasswordDeserializer extends JsonDeserializer<HashedPassword> {
+class HashedPasswordDeserializer extends JsonDeserializer<HashedPassword> {
 
   @Override
   public HashedPassword deserialize(

@@ -1,11 +1,5 @@
 package jobblett.json;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Iterator;
@@ -13,9 +7,7 @@ import jobblett.core.HashedPassword;
 import jobblett.core.JobShift;
 import jobblett.core.JobShiftList;
 import jobblett.core.User;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInstance;
 
 public class JobShiftListPersistenceTest extends AbstractPersistenceTest<JobShiftList>{
 

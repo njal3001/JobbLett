@@ -1,17 +1,11 @@
 package jobblett.json;
 
-import static org.junit.jupiter.api.Assertions.fail;
 import java.util.Iterator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import jobblett.core.HashedPassword;
 import jobblett.core.User;
 import jobblett.core.UserList;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+
 
 public class UserListPersistenceTest extends AbstractPersistenceTest<UserList>{
 
