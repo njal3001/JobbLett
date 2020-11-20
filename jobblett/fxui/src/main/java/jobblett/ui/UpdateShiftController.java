@@ -47,7 +47,7 @@ public class UpdateShiftController extends SceneController {
   private Integer activeJobShiftIndex;
 
   /**
-   * TODO.
+   * initialize method.
    */
   @FXML
   public void initialize() {
