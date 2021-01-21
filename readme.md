@@ -6,19 +6,19 @@
     Koden ligger i [jobblett.core](https://github.com/Sanketb2312/JobbLett/tree/master/jobblett/core/src)
     
 <h4> Brukergrensesnittlaget </h4>
-    Koden ligger i [jobblett.fxui](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2007/gr2007/-/tree/master/jobblett%2Ffxui%2Fsrc)
+    Koden ligger i [jobblett.fxui](https://github.com/Sanketb2312/JobbLett/tree/master/jobblett/fxui/src)
     
 <h4> Persistenslaget </h4>
-    Koden ligger i [jobblett.json](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2007/gr2007/-/tree/master/jobblett%2Fjson%2Fsrc%2Fmain%2Fjava%2Fjobblett%2Fjson)
+    Koden ligger i [jobblett.json](https://github.com/Sanketb2312/JobbLett/tree/master/jobblett/json/src)
 
 <h4> RestApi </h4>
-    Koden ligger i [jobblett.RestApi](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2007/gr2007/-/tree/master/jobblett/restapi)
+    Koden ligger i [jobblett.RestApi](https://github.com/Sanketb2312/JobbLett/tree/master/jobblett/restapi/src)
     
 <h4> RestServer </h4>
-    Koden ligger i [jobblett.RestServer](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2007/gr2007/-/tree/master/jobblett/restserver)
+    Koden ligger i [jobblett.RestServer](https://github.com/Sanketb2312/JobbLett/tree/master/jobblett/restserver/src)
     
 <h4> Integrationtests </h4>
-    Koden ligger i [jobblett.Integrationtests](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2007/gr2007/-/tree/master/jobblett/integrationtests)
+    Koden ligger i [jobblett.Integrationtests](https://github.com/Sanketb2312/JobbLett/tree/master/jobblett/integrationtests/src)
     
     
     
